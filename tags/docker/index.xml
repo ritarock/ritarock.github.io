@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>docker on GHOSTの囁き</title>
+    <link>https://ritarock.github.io/tags/docker/</link>
+    <description>Recent content in docker on GHOSTの囁き</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <lastBuildDate>Thu, 29 Aug 2019 09:00:00 +0900</lastBuildDate>
+    
+	<atom:link href="https://ritarock.github.io/tags/docker/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>docker-composeでrailsとmysqlを使う</title>
+      <link>https://ritarock.github.io/posts/2019-08-29t090000&#43;0900/</link>
+      <pubDate>Thu, 29 Aug 2019 09:00:00 +0900</pubDate>
+      
+      <guid>https://ritarock.github.io/posts/2019-08-29t090000&#43;0900/</guid>
+      <description>ディレクトリ構成 ./ ├── Dockerfile ├── docker-compose.yml ├── db_volume/ ├── mysql-confd/ │ └── default_authentication.cnf └── src/ ├── Gemfile └── Gemfile.lock ファイルの説明 Dockerfile railsのアプリ用のDockerfil</description>
+    </item>
+    
+    <item>
+      <title>Dockerのインストールからコンテナ作成まで</title>
+      <link>https://ritarock.github.io/posts/2018-02-13t090000&#43;0900/</link>
+      <pubDate>Tue, 13 Feb 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://ritarock.github.io/posts/2018-02-13t090000&#43;0900/</guid>
+      <description>開発環境 ubuntu/trusty64 Dockerのインストール $ sudo apt-get update $ sudo apt-get -y install \ apt-transport-https \ ca-certificates \ curl \ software-properties-common $ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - $ sudo apt-key fingerprint 0EBFCD88 $ sudo add-apt-repository -y \ &amp;quot;deb [arch=amd64] https://download.docker.com/linux/ubuntu \ $(lsb_release -cs) \ stable&amp;quot; $ sudo apt-get update $ sudo apt-get install</description>
+    </item>
+    
+    <item>
+      <title>Ubuntu 16.04 LTS にdockerをインストールする</title>
+      <link>https://ritarock.github.io/posts/2017-10-11t090000&#43;0900/</link>
+      <pubDate>Wed, 11 Oct 2017 09:00:00 +0900</pubDate>
+      
+      <guid>https://ritarock.github.io/posts/2017-10-11t090000&#43;0900/</guid>
+      <description>$ sudo apt-get update $ apt-get install -y software-properties-common $ sudo apt-get install apt-transport-https ca-certificates curl software-properties-common $ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - $ sudo apt-key fingerprint 0EBFCD88 $ sudo add-apt-repository &amp;quot;deb [arch=amd64] $ https://download.docker.com/linux/ubuntu \ $(lsb_release -cs) \ stable&amp;quot; $ sudo apt-get update $ sudo apt-get install docker-ce $ docker --version</description>
+    </item>
+    
+  </channel>
+</rss>

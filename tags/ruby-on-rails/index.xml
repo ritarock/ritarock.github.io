@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ruby on rails on GHOSTの囁き</title>
+    <link>https://ritarock.github.io/tags/ruby-on-rails/</link>
+    <description>Recent content in ruby on rails on GHOSTの囁き</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <lastBuildDate>Thu, 29 Aug 2019 09:00:00 +0900</lastBuildDate>
+    
+	<atom:link href="https://ritarock.github.io/tags/ruby-on-rails/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>docker-composeでrailsとmysqlを使う</title>
+      <link>https://ritarock.github.io/posts/2019-08-29t090000&#43;0900/</link>
+      <pubDate>Thu, 29 Aug 2019 09:00:00 +0900</pubDate>
+      
+      <guid>https://ritarock.github.io/posts/2019-08-29t090000&#43;0900/</guid>
+      <description>ディレクトリ構成 ./ ├── Dockerfile ├── docker-compose.yml ├── db_volume/ ├── mysql-confd/ │ └── default_authentication.cnf └── src/ ├── Gemfile └── Gemfile.lock ファイルの説明 Dockerfile railsのアプリ用のDockerfil</description>
+    </item>
+    
+  </channel>
+</rss>

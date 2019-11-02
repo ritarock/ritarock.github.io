@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html class="no-js" lang="ja-jp">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>hexoとやらを試してみた - GHOSTの囁き</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	
+	
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="https://ritarock.github.io/css/style.css">
+	
+	<link rel="shortcut icon" href="https://ritarock.github.io/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="https://ritarock.github.io/" title="GHOSTの囁き" rel="home">
+				<div class="logo__title">GHOSTの囁き</div>
+				<div class="logo__tagline">ritarock’s blog</div>
+			</a>
+		</div>
+		<div class="divider"></div>
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">hexoとやらを試してみた</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2017-12-19T09:00:00">December 19, 2017</time>
+</div>
+
+<div class="meta__item-categories meta__item">
+	<svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg>
+	<span class="meta__text"><a class="meta__link" href="https://ritarock.github.io/categories/node" rel="category">node</a>, <a class="meta__link" href="https://ritarock.github.io/categories/git" rel="category">git</a>, <a class="meta__link" href="https://ritarock.github.io/categories/github" rel="category">github</a>, <a class="meta__link" href="https://ritarock.github.io/categories/hexo" rel="category">hexo</a></span>
+</div>
+</div>
+		</header><div class="content post__content clearfix">
+			
+
+<h1 id="hexo">hexo</h1>
+
+<p><a href="https://hexo.io/">https://hexo.io/</a></p>
+
+<p>githubのアカウントあれば誰でもブログを公開できる</p>
+
+<h2 id="まずはリポジトリ作成">まずはリポジトリ作成</h2>
+
+<p>[username].github.io
+というリポジトリを作成</p>
+
+<h2 id="hexoの準備">hexoの準備</h2>
+
+<p>公式通りに
+hexoをグローバルにインストール</p>
+
+<pre><code>$ npm install hexo-cli -g
+</code></pre>
+
+<p>以下のコマンドでディレクトリを作成</p>
+
+<pre><code>$ hexo init blog
+</code></pre>
+
+<p>作成されたディレクトリに移動して、モジュールをインストール</p>
+
+<pre><code>$ cd blog
+$ npm install
+</code></pre>
+
+<p>インストールできたら、以下のコマンドで起動</p>
+
+<pre><code>$ hexo server
+</code></pre>
+
+<p><a href="http://localhost:4000/">http://localhost:4000/</a> にアクセスすると雛形ができている</p>
+
+<h2 id="githubで公開">githubで公開</h2>
+
+<p>作成されたディレクトリ配下にある<font color="DeepPink">_config.yml</font>を弄る
+<font color="DeepPink">_config.yml</font>ではサイトのタイトル等を変更可能</p>
+
+<pre><code class="language-_config.yml">deploy:
+  type: git
+  repo: https://github.com/[username]/[username].github.io.git
+  branch: master
+</code></pre>
+
+<p>編集したら、以下のコマンドでデプロイ</p>
+
+<pre><code>hexo deploy -g
+</code></pre>
+
+<p>エラーがでた<br />
+どうやら、<font color="DeepPink">hexo-deployer-git</font>というモジュールをインストールしないといけないよう<br />
+ってことでインストール</p>
+
+<pre><code>$ npm install hexo-deployer-git --save
+</code></pre>
+
+<p>改めてデプロイ</p>
+
+<pre><code>$ hexo deploy -g
+</code></pre>
+
+<p><a href="https://username.github.io/">https://username.github.io/</a> にアクセスすると先程 <a href="http://localhost:4000/">http://localhost:4000/</a> でみたページにアクセス可能</p>
+
+<p><strong>※反映にそれなりに時間が掛かる</strong></p>
+
+<h2 id="テーマの導入">テーマの導入</h2>
+
+<p><a href="https://hexo.io/themes/index.html">https://hexo.io/themes/index.html</a></p>
+
+<p>こちらのサイトから気に入ったプラグインclone</p>
+
+<p>例えば、これなら
+<a href="https://github.com/mkkhedawat/clexy">https://github.com/mkkhedawat/clexy</a>
+<strong>README</strong>にあるようにコマンドを実行</p>
+
+<pre><code>$ git clone https://github.com/mkkhedawat/clexy themes/clexy
+$ git clone https://github.com/mkkhedawat/clexy themes/clexy
+$ yarn remove hexo-renderer-ejs
+$ yarn add hexo-renderer-jade
+$ yarn add hexo-prism-plugin
+</code></pre>
+
+<p><font color="DeepPink">_config.yml</font>を編集</p>
+
+<pre><code class="language-_config.yml">prism_plugin:
+  mode: 'preprocess'    # realtime/preprocess
+  theme: 'default'
+  line_number: false    # default false
+theme: clexy
+</code></pre>
+
+<p>デプロイ</p>
+
+<pre><code>$ hexo deploy -g
+</code></pre>
+
+<h2 id="記事の投稿">記事の投稿</h2>
+
+<p>以下のコマンドを実行</p>
+
+<pre><code>$ hexo new post 新規ページ
+</code></pre>
+
+<p><font color="DeepPink">source/post/新規ページ.md</font>が作成されているので弄ってpushすれば記事が投稿できる</p>
+
+<p>ところで、hexoってなんて読むんだろう・・・？</p>
+
+		</div>
+		<footer class="post__footer">
+			
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item"><a class="tags__link btn" href="https://ritarock.github.io/tags/node/" rel="tag">node</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="https://ritarock.github.io/tags/git/" rel="tag">git</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="https://ritarock.github.io/tags/github/" rel="tag">github</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="https://ritarock.github.io/tags/hexo/" rel="tag">hexo</a></li>
+	</ul>
+</div>
+		</footer>
+	</article>
+</main>
+
+
+
+
+			</div>
+			
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2019 GHOSTの囁き.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="https://ritarock.github.io/js/menu.js"></script>
+</body>
+</html>

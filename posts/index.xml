@@ -1,23 +1,221 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on MY MEMORANDUM</title>
+    <title>Posts on GHOSTの囁き</title>
     <link>https://ritarock.github.io/posts/</link>
-    <description>Recent content in Posts on MY MEMORANDUM</description>
+    <description>Recent content in Posts on GHOSTの囁き</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
-    <lastBuildDate>Sat, 02 Nov 2019 15:18:57 +0900</lastBuildDate>
+    <lastBuildDate>Sun, 03 Nov 2019 01:57:26 +0900</lastBuildDate>
     
 	<atom:link href="https://ritarock.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>移行しました</title>
-      <link>https://ritarock.github.io/posts/%E7%A7%BB%E8%A1%8C%E3%81%97%E3%81%BE%E3%81%97%E3%81%9F/</link>
-      <pubDate>Sat, 02 Nov 2019 15:18:57 +0900</pubDate>
+      <title>はてなの記事移行しました</title>
+      <link>https://ritarock.github.io/posts/2019-11-03t015726&#43;090000/</link>
+      <pubDate>Sun, 03 Nov 2019 01:57:26 +0900</pubDate>
       
-      <guid>https://ritarock.github.io/posts/%E7%A7%BB%E8%A1%8C%E3%81%97%E3%81%BE%E3%81%97%E3%81%9F/</guid>
-      <description>top first page</description>
+      <guid>https://ritarock.github.io/posts/2019-11-03t015726&#43;090000/</guid>
+      <description>今後はこちらで</description>
+    </item>
+    
+    <item>
+      <title>docker-composeでrailsとmysqlを使う</title>
+      <link>https://ritarock.github.io/posts/2019-08-29t090000&#43;0900/</link>
+      <pubDate>Thu, 29 Aug 2019 09:00:00 +0900</pubDate>
+      
+      <guid>https://ritarock.github.io/posts/2019-08-29t090000&#43;0900/</guid>
+      <description>ディレクトリ構成 ./ ├── Dockerfile ├── docker-compose.yml ├── db_volume/ ├── mysql-confd/ │ └── default_authentication.cnf └── src/ ├── Gemfile └── Gemfile.lock ファイルの説明 Dockerfile railsのアプリ用のDockerfil</description>
+    </item>
+    
+    <item>
+      <title>pythonでlistから辞書を作る、辞書からjsonを作る</title>
+      <link>https://ritarock.github.io/posts/2019-01-08t090000&#43;0900/</link>
+      <pubDate>Tue, 08 Jan 2019 09:00:00 +0900</pubDate>
+      
+      <guid>https://ritarock.github.io/posts/2019-01-08t090000&#43;0900/</guid>
+      <description>listから辞書を作る list_col = [&#39;col1&#39;, &#39;col2&#39;, &#39;col3&#39;, &#39;col4&#39;, &#39;col5&#39;] list_data = [1, 2, 3, 4, 5] dict_data = dict(zip(list_col, list_data)) print(dict_data) # {&#39;col1&#39;: 1, &#39;col2&#39;: 2, &#39;col3&#39;: 3, &#39;col4&#39;: 4, &#39;col5&#39;: 5} 辞書からjsonを作る import json json_data = json.dumps(dict_data) print(json_data) # {&amp;quot;col1&amp;quot;: 1, &amp;quot;col2&amp;quot;: 2, &amp;quot;col3&amp;quot;: 3, &amp;quot;col4&amp;quot;: 4, &amp;quot;col5&amp;quot;: 5}</description>
+    </item>
+    
+    <item>
+      <title>windwosのGOPATH</title>
+      <link>https://ritarock.github.io/posts/2018-11-12t090000&#43;0900/</link>
+      <pubDate>Mon, 12 Nov 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://ritarock.github.io/posts/2018-11-12t090000&#43;0900/</guid>
+      <description>setx GOPATH %USERPROFILE%\go</description>
+    </item>
+    
+    <item>
+      <title>vimをちゃんとやる(9)</title>
+      <link>https://ritarock.github.io/posts/2018-10-28t090000&#43;0900/</link>
+      <pubDate>Sun, 28 Oct 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://ritarock.github.io/posts/2018-10-28t090000&#43;0900/</guid>
+      <description>:sort アルファベット順にソートできる 自動補完呼び出し方法一覧 コマンド 種類 &amp;lt;C-a&amp;gt; 汎用キーワード &amp;lt;C-x&amp;gt; 現在バッファのキーワード &amp;lt;C-x&amp;gt; インクルードされているファイ</description>
+    </item>
+    
+    <item>
+      <title>vimをちゃんとやる(8)</title>
+      <link>https://ritarock.github.io/posts/2018-10-23t090000&#43;0900/</link>
+      <pubDate>Tue, 23 Oct 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://ritarock.github.io/posts/2018-10-23t090000&#43;0900/</guid>
+      <description>&amp;lt;C-r&amp;gt; 検索の自動補完 :%s/{文字}//gn 文字数をカウント :%s/{対象文字}/{置換後の文字}/g ファイルの対象文字を置換する :%s/{対象</description>
+    </item>
+    
+    <item>
+      <title>vimをちゃんとやる(7)</title>
+      <link>https://ritarock.github.io/posts/2018-10-22t090000&#43;0900/</link>
+      <pubDate>Mon, 22 Oct 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://ritarock.github.io/posts/2018-10-22t090000&#43;0900/</guid>
+      <description>\v /\v で検索することで正規表現エンジンの振る舞いが切り替わる \x 文字集合 [0-9a-fA-F] を\x で置き換える \V nomagic検索に切り替える この場合、バックスラ</description>
+    </item>
+    
+    <item>
+      <title>vimをちゃんとやる(6)</title>
+      <link>https://ritarock.github.io/posts/2018-10-21t090000&#43;0900/</link>
+      <pubDate>Sun, 21 Oct 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://ritarock.github.io/posts/2018-10-21t090000&#43;0900/</guid>
+      <description>@@ 直前に呼び出されたマクロを繰り返す ~ カーソルの下の文字を大文字/小文字に変換する マクロにコマンドを追記する qa で記録したマクロならば、qA で</description>
+    </item>
+    
+    <item>
+      <title>vimをちゃんとやる(5)</title>
+      <link>https://ritarock.github.io/posts/2018-10-20t090000&#43;0900/</link>
+      <pubDate>Sat, 20 Oct 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://ritarock.github.io/posts/2018-10-20t090000&#43;0900/</guid>
+      <description>&amp;rdquo;{rejister} &amp;ldquo;ayiw でレジスタa に単語をヤンク &amp;ldquo;ap でレジスタa の単語をプット 0p ヤンクレジスタは次のヤンクまで内容が溜まる :reg レジスタの中身を見る &amp;ldquo;_ ブラックホール</description>
+    </item>
+    
+    <item>
+      <title>vimをちゃんとやる(4)</title>
+      <link>https://ritarock.github.io/posts/2018-10-18t090000&#43;0900/</link>
+      <pubDate>Thu, 18 Oct 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://ritarock.github.io/posts/2018-10-18t090000&#43;0900/</guid>
+      <description>H M L 画面の先頭 / 中央 / 末尾にジャンプ g; 直前の変更一までジャンプして戻る m {letter} バッファにローカルなマークを作る {letter}を大文字にするこ</description>
+    </item>
+    
+    <item>
+      <title>vimをちゃんとやる(3)</title>
+      <link>https://ritarock.github.io/posts/2018-10-17t090000&#43;0900/</link>
+      <pubDate>Wed, 17 Oct 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://ritarock.github.io/posts/2018-10-17t090000&#43;0900/</guid>
+      <description>, f{char} の反対側に移動 t f{char} は {char} の文字上 t{char} は {char} の文字の手前 vi{char}, va{char} vi のときは {char} を含まない va のときは {char} を含む</description>
+    </item>
+    
+    <item>
+      <title>vimをちゃんとやる(2)</title>
+      <link>https://ritarock.github.io/posts/2018-10-16t090000&#43;0900/</link>
+      <pubDate>Tue, 16 Oct 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://ritarock.github.io/posts/2018-10-16t090000&#43;0900/</guid>
+      <description>:tabedit {filename} {filename} のタブを作る :tabc[lose] アクティブなタブを閉じる @: 直前のコマンドライン入力を繰り返す タブの移動 覚えかたは「 &amp;ldquo;g&amp;rdquo;oto &amp;ldquo;t&amp;rdquo;ab 」 {N}gt gt gT 以下の通り {N}番目のタブ</description>
+    </item>
+    
+    <item>
+      <title>vimをちゃんとやる(1)</title>
+      <link>https://ritarock.github.io/posts/2018-10-15t090000&#43;0900/</link>
+      <pubDate>Mon, 15 Oct 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://ritarock.github.io/posts/2018-10-15t090000&#43;0900/</guid>
+      <description>; fコマンドで実行した直前の検索を繰り返す 1文字ずつ置換する 置換対象の文字の上で * cw&amp;rdquo; 文字入力 &amp;ldquo;&amp;lt;ESC&amp;gt; n . やっていることは以下の通り 置換対象文字のハ</description>
+    </item>
+    
+    <item>
+      <title>ansibleでmacbookを管理</title>
+      <link>https://ritarock.github.io/posts/2018-04-09t090000&#43;0900/</link>
+      <pubDate>Mon, 09 Apr 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://ritarock.github.io/posts/2018-04-09t090000&#43;0900/</guid>
+      <description>はじめに 先日、macbookが起動しなくなり仕方なくクリーンインストールしたので、今後のことも考えてmacbookの環境を管理する 環境 brew と brew</description>
+    </item>
+    
+    <item>
+      <title>Dockerのインストールからコンテナ作成まで</title>
+      <link>https://ritarock.github.io/posts/2018-02-13t090000&#43;0900/</link>
+      <pubDate>Tue, 13 Feb 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://ritarock.github.io/posts/2018-02-13t090000&#43;0900/</guid>
+      <description>開発環境 ubuntu/trusty64 Dockerのインストール $ sudo apt-get update $ sudo apt-get -y install \ apt-transport-https \ ca-certificates \ curl \ software-properties-common $ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - $ sudo apt-key fingerprint 0EBFCD88 $ sudo add-apt-repository -y \ &amp;quot;deb [arch=amd64] https://download.docker.com/linux/ubuntu \ $(lsb_release -cs) \ stable&amp;quot; $ sudo apt-get update $ sudo apt-get install</description>
+    </item>
+    
+    <item>
+      <title>hexoとやらを試してみた</title>
+      <link>https://ritarock.github.io/posts/2017-12-19t090000&#43;0900/</link>
+      <pubDate>Tue, 19 Dec 2017 09:00:00 +0900</pubDate>
+      
+      <guid>https://ritarock.github.io/posts/2017-12-19t090000&#43;0900/</guid>
+      <description>hexo https://hexo.io/ githubのアカウントあれば誰でもブログを公開できる まずはリポジトリ作成 [username].github.io というリポジトリを作成 hexoの準備 公式通りに hexoをグロ</description>
+    </item>
+    
+    <item>
+      <title>JavaScriptの非同期処理(Promise)</title>
+      <link>https://ritarock.github.io/posts/2017-11-07t090000&#43;0900/</link>
+      <pubDate>Tue, 07 Nov 2017 09:00:00 +0900</pubDate>
+      
+      <guid>https://ritarock.github.io/posts/2017-11-07t090000&#43;0900/</guid>
+      <description>Promise.resolve().then(function() { return new Promise(function(fulfilled, rejected) { //処理1 fulfilled(); }); }).then(function() { return new Promise(function(fulfilled, rejected) { //処理2 fulfilled(); }); }).then(function() { return new Promise(function(fulfilled, rejected) { //処理3 }); })</description>
+    </item>
+    
+    <item>
+      <title>vagrant の共有ディレクトリでnpm installがエラーを吐く時</title>
+      <link>https://ritarock.github.io/posts/2017-11-06t090000&#43;0900/</link>
+      <pubDate>Mon, 06 Nov 2017 09:00:00 +0900</pubDate>
+      
+      <guid>https://ritarock.github.io/posts/2017-11-06t090000&#43;0900/</guid>
+      <description>$ sudo npm install --no-bin-links &amp;ndash;no-bin-linksをつければうまくいく</description>
+    </item>
+    
+    <item>
+      <title>vagrant &#43; Ubuntu 16.04 LTS でDjango開発環境を構築</title>
+      <link>https://ritarock.github.io/posts/2017-10-11t090004&#43;0900/</link>
+      <pubDate>Wed, 11 Oct 2017 09:00:04 +0900</pubDate>
+      
+      <guid>https://ritarock.github.io/posts/2017-10-11t090004&#43;0900/</guid>
+      <description>はじめに vagrantを使ってDjango開発環境を構築する vagrantでUbuntu 16.04 LTSの準備 ubuntu 16.04 LTSのboxを持っていることが前</description>
+    </item>
+    
+    <item>
+      <title>dein.vimを使ってみる</title>
+      <link>https://ritarock.github.io/posts/2017-10-11t090003&#43;0900/</link>
+      <pubDate>Wed, 11 Oct 2017 09:00:03 +0900</pubDate>
+      
+      <guid>https://ritarock.github.io/posts/2017-10-11t090003&#43;0900/</guid>
+      <description>curl を使ってシェルをダウンロード $ curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh -o /tmp/installer.sh シェルの実行 $ sh /tmp/installer.sh ~/.vim/dein &amp;quot;dein Scripts----------------------------- if &amp;amp;compatible set nocompatible &amp;quot; Be iMproved endif &amp;quot; Required: set runtimepath+=/home/ubuntu/.vim/dein/repos/github.com/Shougo/dein.vim &amp;quot; Required: if dein#load_state(&#39;/home/ubuntu/.vim/dein&#39;) call dein#begin(&#39;/home/ubuntu/.vim/dein&#39;) &amp;quot; Let dein manage dein &amp;quot; Required: call dein#add(&#39;/home/ubuntu/.vim/dein/repos/github.com/Shougo/dein.vim&#39;) &amp;quot; Add or remove your plugins here: call dein#add(&#39;Shougo/neosnippet.vim&#39;) call dein#add(&#39;Shougo/neosnippet-snippets&#39;)</description>
+    </item>
+    
+    <item>
+      <title>pythonでYYYY-MM-DD形式で日付を扱う</title>
+      <link>https://ritarock.github.io/posts/2017-10-11t090002&#43;0900/</link>
+      <pubDate>Wed, 11 Oct 2017 09:00:02 +0900</pubDate>
+      
+      <guid>https://ritarock.github.io/posts/2017-10-11t090002&#43;0900/</guid>
+      <description>import datetime today = datetime.date.today() today.isoformat()</description>
+    </item>
+    
+    <item>
+      <title>pythonで取得したテキストの行数を取得する</title>
+      <link>https://ritarock.github.io/posts/2017-10-11t090001&#43;0900/</link>
+      <pubDate>Wed, 11 Oct 2017 09:00:01 +0900</pubDate>
+      
+      <guid>https://ritarock.github.io/posts/2017-10-11t090001&#43;0900/</guid>
+      <description>num_lines = sum(1 for line in open(text))</description>
+    </item>
+    
+    <item>
+      <title>Ubuntu 16.04 LTS にdockerをインストールする</title>
+      <link>https://ritarock.github.io/posts/2017-10-11t090000&#43;0900/</link>
+      <pubDate>Wed, 11 Oct 2017 09:00:00 +0900</pubDate>
+      
+      <guid>https://ritarock.github.io/posts/2017-10-11t090000&#43;0900/</guid>
+      <description>$ sudo apt-get update $ apt-get install -y software-properties-common $ sudo apt-get install apt-transport-https ca-certificates curl software-properties-common $ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - $ sudo apt-key fingerprint 0EBFCD88 $ sudo add-apt-repository &amp;quot;deb [arch=amd64] $ https://download.docker.com/linux/ubuntu \ $(lsb_release -cs) \ stable&amp;quot; $ sudo apt-get update $ sudo apt-get install docker-ce $ docker --version</description>
     </item>
     
   </channel>

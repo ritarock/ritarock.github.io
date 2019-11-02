@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html class="no-js" lang="ja-jp">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>docker-composeでrailsとmysqlを使う - GHOSTの囁き</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	
+	
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="https://ritarock.github.io/css/style.css">
+	
+	<link rel="shortcut icon" href="https://ritarock.github.io/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="https://ritarock.github.io/" title="GHOSTの囁き" rel="home">
+				<div class="logo__title">GHOSTの囁き</div>
+				<div class="logo__tagline">ritarock’s blog</div>
+			</a>
+		</div>
+		<div class="divider"></div>
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">docker-composeでrailsとmysqlを使う</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2019-08-29T09:00:00">August 29, 2019</time>
+</div>
+
+<div class="meta__item-categories meta__item">
+	<svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg>
+	<span class="meta__text"><a class="meta__link" href="https://ritarock.github.io/categories/docker" rel="category">docker</a>, <a class="meta__link" href="https://ritarock.github.io/categories/docker-compose" rel="category">docker-compose</a>, <a class="meta__link" href="https://ritarock.github.io/categories/ruby-on-rails" rel="category">ruby on rails</a>, <a class="meta__link" href="https://ritarock.github.io/categories/mysql" rel="category">mysql</a></span>
+</div>
+</div>
+		</header><div class="content post__content clearfix">
+			
+
+<h1 id="ディレクトリ構成">ディレクトリ構成</h1>
+
+<pre><code>./
+├── Dockerfile
+├── docker-compose.yml
+├── db_volume/
+├── mysql-confd/
+│   └── default_authentication.cnf
+└── src/
+    ├── Gemfile
+    └── Gemfile.lock
+</code></pre>
+
+<h1 id="ファイルの説明">ファイルの説明</h1>
+
+<h2 id="dockerfile">Dockerfile</h2>
+
+<p>railsのアプリ用のDockerfileを定義する<br />
+mysqlと連携するためにmysql-clientをインストールしている</p>
+
+<pre><code>FROM ruby:latest
+
+RUN apt-get update -qq &amp;&amp; \
+    apt-get install -y build-essential &amp;&amp; \
+    apt-get install -y libpq-dev &amp;&amp; \
+    apt-get install -y mysql-client &amp;&amp; \
+    apt-get install -y nodejs
+
+RUN mkdir /myapp
+ENV APP_ROOT /myapp
+WORKDIR $APP_ROOT
+ADD ./src/Gemfile $APP_ROOT/Gemfile
+ADD ./src/Gemfile.lock $APP_ROOT/Gemfile.lock
+
+RUN bundle install
+ADD ./src/ $APP_ROOT
+</code></pre>
+
+<h2 id="docker-compose">docker-compose</h2>
+
+<p>mysqlのバージョンが8以上だと認証でエラーになるので設定ファイルをにマウントする<br />
+<a href="https://qiita.com/yensaki/items/9e453b7320ca2d0461c7">参考</a><br />
+また<br />
+./db_volume:/var/lib/mysqlでDBを永続化している</p>
+
+<pre><code class="language-yaml">version: '3'
+services:
+  db:
+    image: mysql:latest
+    volumes:
+      - ./mysql-confd:/etc/mysql/conf.d
+      - ./db_volume:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: root
+    ports:
+      - &quot;3306:3306&quot;
+
+  web:
+    build: .
+    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    volumes:
+      - ./src:/myapp
+    ports:
+      - &quot;3000:3000&quot;
+    links:
+      - db
+</code></pre>
+
+<h2 id="default-authentication-cnf">default_authentication.cnf</h2>
+
+<p>認証用の設定ファイル</p>
+
+<pre><code class="language-default_authentication.cnf">[mysqld]
+default_authentication_plugin= mysql_native_password
+</code></pre>
+
+<h2 id="gemfile">Gemfile</h2>
+
+<pre><code class="language-Gemfile">source 'https://rubygems.org'
+gem 'rails', '5.1.6'
+</code></pre>
+
+<p>Gemfile.lockも作成しておく(中身は空)</p>
+
+<pre><code>$ touch ./src/Gemfile.lock
+</code></pre>
+
+<h1 id="プロジェクトの構築">プロジェクトの構築</h1>
+
+<pre><code>$ docker-compose run web rails new . --force --database=mysql --skip-bundle
+</code></pre>
+
+<p>&ndash;skip-bundleでgemのインストールを回避<br />
+実行後 ./src 配下に新しいアプリケーションが作成されている</p>
+
+<h1 id="データベースに接続">データベースに接続</h1>
+
+<p>./src/config/database.ymlを<br />
+password部分とhostをdocker-composeで定義した内容に変更</p>
+
+<pre><code class="language-yaml">default: &amp;default
+  adapter: mysql2
+  encoding: utf8
+  pool: &lt;%= ENV.fetch(&quot;RAILS_MAX_THREADS&quot;) { 5 } %&gt;
+  username: root
+  password: root
+  host: db
+</code></pre>
+
+<h1 id="dockerの起動">dockerの起動</h1>
+
+<p>ビルド</p>
+
+<pre><code>$ docker-compose build
+</code></pre>
+
+<p>起動</p>
+
+<pre><code>$ docker-compose up
+</code></pre>
+
+<h1 id="dbの作成">DBの作成</h1>
+
+<pre><code>$ docker-compose run web rails db:create
+</code></pre>
+
+<h1 id="確認">確認</h1>
+
+<p>ブラウザで<a href="localhost:3000">localhost:3000</a>にアクセス</p>
+
+<p>railsのコンテナにアクセスしてDBとの接続確認</p>
+
+<pre><code>$ docker exec -it コンテナID /bin/bash
+</code></pre>
+
+<p>接続したコンテナからDBに接続</p>
+
+<pre><code>$ rails dbconsole
+</code></pre>
+
+		</div>
+		<footer class="post__footer">
+			
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item"><a class="tags__link btn" href="https://ritarock.github.io/tags/docker/" rel="tag">docker</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="https://ritarock.github.io/tags/docker-compose/" rel="tag">docker-compose</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="https://ritarock.github.io/tags/ruby-on-rails/" rel="tag">ruby on rails</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="https://ritarock.github.io/tags/mysql/" rel="tag">mysql</a></li>
+	</ul>
+</div>
+		</footer>
+	</article>
+</main>
+
+
+
+
+			</div>
+			
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2019 GHOSTの囁き.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="https://ritarock.github.io/js/menu.js"></script>
+</body>
+</html>

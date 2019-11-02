@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html class="no-js" lang="ja-jp">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>vimをちゃんとやる(9) - GHOSTの囁き</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	
+	
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="https://ritarock.github.io/css/style.css">
+	
+	<link rel="shortcut icon" href="https://ritarock.github.io/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="https://ritarock.github.io/" title="GHOSTの囁き" rel="home">
+				<div class="logo__title">GHOSTの囁き</div>
+				<div class="logo__tagline">ritarock’s blog</div>
+			</a>
+		</div>
+		<div class="divider"></div>
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">vimをちゃんとやる(9)</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2018-10-28T09:00:00">October 28, 2018</time>
+</div>
+
+<div class="meta__item-categories meta__item">
+	<svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg>
+	<span class="meta__text"><a class="meta__link" href="https://ritarock.github.io/categories/vim" rel="category">vim</a></span>
+</div>
+</div>
+		</header><div class="content post__content clearfix">
+			
+
+<h1 id="sort">:sort</h1>
+
+<p>アルファベット順にソートできる</p>
+
+<h1 id="自動補完呼び出し方法一覧">自動補完呼び出し方法一覧</h1>
+
+<table>
+<thead>
+<tr>
+<th align="left">コマンド</th>
+<th align="left">種類</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">&lt;C-a&gt;</td>
+<td align="left">汎用キーワード</td>
+</tr>
+
+<tr>
+<td align="left">&lt;C-x&gt;<C-n></td>
+<td align="left">現在バッファのキーワード</td>
+</tr>
+
+<tr>
+<td align="left">&lt;C-x&gt;<C-i></td>
+<td align="left">インクルードされているファイルのキーワード</td>
+</tr>
+
+<tr>
+<td align="left">&lt;C-x&gt;<C-]></td>
+<td align="left">tagsファイルのキーワード</td>
+</tr>
+
+<tr>
+<td align="left">&lt;C-x&gt;<C-k></td>
+<td align="left">辞書のルックアップ</td>
+</tr>
+
+<tr>
+<td align="left">&lt;C-x&gt;<C-l></td>
+<td align="left">行全体の補完</td>
+</tr>
+
+<tr>
+<td align="left">&lt;C-x&gt;<C-f></td>
+<td align="left">ファイル名を補完</td>
+</tr>
+
+<tr>
+<td align="left">&lt;C-x&gt;<C-o></td>
+<td align="left">オムニ補完</td>
+</tr>
+</tbody>
+</table>
+
+<h1 id="ポップアップメニューの操作">ポップアップメニューの操作</h1>
+
+<table>
+<thead>
+<tr>
+<th align="left">キー</th>
+<th align="left">操作</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">&lt;C-n&gt;</td>
+<td align="left">次のマッチ</td>
+</tr>
+
+<tr>
+<td align="left">&lt;C-p&gt;</td>
+<td align="left">前のマッチ</td>
+</tr>
+
+<tr>
+<td align="left">&lt;C-y&gt;</td>
+<td align="left">選択されているマッチを入力</td>
+</tr>
+
+<tr>
+<td align="left">&lt;C-e&gt;</td>
+<td align="left">テキストに戻る</td>
+</tr>
+</tbody>
+</table>
+
+		</div>
+		<footer class="post__footer">
+			
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item"><a class="tags__link btn" href="https://ritarock.github.io/tags/vim/" rel="tag">vim</a></li>
+	</ul>
+</div>
+		</footer>
+	</article>
+</main>
+
+
+
+
+			</div>
+			
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2019 GHOSTの囁き.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="https://ritarock.github.io/js/menu.js"></script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ubuntu on GHOSTの囁き</title>
+    <link>https://ritarock.github.io/tags/ubuntu/</link>
+    <description>Recent content in ubuntu on GHOSTの囁き</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <lastBuildDate>Wed, 11 Oct 2017 09:00:00 +0900</lastBuildDate>
+    
+	<atom:link href="https://ritarock.github.io/tags/ubuntu/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Ubuntu 16.04 LTS にdockerをインストールする</title>
+      <link>https://ritarock.github.io/posts/2017-10-11t090000&#43;0900/</link>
+      <pubDate>Wed, 11 Oct 2017 09:00:00 +0900</pubDate>
+      
+      <guid>https://ritarock.github.io/posts/2017-10-11t090000&#43;0900/</guid>
+      <description>$ sudo apt-get update $ apt-get install -y software-properties-common $ sudo apt-get install apt-transport-https ca-certificates curl software-properties-common $ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - $ sudo apt-key fingerprint 0EBFCD88 $ sudo add-apt-repository &amp;quot;deb [arch=amd64] $ https://download.docker.com/linux/ubuntu \ $(lsb_release -cs) \ stable&amp;quot; $ sudo apt-get update $ sudo apt-get install docker-ce $ docker --version</description>
+    </item>
+    
+  </channel>
+</rss>

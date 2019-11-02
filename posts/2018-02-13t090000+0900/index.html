@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html class="no-js" lang="ja-jp">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Dockerのインストールからコンテナ作成まで - GHOSTの囁き</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	
+	
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="https://ritarock.github.io/css/style.css">
+	
+	<link rel="shortcut icon" href="https://ritarock.github.io/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="https://ritarock.github.io/" title="GHOSTの囁き" rel="home">
+				<div class="logo__title">GHOSTの囁き</div>
+				<div class="logo__tagline">ritarock’s blog</div>
+			</a>
+		</div>
+		<div class="divider"></div>
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Dockerのインストールからコンテナ作成まで</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2018-02-13T09:00:00">February 13, 2018</time>
+</div>
+
+<div class="meta__item-categories meta__item">
+	<svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg>
+	<span class="meta__text"><a class="meta__link" href="https://ritarock.github.io/categories/docker" rel="category">docker</a></span>
+</div>
+</div>
+		</header><div class="content post__content clearfix">
+			
+
+<h1 id="開発環境">開発環境</h1>
+
+<p>ubuntu/trusty64</p>
+
+<h1 id="dockerのインストール">Dockerのインストール</h1>
+
+<pre><code>$ sudo apt-get update
+$ sudo apt-get -y install \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    software-properties-common
+$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+$ sudo apt-key fingerprint 0EBFCD88
+$ sudo add-apt-repository -y  \
+   &quot;deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable&quot;
+$ sudo apt-get update
+$ sudo apt-get install -y docker-ce
+</code></pre>
+
+<h1 id="dockerコマンド">Dockerコマンド</h1>
+
+<h3 id="ローカルに保存されたdockerイメージの一覧を取得">ローカルに保存されたdockerイメージの一覧を取得</h3>
+
+<pre><code>$docker images
+</code></pre>
+
+<h3 id="docker-hubにあるイメージを検索">docker hubにあるイメージを検索</h3>
+
+<pre><code>$docker search &lt;イメージ&gt;
+</code></pre>
+
+<h3 id="docker-hubにあるイメージをローカルに取得する">docker hubにあるイメージをローカルに取得する</h3>
+
+<pre><code>$docker pull &lt;イメージ&gt;
+</code></pre>
+
+<h3 id="コンテナでプロセスを起動する">コンテナでプロセスを起動する</h3>
+
+<pre><code>$docker run -it &lt;イメージ&gt; /bin/bash
+</code></pre>
+
+<p>起動したコンテナはexitすれば自動的に終了</p>
+
+<h3 id="プロセスを確認する-停止されたものも含む">プロセスを確認する(停止されたものも含む)</h3>
+
+<pre><code>$ docker ps -a
+</code></pre>
+
+<h3 id="停止されたコンテナの削除">停止されたコンテナの削除</h3>
+
+<pre><code>$ docker rm &lt;コンテナid&gt;
+</code></pre>
+
+<p>idは一意なので頭の4桁程度入力すればOK</p>
+
+<p>何度もコンテナの起動と停止を行なっていると大量にプロセスが生まれるのでそれを避けたい</p>
+
+<h3 id="コンテナを全て削除">コンテナを全て削除</h3>
+
+<pre><code>$ docker rm $(docker ps -aq)
+</code></pre>
+
+<h3 id="exitと同時にコンテナの削除">exitと同時にコンテナの削除</h3>
+
+<pre><code>$docker run --rm -it &lt;イメージ&gt; /bin/bash
+</code></pre>
+
+<h3 id="ポートをホスト側に公開して起動">ポートをホスト側に公開して起動</h3>
+
+<pre><code>$ docker run -it -p 80:80 &lt;イメージ&gt; /bin/bash
+</code></pre>
+
+<h3 id="外部ファイルを取り込む">外部ファイルを取り込む</h3>
+
+<pre><code>$ docker run -it -v &lt;ホスト側のパス&gt;:&lt;コンテナ側のパス&gt; &lt;イメージ&gt; /bin/bash
+</code></pre>
+
+<h1 id="dockerfile作成してからの流れ">Dockerfile作成してからの流れ</h1>
+
+<h3 id="dockerfileからイメージを作成">Dockerfileからイメージを作成</h3>
+
+<pre><code>$ docker build -t &lt;作成するイメージ名&gt; .
+</code></pre>
+
+<h3 id="作成したイメージからコンテナを起動">作成したイメージからコンテナを起動</h3>
+
+<pre><code>$ docker run --name &lt;起動するコンテナ名&gt; -d -p &lt;イメージ名&gt;
+</code></pre>
+
+<h3 id="コンテナの停止">コンテナの停止</h3>
+
+<pre><code>$ docker stop &lt;コンテナ名&gt;
+</code></pre>
+
+		</div>
+		<footer class="post__footer">
+			
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item"><a class="tags__link btn" href="https://ritarock.github.io/tags/docker/" rel="tag">docker</a></li>
+	</ul>
+</div>
+		</footer>
+	</article>
+</main>
+
+
+
+
+			</div>
+			
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2019 GHOSTの囁き.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="https://ritarock.github.io/js/menu.js"></script>
+</body>
+</html>

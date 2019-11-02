@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>other on GHOSTの囁き</title>
+    <link>https://ritarock.github.io/tags/other/</link>
+    <description>Recent content in other on GHOSTの囁き</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <lastBuildDate>Sun, 03 Nov 2019 01:57:26 +0900</lastBuildDate>
+    
+	<atom:link href="https://ritarock.github.io/tags/other/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>はてなの記事移行しました</title>
+      <link>https://ritarock.github.io/posts/2019-11-03t015726&#43;090000/</link>
+      <pubDate>Sun, 03 Nov 2019 01:57:26 +0900</pubDate>
+      
+      <guid>https://ritarock.github.io/posts/2019-11-03t015726&#43;090000/</guid>
+      <description>今後はこちらで</description>
+    </item>
+    
+  </channel>
+</rss>

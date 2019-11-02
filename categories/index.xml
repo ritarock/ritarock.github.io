@@ -1,22 +1,175 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Categories on MY MEMORANDUM</title>
+    <title>Categories on GHOSTの囁き</title>
     <link>https://ritarock.github.io/categories/</link>
-    <description>Recent content in Categories on MY MEMORANDUM</description>
+    <description>Recent content in Categories on GHOSTの囁き</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
-    <lastBuildDate>Sat, 02 Nov 2019 15:18:57 +0900</lastBuildDate>
+    <lastBuildDate>Sun, 03 Nov 2019 01:57:26 +0900</lastBuildDate>
     
 	<atom:link href="https://ritarock.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>hugo</title>
-      <link>https://ritarock.github.io/categories/hugo/</link>
-      <pubDate>Sat, 02 Nov 2019 15:18:57 +0900</pubDate>
+      <title>other</title>
+      <link>https://ritarock.github.io/categories/other/</link>
+      <pubDate>Sun, 03 Nov 2019 01:57:26 +0900</pubDate>
       
-      <guid>https://ritarock.github.io/categories/hugo/</guid>
+      <guid>https://ritarock.github.io/categories/other/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>docker</title>
+      <link>https://ritarock.github.io/categories/docker/</link>
+      <pubDate>Thu, 29 Aug 2019 09:00:00 +0900</pubDate>
+      
+      <guid>https://ritarock.github.io/categories/docker/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>docker-compose</title>
+      <link>https://ritarock.github.io/categories/docker-compose/</link>
+      <pubDate>Thu, 29 Aug 2019 09:00:00 +0900</pubDate>
+      
+      <guid>https://ritarock.github.io/categories/docker-compose/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>mysql</title>
+      <link>https://ritarock.github.io/categories/mysql/</link>
+      <pubDate>Thu, 29 Aug 2019 09:00:00 +0900</pubDate>
+      
+      <guid>https://ritarock.github.io/categories/mysql/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ruby on rails</title>
+      <link>https://ritarock.github.io/categories/ruby-on-rails/</link>
+      <pubDate>Thu, 29 Aug 2019 09:00:00 +0900</pubDate>
+      
+      <guid>https://ritarock.github.io/categories/ruby-on-rails/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>python</title>
+      <link>https://ritarock.github.io/categories/python/</link>
+      <pubDate>Tue, 08 Jan 2019 09:00:00 +0900</pubDate>
+      
+      <guid>https://ritarock.github.io/categories/python/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>golang</title>
+      <link>https://ritarock.github.io/categories/golang/</link>
+      <pubDate>Mon, 12 Nov 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://ritarock.github.io/categories/golang/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>vim</title>
+      <link>https://ritarock.github.io/categories/vim/</link>
+      <pubDate>Sun, 28 Oct 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://ritarock.github.io/categories/vim/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ansible</title>
+      <link>https://ritarock.github.io/categories/ansible/</link>
+      <pubDate>Mon, 09 Apr 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://ritarock.github.io/categories/ansible/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>mac</title>
+      <link>https://ritarock.github.io/categories/mac/</link>
+      <pubDate>Mon, 09 Apr 2018 09:00:00 +0900</pubDate>
+      
+      <guid>https://ritarock.github.io/categories/mac/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>git</title>
+      <link>https://ritarock.github.io/categories/git/</link>
+      <pubDate>Tue, 19 Dec 2017 09:00:00 +0900</pubDate>
+      
+      <guid>https://ritarock.github.io/categories/git/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>github</title>
+      <link>https://ritarock.github.io/categories/github/</link>
+      <pubDate>Tue, 19 Dec 2017 09:00:00 +0900</pubDate>
+      
+      <guid>https://ritarock.github.io/categories/github/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>hexo</title>
+      <link>https://ritarock.github.io/categories/hexo/</link>
+      <pubDate>Tue, 19 Dec 2017 09:00:00 +0900</pubDate>
+      
+      <guid>https://ritarock.github.io/categories/hexo/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>node</title>
+      <link>https://ritarock.github.io/categories/node/</link>
+      <pubDate>Tue, 19 Dec 2017 09:00:00 +0900</pubDate>
+      
+      <guid>https://ritarock.github.io/categories/node/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>JavaScript</title>
+      <link>https://ritarock.github.io/categories/javascript/</link>
+      <pubDate>Tue, 07 Nov 2017 09:00:00 +0900</pubDate>
+      
+      <guid>https://ritarock.github.io/categories/javascript/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>vagrant</title>
+      <link>https://ritarock.github.io/categories/vagrant/</link>
+      <pubDate>Mon, 06 Nov 2017 09:00:00 +0900</pubDate>
+      
+      <guid>https://ritarock.github.io/categories/vagrant/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Django</title>
+      <link>https://ritarock.github.io/categories/django/</link>
+      <pubDate>Wed, 11 Oct 2017 09:00:04 +0900</pubDate>
+      
+      <guid>https://ritarock.github.io/categories/django/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ubuntu</title>
+      <link>https://ritarock.github.io/categories/ubuntu/</link>
+      <pubDate>Wed, 11 Oct 2017 09:00:00 +0900</pubDate>
+      
+      <guid>https://ritarock.github.io/categories/ubuntu/</guid>
       <description></description>
     </item>
     
