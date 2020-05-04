@@ -49,51 +49,32 @@
 </div>
 </div>
 		</header><div class="content post__content clearfix">
-			
-
-<h1 id="c-r-c-w">&lt;C-r&gt;<C-w></h1>
-
+			<h1 id="c-rc-w">&lt;C-r&gt;<!-- raw HTML omitted --></h1>
 <p>検索の自動補完</p>
-
-<h1 id="s-文字-gn">:%s/{文字}//gn</h1>
-
+<h1 id="s文字gn">:%s/{文字}//gn</h1>
 <p>文字数をカウント</p>
-
-<h1 id="s-対象文字-置換後の文字-g">:%s/{対象文字}/{置換後の文字}/g</h1>
-
-<p>ファイルの対象文字を置換する<br />
-:%s/{対象文字}/{置換後の文字} で初めの1文字<br />
+<h1 id="s対象文字置換後の文字g">:%s/{対象文字}/{置換後の文字}/g</h1>
+<p>ファイルの対象文字を置換する<br>
+:%s/{対象文字}/{置換後の文字} で初めの1文字<br>
 :%s/{対象文字}/{置換後の文字}/g で行のみ
 :%s/{対象文字}/{置換後の文字}/g でファイル全体</p>
-
-<h1 id="s-対象文字-置換後の文字-gc">:%s/{対象文字}/{置換後の文字}/gc</h1>
-
-<p>1文字1文字置換するかどうかを確認できる<br />
-q で終了<br />
+<h1 id="s対象文字置換後の文字gc">:%s/{対象文字}/{置換後の文字}/gc</h1>
+<p>1文字1文字置換するかどうかを確認できる<br>
+q で終了<br>
 a でカーソル以降全て置換</p>
-
-<h1 id="s-0-g">:%s\=@0/g</h1>
-
+<h1 id="s0g">:%s=@0/g</h1>
 <p>レジスタ0の中身を対象に置換する</p>
-
 <h1 id="g">g&amp;</h1>
-
 <p>直前の置換をファイル全体に適用する</p>
-
 <h1 id="gv">gv</h1>
-
 <p>直前の選択範囲を再度選択する</p>
-
 <h1 id="csvのフィールドを入れ替える">csvのフィールドを入れ替える</h1>
-
-<p>/\v[^,]*,([^,]),([^,])$<br />
-:%s//\3,\2,\1<br />
+<p>/\v[^,]*,([^,]),([^,])$<br>
+:%s//\3,\2,\1<br>
 列選択して、順序入れ替え</p>
-
 <h1 id="2つの単語を入れ替える">2つの単語を入れ替える</h1>
-
-<p>/\v(&lt;単語A&gt;|&lt;単語B&gt;)<br />
-:%s//\={&ldquo;単語A&rdquo;:&ldquo;単語B&rdquo;,&ldquo;単語B&rdquo;:&ldquo;単語A&rdquo;}[submatch(1)]/g</p>
+<p>/\v(&lt;単語A&gt;|&lt;単語B&gt;)<br>
+:%s//={&ldquo;単語A&rdquo;:&ldquo;単語B&rdquo;,&ldquo;単語B&rdquo;:&ldquo;単語A&rdquo;}[submatch(1)]/g</p>
 
 		</div>
 		<footer class="post__footer">
@@ -118,7 +99,7 @@ a でカーソル以降全て置換</p>
 	<div class="container footer__container flex">
 		
 		<div class="footer__copyright">
-			&copy; 2019 GHOSTの囁き.
+			&copy; 2020 GHOSTの囁き.
 			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
 		</div>
 	</div>

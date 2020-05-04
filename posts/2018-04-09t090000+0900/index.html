@@ -49,79 +49,63 @@
 </div>
 </div>
 		</header><div class="content post__content clearfix">
-			
-
-<h1 id="はじめに">はじめに</h1>
-
+			<h1 id="はじめに">はじめに</h1>
 <p>先日、macbookが起動しなくなり仕方なくクリーンインストールしたので、今後のことも考えてmacbookの環境を管理する</p>
-
 <h1 id="環境">環境</h1>
-
 <pre><code>brew と brew caskは導入済み
 $ brew install ansible
 上記、コマンドを実行済み
 $ ansible --version
 ansible 2.5.0
-</code></pre>
-
-<p>今回用意した2つのファイル</p>
-
+</code></pre><p>今回用意した2つのファイル</p>
 <p>hosts</p>
-
 <pre><code>localhost
-</code></pre>
+</code></pre><p>localhost.yml</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">---
+  - <span style="color:#66d9ef">hosts</span>: localhost
+    <span style="color:#66d9ef">connection</span>: local
+    <span style="color:#66d9ef">gather_facts</span>: no
+    <span style="color:#66d9ef">become</span>: no
 
-<p>localhost.yml</p>
+    <span style="color:#66d9ef">vars</span>:
+      <span style="color:#66d9ef">homebrew_packages</span>:
+        - <span style="color:#66d9ef">name</span>: python
+        - <span style="color:#66d9ef">name</span>: fish
+        - <span style="color:#66d9ef">name</span>: git
+        - <span style="color:#66d9ef">name</span>: node
+        - <span style="color:#66d9ef">name</span>: pyenv
+        - <span style="color:#66d9ef">name</span>: tree
+        - <span style="color:#66d9ef">name</span>: vim
 
-<pre><code class="language-yaml">---
-  - hosts: localhost
-    connection: local
-    gather_facts: no
-    become: no
+      <span style="color:#66d9ef">homebrew_cask_packages</span>:
+        - <span style="color:#66d9ef">name</span>: google-chrome
+        - <span style="color:#66d9ef">name</span>: google-drive
+        - <span style="color:#66d9ef">name</span>: virtualbox
+        - <span style="color:#66d9ef">name</span>: vagrant
+        - <span style="color:#66d9ef">name</span>: iTerm2
+        - <span style="color:#66d9ef">name</span>: atom
+        - <span style="color:#66d9ef">name</span>: docker
+        - <span style="color:#66d9ef">name</span>: evernote
+        - <span style="color:#66d9ef">name</span>: dropbox
+        - <span style="color:#66d9ef">name</span>: slack
 
-    vars:
-      homebrew_packages:
-        - name: python
-        - name: fish
-        - name: git
-        - name: node
-        - name: pyenv
-        - name: tree
-        - name: vim
+    <span style="color:#66d9ef">tasks</span>:
+        - <span style="color:#66d9ef">name</span>: update homebrew
+          <span style="color:#66d9ef">homebrew</span>: update_homebrew=yes
 
-      homebrew_cask_packages:
-        - name: google-chrome
-        - name: google-drive
-        - name: virtualbox
-        - name: vagrant
-        - name: iTerm2
-        - name: atom
-        - name: docker
-        - name: evernote
-        - name: dropbox
-        - name: slack
-
-    tasks:
-        - name: update homebrew
-          homebrew: update_homebrew=yes
-
-        # brew
-        - name: install homebrew_packages
-          homebrew:
+        <span style="color:#75715e"># brew</span>
+        - <span style="color:#66d9ef">name</span>: install homebrew_packages
+          <span style="color:#66d9ef">homebrew</span>:
             name={{ item.name }}
-          with_items: '{{ homebrew_packages }}'
+          <span style="color:#66d9ef">with_items</span>: <span style="color:#e6db74">&#39;{{ homebrew_packages }}&#39;</span>
 
-        # homebrew_cask
-        - name: install homebrew_cask_packages
-          homebrew_cask:
+        <span style="color:#75715e"># homebrew_cask</span>
+        - <span style="color:#66d9ef">name</span>: install homebrew_cask_packages
+          <span style="color:#66d9ef">homebrew_cask</span>:
             name={{ item.name }}
-          with_items: '{{ homebrew_cask_packages }}'
-</code></pre>
-
-<pre><code>$ ansible-playbook -i hosts localhostsyml
-</code></pre>
-
-<p><a href="https://github.com/ritarock/dotfiles/tree/master/.macbook-provisioning">ソース</a></p>
+          <span style="color:#66d9ef">with_items</span>: <span style="color:#e6db74">&#39;{{ homebrew_cask_packages }}&#39;</span>
+</code></pre></div><pre><code>$ ansible-playbook -i hosts localhostsyml
+</code></pre><p><a href="https://github.com/ritarock/dotfiles/tree/master/.macbook-provisioning">ソース</a></p>
 
 		</div>
 		<footer class="post__footer">
@@ -147,7 +131,7 @@ ansible 2.5.0
 	<div class="container footer__container flex">
 		
 		<div class="footer__copyright">
-			&copy; 2019 GHOSTの囁き.
+			&copy; 2020 GHOSTの囁き.
 			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
 		</div>
 	</div>

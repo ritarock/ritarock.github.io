@@ -49,23 +49,22 @@
 </div>
 </div>
 		</header><div class="content post__content clearfix">
-			<pre><code class="language-javascript">Promise.resolve().then(function() {
-    return new Promise(function(fulfilled, rejected) {
-        //処理1
-        fulfilled();
+			<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">Promise.<span style="color:#a6e22e">resolve</span>().<span style="color:#a6e22e">then</span>(<span style="color:#66d9ef">function</span>() {
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> Promise(<span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">fulfilled</span>, <span style="color:#a6e22e">rejected</span>) {
+        <span style="color:#75715e">//処理1
+</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">fulfilled</span>();
     });
-}).then(function() {
-    return new Promise(function(fulfilled, rejected) {
-        //処理2
-        fulfilled();
+}).<span style="color:#a6e22e">then</span>(<span style="color:#66d9ef">function</span>() {
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> Promise(<span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">fulfilled</span>, <span style="color:#a6e22e">rejected</span>) {
+        <span style="color:#75715e">//処理2
+</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">fulfilled</span>();
     });
-}).then(function() {
-    return new Promise(function(fulfilled, rejected) {
-        //処理3
-    });
+}).<span style="color:#a6e22e">then</span>(<span style="color:#66d9ef">function</span>() {
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> Promise(<span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">fulfilled</span>, <span style="color:#a6e22e">rejected</span>) {
+        <span style="color:#75715e">//処理3
+</span><span style="color:#75715e"></span>    });
 })
-</code></pre>
-
+</code></pre></div>
 		</div>
 		<footer class="post__footer">
 			
@@ -90,7 +89,7 @@
 	<div class="container footer__container flex">
 		
 		<div class="footer__copyright">
-			&copy; 2019 GHOSTの囁き.
+			&copy; 2020 GHOSTの囁き.
 			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
 		</div>
 	</div>

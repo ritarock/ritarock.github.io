@@ -49,14 +49,9 @@
 </div>
 </div>
 		</header><div class="content post__content clearfix">
-			
-
-<h1 id="開発環境">開発環境</h1>
-
+			<h1 id="開発環境">開発環境</h1>
 <p>ubuntu/trusty64</p>
-
 <h1 id="dockerのインストール">Dockerのインストール</h1>
-
 <pre><code>$ sudo apt-get update
 $ sudo apt-get -y install \
     apt-transport-https \
@@ -71,83 +66,38 @@ $ sudo add-apt-repository -y  \
    stable&quot;
 $ sudo apt-get update
 $ sudo apt-get install -y docker-ce
-</code></pre>
-
-<h1 id="dockerコマンド">Dockerコマンド</h1>
-
+</code></pre><h1 id="dockerコマンド">Dockerコマンド</h1>
 <h3 id="ローカルに保存されたdockerイメージの一覧を取得">ローカルに保存されたdockerイメージの一覧を取得</h3>
-
 <pre><code>$docker images
-</code></pre>
-
-<h3 id="docker-hubにあるイメージを検索">docker hubにあるイメージを検索</h3>
-
+</code></pre><h3 id="docker-hubにあるイメージを検索">docker hubにあるイメージを検索</h3>
 <pre><code>$docker search &lt;イメージ&gt;
-</code></pre>
-
-<h3 id="docker-hubにあるイメージをローカルに取得する">docker hubにあるイメージをローカルに取得する</h3>
-
+</code></pre><h3 id="docker-hubにあるイメージをローカルに取得する">docker hubにあるイメージをローカルに取得する</h3>
 <pre><code>$docker pull &lt;イメージ&gt;
-</code></pre>
-
-<h3 id="コンテナでプロセスを起動する">コンテナでプロセスを起動する</h3>
-
+</code></pre><h3 id="コンテナでプロセスを起動する">コンテナでプロセスを起動する</h3>
 <pre><code>$docker run -it &lt;イメージ&gt; /bin/bash
-</code></pre>
-
-<p>起動したコンテナはexitすれば自動的に終了</p>
-
-<h3 id="プロセスを確認する-停止されたものも含む">プロセスを確認する(停止されたものも含む)</h3>
-
+</code></pre><p>起動したコンテナはexitすれば自動的に終了</p>
+<h3 id="プロセスを確認する停止されたものも含む">プロセスを確認する(停止されたものも含む)</h3>
 <pre><code>$ docker ps -a
-</code></pre>
-
-<h3 id="停止されたコンテナの削除">停止されたコンテナの削除</h3>
-
+</code></pre><h3 id="停止されたコンテナの削除">停止されたコンテナの削除</h3>
 <pre><code>$ docker rm &lt;コンテナid&gt;
-</code></pre>
-
-<p>idは一意なので頭の4桁程度入力すればOK</p>
-
+</code></pre><p>idは一意なので頭の4桁程度入力すればOK</p>
 <p>何度もコンテナの起動と停止を行なっていると大量にプロセスが生まれるのでそれを避けたい</p>
-
 <h3 id="コンテナを全て削除">コンテナを全て削除</h3>
-
 <pre><code>$ docker rm $(docker ps -aq)
-</code></pre>
-
-<h3 id="exitと同時にコンテナの削除">exitと同時にコンテナの削除</h3>
-
+</code></pre><h3 id="exitと同時にコンテナの削除">exitと同時にコンテナの削除</h3>
 <pre><code>$docker run --rm -it &lt;イメージ&gt; /bin/bash
-</code></pre>
-
-<h3 id="ポートをホスト側に公開して起動">ポートをホスト側に公開して起動</h3>
-
+</code></pre><h3 id="ポートをホスト側に公開して起動">ポートをホスト側に公開して起動</h3>
 <pre><code>$ docker run -it -p 80:80 &lt;イメージ&gt; /bin/bash
-</code></pre>
-
-<h3 id="外部ファイルを取り込む">外部ファイルを取り込む</h3>
-
+</code></pre><h3 id="外部ファイルを取り込む">外部ファイルを取り込む</h3>
 <pre><code>$ docker run -it -v &lt;ホスト側のパス&gt;:&lt;コンテナ側のパス&gt; &lt;イメージ&gt; /bin/bash
-</code></pre>
-
-<h1 id="dockerfile作成してからの流れ">Dockerfile作成してからの流れ</h1>
-
+</code></pre><h1 id="dockerfile作成してからの流れ">Dockerfile作成してからの流れ</h1>
 <h3 id="dockerfileからイメージを作成">Dockerfileからイメージを作成</h3>
-
 <pre><code>$ docker build -t &lt;作成するイメージ名&gt; .
-</code></pre>
-
-<h3 id="作成したイメージからコンテナを起動">作成したイメージからコンテナを起動</h3>
-
+</code></pre><h3 id="作成したイメージからコンテナを起動">作成したイメージからコンテナを起動</h3>
 <pre><code>$ docker run --name &lt;起動するコンテナ名&gt; -d -p &lt;イメージ名&gt;
-</code></pre>
-
-<h3 id="コンテナの停止">コンテナの停止</h3>
-
+</code></pre><h3 id="コンテナの停止">コンテナの停止</h3>
 <pre><code>$ docker stop &lt;コンテナ名&gt;
 </code></pre>
-
 		</div>
 		<footer class="post__footer">
 			
@@ -171,7 +121,7 @@ $ sudo apt-get install -y docker-ce
 	<div class="container footer__container flex">
 		
 		<div class="footer__copyright">
-			&copy; 2019 GHOSTの囁き.
+			&copy; 2020 GHOSTの囁き.
 			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
 		</div>
 	</div>

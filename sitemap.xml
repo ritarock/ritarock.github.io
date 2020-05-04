@@ -4,17 +4,37 @@
   
   <url>
     <loc>https://ritarock.github.io/categories/</loc>
-    <lastmod>2019-11-03T01:57:26+09:00</lastmod>
+    <lastmod>2020-05-04T14:53:06+09:00</lastmod>
   </url>
   
   <url>
     <loc>https://ritarock.github.io/</loc>
-    <lastmod>2019-11-03T01:57:26+09:00</lastmod>
+    <lastmod>2020-05-04T14:53:06+09:00</lastmod>
   </url>
   
   <url>
-    <loc>https://ritarock.github.io/categories/other/</loc>
-    <lastmod>2019-11-03T01:57:26+09:00</lastmod>
+    <loc>https://ritarock.github.io/tags/golang/</loc>
+    <lastmod>2020-05-04T14:53:06+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ritarock.github.io/categories/golang/</loc>
+    <lastmod>2020-05-04T14:53:06+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ritarock.github.io/posts/2020-05-04t145305&#43;090000/</loc>
+    <lastmod>2020-05-04T14:53:06+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ritarock.github.io/posts/</loc>
+    <lastmod>2020-05-04T14:53:06+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ritarock.github.io/tags/</loc>
+    <lastmod>2020-05-04T14:53:06+09:00</lastmod>
   </url>
   
   <url>
@@ -23,12 +43,7 @@
   </url>
   
   <url>
-    <loc>https://ritarock.github.io/posts/</loc>
-    <lastmod>2019-11-03T01:57:26+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://ritarock.github.io/tags/</loc>
+    <loc>https://ritarock.github.io/categories/other/</loc>
     <lastmod>2019-11-03T01:57:26+09:00</lastmod>
   </url>
   
@@ -48,12 +63,12 @@
   </url>
   
   <url>
-    <loc>https://ritarock.github.io/categories/docker-compose/</loc>
+    <loc>https://ritarock.github.io/tags/docker-compose/</loc>
     <lastmod>2019-08-29T09:00:00+09:00</lastmod>
   </url>
   
   <url>
-    <loc>https://ritarock.github.io/tags/docker-compose/</loc>
+    <loc>https://ritarock.github.io/categories/docker-compose/</loc>
     <lastmod>2019-08-29T09:00:00+09:00</lastmod>
   </url>
   
@@ -95,16 +110,6 @@
   <url>
     <loc>https://ritarock.github.io/posts/2019-01-08t090000&#43;0900/</loc>
     <lastmod>2019-01-08T09:00:00+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://ritarock.github.io/categories/golang/</loc>
-    <lastmod>2018-11-12T09:00:00+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://ritarock.github.io/tags/golang/</loc>
-    <lastmod>2018-11-12T09:00:00+09:00</lastmod>
   </url>
   
   <url>
@@ -168,12 +173,12 @@
   </url>
   
   <url>
-    <loc>https://ritarock.github.io/categories/ansible/</loc>
+    <loc>https://ritarock.github.io/tags/ansible/</loc>
     <lastmod>2018-04-09T09:00:00+09:00</lastmod>
   </url>
   
   <url>
-    <loc>https://ritarock.github.io/tags/ansible/</loc>
+    <loc>https://ritarock.github.io/categories/ansible/</loc>
     <lastmod>2018-04-09T09:00:00+09:00</lastmod>
   </url>
   
@@ -183,12 +188,12 @@
   </url>
   
   <url>
-    <loc>https://ritarock.github.io/categories/mac/</loc>
+    <loc>https://ritarock.github.io/tags/mac/</loc>
     <lastmod>2018-04-09T09:00:00+09:00</lastmod>
   </url>
   
   <url>
-    <loc>https://ritarock.github.io/tags/mac/</loc>
+    <loc>https://ritarock.github.io/categories/mac/</loc>
     <lastmod>2018-04-09T09:00:00+09:00</lastmod>
   </url>
   
@@ -208,12 +213,12 @@
   </url>
   
   <url>
-    <loc>https://ritarock.github.io/categories/github/</loc>
+    <loc>https://ritarock.github.io/tags/github/</loc>
     <lastmod>2017-12-19T09:00:00+09:00</lastmod>
   </url>
   
   <url>
-    <loc>https://ritarock.github.io/tags/github/</loc>
+    <loc>https://ritarock.github.io/categories/github/</loc>
     <lastmod>2017-12-19T09:00:00+09:00</lastmod>
   </url>
   
@@ -233,12 +238,12 @@
   </url>
   
   <url>
-    <loc>https://ritarock.github.io/categories/node/</loc>
+    <loc>https://ritarock.github.io/tags/node/</loc>
     <lastmod>2017-12-19T09:00:00+09:00</lastmod>
   </url>
   
   <url>
-    <loc>https://ritarock.github.io/tags/node/</loc>
+    <loc>https://ritarock.github.io/categories/node/</loc>
     <lastmod>2017-12-19T09:00:00+09:00</lastmod>
   </url>
   
@@ -258,12 +263,12 @@
   </url>
   
   <url>
-    <loc>https://ritarock.github.io/categories/vagrant/</loc>
+    <loc>https://ritarock.github.io/tags/vagrant/</loc>
     <lastmod>2017-11-06T09:00:00+09:00</lastmod>
   </url>
   
   <url>
-    <loc>https://ritarock.github.io/tags/vagrant/</loc>
+    <loc>https://ritarock.github.io/categories/vagrant/</loc>
     <lastmod>2017-11-06T09:00:00+09:00</lastmod>
   </url>
   
@@ -273,12 +278,12 @@
   </url>
   
   <url>
-    <loc>https://ritarock.github.io/categories/django/</loc>
+    <loc>https://ritarock.github.io/tags/django/</loc>
     <lastmod>2017-10-11T09:00:04+09:00</lastmod>
   </url>
   
   <url>
-    <loc>https://ritarock.github.io/tags/django/</loc>
+    <loc>https://ritarock.github.io/categories/django/</loc>
     <lastmod>2017-10-11T09:00:04+09:00</lastmod>
   </url>
   

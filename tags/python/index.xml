@@ -17,7 +17,7 @@
       <pubDate>Tue, 08 Jan 2019 09:00:00 +0900</pubDate>
       
       <guid>https://ritarock.github.io/posts/2019-01-08t090000&#43;0900/</guid>
-      <description>listから辞書を作る list_col = [&#39;col1&#39;, &#39;col2&#39;, &#39;col3&#39;, &#39;col4&#39;, &#39;col5&#39;] list_data = [1, 2, 3, 4, 5] dict_data = dict(zip(list_col, list_data)) print(dict_data) # {&#39;col1&#39;: 1, &#39;col2&#39;: 2, &#39;col3&#39;: 3, &#39;col4&#39;: 4, &#39;col5&#39;: 5} 辞書からjsonを作る import json json_data = json.dumps(dict_data) print(json_data) # {&amp;quot;col1&amp;quot;: 1, &amp;quot;col2&amp;quot;: 2, &amp;quot;col3&amp;quot;: 3, &amp;quot;col4&amp;quot;: 4, &amp;quot;col5&amp;quot;: 5}</description>
+      <description>listから辞書を作る list_col = [&amp;#39;col1&amp;#39;, &amp;#39;col2&amp;#39;, &amp;#39;col3&amp;#39;, &amp;#39;col4&amp;#39;, &amp;#39;col5&amp;#39;] list_data = [1, 2, 3, 4, 5] dict_data = dict(zip(list_col, list_data)) print(dict_data) # {&amp;#39;col1&amp;#39;: 1, &amp;#39;col2&amp;#39;: 2, &amp;#39;col3&amp;#39;: 3, &amp;#39;col4&amp;#39;: 4, &amp;#39;col5&amp;#39;: 5} 辞書からjsonを作る import json json_data = json.dumps(dict_data) print(json_data) # {&amp;#34;col1&amp;#34;: 1, &amp;#34;col2&amp;#34;: 2, &amp;#34;col3&amp;#34;: 3, &amp;#34;col4&amp;#34;: 4, &amp;#34;col5&amp;#34;: 5}</description>
     </item>
     
     <item>

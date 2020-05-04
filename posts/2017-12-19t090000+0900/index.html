@@ -49,117 +49,64 @@
 </div>
 </div>
 		</header><div class="content post__content clearfix">
-			
-
-<h1 id="hexo">hexo</h1>
-
+			<h1 id="hexo">hexo</h1>
 <p><a href="https://hexo.io/">https://hexo.io/</a></p>
-
 <p>githubのアカウントあれば誰でもブログを公開できる</p>
-
 <h2 id="まずはリポジトリ作成">まずはリポジトリ作成</h2>
-
 <p>[username].github.io
 というリポジトリを作成</p>
-
 <h2 id="hexoの準備">hexoの準備</h2>
-
 <p>公式通りに
 hexoをグローバルにインストール</p>
-
 <pre><code>$ npm install hexo-cli -g
-</code></pre>
-
-<p>以下のコマンドでディレクトリを作成</p>
-
+</code></pre><p>以下のコマンドでディレクトリを作成</p>
 <pre><code>$ hexo init blog
-</code></pre>
-
-<p>作成されたディレクトリに移動して、モジュールをインストール</p>
-
+</code></pre><p>作成されたディレクトリに移動して、モジュールをインストール</p>
 <pre><code>$ cd blog
 $ npm install
-</code></pre>
-
-<p>インストールできたら、以下のコマンドで起動</p>
-
+</code></pre><p>インストールできたら、以下のコマンドで起動</p>
 <pre><code>$ hexo server
-</code></pre>
-
-<p><a href="http://localhost:4000/">http://localhost:4000/</a> にアクセスすると雛形ができている</p>
-
+</code></pre><p>http://localhost:4000/ にアクセスすると雛形ができている</p>
 <h2 id="githubで公開">githubで公開</h2>
-
-<p>作成されたディレクトリ配下にある<font color="DeepPink">_config.yml</font>を弄る
-<font color="DeepPink">_config.yml</font>ではサイトのタイトル等を変更可能</p>
-
-<pre><code class="language-_config.yml">deploy:
-  type: git
-  repo: https://github.com/[username]/[username].github.io.git
-  branch: master
-</code></pre>
-
-<p>編集したら、以下のコマンドでデプロイ</p>
-
+<p>作成されたディレクトリ配下にある<!-- raw HTML omitted -->_config.yml<!-- raw HTML omitted -->を弄る
+<!-- raw HTML omitted -->_config.yml<!-- raw HTML omitted -->ではサイトのタイトル等を変更可能</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-_config.yml" data-lang="_config.yml"><span style="color:#66d9ef">deploy</span>:
+  <span style="color:#66d9ef">type</span>: git
+  <span style="color:#66d9ef">repo</span>: https://github.com/[username]/[username].github.io.git
+  <span style="color:#66d9ef">branch</span>: master
+</code></pre></div><p>編集したら、以下のコマンドでデプロイ</p>
 <pre><code>hexo deploy -g
-</code></pre>
-
-<p>エラーがでた<br />
-どうやら、<font color="DeepPink">hexo-deployer-git</font>というモジュールをインストールしないといけないよう<br />
+</code></pre><p>エラーがでた<br>
+どうやら、<!-- raw HTML omitted -->hexo-deployer-git<!-- raw HTML omitted -->というモジュールをインストールしないといけないよう<br>
 ってことでインストール</p>
-
 <pre><code>$ npm install hexo-deployer-git --save
-</code></pre>
-
-<p>改めてデプロイ</p>
-
+</code></pre><p>改めてデプロイ</p>
 <pre><code>$ hexo deploy -g
-</code></pre>
-
-<p><a href="https://username.github.io/">https://username.github.io/</a> にアクセスすると先程 <a href="http://localhost:4000/">http://localhost:4000/</a> でみたページにアクセス可能</p>
-
+</code></pre><p><a href="https://username.github.io/">https://username.github.io/</a> にアクセスすると先程 http://localhost:4000/ でみたページにアクセス可能</p>
 <p><strong>※反映にそれなりに時間が掛かる</strong></p>
-
 <h2 id="テーマの導入">テーマの導入</h2>
-
 <p><a href="https://hexo.io/themes/index.html">https://hexo.io/themes/index.html</a></p>
-
 <p>こちらのサイトから気に入ったプラグインclone</p>
-
 <p>例えば、これなら
 <a href="https://github.com/mkkhedawat/clexy">https://github.com/mkkhedawat/clexy</a>
 <strong>README</strong>にあるようにコマンドを実行</p>
-
 <pre><code>$ git clone https://github.com/mkkhedawat/clexy themes/clexy
 $ git clone https://github.com/mkkhedawat/clexy themes/clexy
 $ yarn remove hexo-renderer-ejs
 $ yarn add hexo-renderer-jade
 $ yarn add hexo-prism-plugin
-</code></pre>
-
-<p><font color="DeepPink">_config.yml</font>を編集</p>
-
-<pre><code class="language-_config.yml">prism_plugin:
-  mode: 'preprocess'    # realtime/preprocess
-  theme: 'default'
-  line_number: false    # default false
-theme: clexy
-</code></pre>
-
-<p>デプロイ</p>
-
+</code></pre><p><!-- raw HTML omitted -->_config.yml<!-- raw HTML omitted -->を編集</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-_config.yml" data-lang="_config.yml"><span style="color:#66d9ef">prism_plugin</span>:
+  <span style="color:#66d9ef">mode</span>: <span style="color:#e6db74">&#39;preprocess&#39;</span>    <span style="color:#75715e"># realtime/preprocess</span>
+  <span style="color:#66d9ef">theme</span>: <span style="color:#e6db74">&#39;default&#39;</span>
+  <span style="color:#66d9ef">line_number</span>: <span style="color:#66d9ef">false</span>    <span style="color:#75715e"># default false</span>
+<span style="color:#66d9ef">theme</span>: clexy
+</code></pre></div><p>デプロイ</p>
 <pre><code>$ hexo deploy -g
-</code></pre>
-
-<h2 id="記事の投稿">記事の投稿</h2>
-
+</code></pre><h2 id="記事の投稿">記事の投稿</h2>
 <p>以下のコマンドを実行</p>
-
 <pre><code>$ hexo new post 新規ページ
-</code></pre>
-
-<p><font color="DeepPink">source/post/新規ページ.md</font>が作成されているので弄ってpushすれば記事が投稿できる</p>
-
+</code></pre><p><!-- raw HTML omitted -->source/post/新規ページ.md<!-- raw HTML omitted -->が作成されているので弄ってpushすれば記事が投稿できる</p>
 <p>ところで、hexoってなんて読むんだろう・・・？</p>
 
 		</div>
@@ -188,7 +135,7 @@ theme: clexy
 	<div class="container footer__container flex">
 		
 		<div class="footer__copyright">
-			&copy; 2019 GHOSTの囁き.
+			&copy; 2020 GHOSTの囁き.
 			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
 		</div>
 	</div>

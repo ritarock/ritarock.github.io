@@ -49,25 +49,18 @@
 </div>
 </div>
 		</header><div class="content post__content clearfix">
-			
+			<h1 id="listから辞書を作る">listから辞書を作る</h1>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">list_col <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;col1&#39;</span>, <span style="color:#e6db74">&#39;col2&#39;</span>, <span style="color:#e6db74">&#39;col3&#39;</span>, <span style="color:#e6db74">&#39;col4&#39;</span>, <span style="color:#e6db74">&#39;col5&#39;</span>]
+list_data <span style="color:#f92672">=</span> [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>]
 
-<h1 id="listから辞書を作る">listから辞書を作る</h1>
+dict_data <span style="color:#f92672">=</span> dict(zip(list_col, list_data))
+<span style="color:#66d9ef">print</span>(dict_data) <span style="color:#75715e"># {&#39;col1&#39;: 1, &#39;col2&#39;: 2, &#39;col3&#39;: 3, &#39;col4&#39;: 4, &#39;col5&#39;: 5}</span>
+</code></pre></div><h1 id="辞書からjsonを作る">辞書からjsonを作る</h1>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> json
 
-<pre><code class="language-python">list_col = ['col1', 'col2', 'col3', 'col4', 'col5']
-list_data = [1, 2, 3, 4, 5]
-
-dict_data = dict(zip(list_col, list_data))
-print(dict_data) # {'col1': 1, 'col2': 2, 'col3': 3, 'col4': 4, 'col5': 5}
-</code></pre>
-
-<h1 id="辞書からjsonを作る">辞書からjsonを作る</h1>
-
-<pre><code class="language-python">import json
-
-json_data = json.dumps(dict_data)
-print(json_data) # {&quot;col1&quot;: 1, &quot;col2&quot;: 2, &quot;col3&quot;: 3, &quot;col4&quot;: 4, &quot;col5&quot;: 5}
-</code></pre>
-
+json_data <span style="color:#f92672">=</span> json<span style="color:#f92672">.</span>dumps(dict_data)
+<span style="color:#66d9ef">print</span>(json_data) <span style="color:#75715e"># {&#34;col1&#34;: 1, &#34;col2&#34;: 2, &#34;col3&#34;: 3, &#34;col4&#34;: 4, &#34;col5&#34;: 5}</span>
+</code></pre></div>
 		</div>
 		<footer class="post__footer">
 			
@@ -91,7 +84,7 @@ print(json_data) # {&quot;col1&quot;: 1, &quot;col2&quot;: 2, &quot;col3&quot;: 
 	<div class="container footer__container flex">
 		
 		<div class="footer__copyright">
-			&copy; 2019 GHOSTの囁き.
+			&copy; 2020 GHOSTの囁き.
 			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
 		</div>
 	</div>

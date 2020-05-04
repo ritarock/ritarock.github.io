@@ -6,10 +6,19 @@
     <description>Recent content in Posts on GHOSTの囁き</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
-    <lastBuildDate>Sun, 03 Nov 2019 01:57:26 +0900</lastBuildDate>
+    <lastBuildDate>Mon, 04 May 2020 14:53:06 +0900</lastBuildDate>
     
 	<atom:link href="https://ritarock.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>golangでatcorderの入出力</title>
+      <link>https://ritarock.github.io/posts/2020-05-04t145305&#43;090000/</link>
+      <pubDate>Mon, 04 May 2020 14:53:06 +0900</pubDate>
+      
+      <guid>https://ritarock.github.io/posts/2020-05-04t145305&#43;090000/</guid>
+      <description>入力 単一数値、文字 var N int fmt.Scan(&amp;amp;N) var s string fmt.Scan(&amp;amp;s) 文字列、数列群をスライスで返す func scanStrings(len int) []string { var str string for i := 0; i &amp;lt; len; i++ { fmt.Scanf(&amp;#34;%s&amp;#34;, &amp;amp;str) strings = append(strings, str) } return strings } func scanNums(len int) []int { var num int for i :=</description>
+    </item>
     
     <item>
       <title>はてなの記事移行しました</title>
@@ -35,7 +44,7 @@
       <pubDate>Tue, 08 Jan 2019 09:00:00 +0900</pubDate>
       
       <guid>https://ritarock.github.io/posts/2019-01-08t090000&#43;0900/</guid>
-      <description>listから辞書を作る list_col = [&#39;col1&#39;, &#39;col2&#39;, &#39;col3&#39;, &#39;col4&#39;, &#39;col5&#39;] list_data = [1, 2, 3, 4, 5] dict_data = dict(zip(list_col, list_data)) print(dict_data) # {&#39;col1&#39;: 1, &#39;col2&#39;: 2, &#39;col3&#39;: 3, &#39;col4&#39;: 4, &#39;col5&#39;: 5} 辞書からjsonを作る import json json_data = json.dumps(dict_data) print(json_data) # {&amp;quot;col1&amp;quot;: 1, &amp;quot;col2&amp;quot;: 2, &amp;quot;col3&amp;quot;: 3, &amp;quot;col4&amp;quot;: 4, &amp;quot;col5&amp;quot;: 5}</description>
+      <description>listから辞書を作る list_col = [&amp;#39;col1&amp;#39;, &amp;#39;col2&amp;#39;, &amp;#39;col3&amp;#39;, &amp;#39;col4&amp;#39;, &amp;#39;col5&amp;#39;] list_data = [1, 2, 3, 4, 5] dict_data = dict(zip(list_col, list_data)) print(dict_data) # {&amp;#39;col1&amp;#39;: 1, &amp;#39;col2&amp;#39;: 2, &amp;#39;col3&amp;#39;: 3, &amp;#39;col4&amp;#39;: 4, &amp;#39;col5&amp;#39;: 5} 辞書からjsonを作る import json json_data = json.dumps(dict_data) print(json_data) # {&amp;#34;col1&amp;#34;: 1, &amp;#34;col2&amp;#34;: 2, &amp;#34;col3&amp;#34;: 3, &amp;#34;col4&amp;#34;: 4, &amp;#34;col5&amp;#34;: 5}</description>
     </item>
     
     <item>
@@ -89,7 +98,7 @@
       <pubDate>Sat, 20 Oct 2018 09:00:00 +0900</pubDate>
       
       <guid>https://ritarock.github.io/posts/2018-10-20t090000&#43;0900/</guid>
-      <description>&amp;rdquo;{rejister} &amp;ldquo;ayiw でレジスタa に単語をヤンク &amp;ldquo;ap でレジスタa の単語をプット 0p ヤンクレジスタは次のヤンクまで内容が溜まる :reg レジスタの中身を見る &amp;ldquo;_ ブラックホール</description>
+      <description>&amp;ldquo;{rejister} &amp;ldquo;ayiw でレジスタa に単語をヤンク &amp;ldquo;ap でレジスタa の単語をプット 0p ヤンクレジスタは次のヤンクまで内容が溜まる :reg レジスタの中身を見る &amp;ldquo;_ ブラックホール</description>
     </item>
     
     <item>
@@ -116,7 +125,7 @@
       <pubDate>Tue, 16 Oct 2018 09:00:00 +0900</pubDate>
       
       <guid>https://ritarock.github.io/posts/2018-10-16t090000&#43;0900/</guid>
-      <description>:tabedit {filename} {filename} のタブを作る :tabc[lose] アクティブなタブを閉じる @: 直前のコマンドライン入力を繰り返す タブの移動 覚えかたは「 &amp;ldquo;g&amp;rdquo;oto &amp;ldquo;t&amp;rdquo;ab 」 {N}gt gt gT 以下の通り {N}番目のタブ</description>
+      <description>:tabedit {filename} {filename} のタブを作る :tabc[lose] アクティブなタブを閉じる @: 直前のコマンドライン入力を繰り返す タブの移動 覚えかたは「 &amp;ldquo;g&amp;quot;oto &amp;ldquo;t&amp;quot;ab 」 {N}gt gt gT 以下の通り {N}番目のタブ</description>
     </item>
     
     <item>

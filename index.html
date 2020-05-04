@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="no-js" lang="ja-jp">
 <head>
-	<meta name="generator" content="Hugo 0.59.0" />
+	<meta name="generator" content="Hugo 0.68.3" />
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -37,6 +37,28 @@
 			
 <main class="main list" role="main">
 	<article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="https://ritarock.github.io/posts/2020-05-04t145305&#43;090000/" rel="bookmark">
+			golangでatcorderの入出力
+			</a>
+		</h3>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2020-05-04T14:53:06">May 04, 2020</time>
+</div>
+
+<div class="meta__item-categories meta__item">
+	<svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg>
+	<span class="meta__text"><a class="meta__link" href="https://ritarock.github.io/categories/golang" rel="category">golang</a></span>
+</div>
+</div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		入力 単一数値、文字 var N int fmt.Scan(&amp;N) var s string fmt.Scan(&amp;s) 文字列、数列群をスライスで返す func scanStrings(len int) []string { var str string for i := 0; i &lt; len; i++ { fmt.Scanf(&#34;%s&#34;, &amp;str) strings = append(strings, str) } return strings } func scanNums(len int) []int { var num int for i :=
+	</div>
+</article><article class="list__item post">
 	<header class="list__header">
 		<h3 class="list__title post__title ">
 			<a href="https://ritarock.github.io/posts/2019-11-03t015726&#43;090000/" rel="bookmark">
@@ -100,7 +122,7 @@
 </div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
-		listから辞書を作る list_col = ['col1', 'col2', 'col3', 'col4', 'col5'] list_data = [1, 2, 3, 4, 5] dict_data = dict(zip(list_col, list_data)) print(dict_data) # {'col1': 1, 'col2': 2, 'col3': 3, 'col4': 4, 'col5': 5} 辞書からjsonを作る import json json_data = json.dumps(dict_data) print(json_data) # {&quot;col1&quot;: 1, &quot;col2&quot;: 2, &quot;col3&quot;: 3, &quot;col4&quot;: 4, &quot;col5&quot;: 5}
+		listから辞書を作る list_col = [&#39;col1&#39;, &#39;col2&#39;, &#39;col3&#39;, &#39;col4&#39;, &#39;col5&#39;] list_data = [1, 2, 3, 4, 5] dict_data = dict(zip(list_col, list_data)) print(dict_data) # {&#39;col1&#39;: 1, &#39;col2&#39;: 2, &#39;col3&#39;: 3, &#39;col4&#39;: 4, &#39;col5&#39;: 5} 辞書からjsonを作る import json json_data = json.dumps(dict_data) print(json_data) # {&#34;col1&#34;: 1, &#34;col2&#34;: 2, &#34;col3&#34;: 3, &#34;col4&#34;: 4, &#34;col5&#34;: 5}
 	</div>
 </article><article class="list__item post">
 	<header class="list__header">
@@ -232,29 +254,7 @@
 </div>
 	</header>
 	<div class="content list__excerpt post__content clearfix">
-		&rdquo;{rejister} &ldquo;ayiw でレジスタa に単語をヤンク &ldquo;ap でレジスタa の単語をプット 0p ヤンクレジスタは次のヤンクまで内容が溜まる :reg レジスタの中身を見る &ldquo;_ ブラックホール
-	</div>
-</article><article class="list__item post">
-	<header class="list__header">
-		<h3 class="list__title post__title ">
-			<a href="https://ritarock.github.io/posts/2018-10-18t090000&#43;0900/" rel="bookmark">
-			vimをちゃんとやる(4)
-			</a>
-		</h3>
-		<div class="list__meta meta">
-<div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
-	<time class="meta__text" datetime="2018-10-18T09:00:00">October 18, 2018</time>
-</div>
-
-<div class="meta__item-categories meta__item">
-	<svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg>
-	<span class="meta__text"><a class="meta__link" href="https://ritarock.github.io/categories/vim" rel="category">vim</a></span>
-</div>
-</div>
-	</header>
-	<div class="content list__excerpt post__content clearfix">
-		H M L 画面の先頭 / 中央 / 末尾にジャンプ g; 直前の変更一までジャンプして戻る m {letter} バッファにローカルなマークを作る {letter}を大文字にするこ
+		&ldquo;{rejister} &ldquo;ayiw でレジスタa に単語をヤンク &ldquo;ap でレジスタa の単語をプット 0p ヤンクレジスタは次のヤンクまで内容が溜まる :reg レジスタの中身を見る &ldquo;_ ブラックホール
 	</div>
 </article>
 </main>
@@ -279,6 +279,7 @@
 	<h4 class="widget__title">Recent Posts</h4>
 	<div class="widget__content">
 		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="https://ritarock.github.io/posts/2020-05-04t145305&#43;090000/">golangでatcorderの入出力</a></li>
 			<li class="widget__item"><a class="widget__link" href="https://ritarock.github.io/posts/2019-11-03t015726&#43;090000/">はてなの記事移行しました</a></li>
 			<li class="widget__item"><a class="widget__link" href="https://ritarock.github.io/posts/2019-08-29t090000&#43;0900/">docker-composeでrailsとmysqlを使う</a></li>
 			<li class="widget__item"><a class="widget__link" href="https://ritarock.github.io/posts/2019-01-08t090000&#43;0900/">pythonでlistから辞書を作る、辞書からjsonを作る</a></li>
@@ -288,33 +289,30 @@
 			<li class="widget__item"><a class="widget__link" href="https://ritarock.github.io/posts/2018-10-22t090000&#43;0900/">vimをちゃんとやる(7)</a></li>
 			<li class="widget__item"><a class="widget__link" href="https://ritarock.github.io/posts/2018-10-21t090000&#43;0900/">vimをちゃんとやる(6)</a></li>
 			<li class="widget__item"><a class="widget__link" href="https://ritarock.github.io/posts/2018-10-20t090000&#43;0900/">vimをちゃんとやる(5)</a></li>
-			<li class="widget__item"><a class="widget__link" href="https://ritarock.github.io/posts/2018-10-18t090000&#43;0900/">vimをちゃんとやる(4)</a></li>
 		</ul>
 	</div>
 </div>
-<div class="widget-categories widget">
-	<h4 class="widget__title">Categories</h4>
+<div class="widget-taglist widget">
+	<h4 class="widget__title">Tags</h4>
 	<div class="widget__content">
-		<ul class="widget__list">
-			<li class="widget__item"><a class="widget__link" href="https://ritarock.github.io/categories/ansible">Ansible</a></li>
-			<li class="widget__item"><a class="widget__link" href="https://ritarock.github.io/categories/django">Django</a></li>
-			<li class="widget__item"><a class="widget__link" href="https://ritarock.github.io/categories/docker">Docker</a></li>
-			<li class="widget__item"><a class="widget__link" href="https://ritarock.github.io/categories/docker-compose">Docker compose</a></li>
-			<li class="widget__item"><a class="widget__link" href="https://ritarock.github.io/categories/git">Git</a></li>
-			<li class="widget__item"><a class="widget__link" href="https://ritarock.github.io/categories/github">Github</a></li>
-			<li class="widget__item"><a class="widget__link" href="https://ritarock.github.io/categories/golang">Golang</a></li>
-			<li class="widget__item"><a class="widget__link" href="https://ritarock.github.io/categories/hexo">Hexo</a></li>
-			<li class="widget__item"><a class="widget__link" href="https://ritarock.github.io/categories/javascript">Javascript</a></li>
-			<li class="widget__item"><a class="widget__link" href="https://ritarock.github.io/categories/mac">Mac</a></li>
-			<li class="widget__item"><a class="widget__link" href="https://ritarock.github.io/categories/mysql">Mysql</a></li>
-			<li class="widget__item"><a class="widget__link" href="https://ritarock.github.io/categories/node">Node</a></li>
-			<li class="widget__item"><a class="widget__link" href="https://ritarock.github.io/categories/other">Other</a></li>
-			<li class="widget__item"><a class="widget__link" href="https://ritarock.github.io/categories/python">Python</a></li>
-			<li class="widget__item"><a class="widget__link" href="https://ritarock.github.io/categories/ruby-on-rails">Ruby on rails</a></li>
-			<li class="widget__item"><a class="widget__link" href="https://ritarock.github.io/categories/ubuntu">Ubuntu</a></li>
-			<li class="widget__item"><a class="widget__link" href="https://ritarock.github.io/categories/vagrant">Vagrant</a></li>
-			<li class="widget__item"><a class="widget__link" href="https://ritarock.github.io/categories/vim">Vim</a></li>
-		</ul>
+		<a class="widget-taglist__link widget__link btn" href="https://ritarock.github.io/tags/ansible" title="Ansible">Ansible</a>
+		<a class="widget-taglist__link widget__link btn" href="https://ritarock.github.io/tags/django" title="Django">Django</a>
+		<a class="widget-taglist__link widget__link btn" href="https://ritarock.github.io/tags/docker" title="Docker">Docker</a>
+		<a class="widget-taglist__link widget__link btn" href="https://ritarock.github.io/tags/docker-compose" title="Docker compose">Docker compose</a>
+		<a class="widget-taglist__link widget__link btn" href="https://ritarock.github.io/tags/git" title="Git">Git</a>
+		<a class="widget-taglist__link widget__link btn" href="https://ritarock.github.io/tags/github" title="Github">Github</a>
+		<a class="widget-taglist__link widget__link btn" href="https://ritarock.github.io/tags/golang" title="Golang">Golang</a>
+		<a class="widget-taglist__link widget__link btn" href="https://ritarock.github.io/tags/hexo" title="Hexo">Hexo</a>
+		<a class="widget-taglist__link widget__link btn" href="https://ritarock.github.io/tags/javascript" title="Javascript">Javascript</a>
+		<a class="widget-taglist__link widget__link btn" href="https://ritarock.github.io/tags/mac" title="Mac">Mac</a>
+		<a class="widget-taglist__link widget__link btn" href="https://ritarock.github.io/tags/mysql" title="Mysql">Mysql</a>
+		<a class="widget-taglist__link widget__link btn" href="https://ritarock.github.io/tags/node" title="Node">Node</a>
+		<a class="widget-taglist__link widget__link btn" href="https://ritarock.github.io/tags/other" title="Other">Other</a>
+		<a class="widget-taglist__link widget__link btn" href="https://ritarock.github.io/tags/python" title="Python">Python</a>
+		<a class="widget-taglist__link widget__link btn" href="https://ritarock.github.io/tags/ruby-on-rails" title="Ruby on rails">Ruby on rails</a>
+		<a class="widget-taglist__link widget__link btn" href="https://ritarock.github.io/tags/ubuntu" title="Ubuntu">Ubuntu</a>
+		<a class="widget-taglist__link widget__link btn" href="https://ritarock.github.io/tags/vagrant" title="Vagrant">Vagrant</a>
+		<a class="widget-taglist__link widget__link btn" href="https://ritarock.github.io/tags/vim" title="Vim">Vim</a>
 	</div>
 </div>
 </aside>
@@ -323,7 +321,7 @@
 	<div class="container footer__container flex">
 		
 		<div class="footer__copyright">
-			&copy; 2019 GHOSTの囁き.
+			&copy; 2020 GHOSTの囁き.
 			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
 		</div>
 	</div>
