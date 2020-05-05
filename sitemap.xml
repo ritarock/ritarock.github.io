@@ -3,37 +3,42 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://ritarock.github.io/posts/2020-05-05t151108&#43;090000/</loc>
+    <lastmod>2020-05-05T15:11:08+09:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://ritarock.github.io/categories/</loc>
-    <lastmod>2020-05-04T14:53:06+09:00</lastmod>
+    <lastmod>2020-05-05T15:11:08+09:00</lastmod>
   </url>
   
   <url>
     <loc>https://ritarock.github.io/</loc>
-    <lastmod>2020-05-04T14:53:06+09:00</lastmod>
+    <lastmod>2020-05-05T15:11:08+09:00</lastmod>
   </url>
   
   <url>
     <loc>https://ritarock.github.io/tags/golang/</loc>
-    <lastmod>2020-05-04T14:53:06+09:00</lastmod>
+    <lastmod>2020-05-05T15:11:08+09:00</lastmod>
   </url>
   
   <url>
     <loc>https://ritarock.github.io/categories/golang/</loc>
-    <lastmod>2020-05-04T14:53:06+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://ritarock.github.io/posts/2020-05-04t145305&#43;090000/</loc>
-    <lastmod>2020-05-04T14:53:06+09:00</lastmod>
+    <lastmod>2020-05-05T15:11:08+09:00</lastmod>
   </url>
   
   <url>
     <loc>https://ritarock.github.io/posts/</loc>
-    <lastmod>2020-05-04T14:53:06+09:00</lastmod>
+    <lastmod>2020-05-05T15:11:08+09:00</lastmod>
   </url>
   
   <url>
     <loc>https://ritarock.github.io/tags/</loc>
+    <lastmod>2020-05-05T15:11:08+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://ritarock.github.io/posts/2020-05-04t145305&#43;090000/</loc>
     <lastmod>2020-05-04T14:53:06+09:00</lastmod>
   </url>
   

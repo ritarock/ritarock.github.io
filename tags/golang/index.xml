@@ -6,18 +6,27 @@
     <description>Recent content in golang on GHOSTの囁き</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
-    <lastBuildDate>Mon, 04 May 2020 14:53:06 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 05 May 2020 15:11:08 +0900</lastBuildDate>
     
 	<atom:link href="https://ritarock.github.io/tags/golang/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>golangでatcorderの入出力</title>
+      <title>atcorder過去問精鋭10問をgolangで解いた</title>
+      <link>https://ritarock.github.io/posts/2020-05-05t151108&#43;090000/</link>
+      <pubDate>Tue, 05 May 2020 15:11:08 +0900</pubDate>
+      
+      <guid>https://ritarock.github.io/posts/2020-05-05t151108&#43;090000/</guid>
+      <description>1問目 ABC 086 A - Product package main import &amp;#34;fmt&amp;#34; func main() { var a, b int fmt.Scan(&amp;amp;a, &amp;amp;b) if (a*b)%2 == 0 { fmt.Println(&amp;#34;Even&amp;#34;) } else { fmt.Println(&amp;#34;Odd&amp;#34;) } } 2問目 ABC 081 A - Placing Marbles package main import ( &amp;#34;fmt&amp;#34; &amp;#34;strings&amp;#34; ) func main() { var s string var count int fmt.Scan(&amp;amp;s) splitWord := strings.Split(s, &amp;#34;&amp;#34;) for _, w := range splitWord {</description>
+    </item>
+    
+    <item>
+      <title>golangでatcorderの入出力とか繰り返しとか</title>
       <link>https://ritarock.github.io/posts/2020-05-04t145305&#43;090000/</link>
       <pubDate>Mon, 04 May 2020 14:53:06 +0900</pubDate>
       
       <guid>https://ritarock.github.io/posts/2020-05-04t145305&#43;090000/</guid>
-      <description>入力 単一数値、文字 var N int fmt.Scan(&amp;amp;N) var s string fmt.Scan(&amp;amp;s) 文字列、数列群をスライスで返す func scanStrings(len int) []string { var str string for i := 0; i &amp;lt; len; i++ { fmt.Scanf(&amp;#34;%s&amp;#34;, &amp;amp;str) strings = append(strings, str) } return strings } func scanNums(len int) []int { var num int for i :=</description>
+      <description>入出力 単一数値、文字 var N int fmt.Scan(&amp;amp;N) fmt.Println(N) var s string fmt.Scan(&amp;amp;s) fmt.Println(s) 文字列、数列群をスライスで返す func scanStrings(len int) []string { var str string var strs []string for i := 0; i &amp;lt; len; i++ { fmt.Scanf(&amp;#34;%s&amp;#34;, &amp;amp;str) strs = append(strs, str) } return strings } func scanNums(len int) []int {</description>
     </item>
     
     <item>
