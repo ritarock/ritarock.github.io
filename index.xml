@@ -6,10 +6,19 @@
     <description>Recent content on GHOSTの囁き</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
-    <lastBuildDate>Tue, 05 May 2020 15:11:08 +0900</lastBuildDate>
+    <lastBuildDate>Thu, 28 May 2020 07:49:34 +0900</lastBuildDate>
     
 	<atom:link href="https://ritarock.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>yesコマンドを知った</title>
+      <link>https://ritarock.github.io/posts/2020-05-28t074933&#43;090000/</link>
+      <pubDate>Thu, 28 May 2020 07:49:34 +0900</pubDate>
+      
+      <guid>https://ritarock.github.io/posts/2020-05-28t074933&#43;090000/</guid>
+      <description>サーバーへの負荷をかけたりするときに使えるみたい CPUに負荷をかける $ yes &amp;gt; /dev/null メモリに負荷をかける $ /dev/null &amp;lt; $(yes)</description>
+    </item>
     
     <item>
       <title>atcorder過去問精鋭10問をgolangで解いた</title>
