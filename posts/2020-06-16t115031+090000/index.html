@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html class="no-js" lang="ja-jp">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>JavaScript の call, apply, bind - GHOSTの囁き</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	
+	
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="https://ritarock.github.io/css/style.css">
+	
+	<link rel="shortcut icon" href="https://ritarock.github.io/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="https://ritarock.github.io/" title="GHOSTの囁き" rel="home">
+				<div class="logo__title">GHOSTの囁き</div>
+				<div class="logo__tagline">ritarock’s blog</div>
+			</a>
+		</div>
+		<div class="divider"></div>
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">JavaScript の call, apply, bind</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2020-06-16T11:50:31">June 16, 2020</time>
+</div>
+
+<div class="meta__item-categories meta__item">
+	<svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg>
+	<span class="meta__text"><a class="meta__link" href="https://ritarock.github.io/categories/javascript" rel="category">JavaScript</a></span>
+</div>
+</div>
+		</header><div class="content post__content clearfix">
+			<p><strong>ちゃんと理解してなかった。。。</strong></p>
+<h1 id="apply">apply</h1>
+<p>結局公式が一番わかりやすい
+<a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Function/apply">https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Function/apply</a></p>
+<blockquote>
+<p>apply() メソッドは与えられた this 参照値と、配列 (もしくは配列風のオブジェクト) の形で与えられた引数を用いて関数を呼び出します。</p>
+</blockquote>
+<p>applyは配列を受け取る</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#75715e">// this 参照値と、配列 (もしくは配列風のオブジェクト) の形で与えられた引数を用いて関数を呼び出します。
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">numbers</span> <span style="color:#f92672">=</span> [<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">7</span>];
+
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">max</span> <span style="color:#f92672">=</span> Math.<span style="color:#a6e22e">max</span>.<span style="color:#a6e22e">apply</span>(<span style="color:#66d9ef">null</span>, <span style="color:#a6e22e">numbers</span>); <span style="color:#75715e">// 7
+</span><span style="color:#75715e"></span>
+<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">max</span>);
+
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">min</span> <span style="color:#f92672">=</span> Math.<span style="color:#a6e22e">min</span>.<span style="color:#a6e22e">apply</span>(<span style="color:#66d9ef">null</span>, <span style="color:#a6e22e">numbers</span>); <span style="color:#75715e">// 2
+</span><span style="color:#75715e"></span>
+<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">min</span>);
+</code></pre></div><h1 id="call">call</h1>
+<p><a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Function/call">https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Function/call</a></p>
+<blockquote>
+<p>このメソッドの構文は apply() とほぼ同じですが、基本的な違いは call() が引数リストを受け取るのに対して、 apply() は引数の単一の配列を受け取る点です。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#75715e">// this の値と、独立して提供された引数によって関数を呼び出します。
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">Product</span>(<span style="color:#a6e22e">name</span>, <span style="color:#a6e22e">price</span>) {
+  <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">name</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">name</span>;
+  <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">price</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">price</span>;
+}
+
+<span style="color:#66d9ef">function</span> <span style="color:#a6e22e">Food</span>(<span style="color:#a6e22e">name</span>, <span style="color:#a6e22e">price</span>) {
+  <span style="color:#a6e22e">Product</span>.<span style="color:#a6e22e">call</span>(<span style="color:#66d9ef">this</span>, <span style="color:#a6e22e">name</span>, <span style="color:#a6e22e">price</span>);
+  <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">category</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;food&#39;</span>;
+}
+
+<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Food</span>(<span style="color:#e6db74">&#39;cheese&#39;</span>, <span style="color:#ae81ff">5</span>).<span style="color:#a6e22e">name</span>); <span style="color:#75715e">// &#34;cheese&#34;
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">JSON</span>.<span style="color:#a6e22e">stringify</span>(<span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Food</span>(<span style="color:#e6db74">&#39;cheese&#39;</span>, <span style="color:#ae81ff">5</span>))); <span style="color:#75715e">// &#34;{&#34;name&#34;:&#34;cheese&#34;,&#34;price&#34;:5,&#34;category&#34;:&#34;food&#34;}&#34;
+</span></code></pre></div><h1 id="bind">bind</h1>
+<p><a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Function/bind">https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Function/bind</a></p>
+<blockquote>
+<p>bind() メソッドは、呼び出された際に this キーワードに指定された値が設定される新しい関数を生成します。この値は新しい関数が呼び出されたとき、一連の引数の前に置かれます。</p>
+</blockquote>
+<p>関数が返って来るから実行のときは()をつけてあげないといけない。もしくは call で呼び出す</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">module</span> <span style="color:#f92672">=</span> {
+  <span style="color:#a6e22e">x</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">42</span>,
+  <span style="color:#a6e22e">getX</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">function</span>() {
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">x</span>;
+  }
+};
+
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">unboundGetX</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">module</span>.<span style="color:#a6e22e">getX</span>;
+<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">unboundGetX</span>()); <span style="color:#75715e">// undefined
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">boundGetX</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">unboundGetX</span>.<span style="color:#a6e22e">bind</span>(<span style="color:#a6e22e">module</span>);
+<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">boundGetX</span>()); <span style="color:#75715e">// 42
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">// call で呼び出すとき
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">callGetX</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">unboundGetX</span>.<span style="color:#a6e22e">call</span>(<span style="color:#a6e22e">module</span>);
+<span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">boundGetX</span>); <span style="color:#75715e">// 42
+</span></code></pre></div>
+		</div>
+		<footer class="post__footer">
+			
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item"><a class="tags__link btn" href="https://ritarock.github.io/tags/javascript/" rel="tag">JavaScript</a></li>
+	</ul>
+</div>
+		</footer>
+	</article>
+</main>
+
+
+
+
+			</div>
+			
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2020 GHOSTの囁き.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="https://ritarock.github.io/js/menu.js"></script>
+</body>
+</html>
