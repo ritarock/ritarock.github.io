@@ -1,0 +1,1 @@
+{"pageProps":{"articleData":{"id":"20181018090000","contentHtml":"\n## H M L\n画面の先頭 / 中央 / 末尾にジャンプ。\n\n## g;\n直前の変更一までジャンプして戻る。\n\n## m {letter}\nバッファにローカルなマークを作る。\n{letter}を大文字にすることでグローバルマークにできる。\n\n## ` {letter}\nマークにジャンプする。\n","title":"vim をちゃんとやる(4)","date":20181018090000,"tags":["vim"]}},"__N_SSG":true}
