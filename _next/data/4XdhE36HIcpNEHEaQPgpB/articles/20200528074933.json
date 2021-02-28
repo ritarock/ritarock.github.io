@@ -1,0 +1,1 @@
+{"pageProps":{"articleData":{"id":"20200528074933","contentHtml":"\nサーバーへの負荷をかけたりするときに使える。\n\n## CPU に負荷をかける\n\n```bash\n$ yes > /dev/null\n```\n\n## メモリに負荷をかける\n\n```bash\n$ /dev/null < $(yes)\n```\n","title":"yes コマンド","date":20200528074933,"tags":["Linux"]}},"__N_SSG":true}
