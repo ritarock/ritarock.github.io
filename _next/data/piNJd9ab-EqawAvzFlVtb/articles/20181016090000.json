@@ -1,1 +1,0 @@
-{"pageProps":{"articleData":{"id":"20181016090000","contentHtml":"\n## :tabedit { filename }\n{ filename } のタブを作る。\n\n## :tabc[lose]\nアクティブなタブを閉じる。\n\n## @:\n直前のコマンドライン入力を繰り返す。\n\n## タブの移動\n覚えかたは「 \"g\"oto \"t\"ab 」。\n\n* {N}gt\n* gt\n* gT\n\n動作は以下の通り。\n\n* {N}番目のタブに移動\n* 次のタブに移動\n* 前のタブに移動\n","title":"vim をちゃんとやる(2)","date":20181016090000,"tags":["vim"]}},"__N_SSG":true}
