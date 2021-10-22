@@ -1,0 +1,238 @@
+<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width"/><meta charSet="utf-8"/><title>MyDocs</title><meta name="next-head-count" content="3"/><link rel="preload" href="/_next/static/css/4f6358649898043ee7a7.css" as="style"/><link rel="stylesheet" href="/_next/static/css/4f6358649898043ee7a7.css" data-n-g=""/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills-a40ef1678bae11e696dba45124eadd70.js"></script><script src="/_next/static/chunks/webpack-fb76148cfcfb42ca18eb.js" defer=""></script><script src="/_next/static/chunks/framework-2191d16384373197bc0a.js" defer=""></script><script src="/_next/static/chunks/main-1f2c591c5d3bfcfc95e6.js" defer=""></script><script src="/_next/static/chunks/pages/_app-42cedee763d16b21c0e8.js" defer=""></script><script src="/_next/static/chunks/408-35579d04b0c1f804c73d.js" defer=""></script><script src="/_next/static/chunks/pages/docs/%5Bid%5D-217c0c73201253baba1b.js" defer=""></script><script src="/_next/static/3WFwgUBmCIfCHDts5UaWs/_buildManifest.js" defer=""></script><script src="/_next/static/3WFwgUBmCIfCHDts5UaWs/_ssgManifest.js" defer=""></script></head><body><div id="__next"><div><div><div class="bg-gray-600 h-10 leading-10 text-2xl"><a class="no-underline text-gray-100 mx-2" href="/">MyDocs</a></div></div><div class="mx-7"><h1><b># <!-- -->prisma-client-go を試した</b></h1><p>まずは project の作成から.</p>
+<pre><div node="[object Object]" style="display:block;overflow-x:auto;padding:0.5em;background:#272822;color:#ddd"><code class="language-bash" style="white-space:pre"><span>$ go mod init backend</span></code></div></pre>
+<p>client のインストール.</p>
+<pre><div node="[object Object]" style="display:block;overflow-x:auto;padding:0.5em;background:#272822;color:#ddd"><code class="language-bash" style="white-space:pre"><span>$ go get github.com/prisma/prisma-client-go</span></code></div></pre>
+<p>スキーマの作成.</p>
+<pre><div node="[object Object]" style="display:block;overflow-x:auto;padding:0.5em;background:#272822;color:#ddd"><code class="language-bash" style="white-space:pre"><span>$ npx prisma init</span></code></div></pre>
+<p><code node="[object Object]">prisma/schema.prisma</code> と <code node="[object Object]">.env</code> (と .gitignore ) が生成される.</p>
+<p><code node="[object Object]">.env</code> と <code node="[object Object]">prisma/schema.prisma</code> を修正.</p>
+<pre><div node="[object Object]" style="display:block;overflow-x:auto;padding:0.5em;background:#272822;color:#ddd"><code class="language-env" style="white-space:pre"><span style="color:#75715e"># Environment variables declared in this file are automatically made available to Prisma.</span><span>
+</span><span></span><span style="color:#75715e"># See the documentation for more detail: https://pris.ly/d/prisma-schema#using-environment-variables</span><span>
+</span>
+<span></span><span style="color:#75715e"># Prisma supports the native connection string format for PostgreSQL, MySQL, SQLite, SQL Server and MongoDB (Preview).</span><span>
+</span><span></span><span style="color:#75715e"># See the documentation for all the connection string options: https://pris.ly/d/connection-strings</span><span>
+</span>
+<span></span><span class="hljs-attr">DATABASE_URL</span><span>=</span><span style="color:#a6e22e">&quot;mysql://app:password@localhost:3306/app&quot;</span></code></div></pre>
+<pre><div node="[object Object]" style="display:block;overflow-x:auto;padding:0.5em;background:#272822;color:#ddd"><code class="language-schema" style="white-space:pre"><span style="color:#bf79db">//</span><span> This is your Prisma schema file,
+</span><span></span><span style="color:#bf79db">//</span><span> learn more about it </span><span style="color:#f92672;font-weight:bold">in</span><span> the docs: https:</span><span style="color:#bf79db">//</span><span>pris.ly</span><span style="color:#bf79db">/d/</span><span>prisma-schema
+</span>
+<!-- -->generator client {
+<span>  provider = </span><span style="color:#a6e22e">&quot;go run github.com/prisma/prisma-client-go&quot;</span><span>
+</span>}
+<!-- -->
+<!-- -->datasource db {
+<span>  provider = </span><span style="color:#a6e22e">&quot;mysql&quot;</span><span>
+</span><span>  url      = env(</span><span style="color:#a6e22e">&quot;DATABASE_URL&quot;</span><span>)
+</span>}
+</code></div></pre>
+<p><code node="[object Object]">Task</code> モデルを定義する.</p>
+<pre><div node="[object Object]" style="display:block;overflow-x:auto;padding:0.5em;background:#272822;color:#ddd"><code class="language-schema" style="white-space:pre"><span style="color:#75715e">// This is your Prisma schema file,</span><span>
+</span><span></span><span style="color:#75715e">// learn more about it in the docs: https://pris.ly/d/prisma-schema</span><span>
+</span>
+<!-- -->generator client {
+<span>  provider = </span><span style="color:#a6e22e">&quot;go run github.com/prisma/prisma-client-go&quot;</span><span>
+</span>}
+<!-- -->
+<!-- -->datasource db {
+<span>  provider = </span><span style="color:#a6e22e">&quot;mysql&quot;</span><span>
+</span><span>  url      = env(</span><span style="color:#a6e22e">&quot;DATABASE_URL&quot;</span><span>)
+</span>}
+<!-- -->
+<!-- -->model Task {
+<span>  id </span><span style="color:#a6e22e">String</span><span> </span><span style="color:#75715e">@default</span><span>(cuid()) </span><span style="color:#75715e">@id</span><span>
+</span><span>  createdAt </span><span style="color:#a6e22e">DateTime</span><span> </span><span style="color:#75715e">@default</span><span>(now())
+</span><span>  updatedAt </span><span style="color:#a6e22e">DateTime</span><span> </span><span style="color:#75715e">@updatedAt</span><span>
+</span><span>  title </span><span style="color:#a6e22e">String</span><span>
+</span>  status Boolean
+<span>  desc </span><span style="color:#a6e22e">String?</span><span>
+</span>}
+</code></div></pre>
+<p>prisma クライアントの作成.
+<code node="[object Object]">prisma/db/</code> が生成される.</p>
+<pre><div node="[object Object]" style="display:block;overflow-x:auto;padding:0.5em;background:#272822;color:#ddd"><code class="language-bash" style="white-space:pre"><span>$ go run github.com/prisma/prisma-client-go generate</span></code></div></pre>
+<p>DB にスキーマを反映させる.</p>
+<pre><div node="[object Object]" style="display:block;overflow-x:auto;padding:0.5em;background:#272822;color:#ddd"><code class="language-bash" style="white-space:pre"><span>$ go run github.com/prisma/prisma-client-go migrate dev --name create_task
+</span>
+<!-- -->~~
+<!-- -->~~
+<!-- -->migrations/
+<!-- -->  └─ 20211022082219_create_task/
+<!-- -->    └─ migration.sql
+<!-- -->
+<span>Your database is now </span><span style="color:#f92672;font-weight:bold">in</span><span> sync with your schema.</span></code></div></pre>
+<p><code node="[object Object]">prisma/migrations/20211022082219_create_task/migration.sql</code> を見てみる.</p>
+<pre><div node="[object Object]" style="display:block;overflow-x:auto;padding:0.5em;background:#272822;color:#ddd"><code class="language-sql" style="white-space:pre"><span style="color:#75715e">-- CreateTable</span><span>
+</span><span></span><span style="color:#f92672;font-weight:bold">CREATE</span><span> </span><span style="color:#f92672;font-weight:bold">TABLE</span><span> `Task` (
+</span><span>    `id` </span><span style="color:#a6e22e;font-weight:bold">VARCHAR</span><span>(</span><span class="hljs-number">191</span><span>) </span><span style="color:#f92672;font-weight:bold">NOT</span><span> </span><span style="color:#f92672;font-weight:bold">NULL</span><span>,
+</span><span>    `createdAt` DATETIME(</span><span class="hljs-number">3</span><span>) </span><span style="color:#f92672;font-weight:bold">NOT</span><span> </span><span style="color:#f92672;font-weight:bold">NULL</span><span> </span><span style="color:#f92672;font-weight:bold">DEFAULT</span><span> </span><span style="color:#a6e22e">CURRENT_TIMESTAMP</span><span>(</span><span class="hljs-number">3</span><span>),
+</span><span>    `updatedAt` DATETIME(</span><span class="hljs-number">3</span><span>) </span><span style="color:#f92672;font-weight:bold">NOT</span><span> </span><span style="color:#f92672;font-weight:bold">NULL</span><span>,
+</span><span>    `title` </span><span style="color:#a6e22e;font-weight:bold">VARCHAR</span><span>(</span><span class="hljs-number">191</span><span>) </span><span style="color:#f92672;font-weight:bold">NOT</span><span> </span><span style="color:#f92672;font-weight:bold">NULL</span><span>,
+</span><span>    `status` </span><span style="color:#a6e22e;font-weight:bold">BOOLEAN</span><span> </span><span style="color:#f92672;font-weight:bold">NOT</span><span> </span><span style="color:#f92672;font-weight:bold">NULL</span><span>,
+</span><span>    `</span><span style="color:#f92672;font-weight:bold">desc</span><span>` </span><span style="color:#a6e22e;font-weight:bold">VARCHAR</span><span>(</span><span class="hljs-number">191</span><span>) </span><span style="color:#f92672;font-weight:bold">NULL</span><span>,
+</span>
+<span>    </span><span style="color:#f92672;font-weight:bold">PRIMARY</span><span> KEY (`id`)
+</span><span>) </span><span style="color:#f92672;font-weight:bold">DEFAULT</span><span> </span><span style="color:#a6e22e;font-weight:bold">CHARACTER</span><span> </span><span style="color:#f92672;font-weight:bold">SET</span><span> utf8mb4 </span><span style="color:#f92672;font-weight:bold">COLLATE</span><span> utf8mb4_unicode_ci;</span></code></div></pre>
+<p>テーブルも作成されている.</p>
+<pre><div node="[object Object]" style="display:block;overflow-x:auto;padding:0.5em;background:#272822;color:#ddd"><code class="language-mysql" style="white-space:pre"><span style="color:#a6e22e;font-weight:bold">mysql&gt; show tables;
+</span><span style="color:#a6e22e;font-weight:bold">+--------------------+</span><span>
+</span><span></span><span style="color:#a6e22e;font-weight:bold">| Tables_in_app      |
+</span><span style="color:#a6e22e;font-weight:bold">+--------------------+</span><span>
+</span>| _prisma_migrations |
+<span></span><span style="color:#a6e22e;font-weight:bold">| Task               |
+</span><span style="color:#a6e22e;font-weight:bold">+--------------------+
+</span></code></div></pre>
+<p><code node="[object Object]">Comment</code> モデルを定義し, <code node="[object Object]">Task</code> モデルと関連付けを行う.</p>
+<pre><div node="[object Object]" style="display:block;overflow-x:auto;padding:0.5em;background:#272822;color:#ddd"><code class="language-schema" style="white-space:pre"><span>model Task {
+</span><span>  id </span><span style="color:#a6e22e">String</span><span> </span><span style="color:#75715e">@default</span><span>(cuid()) </span><span style="color:#75715e">@id</span><span>
+</span><span>  createdAt </span><span style="color:#a6e22e">DateTime</span><span> </span><span style="color:#75715e">@default</span><span>(now())
+</span><span>  updatedAt </span><span style="color:#a6e22e">DateTime</span><span> </span><span style="color:#75715e">@updatedAt</span><span>
+</span><span>  title </span><span style="color:#a6e22e">String</span><span>
+</span>  status Boolean
+<span>  desc </span><span style="color:#a6e22e">String?</span><span>
+</span>
+<!-- -->  comments Comment[]
+<!-- -->}
+<!-- -->
+<!-- -->model Comment {
+<span>  id </span><span style="color:#a6e22e">String</span><span> </span><span style="color:#75715e">@default</span><span>(cuid()) </span><span style="color:#75715e">@id</span><span>
+</span><span>  createdAt </span><span style="color:#a6e22e">DateTime</span><span> </span><span style="color:#75715e">@default</span><span>(now())
+</span><span>  updatedAt </span><span style="color:#a6e22e">DateTime</span><span> </span><span style="color:#75715e">@updatedAt</span><span>
+</span><span>  content </span><span style="color:#a6e22e">String</span><span>
+</span>
+<span>  task Task </span><span style="color:#75715e">@relation</span><span>(fields: [taskId], references: [id])
+</span><span>  taskId </span><span style="color:#a6e22e">String</span></code></div></pre>
+<p>migration を行う.</p>
+<pre><div node="[object Object]" style="display:block;overflow-x:auto;padding:0.5em;background:#272822;color:#ddd"><code class="language-bash" style="white-space:pre"><span>$ go run github.com/prisma/prisma-client-go migrate dev --name add_comment_model
+</span>
+<!-- -->~~
+<!-- -->~~
+<!-- -->migrations/
+<!-- -->  └─ 20211022083117_add_comment_model/
+<!-- -->    └─ migration.sql
+<!-- -->
+<span>Your database is now </span><span style="color:#f92672;font-weight:bold">in</span><span> sync with your schema.</span></code></div></pre>
+<p><code node="[object Object]">migrations/20211022083117_add_comment_model/migration.sql</code> を見る.</p>
+<pre><div node="[object Object]" style="display:block;overflow-x:auto;padding:0.5em;background:#272822;color:#ddd"><code class="language-sql" style="white-space:pre"><span style="color:#75715e">-- CreateTable</span><span>
+</span><span></span><span style="color:#f92672;font-weight:bold">CREATE</span><span> </span><span style="color:#f92672;font-weight:bold">TABLE</span><span> `Comment` (
+</span><span>    `id` </span><span style="color:#a6e22e;font-weight:bold">VARCHAR</span><span>(</span><span class="hljs-number">191</span><span>) </span><span style="color:#f92672;font-weight:bold">NOT</span><span> </span><span style="color:#f92672;font-weight:bold">NULL</span><span>,
+</span><span>    `createdAt` DATETIME(</span><span class="hljs-number">3</span><span>) </span><span style="color:#f92672;font-weight:bold">NOT</span><span> </span><span style="color:#f92672;font-weight:bold">NULL</span><span> </span><span style="color:#f92672;font-weight:bold">DEFAULT</span><span> </span><span style="color:#a6e22e">CURRENT_TIMESTAMP</span><span>(</span><span class="hljs-number">3</span><span>),
+</span><span>    `updatedAt` DATETIME(</span><span class="hljs-number">3</span><span>) </span><span style="color:#f92672;font-weight:bold">NOT</span><span> </span><span style="color:#f92672;font-weight:bold">NULL</span><span>,
+</span><span>    `content` </span><span style="color:#a6e22e;font-weight:bold">VARCHAR</span><span>(</span><span class="hljs-number">191</span><span>) </span><span style="color:#f92672;font-weight:bold">NOT</span><span> </span><span style="color:#f92672;font-weight:bold">NULL</span><span>,
+</span><span>    `taskId` </span><span style="color:#a6e22e;font-weight:bold">VARCHAR</span><span>(</span><span class="hljs-number">191</span><span>) </span><span style="color:#f92672;font-weight:bold">NOT</span><span> </span><span style="color:#f92672;font-weight:bold">NULL</span><span>,
+</span>
+<span>    </span><span style="color:#f92672;font-weight:bold">PRIMARY</span><span> KEY (`id`)
+</span><span>) </span><span style="color:#f92672;font-weight:bold">DEFAULT</span><span> </span><span style="color:#a6e22e;font-weight:bold">CHARACTER</span><span> </span><span style="color:#f92672;font-weight:bold">SET</span><span> utf8mb4 </span><span style="color:#f92672;font-weight:bold">COLLATE</span><span> utf8mb4_unicode_ci;
+</span>
+<span></span><span style="color:#75715e">-- AddForeignKey</span><span>
+</span><span></span><span style="color:#f92672;font-weight:bold">ALTER</span><span> </span><span style="color:#f92672;font-weight:bold">TABLE</span><span> `Comment` </span><span style="color:#f92672;font-weight:bold">ADD</span><span> </span><span style="color:#f92672;font-weight:bold">CONSTRAINT</span><span> `Comment_taskId_fkey` </span><span style="color:#f92672;font-weight:bold">FOREIGN</span><span> KEY (`taskId`) </span><span style="color:#f92672;font-weight:bold">REFERENCES</span><span> `Task`(`id`) </span><span style="color:#f92672;font-weight:bold">ON</span><span> </span><span style="color:#f92672;font-weight:bold">DELETE</span><span> RESTRICT </span><span style="color:#f92672;font-weight:bold">ON</span><span> UPDATE CASCADE;</span></code></div></pre>
+<h2>Prisma Studio を使う</h2>
+<p><code node="[object Object]">localhost:5555</code> で起動する.</p>
+<pre><div node="[object Object]" style="display:block;overflow-x:auto;padding:0.5em;background:#272822;color:#ddd"><code class="language-bash" style="white-space:pre"><span>$ npx prisma studio</span></code></div></pre>
+<h2>prisma api syntax</h2>
+<h3>全件取得する</h3>
+<pre><div node="[object Object]" style="display:block;overflow-x:auto;padding:0.5em;background:#272822;color:#ddd"><code class="language-go" style="white-space:pre"><span>tasks, err := client.Task.FindMany().Exec(context.Background())</span></code></div></pre>
+<h3>クエリで取得する</h3>
+<pre><div node="[object Object]" style="display:block;overflow-x:auto;padding:0.5em;background:#272822;color:#ddd"><code class="language-go" style="white-space:pre"><span>tasks, err := client.Task.FindMany(
+</span><span>  db.Task.Title.Equals(</span><span style="color:#a6e22e">&quot;1st task&quot;</span><span>)
+</span><span>  </span><span style="color:#75715e">// &lt;model&gt;.&lt;field&gt;.&lt;method&gt;.(value) 基本的にこの形式で使う</span><span>
+</span>).Exec(context.Background())
+</code></div></pre>
+<h3>一意なデータを取得する</h3>
+<p><code node="[object Object]">schema.prisma</code> で <code node="[object Object]">@id</code>,<code node="[object Object]">@unique</code> でマークされたもののみに使用可能.</p>
+<pre><div node="[object Object]" style="display:block;overflow-x:auto;padding:0.5em;background:#272822;color:#ddd"><code class="language-go" style="white-space:pre"><span>task, err := client.Task.FindUnique(
+</span><span>  db.Task.ID.Equals(</span><span style="color:#a6e22e">&quot;1234567890&quot;</span><span>)
+</span>).Exec(context.Background())
+</code></div></pre>
+<h3>最初に見つかった 1 件を取得する</h3>
+<pre><div node="[object Object]" style="display:block;overflow-x:auto;padding:0.5em;background:#272822;color:#ddd"><code class="language-go" style="white-space:pre"><span>task, err := client.Task.FindFirst(
+</span><span>  db.Task.Title.Equals(</span><span style="color:#a6e22e">&quot;1st task&quot;</span><span>)
+</span>).Exec(context.Background())
+</code></div></pre>
+<h3>Query API</h3>
+<h3>スキーマのデータ型によってよしなにできる</h3>
+<ul>
+<li><code node="[object Object]">String Filter</code></li>
+</ul>
+<pre><div node="[object Object]" style="display:block;overflow-x:auto;padding:0.5em;background:#272822;color:#ddd"><code class="language-go" style="white-space:pre"><span>tasks, err := client.Task.FindMany(
+</span><span>  </span><span style="color:#75715e">// Title が &quot;1st task&quot; と一致する Task を取得</span><span>
+</span><span>  db.Task.Title.Equals(</span><span style="color:#a6e22e">&quot;1st task&quot;</span><span>)
+</span>
+<span>  </span><span style="color:#75715e">// Title に &quot;task&quot; を含む Task を取得</span><span>
+</span><span>  </span><span style="color:#75715e">// db.Task.Title.Contains(&quot;task&quot;)</span><span>
+</span>
+<span>  </span><span style="color:#75715e">// Title が &quot;1st&quot; から始まる Task を取得</span><span>
+</span><span>  </span><span style="color:#75715e">// db.Task.Title.StartsWith(&quot;1st&quot;)</span><span>
+</span>
+<span>  </span><span style="color:#75715e">// Title が &quot;task&quot; で終わる Task を取得</span><span>
+</span><span>  </span><span style="color:#75715e">// db.Task.Title.EndsWith(&quot;task&quot;)</span><span>
+</span>).Exec(context.Background())
+</code></div></pre>
+<ul>
+<li><code node="[object Object]">Number Filter</code></li>
+</ul>
+<pre><div node="[object Object]" style="display:block;overflow-x:auto;padding:0.5em;background:#272822;color:#ddd"><code class="language-go" style="white-space:pre"><span style="color:#75715e">// &lt;Field&gt; が 50 である &lt;Model&gt; を取得</span><span>
+</span><span>db.&lt;Model&gt;.&lt;Field&gt;.Equals(</span><span class="hljs-number">50</span><span>).Exec(context.Background())
+</span>
+<span></span><span style="color:#75715e">// &lt;Field&gt; が 50 以下の &lt;Model&gt; を取得</span><span>
+</span><span>db.&lt;Model&gt;.&lt;Field&gt;.Lte(</span><span class="hljs-number">50</span><span>).Exec(context.Background())
+</span>
+<span></span><span style="color:#75715e">// &lt;Field&gt; が 50 未満の &lt;Model&gt; を取得</span><span>
+</span><span>db.&lt;Model&gt;.&lt;Field&gt;.Lt(</span><span class="hljs-number">50</span><span>).Exec(context.Background())
+</span>
+<span></span><span style="color:#75715e">// &lt;Field&gt; が 50 以上の &lt;Model&gt; を取得</span><span>
+</span><span>db.&lt;Model&gt;.&lt;Field&gt;.Gte(</span><span class="hljs-number">50</span><span>).Exec(context.Background())
+</span>
+<span></span><span style="color:#75715e">// &lt;Field&gt; が 50 より大きいの &lt;Model&gt; を取得</span><span>
+</span><span>db.&lt;Model&gt;.&lt;Field&gt;.Gte(</span><span class="hljs-number">50</span><span>).Exec(context.Background())</span></code></div></pre>
+<ul>
+<li><code node="[object Object]">Time Filter</code></li>
+</ul>
+<pre><div node="[object Object]" style="display:block;overflow-x:auto;padding:0.5em;background:#272822;color:#ddd"><code class="language-go" style="white-space:pre"><span>tasks, err := client.Task.FindMany(
+</span><span>  </span><span style="color:#75715e">// 昨日作成された task を取得する</span><span>
+</span>  db.Task.CreatedAt.Equals(yesterday)
+<!-- -->
+<span>  </span><span style="color:#75715e">// 過去 6 時間で作られた task を取得する (createdAt &gt; 6 hours ago)</span><span>
+</span><span>  </span><span style="color:#75715e">// db.Task.Gt(time.Now().Add(-6 * time.Hour))</span><span>
+</span>
+<span>  </span><span style="color:#75715e">// 過去 6 時間で作られた task を取得する (createdAt &gt;= 6 hours ago)</span><span>
+</span><span>  </span><span style="color:#75715e">// db.Task.Gte(time.Now().Add(-6 * time.Hour))</span><span>
+</span>
+<span>  </span><span style="color:#75715e">// 昨日作成された task を取得する</span><span>
+</span><span>  </span><span style="color:#75715e">// db.Task.Lt(time.Now().Truncate(24 * time.Hour))</span><span>
+</span>
+<span>  </span><span style="color:#75715e">// 昨日作成された task を取得する (本日 00:00:00 を含む)</span><span>
+</span><span>  </span><span style="color:#75715e">// db.Task.Lte(time.Now().Truncate(24 * time.Hour))</span><span>
+</span>).Exec(context.Background())
+</code></div></pre>
+<h3>NULL 関連</h3>
+<p>null であるものを取得する.</p>
+<pre><div node="[object Object]" style="display:block;overflow-x:auto;padding:0.5em;background:#272822;color:#ddd"><code class="language-go" style="white-space:pre"><span>db.Task.Content.EqualsOptional(</span><span style="color:#f92672;font-weight:bold">nil</span><span>).Exec(context.Background())
+</span>
+<span>content := </span><span style="color:#a6e22e">&quot;string&quot;</span><span>
+</span>db.Task.Content.EqualsOptional(&amp;content).Exec(context.Background())
+</code></div></pre>
+<h3>他にも</h3>
+<ul>
+<li><code node="[object Object]">Not</code></li>
+</ul>
+<pre><div node="[object Object]" style="display:block;overflow-x:auto;padding:0.5em;background:#272822;color:#ddd"><code class="language-go" style="white-space:pre"><span>db.Task.Not(
+</span><span>  db.Task.Title.Equals(</span><span style="color:#a6e22e">&quot;1st task&quot;</span><span>)
+</span>).Exec(context.Background())
+</code></div></pre>
+<ul>
+<li><code node="[object Object]">Or</code></li>
+</ul>
+<pre><div node="[object Object]" style="display:block;overflow-x:auto;padding:0.5em;background:#272822;color:#ddd"><code class="language-go" style="white-space:pre"><span>db.Task.Or(
+</span><span>  db.Task.Title.Equals(</span><span style="color:#a6e22e">&quot;1st task&quot;</span><span>),
+</span><span>  db.Task.Desc.Equals(</span><span style="color:#a6e22e">&quot;new task&quot;</span><span>)
+</span>).Exec(context.Background())
+</code></div></pre>
+<h3>関連付けされたクエリ</h3>
+<p>task の title が &quot;1st task&quot; で comment が &quot;new content&quot; であるもの task を取得する.</p>
+<pre><div node="[object Object]" style="display:block;overflow-x:auto;padding:0.5em;background:#272822;color:#ddd"><code class="language-go" style="white-space:pre"><span>tasks, err := client.Task.FindMany(
+</span><span>  db.Task.Title.Equals(</span><span style="color:#a6e22e">&quot;1st task&quot;</span><span>)
+</span>  db.Task.Comments.Some(
+<span>    db.Comment.Content.Equals(</span><span style="color:#a6e22e">&quot;new content&quot;</span><span>),
+</span>  ),
+<!-- -->).Exec(context.Background())
+</code></div></pre></div><br/></div></div><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"docBody":{"id":"20211022165454","title":"prisma-client-go を試した","content":"\nまずは project の作成から.\n```bash\n$ go mod init backend\n```\n\nclient のインストール.\n```bash\n$ go get github.com/prisma/prisma-client-go\n```\n\nスキーマの作成.\n```bash\n$ npx prisma init\n```\n\n`prisma/schema.prisma` と `.env` (と .gitignore ) が生成される.\n\n`.env` と `prisma/schema.prisma` を修正.\n\n```env\n# Environment variables declared in this file are automatically made available to Prisma.\n# See the documentation for more detail: https://pris.ly/d/prisma-schema#using-environment-variables\n\n# Prisma supports the native connection string format for PostgreSQL, MySQL, SQLite, SQL Server and MongoDB (Preview).\n# See the documentation for all the connection string options: https://pris.ly/d/connection-strings\n\nDATABASE_URL=\"mysql://app:password@localhost:3306/app\"\n```\n\n```schema.prisma\n// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\ngenerator client {\n  provider = \"go run github.com/prisma/prisma-client-go\"\n}\n\ndatasource db {\n  provider = \"mysql\"\n  url      = env(\"DATABASE_URL\")\n}\n```\n\n`Task` モデルを定義する.\n```schema.prisma\n// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\ngenerator client {\n  provider = \"go run github.com/prisma/prisma-client-go\"\n}\n\ndatasource db {\n  provider = \"mysql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Task {\n  id String @default(cuid()) @id\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n  title String\n  status Boolean\n  desc String?\n}\n```\n\nprisma クライアントの作成.\n`prisma/db/` が生成される.\n```bash\n$ go run github.com/prisma/prisma-client-go generate\n```\n\nDB にスキーマを反映させる.\n```bash\n$ go run github.com/prisma/prisma-client-go migrate dev --name create_task\n\n~~\n~~\nmigrations/\n  └─ 20211022082219_create_task/\n    └─ migration.sql\n\nYour database is now in sync with your schema.\n```\n\n`prisma/migrations/20211022082219_create_task/migration.sql` を見てみる.\n```sql\n-- CreateTable\nCREATE TABLE `Task` (\n    `id` VARCHAR(191) NOT NULL,\n    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),\n    `updatedAt` DATETIME(3) NOT NULL,\n    `title` VARCHAR(191) NOT NULL,\n    `status` BOOLEAN NOT NULL,\n    `desc` VARCHAR(191) NULL,\n\n    PRIMARY KEY (`id`)\n) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;\n```\n\nテーブルも作成されている.\n```mysql\nmysql\u003e show tables;\n+--------------------+\n| Tables_in_app      |\n+--------------------+\n| _prisma_migrations |\n| Task               |\n+--------------------+\n```\n\n`Comment` モデルを定義し, `Task` モデルと関連付けを行う.\n```schema.prisma\nmodel Task {\n  id String @default(cuid()) @id\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n  title String\n  status Boolean\n  desc String?\n\n  comments Comment[]\n}\n\nmodel Comment {\n  id String @default(cuid()) @id\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n  content String\n\n  task Task @relation(fields: [taskId], references: [id])\n  taskId String\n```\n\nmigration を行う.\n```bash\n$ go run github.com/prisma/prisma-client-go migrate dev --name add_comment_model\n\n~~\n~~\nmigrations/\n  └─ 20211022083117_add_comment_model/\n    └─ migration.sql\n\nYour database is now in sync with your schema.\n```\n\n`migrations/20211022083117_add_comment_model/migration.sql` を見る.\n```sql\n-- CreateTable\nCREATE TABLE `Comment` (\n    `id` VARCHAR(191) NOT NULL,\n    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),\n    `updatedAt` DATETIME(3) NOT NULL,\n    `content` VARCHAR(191) NOT NULL,\n    `taskId` VARCHAR(191) NOT NULL,\n\n    PRIMARY KEY (`id`)\n) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;\n\n-- AddForeignKey\nALTER TABLE `Comment` ADD CONSTRAINT `Comment_taskId_fkey` FOREIGN KEY (`taskId`) REFERENCES `Task`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;\n```\n\n## Prisma Studio を使う\n`localhost:5555` で起動する.\n```bash\n$ npx prisma studio\n```\n\n## prisma api syntax\n### 全件取得する\n```go\ntasks, err := client.Task.FindMany().Exec(context.Background())\n```\n\n### クエリで取得する\n```go\ntasks, err := client.Task.FindMany(\n  db.Task.Title.Equals(\"1st task\")\n  // \u003cmodel\u003e.\u003cfield\u003e.\u003cmethod\u003e.(value) 基本的にこの形式で使う\n).Exec(context.Background())\n```\n\n### 一意なデータを取得する\n`schema.prisma` で `@id`,`@unique` でマークされたもののみに使用可能.\n```go\ntask, err := client.Task.FindUnique(\n  db.Task.ID.Equals(\"1234567890\")\n).Exec(context.Background())\n```\n\n### 最初に見つかった 1 件を取得する\n```go\ntask, err := client.Task.FindFirst(\n  db.Task.Title.Equals(\"1st task\")\n).Exec(context.Background())\n```\n\n### Query API\n### スキーマのデータ型によってよしなにできる\n\n- `String Filter`\n```go\ntasks, err := client.Task.FindMany(\n  // Title が \"1st task\" と一致する Task を取得\n  db.Task.Title.Equals(\"1st task\")\n\n  // Title に \"task\" を含む Task を取得\n  // db.Task.Title.Contains(\"task\")\n\n  // Title が \"1st\" から始まる Task を取得\n  // db.Task.Title.StartsWith(\"1st\")\n\n  // Title が \"task\" で終わる Task を取得\n  // db.Task.Title.EndsWith(\"task\")\n).Exec(context.Background())\n```\n\n- `Number Filter`\n```go\n// \u003cField\u003e が 50 である \u003cModel\u003e を取得\ndb.\u003cModel\u003e.\u003cField\u003e.Equals(50).Exec(context.Background())\n\n// \u003cField\u003e が 50 以下の \u003cModel\u003e を取得\ndb.\u003cModel\u003e.\u003cField\u003e.Lte(50).Exec(context.Background())\n\n// \u003cField\u003e が 50 未満の \u003cModel\u003e を取得\ndb.\u003cModel\u003e.\u003cField\u003e.Lt(50).Exec(context.Background())\n\n// \u003cField\u003e が 50 以上の \u003cModel\u003e を取得\ndb.\u003cModel\u003e.\u003cField\u003e.Gte(50).Exec(context.Background())\n\n// \u003cField\u003e が 50 より大きいの \u003cModel\u003e を取得\ndb.\u003cModel\u003e.\u003cField\u003e.Gte(50).Exec(context.Background())\n```\n\n- `Time Filter`\n```go\ntasks, err := client.Task.FindMany(\n  // 昨日作成された task を取得する\n  db.Task.CreatedAt.Equals(yesterday)\n\n  // 過去 6 時間で作られた task を取得する (createdAt \u003e 6 hours ago)\n  // db.Task.Gt(time.Now().Add(-6 * time.Hour))\n\n  // 過去 6 時間で作られた task を取得する (createdAt \u003e= 6 hours ago)\n  // db.Task.Gte(time.Now().Add(-6 * time.Hour))\n\n  // 昨日作成された task を取得する\n  // db.Task.Lt(time.Now().Truncate(24 * time.Hour))\n\n  // 昨日作成された task を取得する (本日 00:00:00 を含む)\n  // db.Task.Lte(time.Now().Truncate(24 * time.Hour))\n).Exec(context.Background())\n```\n\n### NULL 関連\nnull であるものを取得する.\n```go\ndb.Task.Content.EqualsOptional(nil).Exec(context.Background())\n\ncontent := \"string\"\ndb.Task.Content.EqualsOptional(\u0026content).Exec(context.Background())\n```\n\n### 他にも\n- `Not`\n```go\ndb.Task.Not(\n  db.Task.Title.Equals(\"1st task\")\n).Exec(context.Background())\n```\n\n- `Or`\n```go\ndb.Task.Or(\n  db.Task.Title.Equals(\"1st task\"),\n  db.Task.Desc.Equals(\"new task\")\n).Exec(context.Background())\n```\n\n### 関連付けされたクエリ\ntask の title が \"1st task\" で comment が \"new content\" であるもの task を取得する.\n```go\ntasks, err := client.Task.FindMany(\n  db.Task.Title.Equals(\"1st task\")\n  db.Task.Comments.Some(\n    db.Comment.Content.Equals(\"new content\"),\n  ),\n).Exec(context.Background())\n```\n"}},"__N_SSG":true},"page":"/docs/[id]","query":{"id":"20211022165454"},"buildId":"3WFwgUBmCIfCHDts5UaWs","isFallback":false,"gsp":true,"scriptLoader":[]}</script></body></html>
