@@ -1,0 +1,246 @@
+<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width"/><meta charSet="utf-8"/><title>MyDocs</title><meta name="next-head-count" content="3"/><link rel="preload" href="/_next/static/css/e44854d771c00df0.css" as="style"/><link rel="stylesheet" href="/_next/static/css/e44854d771c00df0.css" data-n-g=""/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills-5cd94c89d3acac5f.js"></script><script src="/_next/static/chunks/webpack-514908bffb652963.js" defer=""></script><script src="/_next/static/chunks/framework-91d7f78b5b4003c8.js" defer=""></script><script src="/_next/static/chunks/main-d98b4a7f39fdfc80.js" defer=""></script><script src="/_next/static/chunks/pages/_app-327d6f89185e0007.js" defer=""></script><script src="/_next/static/chunks/594-14c965e1fcce40c6.js" defer=""></script><script src="/_next/static/chunks/pages/docs/%5Bid%5D-5449b7016e4923d1.js" defer=""></script><script src="/_next/static/U6R7CMMdXPU1CTPoaVNEN/_buildManifest.js" defer=""></script><script src="/_next/static/U6R7CMMdXPU1CTPoaVNEN/_ssgManifest.js" defer=""></script><script src="/_next/static/U6R7CMMdXPU1CTPoaVNEN/_middlewareManifest.js" defer=""></script></head><body><div id="__next" data-reactroot=""><div><div><div class="bg-gray-600 h-10 leading-10 text-2xl"><a class="no-underline text-gray-100 mx-2" href="/">MyDocs</a></div></div><div class="mx-7"><h1><b># <!-- -->TypeScript の Utility Types</b></h1><h2>Partial<!-- -->&lt;Type&gt;</h2>
+<p><code node="[object Object]">Partial&lt;Type&gt;</code> で指定した型に一時的に切り替えることができる。値を返すときはキャストする必要がある。</p>
+<pre><div node="[object Object]" style="display:block;overflow-x:auto;padding:0.5em;background:#272822;color:#ddd"><code class="language-ts" style="white-space:pre"><span style="color:#f92672;font-weight:bold">interface</span><span> Todo {
+</span><span>  title: </span><span style="color:#a6e22e;font-weight:bold">string</span><span>;
+</span><span>  desc: </span><span style="color:#a6e22e;font-weight:bold">string</span><span>;
+</span><span>  </span><span style="color:#a6e22e;font-weight:bold">date</span><span>: </span><span style="color:#a6e22e;font-weight:bold">Date</span><span>;
+</span>}
+<!-- -->
+<span></span><span style="color:#f92672;font-weight:bold">function</span><span> createTodo(
+</span><span>  title: </span><span style="color:#a6e22e;font-weight:bold">string</span><span>,
+</span><span>  desc: </span><span style="color:#a6e22e;font-weight:bold">string</span><span>,
+</span><span>  </span><span style="color:#a6e22e;font-weight:bold">date</span><span>: </span><span style="color:#a6e22e;font-weight:bold">Date</span><span>,
+</span>): Todo {
+<span>  // </span><span style="color:#f92672;font-weight:bold">let</span><span> todo: Todo = {} // ここでのエラーを防ぐ
+</span><span>  </span><span style="color:#f92672;font-weight:bold">let</span><span> todo: </span><span style="color:#f92672;font-weight:bold">Partial</span><span>&lt;Todo&gt; = {};
+</span>  todo.title = title;
+<!-- -->  todo.desc = desc;
+<span>  todo.</span><span style="color:#a6e22e;font-weight:bold">date</span><span> = </span><span style="color:#a6e22e;font-weight:bold">date</span><span>;
+</span><span>  </span><span style="color:#f92672;font-weight:bold">return</span><span> todo </span><span style="color:#f92672;font-weight:bold">as</span><span> Todo;
+</span>}
+</code></div><p class="h-2"></p></pre>
+<h2>Required<!-- -->&lt;Type&gt;</h2>
+<p>パラメータが欠損したらエラー。</p>
+<pre><div node="[object Object]" style="display:block;overflow-x:auto;padding:0.5em;background:#272822;color:#ddd"><code class="language-ts" style="white-space:pre"><span style="color:#f92672;font-weight:bold">interface</span><span> Todo {
+</span><span>  title: </span><span style="color:#a6e22e;font-weight:bold">string</span><span>;
+</span><span>  desc: </span><span style="color:#a6e22e;font-weight:bold">string</span><span>;
+</span><span>  </span><span style="color:#a6e22e;font-weight:bold">date</span><span>: </span><span style="color:#a6e22e;font-weight:bold">Date</span><span>;
+</span>}
+<!-- -->
+<span></span><span style="color:#f92672;font-weight:bold">function</span><span> createTodo(
+</span><span>  title: </span><span style="color:#a6e22e;font-weight:bold">string</span><span>,
+</span><span>  desc: </span><span style="color:#a6e22e;font-weight:bold">string</span><span>,
+</span><span>  </span><span style="color:#a6e22e;font-weight:bold">date</span><span>: </span><span style="color:#a6e22e;font-weight:bold">Date</span><span>,
+</span>): Todo {
+<span>  </span><span style="color:#f92672;font-weight:bold">const</span><span> todo: Required&lt;Todo&gt; = {
+</span>    title: title,
+<!-- -->    desc: desc,
+<span>    </span><span style="color:#a6e22e;font-weight:bold">date</span><span>: </span><span style="color:#a6e22e;font-weight:bold">date</span><span>,
+</span>  };
+<!-- -->
+<span>  </span><span style="color:#f92672;font-weight:bold">return</span><span> todo;
+</span>}
+</code></div><p class="h-2"></p></pre>
+<h2>Readonly<!-- -->&lt;Type&gt;</h2>
+<p>初期化したあとにパラメータを変更できないようにする。</p>
+<pre><div node="[object Object]" style="display:block;overflow-x:auto;padding:0.5em;background:#272822;color:#ddd"><code class="language-ts" style="white-space:pre"><span>interface </span><span class="hljs-class">Todo </span><span>{
+</span><span></span><span style="color:#bf79db">  title:</span><span> string;
+</span>}
+<!-- -->
+<span>const todo: Readonly</span><span class="hljs-params">&lt;Todo&gt;</span><span> = {
+</span><span></span><span style="color:#bf79db">  title:</span><span> </span><span style="color:#a6e22e">&quot;create&quot;</span><span>,
+</span>};
+<!-- -->
+<span></span><span style="color:#75715e">// todo.title = &quot;update&quot;</span></code></div><p class="h-2"></p></pre>
+<h2>Record&lt;Keys, Type&gt;</h2>
+<p>Key とその型を指定できる。辞書として使いたい場合に適している。</p>
+<pre><div node="[object Object]" style="display:block;overflow-x:auto;padding:0.5em;background:#272822;color:#ddd"><code class="language-ts" style="white-space:pre"><span>interface CatInfo {
+</span>  age: number;
+<!-- -->  breed: string;
+<!-- -->}
+<!-- -->
+<span>type CatName = </span><span style="color:#a6e22e">&quot;miffy&quot;</span><span> | </span><span style="color:#a6e22e">&quot;boris&quot;</span><span> | </span><span style="color:#a6e22e">&quot;mordred&quot;</span><span>;
+</span>
+<!-- -->const cats: Record&lt;CatName, CatInfo&gt; = {
+<span>  miffy: { age: </span><span class="hljs-number">10</span><span>, breed: </span><span style="color:#a6e22e">&quot;Persian&quot;</span><span> },
+</span><span>  boris: { age: </span><span class="hljs-number">5</span><span>, breed: </span><span style="color:#a6e22e">&quot;Maine Coon&quot;</span><span> },
+</span><span>  mordred: { age: </span><span class="hljs-number">16</span><span>, breed: </span><span style="color:#a6e22e">&quot;British Shorthair&quot;</span><span> },
+</span>};
+<!-- -->
+<!-- -->console.log(cats);
+<span></span><span style="color:#75715e">// {</span><span>
+</span><span></span><span style="color:#75715e">//   miffy: { age: 10, breed: &quot;Persian&quot; },</span><span>
+</span><span></span><span style="color:#75715e">//   boris: { age: 5, breed: &quot;Maine Coon&quot; },</span><span>
+</span><span></span><span style="color:#75715e">//   mordred: { age: 16, breed: &quot;British Shorthair&quot; }</span><span>
+</span><span></span><span style="color:#75715e">// }</span><span>
+</span>
+<!-- -->console.log(cats.boris);
+<span></span><span style="color:#75715e">// { age: 5, breed: &quot;Maine Coon&quot; }</span></code></div><p class="h-2"></p></pre>
+<h2>Pick&lt;Type, Keys&gt;</h2>
+<p>keys に指定したプロパティの型になる。</p>
+<pre><div node="[object Object]" style="display:block;overflow-x:auto;padding:0.5em;background:#272822;color:#ddd"><code class="language-ts" style="white-space:pre"><span style="color:#bf79db">interface Todo</span><span> {
+</span><span></span><span style="color:#bf79db">  title</span><span>: string;
+</span><span></span><span style="color:#bf79db">  desc</span><span>: string;
+</span><span></span><span style="color:#bf79db">  completed</span><span>: boolean;
+</span>}
+<!-- -->
+<span></span><span style="color:#bf79db">type TodoPreview</span><span> = Pick&lt;Todo, </span><span style="color:#a6e22e">&quot;title&quot;</span><span> | </span><span style="color:#a6e22e">&quot;completed&quot;</span><span>&gt;;
+</span>
+<span></span><span style="color:#bf79db">const todo</span><span>: TodoPreview = {
+</span><span>  title: </span><span style="color:#a6e22e">&quot;Clean room&quot;</span><span>,
+</span>  completed: false,
+<!-- -->};
+</code></div><p class="h-2"></p></pre>
+<h2>Omit&lt;Type, Keys&gt;</h2>
+<p>keys に指定した以外のプロパティの型になる。</p>
+<pre><div node="[object Object]" style="display:block;overflow-x:auto;padding:0.5em;background:#272822;color:#ddd"><code class="language-ts" style="white-space:pre"><span style="color:#bf79db">interface Todo</span><span> {
+</span><span></span><span style="color:#bf79db">  title</span><span>: string;
+</span><span></span><span style="color:#bf79db">  desc</span><span>: string;
+</span><span></span><span style="color:#bf79db">  completed</span><span>: boolean;
+</span><span></span><span style="color:#bf79db">  createdAt</span><span>: number;
+</span>}
+<!-- -->
+<span></span><span style="color:#bf79db">type TodoPreview</span><span> = Omit&lt;Todo, </span><span style="color:#a6e22e">&quot;desc&quot;</span><span>&gt;;
+</span>
+<span></span><span style="color:#bf79db">const todo</span><span>: TodoPreview = {
+</span><span>  title: </span><span style="color:#a6e22e">&quot;Clean room&quot;</span><span>,
+</span>  completed: false,
+<!-- -->  createdAt: 1000,
+<!-- -->};
+</code></div><p class="h-2"></p></pre>
+<h2>Exclude&lt;Type, ExcludedUnion&gt;</h2>
+<p><code node="[object Object]">Exclude&lt;T, U&gt;</code> T から U を除いた型になる。</p>
+<pre><div node="[object Object]" style="display:block;overflow-x:auto;padding:0.5em;background:#272822;color:#ddd"><code class="language-ts" style="white-space:pre"><span>type </span><span class="hljs-attr">T0</span><span> = Exclude&lt;</span><span style="color:#a6e22e">&quot;a&quot;</span><span> | </span><span style="color:#a6e22e">&quot;b&quot;</span><span> | </span><span style="color:#a6e22e">&quot;c&quot;</span><span>, </span><span style="color:#a6e22e">&quot;a&quot;</span><span>&gt;</span><span style="color:#75715e">;</span><span>
+</span><span>// type </span><span class="hljs-attr">T0</span><span> = </span><span style="color:#a6e22e">&quot;b&quot;</span><span> | </span><span style="color:#a6e22e">&quot;c&quot;</span><span>
+</span>
+<span>type </span><span class="hljs-attr">T1</span><span> = Exclude&lt;</span><span style="color:#a6e22e">&quot;a&quot;</span><span> | </span><span style="color:#a6e22e">&quot;b&quot;</span><span> | </span><span style="color:#a6e22e">&quot;c&quot;</span><span>, </span><span style="color:#a6e22e">&quot;a&quot;</span><span> | </span><span style="color:#a6e22e">&quot;b&quot;</span><span>&gt;</span><span style="color:#75715e">;</span><span>
+</span><span>// type </span><span class="hljs-attr">T1</span><span> = </span><span style="color:#a6e22e">&quot;c&quot;</span><span>
+</span>
+<span>type </span><span class="hljs-attr">T2</span><span> = Exclude&lt;string | number | (() =&gt; void), Function&gt;</span><span style="color:#75715e">;</span><span>
+</span><span>// type </span><span class="hljs-attr">T2</span><span> = string | number</span></code></div><p class="h-2"></p></pre>
+<h2>Extract&lt;Type, Union&gt;</h2>
+<p><code node="[object Object]">Extract&lt;T, U&gt;</code> T と U のユニオン型になる。</p>
+<pre><div node="[object Object]" style="display:block;overflow-x:auto;padding:0.5em;background:#272822;color:#ddd"><code class="language-ts" style="white-space:pre"><span style="color:#a6e22e">type</span><span> T0 = Extract&lt;</span><span style="color:#a6e22e">&quot;a&quot;</span><span> | </span><span style="color:#a6e22e">&quot;b&quot;</span><span> | </span><span style="color:#a6e22e">&quot;c&quot;</span><span>, </span><span style="color:#a6e22e">&quot;a&quot;</span><span> | </span><span style="color:#a6e22e">&quot;f&quot;</span><span>&gt;;
+</span><span>// </span><span style="color:#a6e22e">type</span><span> T0 = </span><span style="color:#a6e22e">&quot;a&quot;</span><span>
+</span>
+<span></span><span style="color:#a6e22e">type</span><span> T1 = Extract&lt;</span><span style="color:#a6e22e">string</span><span> | number | (</span><span class="hljs-function hljs-params">()</span><span class="hljs-function"> =&gt;</span><span> void), Function&gt;;
+</span><span>// </span><span style="color:#a6e22e">type</span><span> T1 = </span><span class="hljs-function hljs-params">()</span><span class="hljs-function"> =&gt;</span><span> void</span></code></div><p class="h-2"></p></pre>
+<h2>NonNullable<!-- -->&lt;Type&gt;</h2>
+<p><code node="[object Object]">null</code> と <code node="[object Object]">undefined</code> を除いた型になる。</p>
+<pre><div node="[object Object]" style="display:block;overflow-x:auto;padding:0.5em;background:#272822;color:#ddd"><code class="language-ts" style="white-space:pre"><span>type </span><span style="color:#a6e22e;font-weight:bold">T0</span><span> = </span><span style="color:#a6e22e;font-weight:bold">NonNullable</span><span>&lt;string | number | undefined&gt;;
+</span>// type T0 = string | number
+<!-- -->
+<!-- -->type T1 = NonNullable&lt;string[] | null | undefined&gt;;
+<!-- -->// type T1 = string[]
+</code></div><p class="h-2"></p></pre>
+<h2>Parameters<!-- -->&lt;Type&gt;</h2>
+<p><code node="[object Object]">Parameters&lt;T&gt;</code> では T は関数型の必要がある。 T が関数のとき T の引数一覧をタプル型で作成する。</p>
+<pre><div node="[object Object]" style="display:block;overflow-x:auto;padding:0.5em;background:#272822;color:#ddd"><code class="language-ts" style="white-space:pre"><span style="color:#f92672;font-weight:bold">declare</span><span> </span><span class="hljs-function" style="color:#f92672;font-weight:bold">function</span><span class="hljs-function"> </span><span class="hljs-function" style="color:#a6e22e;font-weight:bold">f1</span><span class="hljs-function">(</span><span class="hljs-function hljs-params">arg: { a: </span><span class="hljs-function hljs-params" style="color:#a6e22e">number</span><span class="hljs-function hljs-params">; b: </span><span class="hljs-function hljs-params" style="color:#a6e22e">string</span><span class="hljs-function hljs-params"> }</span><span class="hljs-function">): </span><span class="hljs-function" style="color:#a6e22e;font-weight:bold">void</span><span>;
+</span>
+<span></span><span style="color:#f92672;font-weight:bold">type</span><span> T0 = Parameters&lt;</span><span class="hljs-function">() =&gt;</span><span> </span><span style="color:#a6e22e">string</span><span>&gt;;
+</span><span></span><span style="color:#75715e">// type T0 = []</span><span>
+</span>
+<span></span><span style="color:#f92672;font-weight:bold">type</span><span> T1 = Parameters&lt;</span><span class="hljs-function">(</span><span class="hljs-function hljs-params">s: </span><span class="hljs-function hljs-params" style="color:#a6e22e">string</span><span class="hljs-function">) =&gt;</span><span> </span><span style="color:#a6e22e">void</span><span>&gt;;
+</span><span></span><span style="color:#75715e">// type T1 = [s: string]</span><span>
+</span>
+<span></span><span style="color:#f92672;font-weight:bold">type</span><span> T2 = Parameters&lt;&lt;T&gt;</span><span class="hljs-function">(</span><span class="hljs-function hljs-params">arg: T</span><span class="hljs-function">) =&gt;</span><span> T&gt;;
+</span><span></span><span style="color:#75715e">// type T2 = [arg: unknown]</span><span>
+</span>
+<span></span><span style="color:#f92672;font-weight:bold">type</span><span> T3 = Parameters&lt;</span><span style="color:#f92672;font-weight:bold">typeof</span><span> f1&gt;;
+</span><span></span><span style="color:#75715e">// type T3 = [arg: {</span><span>
+</span><span></span><span style="color:#75715e">//   a: number;</span><span>
+</span><span></span><span style="color:#75715e">//   b: string;</span><span>
+</span><span></span><span style="color:#75715e">// }]</span><span>
+</span>
+<span></span><span style="color:#f92672;font-weight:bold">type</span><span> F = </span><span class="hljs-function">(</span><span class="hljs-function hljs-params">arg1: </span><span class="hljs-function hljs-params" style="color:#a6e22e">string</span><span class="hljs-function hljs-params">, arg2: </span><span class="hljs-function hljs-params" style="color:#a6e22e">number</span><span class="hljs-function">) =&gt;</span><span> </span><span style="color:#a6e22e">string</span><span>;
+</span><span></span><span style="color:#f92672;font-weight:bold">type</span><span> F1 = Parameters&lt;F&gt;;
+</span><span></span><span style="color:#75715e">// type F1 = [arg1: string, arg2: number]</span><span>
+</span>
+<span></span><span style="color:#f92672;font-weight:bold">const</span><span> v: F1 = [</span><span style="color:#a6e22e">&quot;a&quot;</span><span>, </span><span class="hljs-number">123</span><span>];</span></code></div><p class="h-2"></p></pre>
+<h2>ConstructorParameters<!-- -->&lt;Type&gt;</h2>
+<p>class のコンストラクタ関数の引数の型からタプル型を作成する。</p>
+<pre><div node="[object Object]" style="display:block;overflow-x:auto;padding:0.5em;background:#272822;color:#ddd"><code class="language-ts" style="white-space:pre"><span>type </span><span class="hljs-attr">T0</span><span> = ConstructorParameters&lt;ErrorConstructor&gt;</span><span style="color:#75715e">;</span><span>
+</span><span>// type </span><span class="hljs-attr">T0</span><span> = [message?: string]
+</span>
+<span>type </span><span class="hljs-attr">T1</span><span> = ConstructorParameters&lt;FunctionConstructor&gt;</span><span style="color:#75715e">;</span><span>
+</span><span>// type </span><span class="hljs-attr">T1</span><span> = string[]
+</span>
+<!-- -->class Person {
+<!-- -->  constructor(public id: number, public name: string) {}
+<!-- -->}
+<!-- -->
+<span>type </span><span class="hljs-attr">P</span><span> = ConstructorParameters&lt;typeof Person&gt;</span><span style="color:#75715e">;</span><span>
+</span><span>// type </span><span class="hljs-attr">P</span><span> = [id: number, name: string]</span></code></div><p class="h-2"></p></pre>
+<h2>ReturnType<!-- -->&lt;Type&gt;</h2>
+<p>戻り値からなる型になる。</p>
+<pre><div node="[object Object]" style="display:block;overflow-x:auto;padding:0.5em;background:#272822;color:#ddd"><code class="language-ts" style="white-space:pre"><span style="color:#f92672;font-weight:bold">declare</span><span> </span><span class="hljs-function" style="color:#f92672;font-weight:bold">function</span><span class="hljs-function"> </span><span class="hljs-function" style="color:#a6e22e;font-weight:bold">f1</span><span class="hljs-function">(</span><span class="hljs-function">): </span><span>{ a: </span><span style="color:#a6e22e">number</span><span>; b: </span><span style="color:#a6e22e">string</span><span> };
+</span>
+<span></span><span style="color:#f92672;font-weight:bold">type</span><span> T0 = ReturnType&lt;</span><span class="hljs-function">() =&gt;</span><span> </span><span style="color:#a6e22e">string</span><span>&gt;;
+</span><span></span><span style="color:#75715e">// type T0 = string</span><span>
+</span>
+<span></span><span style="color:#f92672;font-weight:bold">type</span><span> T1 = ReturnType&lt;</span><span class="hljs-function">(</span><span class="hljs-function hljs-params">s: </span><span class="hljs-function hljs-params" style="color:#a6e22e">string</span><span class="hljs-function">) =&gt;</span><span> </span><span style="color:#a6e22e">void</span><span>&gt;;
+</span><span></span><span style="color:#75715e">// type T1 = void</span><span>
+</span>
+<span></span><span style="color:#f92672;font-weight:bold">type</span><span> T2 = ReturnType&lt;&lt;T&gt;</span><span class="hljs-function">() =&gt;</span><span> T&gt;;
+</span><span></span><span style="color:#75715e">// type T2 = unknown</span><span>
+</span>
+<span></span><span style="color:#f92672;font-weight:bold">type</span><span> T3 = ReturnType&lt;&lt;T </span><span style="color:#f92672;font-weight:bold">extends</span><span> U, U </span><span style="color:#f92672;font-weight:bold">extends</span><span> </span><span style="color:#a6e22e">number</span><span>[]&gt;</span><span class="hljs-function">() =&gt;</span><span> T&gt;;
+</span><span></span><span style="color:#75715e">// type T3 = number[]</span><span>
+</span>
+<span></span><span style="color:#f92672;font-weight:bold">type</span><span> T4 = ReturnType&lt;</span><span style="color:#f92672;font-weight:bold">typeof</span><span> f1&gt;;
+</span><span></span><span style="color:#75715e">// type T4 = {</span><span>
+</span><span></span><span style="color:#75715e">//   a: number;</span><span>
+</span><span></span><span style="color:#75715e">//   b: string;</span><span>
+</span><span></span><span style="color:#75715e">// }</span></code></div><p class="h-2"></p></pre>
+<h2>InstanceType<!-- -->&lt;Type&gt;</h2>
+<p>コンストラクタの戻り値からなる型。</p>
+<pre><div node="[object Object]" style="display:block;overflow-x:auto;padding:0.5em;background:#272822;color:#ddd"><code class="language-ts" style="white-space:pre"><span>class C {
+</span><span>  </span><span class="hljs-attr">x</span><span> = </span><span class="hljs-number">0</span><span style="color:#75715e">;</span><span>
+</span><span>  </span><span class="hljs-attr">y</span><span> = </span><span class="hljs-number">0</span><span style="color:#75715e">;</span><span>
+</span>}
+<!-- -->
+<!-- -->class Foo {}
+<!-- -->
+<span>type </span><span class="hljs-attr">T0</span><span> = InstanceType&lt;typeof C&gt;</span><span style="color:#75715e">;</span><span>
+</span><span>// type </span><span class="hljs-attr">T0</span><span> = C
+</span>
+<span>type </span><span class="hljs-attr">T1</span><span> = InstanceType&lt;typeof Foo&gt;</span><span style="color:#75715e">;</span><span>
+</span><span>// type </span><span class="hljs-attr">T1</span><span> = Foo</span></code></div><p class="h-2"></p></pre>
+<h2>ThisParameterType<!-- -->&lt;Type&gt;</h2>
+<p>関数型の this パラメータの型を抽出した型になる。</p>
+<pre><div node="[object Object]" style="display:block;overflow-x:auto;padding:0.5em;background:#272822;color:#ddd"><code class="language-ts" style="white-space:pre"><span style="color:#f92672;font-weight:bold">function</span><span> </span><span style="color:#f92672;font-weight:bold">to</span><span class="hljs-constructor">Hex(</span><span class="hljs-constructor hljs-params">this</span><span class="hljs-constructor">: </span><span class="hljs-constructor hljs-params">number</span><span class="hljs-constructor">)</span><span> {
+</span><span>  return this.</span><span style="color:#f92672;font-weight:bold">to</span><span class="hljs-constructor">String()</span><span>;
+</span>}
+<!-- -->
+<span></span><span style="color:#f92672;font-weight:bold">function</span><span> number</span><span class="hljs-constructor">ToString(</span><span class="hljs-constructor hljs-params">n</span><span class="hljs-constructor">: ThisParameterType&lt;</span><span class="hljs-constructor hljs-params">typeof</span><span class="hljs-constructor"> </span><span class="hljs-constructor hljs-params">toHex</span><span class="hljs-constructor">&gt;)</span><span> {
+</span>  return toHex.apply(n);
+<!-- -->}
+<!-- -->
+<span>console.log(number</span><span class="hljs-constructor">ToString(123)</span><span>);
+</span><span></span><span style="color:#75715e">// 123</span></code></div><p class="h-2"></p></pre>
+<h2>OmitThisParameter<!-- -->&lt;Type&gt;</h2>
+<p>関数型の this パラメータの型を除いた型になる。</p>
+<pre><div node="[object Object]" style="display:block;overflow-x:auto;padding:0.5em;background:#272822;color:#ddd"><code class="language-ts" style="white-space:pre"><span class="hljs-function" style="color:#f92672;font-weight:bold">function</span><span class="hljs-function"> </span><span class="hljs-function" style="color:#a6e22e;font-weight:bold">toHex</span><span class="hljs-function">(</span><span class="hljs-function hljs-params" style="color:#a6e22e">this</span><span class="hljs-function hljs-params">: </span><span class="hljs-function hljs-params" style="color:#a6e22e">number</span><span class="hljs-function">) </span><span>{
+</span><span>  </span><span style="color:#f92672;font-weight:bold">return</span><span> </span><span style="color:#a6e22e">this</span><span>.toString();
+</span>}
+<!-- -->
+<span></span><span style="color:#f92672;font-weight:bold">const</span><span> fiveToHex: OmitThisParameter&lt;</span><span style="color:#f92672;font-weight:bold">typeof</span><span> toHex&gt; = toHex.bind(</span><span class="hljs-number">123</span><span>);
+</span>
+<span></span><span style="color:#a6e22e">console</span><span>.log(fiveToHex());
+</span><span></span><span style="color:#75715e">// 123</span></code></div><p class="h-2"></p></pre>
+<h2>ThisType<!-- -->&lt;Type&gt;</h2>
+<p>オブジェクト内の this の型を正しい型にする。</p>
+<pre><div node="[object Object]" style="display:block;overflow-x:auto;padding:0.5em;background:#272822;color:#ddd"><code class="language-ts" style="white-space:pre"><span style="color:#f92672;font-weight:bold">interface</span><span> User {
+</span><span>  </span><span class="hljs-attr">name</span><span>: </span><span style="color:#a6e22e">string</span><span>;
+</span>}
+<!-- -->
+<span></span><span style="color:#f92672;font-weight:bold">interface</span><span> Greeting {
+</span><span>  hello(): </span><span style="color:#a6e22e">void</span><span>;
+</span>}
+<!-- -->
+<span></span><span style="color:#f92672;font-weight:bold">const</span><span> user: Greeting &amp; ThisType&lt;User&gt; = {
+</span><span>  </span><span class="hljs-function" style="color:#a6e22e;font-weight:bold">hello</span><span class="hljs-function">(</span><span class="hljs-function">)</span><span> {
+</span><span>    </span><span style="color:#a6e22e">console</span><span>.log(</span><span style="color:#a6e22e">`Hello </span><span style="color:#a6e22e">${</span><span style="color:#a6e22e">this</span><span style="color:#a6e22e">.name}</span><span style="color:#a6e22e">`</span><span>);
+</span>  },
+<!-- -->};
+</code></div><p class="h-2"></p></pre></div><br/></div></div><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"docBody":{"id":"20220105212211","title":"TypeScript の Utility Types","content":"\n## Partial\u003cType\u003e\n`Partial\u003cType\u003e` で指定した型に一時的に切り替えることができる。値を返すときはキャストする必要がある。\n```ts\ninterface Todo {\n  title: string;\n  desc: string;\n  date: Date;\n}\n\nfunction createTodo(\n  title: string,\n  desc: string,\n  date: Date,\n): Todo {\n  // let todo: Todo = {} // ここでのエラーを防ぐ\n  let todo: Partial\u003cTodo\u003e = {};\n  todo.title = title;\n  todo.desc = desc;\n  todo.date = date;\n  return todo as Todo;\n}\n```\n\n## Required\u003cType\u003e\nパラメータが欠損したらエラー。\n```ts\ninterface Todo {\n  title: string;\n  desc: string;\n  date: Date;\n}\n\nfunction createTodo(\n  title: string,\n  desc: string,\n  date: Date,\n): Todo {\n  const todo: Required\u003cTodo\u003e = {\n    title: title,\n    desc: desc,\n    date: date,\n  };\n\n  return todo;\n}\n```\n\n## Readonly\u003cType\u003e\n初期化したあとにパラメータを変更できないようにする。\n```ts\ninterface Todo {\n  title: string;\n}\n\nconst todo: Readonly\u003cTodo\u003e = {\n  title: \"create\",\n};\n\n// todo.title = \"update\"\n```\n\n## Record\u003cKeys, Type\u003e\nKey とその型を指定できる。辞書として使いたい場合に適している。\n```ts\ninterface CatInfo {\n  age: number;\n  breed: string;\n}\n\ntype CatName = \"miffy\" | \"boris\" | \"mordred\";\n\nconst cats: Record\u003cCatName, CatInfo\u003e = {\n  miffy: { age: 10, breed: \"Persian\" },\n  boris: { age: 5, breed: \"Maine Coon\" },\n  mordred: { age: 16, breed: \"British Shorthair\" },\n};\n\nconsole.log(cats);\n// {\n//   miffy: { age: 10, breed: \"Persian\" },\n//   boris: { age: 5, breed: \"Maine Coon\" },\n//   mordred: { age: 16, breed: \"British Shorthair\" }\n// }\n\nconsole.log(cats.boris);\n// { age: 5, breed: \"Maine Coon\" }\n```\n\n## Pick\u003cType, Keys\u003e\nkeys に指定したプロパティの型になる。\n```ts\ninterface Todo {\n  title: string;\n  desc: string;\n  completed: boolean;\n}\n\ntype TodoPreview = Pick\u003cTodo, \"title\" | \"completed\"\u003e;\n\nconst todo: TodoPreview = {\n  title: \"Clean room\",\n  completed: false,\n};\n```\n\n## Omit\u003cType, Keys\u003e\nkeys に指定した以外のプロパティの型になる。\n```ts\ninterface Todo {\n  title: string;\n  desc: string;\n  completed: boolean;\n  createdAt: number;\n}\n\ntype TodoPreview = Omit\u003cTodo, \"desc\"\u003e;\n\nconst todo: TodoPreview = {\n  title: \"Clean room\",\n  completed: false,\n  createdAt: 1000,\n};\n```\n\n## Exclude\u003cType, ExcludedUnion\u003e\n`Exclude\u003cT, U\u003e` T から U を除いた型になる。\n```ts\ntype T0 = Exclude\u003c\"a\" | \"b\" | \"c\", \"a\"\u003e;\n// type T0 = \"b\" | \"c\"\n\ntype T1 = Exclude\u003c\"a\" | \"b\" | \"c\", \"a\" | \"b\"\u003e;\n// type T1 = \"c\"\n\ntype T2 = Exclude\u003cstring | number | (() =\u003e void), Function\u003e;\n// type T2 = string | number\n```\n\n## Extract\u003cType, Union\u003e\n`Extract\u003cT, U\u003e` T と U のユニオン型になる。\n```ts\ntype T0 = Extract\u003c\"a\" | \"b\" | \"c\", \"a\" | \"f\"\u003e;\n// type T0 = \"a\"\n\ntype T1 = Extract\u003cstring | number | (() =\u003e void), Function\u003e;\n// type T1 = () =\u003e void\n```\n\n## NonNullable\u003cType\u003e\n`null` と `undefined` を除いた型になる。\n```ts\ntype T0 = NonNullable\u003cstring | number | undefined\u003e;\n// type T0 = string | number\n\ntype T1 = NonNullable\u003cstring[] | null | undefined\u003e;\n// type T1 = string[]\n```\n\n## Parameters\u003cType\u003e\n`Parameters\u003cT\u003e` では T は関数型の必要がある。 T が関数のとき T の引数一覧をタプル型で作成する。\n```ts\ndeclare function f1(arg: { a: number; b: string }): void;\n\ntype T0 = Parameters\u003c() =\u003e string\u003e;\n// type T0 = []\n\ntype T1 = Parameters\u003c(s: string) =\u003e void\u003e;\n// type T1 = [s: string]\n\ntype T2 = Parameters\u003c\u003cT\u003e(arg: T) =\u003e T\u003e;\n// type T2 = [arg: unknown]\n\ntype T3 = Parameters\u003ctypeof f1\u003e;\n// type T3 = [arg: {\n//   a: number;\n//   b: string;\n// }]\n\ntype F = (arg1: string, arg2: number) =\u003e string;\ntype F1 = Parameters\u003cF\u003e;\n// type F1 = [arg1: string, arg2: number]\n\nconst v: F1 = [\"a\", 123];\n```\n\n## ConstructorParameters\u003cType\u003e\nclass のコンストラクタ関数の引数の型からタプル型を作成する。\n```ts\ntype T0 = ConstructorParameters\u003cErrorConstructor\u003e;\n// type T0 = [message?: string]\n\ntype T1 = ConstructorParameters\u003cFunctionConstructor\u003e;\n// type T1 = string[]\n\nclass Person {\n  constructor(public id: number, public name: string) {}\n}\n\ntype P = ConstructorParameters\u003ctypeof Person\u003e;\n// type P = [id: number, name: string]\n```\n\n## ReturnType\u003cType\u003e\n戻り値からなる型になる。\n```ts\ndeclare function f1(): { a: number; b: string };\n\ntype T0 = ReturnType\u003c() =\u003e string\u003e;\n// type T0 = string\n\ntype T1 = ReturnType\u003c(s: string) =\u003e void\u003e;\n// type T1 = void\n\ntype T2 = ReturnType\u003c\u003cT\u003e() =\u003e T\u003e;\n// type T2 = unknown\n\ntype T3 = ReturnType\u003c\u003cT extends U, U extends number[]\u003e() =\u003e T\u003e;\n// type T3 = number[]\n\ntype T4 = ReturnType\u003ctypeof f1\u003e;\n// type T4 = {\n//   a: number;\n//   b: string;\n// }\n```\n\n## InstanceType\u003cType\u003e\nコンストラクタの戻り値からなる型。\n```ts\nclass C {\n  x = 0;\n  y = 0;\n}\n\nclass Foo {}\n\ntype T0 = InstanceType\u003ctypeof C\u003e;\n// type T0 = C\n\ntype T1 = InstanceType\u003ctypeof Foo\u003e;\n// type T1 = Foo\n```\n\n## ThisParameterType\u003cType\u003e\n関数型の this パラメータの型を抽出した型になる。\n```ts\nfunction toHex(this: number) {\n  return this.toString();\n}\n\nfunction numberToString(n: ThisParameterType\u003ctypeof toHex\u003e) {\n  return toHex.apply(n);\n}\n\nconsole.log(numberToString(123));\n// 123\n```\n\n## OmitThisParameter\u003cType\u003e\n関数型の this パラメータの型を除いた型になる。\n```ts\nfunction toHex(this: number) {\n  return this.toString();\n}\n\nconst fiveToHex: OmitThisParameter\u003ctypeof toHex\u003e = toHex.bind(123);\n\nconsole.log(fiveToHex());\n// 123\n```\n\n## ThisType\u003cType\u003e\nオブジェクト内の this の型を正しい型にする。\n```ts\ninterface User {\n  name: string;\n}\n\ninterface Greeting {\n  hello(): void;\n}\n\nconst user: Greeting \u0026 ThisType\u003cUser\u003e = {\n  hello() {\n    console.log(`Hello ${this.name}`);\n  },\n};\n```\n"}},"__N_SSG":true},"page":"/docs/[id]","query":{"id":"20220105212211"},"buildId":"U6R7CMMdXPU1CTPoaVNEN","isFallback":false,"gsp":true,"scriptLoader":[]}</script></body></html>
