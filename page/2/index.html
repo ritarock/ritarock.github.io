@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-us">
+<html lang="ja">
 <head>
 	<meta name="generator" content="Hugo 0.121.1">
 	<meta charset="UTF-8">
@@ -16,7 +16,7 @@
 <body>
 	<header>
 	============<br>
-	== <a href="https://example.org/">MyDocs</a> ==<br>
+	== <a href="https://ritarock.github.io/">MyDocs</a> ==<br>
 	============
 	<div style="float: right;"></div><br>
 	<p>
@@ -35,7 +35,7 @@
 		
 		
 			<article>
-	<h1><a href="https://example.org/posts/20211227140318/">k6 テスト結果の読み方</a></h1>
+	<h1><a href="https://ritarock.github.io/posts/20211227140318/">k6 テスト結果の読み方</a></h1>
 	<b><time>2021-12-27 14:03:18</time></b>
 	
 	<a href="/tags/k6">k6</a>
@@ -44,14 +44,14 @@
 		docker で実行した。
 $ docker run -i loadimpact/k6 run - &lt;script.js /\ |‾‾| /‾‾/ /‾‾/ /\ / \ | |/ / / / / \/ \ | ( / ‾‾\ / \ | |\ \ | (‾) | / __________ \ |__| \__\ \_____/ .io execution: local script: - output: - scenarios: (100.00%) 1 scenario, 20 max VUs, 2m50s max duration (incl. graceful stop): * default: Up to 20 looping VUs for 2m20s over 3 stages (gracefulRampDown: 30s, gracefulStop: 30s) running (0m01.
 		
-			<a href="https://example.org/posts/20211227140318/">Read more...</a>
+			<a href="https://ritarock.github.io/posts/20211227140318/">Read more...</a>
 		
 	</div>
 </article>
 
 		
 			<article>
-	<h1><a href="https://example.org/posts/20211218151125/">TypeScript 勉強する</a></h1>
+	<h1><a href="https://ritarock.github.io/posts/20211218151125/">TypeScript 勉強する</a></h1>
 	<b><time>2021-12-18 15:11:25</time></b>
 	
 	<a href="/tags/typescript">typescript</a>
@@ -61,14 +61,14 @@ $ docker run -i loadimpact/k6 run - &lt;script.js /\ |‾‾| /‾‾/ /‾‾/ 
 interface Bird { flySpped: number; type: &#34;bird&#34;; } interface Horse { runSpeed: number; type: &#34;horse&#34;; } type Animal = Bird | Horse; function animalSpeed(animal: Animal) { switch (animal.type) { case &#34;bird&#34;: console.log(animal.flySpped); break; case &#34;horse&#34;: console.log(animal.runSpeed); } } 型キャスト 文字列を数値に変換する場合、 + を変数の前につけるだけでよい。
 const a = &#34;1&#34;; const b = &#34;2&#34;; const result = +a + +b; console.log(result); // 3 前に &lt;&gt; で型を書くか、後ろに as を付けて型キャストできる。 祖運剤が確定している場合は ! を付けてエラーを回避できる。
 		
-			<a href="https://example.org/posts/20211218151125/">Read more...</a>
+			<a href="https://ritarock.github.io/posts/20211218151125/">Read more...</a>
 		
 	</div>
 </article>
 
 		
 			<article>
-	<h1><a href="https://example.org/posts/20211120165745/">sql-migrate を試す</a></h1>
+	<h1><a href="https://ritarock.github.io/posts/20211120165745/">sql-migrate を試す</a></h1>
 	<b><time>2021-11-20 16:57:45</time></b>
 	
 	<a href="/tags/golang">golang</a>
@@ -83,14 +83,14 @@ FROM golang:1.17.3 WORKDIR /work RUN go get -v github.com/rubenv/sql-migrate/...
 dbconfig.yml では接続する DB の設定を書いておく。
 development: dialect: mysql datasource: user:pass@tcp(db:3306)/app?
 		
-			<a href="https://example.org/posts/20211120165745/">Read more...</a>
+			<a href="https://ritarock.github.io/posts/20211120165745/">Read more...</a>
 		
 	</div>
 </article>
 
 		
 			<article>
-	<h1><a href="https://example.org/posts/20211112233257/">Go のテストを勉強する</a></h1>
+	<h1><a href="https://ritarock.github.io/posts/20211112233257/">Go のテストを勉強する</a></h1>
 	<b><time>2021-11-12 23:32:57</time></b>
 	
 	<a href="/tags/golang">golang</a>
@@ -106,7 +106,7 @@ t.Helper() を使えば失敗した行が関数呼び出し側になる Benchmar
 
 		
 			<article>
-	<h1><a href="https://example.org/posts/20211106130548/">echo を触ってみる</a></h1>
+	<h1><a href="https://ritarock.github.io/posts/20211106130548/">echo を触ってみる</a></h1>
 	<b><time>2021-11-06 13:05:48</time></b>
 	
 	<a href="/tags/golang">golang</a>
@@ -118,14 +118,14 @@ $ go get github.com/labstack/echo/v4 package main import ( &#34;net/http&#34; &#
 package main import ( &#34;net/http&#34; &#34;github.com/labstack/echo/v4&#34; ) func main() { e := echo.New() e.GET(&#34;/users/:id&#34;, getUser) e.Logger.Fatal(e.Start(&#34;:8080&#34;)) } func getUser(c echo.Context) error { id := c.Param(&#34;id&#34;) return c.String(http.StatusOK, id) } query parameters http://localhost:8080/show?team=x-men&amp;member=wolverine
 team: x-men, member: wolverine が返ってくる。
 		
-			<a href="https://example.org/posts/20211106130548/">Read more...</a>
+			<a href="https://ritarock.github.io/posts/20211106130548/">Read more...</a>
 		
 	</div>
 </article>
 
 		
 			<article>
-	<h1><a href="https://example.org/posts/20211105225321/">textlint の設定を見直した</a></h1>
+	<h1><a href="https://ritarock.github.io/posts/20211105225321/">textlint の設定を見直した</a></h1>
 	<b><time>2021-11-05 22:53:21</time></b>
 	
 	<a href="/tags/textlint">textlint</a>
@@ -136,14 +136,14 @@ team: x-men, member: wolverine が返ってくる。
 filters textlint-filter-rule-allowlist のインストールが必要。
 &#34;filters&#34;: { &#34;allowlist&#34;: { &#34;allow&#34;: [ &#34;\&#34;{ register } で指定.&#34; ] } }, allow のリストに error を無視する文字列や文章を入れることで、対象を無視する。
 		
-			<a href="https://example.org/posts/20211105225321/">Read more...</a>
+			<a href="https://ritarock.github.io/posts/20211105225321/">Read more...</a>
 		
 	</div>
 </article>
 
 		
 			<article>
-	<h1><a href="https://example.org/posts/20211104175819/">並行処理の考え方</a></h1>
+	<h1><a href="https://ritarock.github.io/posts/20211104175819/">並行処理の考え方</a></h1>
 	<b><time>2021-11-04 17:58:19</time></b>
 	
 	<a href="/tags/golang">golang</a>
@@ -157,14 +157,14 @@ i の値を取得する i の値を 1 増やす i の値を保存する アト�
 リソース枯渇 ライブロックのように 1 つ以上の貪欲なプロセスが他のリソースを奪うことで起こる。
 package main import ( &#34;fmt&#34; &#34;sync&#34; &#34;time&#34; ) func main() { var wg sync.WaitGroup var sharedLock sync.Mutex const RUNTIME = 1 * time.
 		
-			<a href="https://example.org/posts/20211104175819/">Read more...</a>
+			<a href="https://ritarock.github.io/posts/20211104175819/">Read more...</a>
 		
 	</div>
 </article>
 
 		
 			<article>
-	<h1><a href="https://example.org/posts/20211103154457/">Go の context</a></h1>
+	<h1><a href="https://ritarock.github.io/posts/20211103154457/">Go の context</a></h1>
 	<b><time>2021-11-03 15:44:57</time></b>
 	
 	<a href="/tags/golang">golang</a>
@@ -177,14 +177,14 @@ type Context interface { Deadline() (deadline time.Time, ok bool) Done() &lt;-ch
 func Background() Context 通常使うのはこっち。空の Context を返す func TODO() Context 本番環境で使われることを想定していない。どの Context を使っていいかわからないとき、もしくは上流の実装が終わっていないときに使う Done / Deadline メソッド キャンセルに使う。
 context.WithCancel func context.WithCancel(parent context.Context) (ctx context.Context, cancel context.CancelFunc) キャンセルする側は context.WithCancel() によって生成された cancal 関数を実行する. そのタイミングで、キャンセルされる側の context の Done メソッドが close される。
 		
-			<a href="https://example.org/posts/20211103154457/">Read more...</a>
+			<a href="https://ritarock.github.io/posts/20211103154457/">Read more...</a>
 		
 	</div>
 </article>
 
 		
 			<article>
-	<h1><a href="https://example.org/posts/20211022165454/">prisma-client-go を試した</a></h1>
+	<h1><a href="https://ritarock.github.io/posts/20211022165454/">prisma-client-go を試した</a></h1>
 	<b><time>2021-10-22 16:54:54</time></b>
 	
 	<a href="/tags/golang">golang</a>
@@ -197,14 +197,14 @@ $ npx prisma init prisma/schema.prisma と .env (と .gitignore ) が生成さ�
 .env ファイルは DATABASE_URL を修正。
 # Environment variables declared in this file are automatically made available to Prisma. # See the documentation for more detail: https://pris.ly/d/prisma-schema#using-environment-variables # Prisma supports the native connection string format for PostgreSQL, MySQL, SQLite, SQL Server and MongoDB (Preview). # See the documentation for all the connection string options: https://pris.
 		
-			<a href="https://example.org/posts/20211022165454/">Read more...</a>
+			<a href="https://ritarock.github.io/posts/20211022165454/">Read more...</a>
 		
 	</div>
 </article>
 
 		
 			<article>
-	<h1><a href="https://example.org/posts/20210723021243/">Golang の http/net について調べた</a></h1>
+	<h1><a href="https://ritarock.github.io/posts/20210723021243/">Golang の http/net について調べた</a></h1>
 	<b><time>2021-07-23 02:12:43</time></b>
 	
 	<a href="/tags/golang">golang</a>
@@ -215,7 +215,7 @@ package main import &#34;net/http&#34; func main() { http.ListenAndServe(&#34;&#
 Server の構造体はこんな感じ。
 type Server struct { Addr string Handler Handler TLSConfig *tls.Config ReadTimeout time.Duration ReadHeaderTimeout time.Duration WriteTimeout time.Duration IdleTimeout time.Duration MaxHeaderBytes int TLSNextProto map[string]func(*Server, *tls.Conn, Handler) ConnState func(net.Conn, ConnState) ErrorLog *log.Logger BaseContext func(net.Listener) context.Context ConnContext func(ctx context.Context, c net.Conn) context.Context inShutdown atomicBool disableKeepAlives int32 nextProtoOnce sync.Once nextProtoErr error mu sync.Mutex listeners map[*net.Listener]struct{} activeConn map[*conn]struct{} doneChan chan struct{} onShutdown []func() } 設定を変更する場合は Server の構造体に値を指定する。
 		
-			<a href="https://example.org/posts/20210723021243/">Read more...</a>
+			<a href="https://ritarock.github.io/posts/20210723021243/">Read more...</a>
 		
 	</div>
 </article>
@@ -234,7 +234,7 @@ type Server struct { Addr string Handler Handler TLSConfig *tls.Config ReadTimeo
 	</main>
 
 	<footer>
-	<p>&copy; 2023 <a href="https://example.org/"><b>MyDocs</b></a>.
+	<p>&copy; 2023 <a href="https://ritarock.github.io/"><b>MyDocs</b></a>.
 	</p>
 </footer>
 

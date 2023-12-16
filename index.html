@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-us">
+<html lang="ja">
 <head>
 	<meta name="generator" content="Hugo 0.121.1">
 	<meta charset="UTF-8">
@@ -16,7 +16,7 @@
 <body>
 	<header>
 	============<br>
-	== <a href="https://example.org/">MyDocs</a> ==<br>
+	== <a href="https://ritarock.github.io/">MyDocs</a> ==<br>
 	============
 	<div style="float: right;"></div><br>
 	<p>
@@ -35,7 +35,7 @@
 		
 		
 			<article>
-	<h1><a href="https://example.org/posts/20231216175817/">ブログを next.js 辞めて hugo にした</a></h1>
+	<h1><a href="https://ritarock.github.io/posts/20231216175817/">ブログを next.js 辞めて hugo にした</a></h1>
 	<b><time>2023-12-16 17:58:17</time></b>
 	
 	<a href="/tags/meta">meta</a>
@@ -51,7 +51,7 @@ https://github.com/ritarock/my-docs/commit/f063965f79b6f5a5c02f999bfdc078a15e620
 
 		
 			<article>
-	<h1><a href="https://example.org/posts/20230322173450/">Slack のスラッシュコマンドを Lambda で受け取る</a></h1>
+	<h1><a href="https://ritarock.github.io/posts/20230322173450/">Slack のスラッシュコマンドを Lambda で受け取る</a></h1>
 	<b><time>2023-03-22 17:34:50</time></b>
 	
 	<a href="/tags/golang">golang</a>
@@ -66,7 +66,7 @@ func Handler(event events.APIGatewayProxyRequest) (Response, error) { if err := 
 
 		
 			<article>
-	<h1><a href="https://example.org/posts/20230223173604/">gqlgen を触る</a></h1>
+	<h1><a href="https://ritarock.github.io/posts/20230223173604/">gqlgen を触る</a></h1>
 	<b><time>2023-02-23 17:36:04</time></b>
 	
 	<a href="/tags/golang">golang</a>
@@ -78,14 +78,14 @@ func Handler(event events.APIGatewayProxyRequest) (Response, error) { if err := 
 // Fields of the Todo. func (Todo) Fields() []ent.Field { return []ent.Field{ field.String(&#34;title&#34;), field.String(&#34;note&#34;), field.Bool(&#34;completed&#34;).Default(false), field.Time(&#34;created_at&#34;).Default(time.Now()), field.Time(&#34;updated_at&#34;).Default(time.Now()), } } $ go generate ./ent gqlgen $ printf &#39;// +build tools\npackage tools\nimport (_ &#34;github.com/99designs/gqlgen&#34;\n _ &#34;github.com/99designs/gqlgen/graphql/introspection&#34;)&#39; | gofmt &gt; tools.go $ go mod tidy $ go run github.com/99designs/gqlgen init graph/ に生成されたファイル。
 tree graph/ graph/ ├── generated.go # 自動生成 ├── model │ └── models_gen.
 		
-			<a href="https://example.org/posts/20230223173604/">Read more...</a>
+			<a href="https://ritarock.github.io/posts/20230223173604/">Read more...</a>
 		
 	</div>
 </article>
 
 		
 			<article>
-	<h1><a href="https://example.org/posts/20230210174709/">aws-sdk-go-v2 で profile を使う</a></h1>
+	<h1><a href="https://ritarock.github.io/posts/20230210174709/">aws-sdk-go-v2 で profile を使う</a></h1>
 	<b><time>2023-02-10 17:47:09</time></b>
 	
 	<a href="/tags/golang">golang</a>
@@ -99,7 +99,7 @@ func session(ctx context.Context, profile string) (aws.Config, error) { configOp
 
 		
 			<article>
-	<h1><a href="https://example.org/posts/20230204160502/">github action で日付を扱う</a></h1>
+	<h1><a href="https://ritarock.github.io/posts/20230204160502/">github action で日付を扱う</a></h1>
 	<b><time>2023-02-04 16:05:02</time></b>
 	
 	<a href="/tags/github-action">github action</a>
@@ -112,7 +112,7 @@ func session(ctx context.Context, profile string) (aws.Config, error) { configOp
 
 		
 			<article>
-	<h1><a href="https://example.org/posts/20221211174737/">rds のパラメータグループを for 文でまとめてかく</a></h1>
+	<h1><a href="https://ritarock.github.io/posts/20221211174737/">rds のパラメータグループを for 文でまとめてかく</a></h1>
 	<b><time>2022-12-11 17:47:37</time></b>
 	
 	<a href="/tags/terraform">terraform</a>
@@ -122,14 +122,14 @@ func session(ctx context.Context, profile string) (aws.Config, error) { configOp
 variable &#34;parameters&#34; { type = list(map(string)) } resource &#34;aws_rds_cluster_parameter_group&#34; &#34;template&#34; { family = &#34;aurora-mysql5.7&#34; name = var.name dynamic &#34;parameter&#34; { for_each = var.parameters content { apply_method = parameter.value[&#34;apply_method&#34;] name = parameter.value[&#34;name&#34;] value = parameter.value[&#34;value&#34;] } } } 呼び出し側で parameters の配列に必要なパラメータを map で書いてあげればよい。
 module &#34;parameter_group&#34; { source = &#34;../../modules/aws_rds_cluster_parameter_group&#34; name = &#34;sample-parameter-group&#34; parameters = [ { apply_method : &#34;immediate&#34;, name : &#34;character_set_server&#34;, value : &#34;utf8mb4&#34; }, { apply_method : &#34;pending-reboot&#34;, name : &#34;binlog_format&#34;, value : &#34;MIXED&#34; }, ] } plan 結果。
 		
-			<a href="https://example.org/posts/20221211174737/">Read more...</a>
+			<a href="https://ritarock.github.io/posts/20221211174737/">Read more...</a>
 		
 	</div>
 </article>
 
 		
 			<article>
-	<h1><a href="https://example.org/posts/20220522180736/">cobra-cli を使う</a></h1>
+	<h1><a href="https://ritarock.github.io/posts/20220522180736/">cobra-cli を使う</a></h1>
 	<b><time>2022-05-22 18:07:36</time></b>
 	
 	<a href="/tags/golang">golang</a>
@@ -140,14 +140,14 @@ $ go run -mod=mod github.com/spf13/cobra-cli@latest init $ tree tree . ├──
 /* Copyright © 2022 NAME HERE &lt;EMAIL ADDRESS&gt; */ package main import &#34;sample/cmd&#34; func main() { cmd.Execute() } cmd/root.go を編集。実行したら Hello を出力する。
 /* Copyright © 2022 NAME HERE &lt;EMAIL ADDRESS&gt; */ package cmd import ( &#34;fmt&#34; &#34;os&#34; &#34;github.
 		
-			<a href="https://example.org/posts/20220522180736/">Read more...</a>
+			<a href="https://ritarock.github.io/posts/20220522180736/">Read more...</a>
 		
 	</div>
 </article>
 
 		
 			<article>
-	<h1><a href="https://example.org/posts/20220129163904/">echo で middleware を実装する</a></h1>
+	<h1><a href="https://ritarock.github.io/posts/20220129163904/">echo で middleware を実装する</a></h1>
 	<b><time>2022-01-29 16:39:04</time></b>
 	
 	<a href="/tags/golang">golang</a>
@@ -162,7 +162,7 @@ package main import ( &#34;fmt&#34; &#34;sync&#34; &#34;github.com/labstack/echo
 
 		
 			<article>
-	<h1><a href="https://example.org/posts/20220108155408/">ent と echo で API 作る</a></h1>
+	<h1><a href="https://ritarock.github.io/posts/20220108155408/">ent と echo で API 作る</a></h1>
 	<b><time>2022-01-08 15:54:08</time></b>
 	
 	<a href="/tags/golang">golang</a>
@@ -173,14 +173,14 @@ $ go get -d entgo.io/ent/cmd/ent $ go get github.com/mattn/go-sqlite3 スキー�
 // Fields of the Todo. func (Todo) Fields() []ent.Field { return []ent.Field{ field.String(&#34;name&#34;). Default(&#34;&#34;), field.Bool(&#34;status&#34;). Default(false), field.Time(&#34;created_at&#34;). Default(func() time.Time { return time.Now() }), } } コード生成 shema ファイルを元にコードを生成するので編集後は実行する必要がある。
 $ go generate ./ent マイグレーション部分を実装 func main() { client, err := ent.Open(&#34;sqlite3&#34;, &#34;file:todo.sqlite?cache=shared&amp;_fk=1&#34;) if err != nil { log.
 		
-			<a href="https://example.org/posts/20220108155408/">Read more...</a>
+			<a href="https://ritarock.github.io/posts/20220108155408/">Read more...</a>
 		
 	</div>
 </article>
 
 		
 			<article>
-	<h1><a href="https://example.org/posts/20220105212211/">TypeScript の Utility Types</a></h1>
+	<h1><a href="https://ritarock.github.io/posts/20220105212211/">TypeScript の Utility Types</a></h1>
 	<b><time>2022-01-05 21:22:11</time></b>
 	
 	<a href="/tags/typescript">typescript</a>
@@ -190,7 +190,7 @@ $ go generate ./ent マイグレーション部分を実装 func main() { client
 interface Todo { title: string; desc: string; date: Date; } function createTodo( title: string, desc: string, date: Date, ): Todo { // let todo: Todo = {} // ここでのエラーを防ぐ let todo: Partial&lt;Todo&gt; = {}; todo.title = title; todo.desc = desc; todo.date = date; return todo as Todo; } Required パラメータが欠損したらエラー。
 interface Todo { title: string; desc: string; date: Date; } function createTodo( title: string, desc: string, date: Date, ): Todo { const todo: Required&lt;Todo&gt; = { title: title, desc: desc, date: date, }; return todo; } Readonly 初期化したあとにパラメータを変更できないようにする。
 		
-			<a href="https://example.org/posts/20220105212211/">Read more...</a>
+			<a href="https://ritarock.github.io/posts/20220105212211/">Read more...</a>
 		
 	</div>
 </article>
@@ -207,7 +207,7 @@ interface Todo { title: string; desc: string; date: Date; } function createTodo(
 	</main>
 
 	<footer>
-	<p>&copy; 2023 <a href="https://example.org/"><b>MyDocs</b></a>.
+	<p>&copy; 2023 <a href="https://ritarock.github.io/"><b>MyDocs</b></a>.
 	</p>
 </footer>
 
