@@ -1,1 +1,0 @@
-{"pageProps":{"docBody":{"id":"20201110160900","title":"curl コマンドでグローバル IP を調べる","content":"\n```bash\n$ curl httpbin.org/ip\n```\n"}},"__N_SSG":true}
