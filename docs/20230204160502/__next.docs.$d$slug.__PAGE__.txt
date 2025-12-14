@@ -1,0 +1,25 @@
+1:"$Sreact.fragment"
+3:I[25151,["/_next/static/chunks/cc5639b053815f24.js","/_next/static/chunks/4904848246fadb45.js"],"OutletBoundary"]
+4:"$Sreact.suspense"
+2:T581,<pre><code class="hljs language-yaml"><span class="hljs-attr">name:</span> <span class="hljs-string">test</span>
+
+<span class="hljs-attr">on:</span> [<span class="hljs-string">workflow_dispatch</span>]
+
+<span class="hljs-attr">jobs:</span>
+  <span class="hljs-attr">echo-date:</span>
+    <span class="hljs-attr">runs-on:</span> <span class="hljs-string">ubuntu-latest</span>
+    
+    <span class="hljs-attr">steps:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-attr">uses:</span> <span class="hljs-string">actions/checkout@v3</span>
+
+      <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">set</span> <span class="hljs-string">date</span>
+        <span class="hljs-attr">env:</span> <span class="hljs-string">"Asia/Tokyo"</span>
+        <span class="hljs-attr">run:</span> <span class="hljs-string">|
+          echo "CURRENT_DATETIME=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
+</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">get</span> <span class="hljs-string">date</span>
+        <span class="hljs-attr">run:</span> <span class="hljs-string">|
+          echo ${{ env.CURRENT_DATETIME }}
+</span></code></pre>
+<p>run の中で環境変数の <code>CURRENT_DATETIME</code> に設定することで、以降は <code>${{ env.CURRENT_DATETIME }}</code> で使うことができる。</p>0:{"buildId":"Mc6Th0Rmyk9pcJ5CRitSL","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"github actionで日付を扱う"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"loading":null,"isPartial":false}
+5:null

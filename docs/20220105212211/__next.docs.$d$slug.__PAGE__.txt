@@ -1,0 +1,261 @@
+1:"$Sreact.fragment"
+4:I[25151,["/_next/static/chunks/cc5639b053815f24.js","/_next/static/chunks/4904848246fadb45.js"],"OutletBoundary"]
+5:"$Sreact.suspense"
+2:T53a7,<h2>Partial</h2>
+<p><code>Partial&#x3C;Type></code> で指定した型に一時的に切り替えることができる。値を返すときはキャストする必要がある。</p>
+<pre><code class="hljs language-ts"><span class="hljs-keyword">interface</span> <span class="hljs-title class_">Todo</span> {
+  <span class="hljs-attr">title</span>: <span class="hljs-built_in">string</span>;
+  <span class="hljs-attr">desc</span>: <span class="hljs-built_in">string</span>;
+  <span class="hljs-attr">date</span>: <span class="hljs-title class_">Date</span>;
+}
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">createTodo</span>(<span class="hljs-params">
+  <span class="hljs-attr">title</span>: <span class="hljs-built_in">string</span>,
+  <span class="hljs-attr">desc</span>: <span class="hljs-built_in">string</span>,
+  <span class="hljs-attr">date</span>: <span class="hljs-title class_">Date</span>,
+</span>): <span class="hljs-title class_">Todo</span> {
+  <span class="hljs-comment">// let todo: Todo = {} // ここでのエラーを防ぐ</span>
+  <span class="hljs-keyword">let</span> <span class="hljs-attr">todo</span>: <span class="hljs-title class_">Partial</span>&#x3C;<span class="hljs-title class_">Todo</span>> = {};
+  todo.<span class="hljs-property">title</span> = title;
+  todo.<span class="hljs-property">desc</span> = desc;
+  todo.<span class="hljs-property">date</span> = date;
+  <span class="hljs-keyword">return</span> todo <span class="hljs-keyword">as</span> <span class="hljs-title class_">Todo</span>;
+}
+</code></pre>
+<h2>Required</h2>
+<p>パラメータが欠損したらエラー。</p>
+<pre><code class="hljs language-ts"><span class="hljs-keyword">interface</span> <span class="hljs-title class_">Todo</span> {
+  <span class="hljs-attr">title</span>: <span class="hljs-built_in">string</span>;
+  <span class="hljs-attr">desc</span>: <span class="hljs-built_in">string</span>;
+  <span class="hljs-attr">date</span>: <span class="hljs-title class_">Date</span>;
+}
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">createTodo</span>(<span class="hljs-params">
+  <span class="hljs-attr">title</span>: <span class="hljs-built_in">string</span>,
+  <span class="hljs-attr">desc</span>: <span class="hljs-built_in">string</span>,
+  <span class="hljs-attr">date</span>: <span class="hljs-title class_">Date</span>,
+</span>): <span class="hljs-title class_">Todo</span> {
+  <span class="hljs-keyword">const</span> <span class="hljs-attr">todo</span>: <span class="hljs-title class_">Required</span>&#x3C;<span class="hljs-title class_">Todo</span>> = {
+    <span class="hljs-attr">title</span>: title,
+    <span class="hljs-attr">desc</span>: desc,
+    <span class="hljs-attr">date</span>: date,
+  };
+
+  <span class="hljs-keyword">return</span> todo;
+}
+</code></pre>
+<h2>Readonly</h2>
+<p>初期化したあとにパラメータを変更できないようにする。</p>
+<pre><code class="hljs language-ts"><span class="hljs-keyword">interface</span> <span class="hljs-title class_">Todo</span> {
+  <span class="hljs-attr">title</span>: <span class="hljs-built_in">string</span>;
+}
+
+<span class="hljs-keyword">const</span> <span class="hljs-attr">todo</span>: <span class="hljs-title class_">Readonly</span>&#x3C;<span class="hljs-title class_">Todo</span>> = {
+  <span class="hljs-attr">title</span>: <span class="hljs-string">"create"</span>,
+};
+
+<span class="hljs-comment">// todo.title = "update"</span>
+</code></pre>
+<h2>Record&#x3C;Keys, Type></h2>
+<p>Key とその型を指定できる。辞書として使いたい場合に適している。</p>
+<pre><code class="hljs language-ts"><span class="hljs-keyword">interface</span> <span class="hljs-title class_">CatInfo</span> {
+  <span class="hljs-attr">age</span>: <span class="hljs-built_in">number</span>;
+  <span class="hljs-attr">breed</span>: <span class="hljs-built_in">string</span>;
+}
+
+<span class="hljs-keyword">type</span> <span class="hljs-title class_">CatName</span> = <span class="hljs-string">"miffy"</span> | <span class="hljs-string">"boris"</span> | <span class="hljs-string">"mordred"</span>;
+
+<span class="hljs-keyword">const</span> <span class="hljs-attr">cats</span>: <span class="hljs-title class_">Record</span>&#x3C;<span class="hljs-title class_">CatName</span>, <span class="hljs-title class_">CatInfo</span>> = {
+  <span class="hljs-attr">miffy</span>: { <span class="hljs-attr">age</span>: <span class="hljs-number">10</span>, <span class="hljs-attr">breed</span>: <span class="hljs-string">"Persian"</span> },
+  <span class="hljs-attr">boris</span>: { <span class="hljs-attr">age</span>: <span class="hljs-number">5</span>, <span class="hljs-attr">breed</span>: <span class="hljs-string">"Maine Coon"</span> },
+  <span class="hljs-attr">mordred</span>: { <span class="hljs-attr">age</span>: <span class="hljs-number">16</span>, <span class="hljs-attr">breed</span>: <span class="hljs-string">"British Shorthair"</span> },
+};
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(cats);
+<span class="hljs-comment">// {</span>
+<span class="hljs-comment">//   miffy: { age: 10, breed: "Persian" },</span>
+<span class="hljs-comment">//   boris: { age: 5, breed: "Maine Coon" },</span>
+<span class="hljs-comment">//   mordred: { age: 16, breed: "British Shorthair" }</span>
+<span class="hljs-comment">// }</span>
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(cats.<span class="hljs-property">boris</span>);
+<span class="hljs-comment">// { age: 5, breed: "Maine Coon" }</span>
+</code></pre>
+<h2>Pick&#x3C;Type, Keys></h2>
+<p>keys に指定したプロパティの型になる。</p>
+<pre><code class="hljs language-ts"><span class="hljs-keyword">interface</span> <span class="hljs-title class_">Todo</span> {
+  <span class="hljs-attr">title</span>: <span class="hljs-built_in">string</span>;
+  <span class="hljs-attr">desc</span>: <span class="hljs-built_in">string</span>;
+  <span class="hljs-attr">completed</span>: <span class="hljs-built_in">boolean</span>;
+}
+
+<span class="hljs-keyword">type</span> <span class="hljs-title class_">TodoPreview</span> = <span class="hljs-title class_">Pick</span>&#x3C;<span class="hljs-title class_">Todo</span>, <span class="hljs-string">"title"</span> | <span class="hljs-string">"completed"</span>>;
+
+<span class="hljs-keyword">const</span> <span class="hljs-attr">todo</span>: <span class="hljs-title class_">TodoPreview</span> = {
+  <span class="hljs-attr">title</span>: <span class="hljs-string">"Clean room"</span>,
+  <span class="hljs-attr">completed</span>: <span class="hljs-literal">false</span>,
+};
+</code></pre>
+<h2>Omit&#x3C;Type, Keys></h2>
+<p>keys に指定した以外のプロパティの型になる。</p>
+<pre><code class="hljs language-ts"><span class="hljs-keyword">interface</span> <span class="hljs-title class_">Todo</span> {
+  <span class="hljs-attr">title</span>: <span class="hljs-built_in">string</span>;
+  <span class="hljs-attr">desc</span>: <span class="hljs-built_in">string</span>;
+  <span class="hljs-attr">completed</span>: <span class="hljs-built_in">boolean</span>;
+  <span class="hljs-attr">createdAt</span>: <span class="hljs-built_in">number</span>;
+}
+
+<span class="hljs-keyword">type</span> <span class="hljs-title class_">TodoPreview</span> = <span class="hljs-title class_">Omit</span>&#x3C;<span class="hljs-title class_">Todo</span>, <span class="hljs-string">"desc"</span>>;
+
+<span class="hljs-keyword">const</span> <span class="hljs-attr">todo</span>: <span class="hljs-title class_">TodoPreview</span> = {
+  <span class="hljs-attr">title</span>: <span class="hljs-string">"Clean room"</span>,
+  <span class="hljs-attr">completed</span>: <span class="hljs-literal">false</span>,
+  <span class="hljs-attr">createdAt</span>: <span class="hljs-number">1000</span>,
+};
+</code></pre>
+<h2>Exclude&#x3C;Type, ExcludedUnion></h2>
+<p><code>Exclude&#x3C;T, U></code> T から U を除いた型になる。</p>
+<pre><code class="hljs language-ts"><span class="hljs-keyword">type</span> <span class="hljs-variable constant_">T0</span> = <span class="hljs-title class_">Exclude</span>&#x3C;<span class="hljs-string">"a"</span> | <span class="hljs-string">"b"</span> | <span class="hljs-string">"c"</span>, <span class="hljs-string">"a"</span>>;
+<span class="hljs-comment">// type T0 = "b" | "c"</span>
+
+<span class="hljs-keyword">type</span> <span class="hljs-variable constant_">T1</span> = <span class="hljs-title class_">Exclude</span>&#x3C;<span class="hljs-string">"a"</span> | <span class="hljs-string">"b"</span> | <span class="hljs-string">"c"</span>, <span class="hljs-string">"a"</span> | <span class="hljs-string">"b"</span>>;
+<span class="hljs-comment">// type T1 = "c"</span>
+
+<span class="hljs-keyword">type</span> <span class="hljs-variable constant_">T2</span> = <span class="hljs-title class_">Exclude</span>&#x3C;<span class="hljs-built_in">string</span> | <span class="hljs-built_in">number</span> | (<span class="hljs-function">() =></span> <span class="hljs-built_in">void</span>), <span class="hljs-title class_">Function</span>>;
+<span class="hljs-comment">// type T2 = string | number</span>
+</code></pre>
+<h2>Extract&#x3C;Type, Union></h2>
+<p><code>Extract&#x3C;T, U></code> T と U のユニオン型になる。</p>
+<pre><code class="hljs language-ts"><span class="hljs-keyword">type</span> <span class="hljs-variable constant_">T0</span> = <span class="hljs-title class_">Extract</span>&#x3C;<span class="hljs-string">"a"</span> | <span class="hljs-string">"b"</span> | <span class="hljs-string">"c"</span>, <span class="hljs-string">"a"</span> | <span class="hljs-string">"f"</span>>;
+<span class="hljs-comment">// type T0 = "a"</span>
+
+<span class="hljs-keyword">type</span> <span class="hljs-variable constant_">T1</span> = <span class="hljs-title class_">Extract</span>&#x3C;<span class="hljs-built_in">string</span> | <span class="hljs-built_in">number</span> | (<span class="hljs-function">() =></span> <span class="hljs-built_in">void</span>), <span class="hljs-title class_">Function</span>>;
+<span class="hljs-comment">// type T1 = () => void</span>
+</code></pre>
+<h2>NonNullable</h2>
+<p><code>null</code> と <code>undefined</code> を除いた型になる。</p>
+<pre><code class="hljs language-ts"><span class="hljs-keyword">type</span> <span class="hljs-variable constant_">T0</span> = <span class="hljs-title class_">NonNullable</span>&#x3C;<span class="hljs-built_in">string</span> | <span class="hljs-built_in">number</span> | <span class="hljs-literal">undefined</span>>;
+<span class="hljs-comment">// type T0 = string | number</span>
+
+<span class="hljs-keyword">type</span> <span class="hljs-variable constant_">T1</span> = <span class="hljs-title class_">NonNullable</span>&#x3C;<span class="hljs-built_in">string</span>[] | <span class="hljs-literal">null</span> | <span class="hljs-literal">undefined</span>>;
+<span class="hljs-comment">// type T1 = string[]</span>
+</code></pre>
+<h2>Parameters</h2>
+<p><code>Parameters&#x3C;T></code> では T は関数型の必要がある。 T が関数のとき T の引数一覧をタプル型で作成する。</p>
+<pre><code class="hljs language-ts"><span class="hljs-keyword">declare</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">f1</span>(<span class="hljs-params"><span class="hljs-attr">arg</span>: { a: <span class="hljs-built_in">number</span>; b: <span class="hljs-built_in">string</span> }</span>): <span class="hljs-built_in">void</span>;
+
+<span class="hljs-keyword">type</span> <span class="hljs-variable constant_">T0</span> = <span class="hljs-title class_">Parameters</span>&#x3C;<span class="hljs-function">() =></span> <span class="hljs-built_in">string</span>>;
+<span class="hljs-comment">// type T0 = []</span>
+
+<span class="hljs-keyword">type</span> <span class="hljs-variable constant_">T1</span> = <span class="hljs-title class_">Parameters</span>&#x3C;<span class="hljs-function">(<span class="hljs-params"><span class="hljs-attr">s</span>: <span class="hljs-built_in">string</span></span>) =></span> <span class="hljs-built_in">void</span>>;
+<span class="hljs-comment">// type T1 = [s: string]</span>
+
+<span class="hljs-keyword">type</span> <span class="hljs-variable constant_">T2</span> = <span class="hljs-title class_">Parameters</span>&#x3C;&#x3C;T><span class="hljs-function">(<span class="hljs-params"><span class="hljs-attr">arg</span>: T</span>) =></span> T>;
+<span class="hljs-comment">// type T2 = [arg: unknown]</span>
+
+<span class="hljs-keyword">type</span> <span class="hljs-variable constant_">T3</span> = <span class="hljs-title class_">Parameters</span>&#x3C;<span class="hljs-keyword">typeof</span> f1>;
+<span class="hljs-comment">// type T3 = [arg: {</span>
+<span class="hljs-comment">//   a: number;</span>
+<span class="hljs-comment">//   b: string;</span>
+<span class="hljs-comment">// }]</span>
+
+<span class="hljs-keyword">type</span> F = <span class="hljs-function">(<span class="hljs-params"><span class="hljs-attr">arg1</span>: <span class="hljs-built_in">string</span>, <span class="hljs-attr">arg2</span>: <span class="hljs-built_in">number</span></span>) =></span> <span class="hljs-built_in">string</span>;
+<span class="hljs-keyword">type</span> <span class="hljs-variable constant_">F1</span> = <span class="hljs-title class_">Parameters</span>&#x3C;F>;
+<span class="hljs-comment">// type F1 = [arg1: string, arg2: number]</span>
+
+<span class="hljs-keyword">const</span> <span class="hljs-attr">v</span>: <span class="hljs-variable constant_">F1</span> = [<span class="hljs-string">"a"</span>, <span class="hljs-number">123</span>];
+</code></pre>
+<h2>ConstructorParameters</h2>
+<p>class のコンストラクタ関数の引数の型からタプル型を作成する。</p>
+<pre><code class="hljs language-ts"><span class="hljs-keyword">type</span> <span class="hljs-variable constant_">T0</span> = <span class="hljs-title class_">ConstructorParameters</span>&#x3C;<span class="hljs-title class_">ErrorConstructor</span>>;
+<span class="hljs-comment">// type T0 = [message?: string]</span>
+
+<span class="hljs-keyword">type</span> <span class="hljs-variable constant_">T1</span> = <span class="hljs-title class_">ConstructorParameters</span>&#x3C;<span class="hljs-title class_">FunctionConstructor</span>>;
+<span class="hljs-comment">// type T1 = string[]</span>
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">Person</span> {
+  <span class="hljs-title function_">constructor</span>(<span class="hljs-params"><span class="hljs-keyword">public</span> <span class="hljs-attr">id</span>: <span class="hljs-built_in">number</span>, <span class="hljs-keyword">public</span> <span class="hljs-attr">name</span>: <span class="hljs-built_in">string</span></span>) {}
+}
+
+<span class="hljs-keyword">type</span> P = <span class="hljs-title class_">ConstructorParameters</span>&#x3C;<span class="hljs-keyword">typeof</span> <span class="hljs-title class_">Person</span>>;
+<span class="hljs-comment">// type P = [id: number, name: string]</span>
+</code></pre>
+<h2>ReturnType</h2>
+<p>戻り値からなる型になる。</p>
+<pre><code class="hljs language-ts"><span class="hljs-keyword">declare</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">f1</span>(<span class="hljs-params"></span>): { <span class="hljs-attr">a</span>: <span class="hljs-built_in">number</span>; <span class="hljs-attr">b</span>: <span class="hljs-built_in">string</span> };
+
+<span class="hljs-keyword">type</span> <span class="hljs-variable constant_">T0</span> = <span class="hljs-title class_">ReturnType</span>&#x3C;<span class="hljs-function">() =></span> <span class="hljs-built_in">string</span>>;
+<span class="hljs-comment">// type T0 = string</span>
+
+<span class="hljs-keyword">type</span> <span class="hljs-variable constant_">T1</span> = <span class="hljs-title class_">ReturnType</span>&#x3C;<span class="hljs-function">(<span class="hljs-params"><span class="hljs-attr">s</span>: <span class="hljs-built_in">string</span></span>) =></span> <span class="hljs-built_in">void</span>>;
+<span class="hljs-comment">// type T1 = void</span>
+
+<span class="hljs-keyword">type</span> <span class="hljs-variable constant_">T2</span> = <span class="hljs-title class_">ReturnType</span>&#x3C;&#x3C;T><span class="hljs-function">() =></span> T>;
+<span class="hljs-comment">// type T2 = unknown</span>
+
+<span class="hljs-keyword">type</span> <span class="hljs-variable constant_">T3</span> = <span class="hljs-title class_">ReturnType</span>&#x3C;&#x3C;T <span class="hljs-keyword">extends</span> U, U <span class="hljs-keyword">extends</span> <span class="hljs-built_in">number</span>[]><span class="hljs-function">() =></span> T>;
+<span class="hljs-comment">// type T3 = number[]</span>
+
+<span class="hljs-keyword">type</span> <span class="hljs-variable constant_">T4</span> = <span class="hljs-title class_">ReturnType</span>&#x3C;<span class="hljs-keyword">typeof</span> f1>;
+<span class="hljs-comment">// type T4 = {</span>
+<span class="hljs-comment">//   a: number;</span>
+<span class="hljs-comment">//   b: string;</span>
+<span class="hljs-comment">// }</span>
+</code></pre>
+<h2>InstanceType</h2>
+<p>コンストラクタの戻り値からなる型。</p>
+<pre><code class="hljs language-ts"><span class="hljs-keyword">class</span> <span class="hljs-title class_">C</span> {
+  x = <span class="hljs-number">0</span>;
+  y = <span class="hljs-number">0</span>;
+}
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">Foo</span> {}
+
+<span class="hljs-keyword">type</span> <span class="hljs-variable constant_">T0</span> = <span class="hljs-title class_">InstanceType</span>&#x3C;<span class="hljs-keyword">typeof</span> C>;
+<span class="hljs-comment">// type T0 = C</span>
+
+<span class="hljs-keyword">type</span> <span class="hljs-variable constant_">T1</span> = <span class="hljs-title class_">InstanceType</span>&#x3C;<span class="hljs-keyword">typeof</span> <span class="hljs-title class_">Foo</span>>;
+<span class="hljs-comment">// type T1 = Foo</span>
+</code></pre>
+<h2>ThisParameterType</h2>
+<p>関数型の this パラメータの型を抽出した型になる。</p>
+<pre><code class="hljs language-ts"><span class="hljs-keyword">function</span> <span class="hljs-title function_">toHex</span>(<span class="hljs-params"><span class="hljs-attr">this</span>: <span class="hljs-built_in">number</span></span>) {
+  <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">toString</span>();
+}
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">numberToString</span>(<span class="hljs-params"><span class="hljs-attr">n</span>: <span class="hljs-title class_">ThisParameterType</span>&#x3C;<span class="hljs-keyword">typeof</span> toHex></span>) {
+  <span class="hljs-keyword">return</span> toHex.<span class="hljs-title function_">apply</span>(n);
+}
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title function_">numberToString</span>(<span class="hljs-number">123</span>));
+<span class="hljs-comment">// 123</span>
+</code></pre>
+<h2>OmitThisParameter</h2>
+<p>関数型の this パラメータの型を除いた型になる。</p>
+<pre><code class="hljs language-ts"><span class="hljs-keyword">function</span> <span class="hljs-title function_">toHex</span>(<span class="hljs-params"><span class="hljs-attr">this</span>: <span class="hljs-built_in">number</span></span>) {
+  <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">toString</span>();
+}
+
+<span class="hljs-keyword">const</span> <span class="hljs-attr">fiveToHex</span>: <span class="hljs-title class_">OmitThisParameter</span>&#x3C;<span class="hljs-keyword">typeof</span> toHex> = toHex.<span class="hljs-title function_">bind</span>(<span class="hljs-number">123</span>);
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title function_">fiveToHex</span>());
+<span class="hljs-comment">// 123</span>
+</code></pre>
+<h2>ThisType</h2>
+<p>オブジェクト内の this の型を正しい型にする。</p>
+<pre><code class="hljs language-ts"><span class="hljs-keyword">interface</span> <span class="hljs-title class_">User</span> {
+  <span class="hljs-attr">name</span>: <span class="hljs-built_in">string</span>;
+}
+
+<span class="hljs-keyword">interface</span> <span class="hljs-title class_">Greeting</span> {
+  <span class="hljs-title function_">hello</span>(): <span class="hljs-built_in">void</span>;
+}
+
+<span class="hljs-keyword">const</span> <span class="hljs-attr">user</span>: <span class="hljs-title class_">Greeting</span> &#x26; <span class="hljs-title class_">ThisType</span>&#x3C;<span class="hljs-title class_">User</span>> = {
+  <span class="hljs-title function_">hello</span>(<span class="hljs-params"></span>) {
+    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`Hello <span class="hljs-subst">${<span class="hljs-variable language_">this</span>.name}</span>`</span>);
+  },
+};
+</code></pre>0:{"buildId":"Mc6Th0Rmyk9pcJ5CRitSL","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"TypeScriptのUtility Types"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,"$L3"]}],"loading":null,"isPartial":false}
+3:["$","$L4",null,{"children":["$","$5",null,{"name":"Next.MetadataOutlet","children":"$@6"}]}]
+6:null

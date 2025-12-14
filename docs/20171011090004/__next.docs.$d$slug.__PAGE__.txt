@@ -1,0 +1,60 @@
+1:"$Sreact.fragment"
+3:I[25151,["/_next/static/chunks/cc5639b053815f24.js","/_next/static/chunks/4904848246fadb45.js"],"OutletBoundary"]
+4:"$Sreact.suspense"
+2:T8b0,<h2>vagrant で Ubuntu 16.04 LTS の準備</h2>
+<p>Ubuntu 16.04 LTS の box を使用する。</p>
+<p>Vagrantfile の作成。</p>
+<pre><code class="hljs language-bash">$ vagrant init ubuntu/xenial64
+</code></pre>
+<p>作成した Vagrantfile のポートを設定。</p>
+<pre><code class="hljs language-bash">$ vim Vagrantfile
+</code></pre>
+<p>下記の部分を変更。</p>
+<pre><code class="hljs language-vagrantfile">config.vm.network "forwarded_port", guest: 8000, host: 8000
+</code></pre>
+<p>起動。</p>
+<pre><code class="hljs language-bash">$ vagrant init ubuntu/xenial64
+</code></pre>
+<p>接続。</p>
+<pre><code class="hljs language-bash">$ vagrant ssh
+</code></pre>
+<h2>Django のインストール</h2>
+<p>pip のインストール。</p>
+<pre><code class="hljs language-bash">$ wget https://bootstrap.pypa.io/get-pip.py
+$ <span class="hljs-built_in">sudo</span> python3 get-pip.py
+$ <span class="hljs-built_in">sudo</span> pip install Django
+</code></pre>
+<p>Ubuntu 16.04 LTS にはデフォルトで Python3.5.2 が入っている。</p>
+<p>バージョンの確認。</p>
+<pre><code class="hljs language-bash"><span class="hljs-variable">$python3</span> -m django --version
+1.11.5
+</code></pre>
+<h2>Django を使ってみる</h2>
+<p>プロジェクトの作成。</p>
+<pre><code class="hljs language-bash">$ django-admin startproject mysite
+</code></pre>
+<p>作られたプロジェクトを見てみる。</p>
+<pre><code class="hljs language-bash">$ tree
+.
+├── get-pip.py
+└── mysite
+    ├── db.sqlite3
+    ├── manage.py
+    └── mysite
+        ├── __init__.py
+        ├── __pycache__
+        │   ├── __init__.cpython-35.pyc
+        │   ├── settings.cpython-35.pyc
+        │   ├── urls.cpython-35.pyc
+        │   └── wsgi.cpython-35.pyc
+        ├── settings.py
+        ├── urls.py
+        └── wsgi.py
+</code></pre>
+<p>作成したプロジェクトのディレクトリに移動。</p>
+<pre><code class="hljs language-bash">$ <span class="hljs-built_in">cd</span> mysite
+</code></pre>
+<p>Django を動かす。</p>
+<pre><code class="hljs language-bash">$ python3 manage.py runserver 0.0.0.0:8000
+</code></pre>0:{"buildId":"Mc6Th0Rmyk9pcJ5CRitSL","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"Vagrant + Ubuntu 16.04 LTSでDjango開発環境を構築"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"loading":null,"isPartial":false}
+5:null

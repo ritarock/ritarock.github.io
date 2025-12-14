@@ -1,0 +1,108 @@
+1:"$Sreact.fragment"
+4:I[25151,["/_next/static/chunks/cc5639b053815f24.js","/_next/static/chunks/4904848246fadb45.js"],"OutletBoundary"]
+5:"$Sreact.suspense"
+2:T20c6,<h2>some()</h2>
+<p><code>some()</code> は配列内の要素 1 つでも条件に合致するものがあれば true を返し、 1 つも合致しなければ false を返す。</p>
+<pre><code class="hljs language-javascript"><span class="hljs-keyword">const</span> dataList = [
+  {<span class="hljs-attr">id</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">user</span>: <span class="hljs-string">"user1"</span>},
+  {<span class="hljs-attr">id</span>: <span class="hljs-number">2</span>, <span class="hljs-attr">user</span>: <span class="hljs-string">"user2"</span>},
+  {<span class="hljs-attr">id</span>: <span class="hljs-number">3</span>, <span class="hljs-attr">user</span>: <span class="hljs-string">"user3"</span>},
+]
+
+<span class="hljs-keyword">const</span> includeId3 = dataList.<span class="hljs-title function_">some</span>(<span class="hljs-function"><span class="hljs-params">data</span> =></span> data.<span class="hljs-property">id</span> === <span class="hljs-number">3</span>)
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(includeId3) <span class="hljs-comment">//true</span>
+</code></pre>
+<h2>ever()</h2>
+<p><code>every()</code> は配列内の全ての要素が条件に合致するかを調べることができる。</p>
+<pre><code class="hljs language-javascript"><span class="hljs-keyword">const</span> dataList = [
+  {<span class="hljs-attr">id</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">user</span>: <span class="hljs-string">"user1"</span>},
+  {<span class="hljs-attr">id</span>: <span class="hljs-number">2</span>, <span class="hljs-attr">user</span>: <span class="hljs-string">"user2"</span>},
+  {<span class="hljs-attr">id</span>: <span class="hljs-number">3</span>, <span class="hljs-attr">user</span>: <span class="hljs-string">"user3"</span>},
+]
+
+<span class="hljs-keyword">const</span> includeId3 = dataList.<span class="hljs-title function_">every</span>(<span class="hljs-function"><span class="hljs-params">data</span> =></span> data.<span class="hljs-property">id</span> === <span class="hljs-number">3</span>)
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(includeId3) <span class="hljs-comment">//false</span>
+</code></pre>
+<h2>filter()</h2>
+<p><code>filter()</code> は配列の要素から条件に合致する新しい配列を作成する。</p>
+<pre><code class="hljs language-javascript"><span class="hljs-keyword">const</span> dataList = [
+  { <span class="hljs-attr">id</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">user</span>: <span class="hljs-string">"usr1"</span>},
+  { <span class="hljs-attr">id</span>: <span class="hljs-number">10</span>, <span class="hljs-attr">user</span>: <span class="hljs-string">"usr10"</span>},
+  { <span class="hljs-attr">id</span>: <span class="hljs-number">20</span>, <span class="hljs-attr">user</span>: <span class="hljs-string">"usr20"</span>},
+]
+
+<span class="hljs-keyword">const</span> over10List = dataList.<span class="hljs-title function_">filter</span>(<span class="hljs-function"><span class="hljs-params">data</span> =></span> data.<span class="hljs-property">id</span> >= <span class="hljs-number">10</span>)
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(over10List)
+<span class="hljs-comment">// [ { id: 10, user: 'usr10' }, { id: 20, user: 'usr20' } ]</span>
+</code></pre>
+<h2>map()</h2>
+<p><code>map()</code> は処理して新しい配列を作成する。</p>
+<pre><code class="hljs language-javascript"><span class="hljs-keyword">const</span> dataList = [
+  { <span class="hljs-attr">id</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">user</span>: <span class="hljs-string">"usr1"</span>},
+  { <span class="hljs-attr">id</span>: <span class="hljs-number">10</span>, <span class="hljs-attr">user</span>: <span class="hljs-string">"usr10"</span>},
+  { <span class="hljs-attr">id</span>: <span class="hljs-number">20</span>, <span class="hljs-attr">user</span>: <span class="hljs-string">"usr20"</span>},
+]
+
+<span class="hljs-keyword">const</span> over10List = dataList
+                    .<span class="hljs-title function_">filter</span>(<span class="hljs-function"><span class="hljs-params">data</span> =></span> data.<span class="hljs-property">id</span> >= <span class="hljs-number">10</span>)
+                    .<span class="hljs-title function_">map</span>(<span class="hljs-function"><span class="hljs-params">data</span> =></span> data.<span class="hljs-property">user</span>)
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(over10List)
+<span class="hljs-comment">// [ 'usr10', 'usr20' ]</span>
+</code></pre>
+<h2>flatMap()</h2>
+<p><code>flatMap()</code> は配列の階層を解除し、別の配列に置き換える。</p>
+<p><code>flatMap()</code> は <code>map()</code> の処理の後に <code>flat()</code> を実行する。</p>
+<p><code>flat()</code> は配列を 1 次元にするメソッド。</p>
+<pre><code class="hljs language-javascript"><span class="hljs-keyword">const</span> dataList = [
+  {
+    <span class="hljs-attr">user</span>: <span class="hljs-string">"user1"</span>,
+    <span class="hljs-attr">tags</span>: [<span class="hljs-string">"aaa"</span>, <span class="hljs-string">"bbb"</span>]
+  },
+  {
+    <span class="hljs-attr">user</span>: <span class="hljs-string">"user2"</span>,
+    <span class="hljs-attr">tags</span>: [<span class="hljs-string">"ccc"</span>]
+  },
+  {
+    <span class="hljs-attr">user</span>: <span class="hljs-string">"user3"</span>,
+    <span class="hljs-attr">tags</span>: [<span class="hljs-string">"ddd"</span>]
+  },
+]
+
+<span class="hljs-keyword">const</span> tagList = dataList.<span class="hljs-title function_">flatMap</span>(<span class="hljs-function"><span class="hljs-params">data</span> =></span> data.<span class="hljs-property">tags</span>)
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(tagList)
+<span class="hljs-comment">// [ 'aaa', 'bbb', 'ccc', 'ddd' ]</span>
+
+
+<span class="hljs-keyword">const</span> tagList2 = dataList.<span class="hljs-title function_">map</span>(<span class="hljs-function"><span class="hljs-params">data</span> =></span> data.<span class="hljs-property">tags</span>)
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(tagList2.<span class="hljs-title function_">flat</span>())
+<span class="hljs-comment">// [ 'aaa', 'bbb', 'ccc', 'ddd' ]</span>
+</code></pre>
+<h2>Object.entries()</h2>
+<p><code>Object.entries( 対象のオブジェクト )</code> を実行すると <code>[[key1, value1], [key2, value2]]</code> が返る。</p>
+<pre><code class="hljs language-javascript"><span class="hljs-keyword">const</span> obj = {
+  <span class="hljs-attr">id</span>: <span class="hljs-number">1</span>,
+  <span class="hljs-attr">user</span>: <span class="hljs-string">"user1"</span>,
+  <span class="hljs-attr">name</span>: <span class="hljs-string">"name1"</span>
+}
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title class_">Object</span>.<span class="hljs-title function_">entries</span>(obj))
+<span class="hljs-comment">// [ [ 'id', 1 ], [ 'user', 'user1' ], [ 'name', 'name1' ] ]</span>
+
+<span class="hljs-title class_">Object</span>.<span class="hljs-title function_">entries</span>(obj)
+        .<span class="hljs-title function_">forEach</span>(<span class="hljs-function">(<span class="hljs-params">[key, value]</span>) =></span> {
+          <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`Key: <span class="hljs-subst">${key}</span>`</span>)
+          <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`Value: <span class="hljs-subst">${value}</span>`</span>)
+        })
+<span class="hljs-comment">// Key: id</span>
+<span class="hljs-comment">// Value: 1</span>
+<span class="hljs-comment">// Key: user</span>
+<span class="hljs-comment">// Value: user1</span>
+<span class="hljs-comment">// Key: name</span>
+<span class="hljs-comment">// Value: name1</span>
+</code></pre>0:{"buildId":"Mc6Th0Rmyk9pcJ5CRitSL","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"some/every/filter/map/flatMap/Object.entriesとか"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,"$L3"]}],"loading":null,"isPartial":false}
+3:["$","$L4",null,{"children":["$","$5",null,{"name":"Next.MetadataOutlet","children":"$@6"}]}]
+6:null

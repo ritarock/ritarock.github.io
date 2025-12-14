@@ -1,0 +1,69 @@
+1:"$Sreact.fragment"
+4:I[25151,["/_next/static/chunks/cc5639b053815f24.js","/_next/static/chunks/4904848246fadb45.js"],"OutletBoundary"]
+5:"$Sreact.suspense"
+2:T1926,<h2>JavaScript</h2>
+<h3>set を使う</h3>
+<p>配列を Set に変換。</p>
+<pre><code class="hljs language-javascript"><span class="hljs-keyword">const</span> arr = [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">5</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>, <span class="hljs-number">9</span>, <span class="hljs-number">9</span>]
+<span class="hljs-keyword">const</span> set = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Set</span>(arr)
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(set)
+<span class="hljs-comment">// Set(10) { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 }</span>
+</code></pre>
+<p>Set を配列に変換。</p>
+<pre><code class="hljs language-javascript"><span class="hljs-keyword">const</span> arr = [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">5</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>, <span class="hljs-number">9</span>, <span class="hljs-number">9</span>]
+<span class="hljs-keyword">const</span> set = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Set</span>(arr)
+
+<span class="hljs-keyword">const</span> setToAArr = <span class="hljs-title class_">Array</span>.<span class="hljs-title function_">from</span>(set)
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(setToAArr)
+<span class="hljs-comment">// [</span>
+<span class="hljs-comment">//   0, 1, 2, 3, 4,</span>
+<span class="hljs-comment">//   5, 6, 7, 8, 9</span>
+<span class="hljs-comment">// ]</span>
+</code></pre>
+<p>スプレッド構文を使う。</p>
+<pre><code class="hljs language-javascript"><span class="hljs-keyword">const</span> arr = [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">5</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>, <span class="hljs-number">9</span>, <span class="hljs-number">9</span>]
+<span class="hljs-keyword">const</span> set = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Set</span>(arr)
+
+<span class="hljs-keyword">const</span> setToAArr = [...set]
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(setToAArr)
+<span class="hljs-comment">// [</span>
+<span class="hljs-comment">//   0, 1, 2, 3, 4,</span>
+<span class="hljs-comment">//   5, 6, 7, 8, 9</span>
+<span class="hljs-comment">// ]</span>
+</code></pre>
+<h3>map を使う</h3>
+<p>配列を Map に変換。</p>
+<pre><code class="hljs language-javascript"><span class="hljs-keyword">const</span> arr = [{<span class="hljs-attr">id</span>: <span class="hljs-number">1</span>}, {<span class="hljs-attr">id</span>: <span class="hljs-number">2</span>}, {<span class="hljs-attr">id</span>: <span class="hljs-number">2</span>}, {<span class="hljs-attr">id</span>: <span class="hljs-number">3</span>}]
+
+<span class="hljs-keyword">const</span> m = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Map</span>(arr.<span class="hljs-title function_">map</span>(<span class="hljs-function"><span class="hljs-params">e</span> =></span> [e.<span class="hljs-property">id</span>, e]))
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(m)
+<span class="hljs-comment">// Map(3) { 1 => { id: 1 }, 2 => { id: 2 }, 3 => { id: 3 } }</span>
+</code></pre>
+<h2>Golang</h2>
+<pre><code class="hljs language-go"><span class="hljs-keyword">package</span> main
+
+<span class="hljs-keyword">import</span> (
+	<span class="hljs-string">"fmt"</span>
+)
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
+	arr := []<span class="hljs-type">int</span>{<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">5</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>, <span class="hljs-number">9</span>, <span class="hljs-number">9</span>}
+	m := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-type">int</span>]<span class="hljs-keyword">struct</span>{})
+	uniqArr := <span class="hljs-built_in">make</span>([]<span class="hljs-type">int</span>, <span class="hljs-number">0</span>)
+
+	<span class="hljs-keyword">for</span> _, v := <span class="hljs-keyword">range</span> arr {
+		<span class="hljs-keyword">if</span> _, ok := m[v]; !ok {
+			m[v] = <span class="hljs-keyword">struct</span>{}{}
+			uniqArr = <span class="hljs-built_in">append</span>(uniqArr, v)
+		}
+	}
+	
+	fmt.Println(uniqArr) <span class="hljs-comment">// [0 1 2 3 4 5 6 7 8 9]</span>
+}
+</code></pre>0:{"buildId":"Mc6Th0Rmyk9pcJ5CRitSL","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"配列をユニークにする"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,"$L3"]}],"loading":null,"isPartial":false}
+3:["$","$L4",null,{"children":["$","$5",null,{"name":"Next.MetadataOutlet","children":"$@6"}]}]
+6:null

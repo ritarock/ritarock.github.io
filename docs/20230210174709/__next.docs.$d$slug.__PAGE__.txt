@@ -1,0 +1,20 @@
+1:"$Sreact.fragment"
+3:I[25151,["/_next/static/chunks/cc5639b053815f24.js","/_next/static/chunks/4904848246fadb45.js"],"OutletBoundary"]
+4:"$Sreact.suspense"
+2:T55d,<p>profile を指定している場合は profile を使うが、指定していない場合は IAM ロールを使う。</p>
+<pre><code class="hljs language-go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">session</span><span class="hljs-params">(ctx context.Context, profile <span class="hljs-type">string</span>)</span></span> (aws.Config, <span class="hljs-type">error</span>) {
+	configOptions := []<span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(*config.LoadOptions)</span></span> <span class="hljs-type">error</span>{
+		config.WithRegion(<span class="hljs-string">"ap-northeast-1"</span>),
+	}
+	<span class="hljs-keyword">if</span> profile != <span class="hljs-string">""</span> {
+		configOptions = <span class="hljs-built_in">append</span>(configOptions, config.WithSharedConfigProfile(aws.ToString(&#x26;profile)))
+	}
+	cfg, err := config.LoadDefaultConfig(ctx, configOptions...)
+	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+		<span class="hljs-keyword">return</span> aws.Config{}, err
+	}
+	<span class="hljs-keyword">return</span> cfg, <span class="hljs-literal">nil</span>
+}
+</code></pre>
+<p><a href="https://github.com/turbot/steampipe-plugin-aws/blob/main/aws/service.go#L1437-L1460">このコード</a> が参考になった。</p>0:{"buildId":"Mc6Th0Rmyk9pcJ5CRitSL","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"aws-sdk-go-v2でprofileを使う"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"loading":null,"isPartial":false}
+5:null

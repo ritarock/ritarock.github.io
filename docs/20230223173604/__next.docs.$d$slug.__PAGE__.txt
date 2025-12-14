@@ -1,0 +1,247 @@
+1:"$Sreact.fragment"
+4:I[25151,["/_next/static/chunks/cc5639b053815f24.js","/_next/static/chunks/4904848246fadb45.js"],"OutletBoundary"]
+5:"$Sreact.suspense"
+2:T1e38,<h2>database の準備</h2>
+<pre><code class="hljs language-bash">$ go run -mod=mod entgo.io/ent/cmd/ent new Todo
+</code></pre>
+<p>schema の設定。</p>
+<pre><code class="hljs language-go"><span class="hljs-comment">// Fields of the Todo.</span>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(Todo)</span></span> Fields() []ent.Field {
+	<span class="hljs-keyword">return</span> []ent.Field{
+		field.String(<span class="hljs-string">"title"</span>),
+		field.String(<span class="hljs-string">"note"</span>),
+		field.Bool(<span class="hljs-string">"completed"</span>).Default(<span class="hljs-literal">false</span>),
+		field.Time(<span class="hljs-string">"created_at"</span>).Default(time.Now()),
+		field.Time(<span class="hljs-string">"updated_at"</span>).Default(time.Now()),
+	}
+}
+</code></pre>
+<pre><code class="hljs language-bash">$ go generate ./ent
+</code></pre>
+<h2>gqlgen</h2>
+<pre><code class="hljs language-bash">$ <span class="hljs-built_in">printf</span> <span class="hljs-string">'// +build tools\npackage tools\nimport (_ "github.com/99designs/gqlgen"\n _ "github.com/99designs/gqlgen/graphql/introspection")'</span> | gofmt > tools.go
+$ go mod tidy
+$ go run github.com/99designs/gqlgen init
+
+</code></pre>
+<p><code>graph/</code> に生成されたファイル。</p>
+<pre><code class="hljs language-bash">tree graph/
+graph/
+├── generated.go <span class="hljs-comment"># 自動生成</span>
+├── model
+│   └── models_gen.go <span class="hljs-comment"># 自動生成</span>
+├── resolver.go
+├── schema.graphqls
+└── schema.resolvers.go
+</code></pre>
+<p>ファイルは <code>resolver.go</code>、<code>schema.graphqls</code>、<code>schema.resolvers.go</code> で良さそう。
+プロジェクト直下に生成された <code>gqlgen.yml</code> は一旦放置。</p>
+<h3>スキーマ定義</h3>
+<p><code>schema.graphqls / schema.resolvers.go</code> を削除し、新規にスキーマ定義ファイルを作る。</p>
+<p>共有インターフェイス Node を定義する。プライマリーキーを持つ場合は Node インターフェイスを作るのがお作法らしい。また、独自の型として Datetime を定義する。</p>
+<pre><code class="hljs language-common.graphqls">interface Node {
+    id: ID!
+}
+
+scalar Datetime
+</code></pre>
+<p>次に Todo スキーマを定義する。</p>
+<pre><code class="hljs language-todo.graphqls">type Todo implements Node {
+    id: ID!
+    title: String!
+    note: String!
+    completed: Boolean!
+    created_at: Datetime!
+    updated_at: Datetime!
+}
+</code></pre>
+<p>最後に query と mutation を定義する。</p>
+<pre><code class="hljs language-query.graphqls">type Query {
+    todos: [Todo!]!
+}
+</code></pre>
+<pre><code class="hljs language-mutation.graphqls">type Mutation {
+    createTodo(input: NewTodo!): Todo!
+}
+
+input NewTodo {
+    id: ID
+    title: String!
+    note: String!
+    completed: Boolean
+    created_at: Datetime
+    updated_at: Datetime
+}
+</code></pre>
+<h3>コードの生成</h3>
+<pre><code class="hljs language-bash">$ go run github.com/99designs/gqlgen
+</code></pre>
+<h3>実装</h3>
+<p>resolver から参照できるようにフィールドを追加する。</p>
+<pre><code class="hljs language-go"><span class="hljs-keyword">type</span> Resolver <span class="hljs-keyword">struct</span> {
+	EntClient *ent.Client
+}
+</code></pre>
+<p><code>query.resolvers.go</code> を実装する。</p>
+<pre><code class="hljs language-go"><span class="hljs-comment">// Todos is the resolver for the todos field.</span>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(r *queryResolver)</span></span> Todos(ctx context.Context) ([]*model.Todo, <span class="hljs-type">error</span>) {
+	todos := []*model.Todo{}
+	searched, _ := r.EntClient.Todo.Query().All(ctx)
+	<span class="hljs-keyword">for</span> _, todo := <span class="hljs-keyword">range</span> searched {
+		todos = <span class="hljs-built_in">append</span>(todos, &#x26;model.Todo{
+			ID:        strconv.Itoa(todo.ID),
+			Title:     todo.Title,
+			Note:      todo.Note,
+			Completed: todo.Completed,
+			CreatedAt: todo.CreatedAt.String(),
+			UpdatedAt: todo.UpdatedAt.String(),
+		})
+	}
+	<span class="hljs-keyword">return</span> todos, <span class="hljs-literal">nil</span>
+}
+</code></pre>
+<p><code>mutation.resolvers.go</code> を実装する。</p>
+<pre><code class="hljs language-go"><span class="hljs-comment">// CreateTodo is the resolver for the createTodo field.</span>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(r *mutationResolver)</span></span> CreateTodo(ctx context.Context, input model.NewTodo) (*model.Todo, <span class="hljs-type">error</span>) {
+	created, _ := r.EntClient.Todo.Create().
+		SetTitle(input.Title).
+		SetNote(input.Note).
+		Save(ctx)
+
+	<span class="hljs-keyword">return</span> &#x26;model.Todo{
+		ID:        strconv.Itoa(created.ID),
+		Title:     created.Title,
+		Note:      created.Note,
+		Completed: created.Completed,
+		CreatedAt: created.CreatedAt.String(),
+		UpdatedAt: created.UpdatedAt.String(),
+	}, <span class="hljs-literal">nil</span>
+}
+</code></pre>
+<h2>server の実装</h2>
+<p>最後は echo で実行できるようにする。<code>server.go</code> は不要なので削除。</p>
+<pre><code class="hljs language-main.go">package main
+
+import (
+	"context"
+	"gqlgen-todo/ent"
+	"gqlgen-todo/graph"
+	"net/http"
+
+	"github.com/99designs/gqlgen/graphql/handler"
+	"github.com/99designs/gqlgen/graphql/playground"
+	"github.com/labstack/echo/v4"
+	_ "github.com/mattn/go-sqlite3"
+)
+
+const (
+	DRIVER      = "sqlite3"
+	DATA_SOURCE = "file:ent?mode=memory&#x26;cache=shared&#x26;_fk=1"
+)
+
+func main() {
+	ctx := context.Background()
+	client, _ := ent.Open(DRIVER, DATA_SOURCE)
+	client.Schema.Create(ctx)
+
+	e := echo.New()
+	e.GET("/health", func(c echo.Context) error {
+		return c.String(http.StatusOK, "ok")
+	})
+
+	graphqlHandler := handler.NewDefaultServer(
+		graph.NewExecutableSchema(
+			graph.Config{
+				Resolvers: &#x26;graph.Resolver{
+					EntClient: client,
+				},
+			},
+		),
+	)
+	playgroudHandler := playground.Handler("GraphQL", "/query")
+
+	e.POST("/query", func(c echo.Context) error {
+		graphqlHandler.ServeHTTP(c.Response(), c.Request())
+		return nil
+	})
+
+	e.GET("playground", func(c echo.Context) error {
+		playgroudHandler.ServeHTTP(c.Response(), c.Request())
+		return nil
+	})
+
+	e.Logger.Fatal(e.Start(":8080"))
+}
+</code></pre>
+<h3>試す</h3>
+<pre><code class="hljs language-query">mutation {
+  createTodo(input: {
+    title: "title1",
+    note: "note1"
+  }) {
+    id
+    title
+    note
+    completed
+    created_at
+    updated_at
+  }
+}
+
+{
+  "data": {
+    "createTodo": {
+      "id": "1",
+      "title": "title1",
+      "note": "note1",
+      "completed": false,
+      "created_at": "2023-02-23 17:33:13",
+      "updated_at": "2023-02-23 17:33:13"
+    }
+  }
+}
+</code></pre>
+<pre><code class="hljs language-query">{
+  todos {
+    id
+    title
+    note
+    completed
+    created_at
+    updated_at
+  }
+}
+
+{
+  "data": {
+    "todos": [
+      {
+        "id": "1",
+        "title": "title1",
+        "note": "note1",
+        "completed": false,
+        "created_at": "2023-02-23 17:33:13",
+        "updated_at": "2023-02-23 17:33:13"
+      },
+      {
+        "id": "2",
+        "title": "title2",
+        "note": "note2",
+        "completed": false,
+        "created_at": "2023-02-23 17:33:13",
+        "updated_at": "2023-02-23 17:33:13"
+      },
+      {
+        "id": "3",
+        "title": "title3",
+        "note": "note3",
+        "completed": false,
+        "created_at": "2023-02-23 17:33:13",
+        "updated_at": "2023-02-23 17:33:13"
+      }
+    ]
+  }
+}
+</code></pre>0:{"buildId":"Mc6Th0Rmyk9pcJ5CRitSL","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"gqlgenを触る"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,"$L3"]}],"loading":null,"isPartial":false}
+3:["$","$L4",null,{"children":["$","$5",null,{"name":"Next.MetadataOutlet","children":"$@6"}]}]
+6:null

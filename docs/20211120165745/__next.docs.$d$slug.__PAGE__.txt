@@ -1,0 +1,59 @@
+1:"$Sreact.fragment"
+4:I[25151,["/_next/static/chunks/cc5639b053815f24.js","/_next/static/chunks/4904848246fadb45.js"],"OutletBoundary"]
+5:"$Sreact.suspense"
+2:Te0b,<p><a href="https://github.com/rubenv/sql-migrate">https://github.com/rubenv/sql-migrate</a> を試してみた。</p>
+<h2>docker で試す</h2>
+<p>通常のアプリを起動する <code>docker-compose.yml</code> とは別に <code>docker-compose.migration.yml</code> を用意した。</p>
+<pre><code class="hljs language-yml"><span class="hljs-attr">version:</span> <span class="hljs-string">'3'</span>
+<span class="hljs-attr">services:</span>
+  <span class="hljs-attr">db:</span>
+    <span class="hljs-attr">build:</span>
+      <span class="hljs-attr">context:</span> <span class="hljs-string">./docker/database</span>
+    <span class="hljs-attr">restart:</span> <span class="hljs-string">always</span>
+    <span class="hljs-attr">environment:</span>
+      <span class="hljs-attr">MYSQL_DATABASE:</span> <span class="hljs-string">app</span>
+      <span class="hljs-attr">MYSQL_USER:</span> <span class="hljs-string">user</span>
+      <span class="hljs-attr">MYSQL_PASSWORD:</span> <span class="hljs-string">pass</span>
+      <span class="hljs-attr">MYSQL_ROOT_PASSWORD:</span> <span class="hljs-string">pass</span>
+    <span class="hljs-attr">ports:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-number">3306</span><span class="hljs-string">:3306</span>
+    <span class="hljs-attr">volumes:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">./docker/database/mysql:/var/lib/mysql</span>
+  <span class="hljs-attr">migration:</span>
+    <span class="hljs-attr">build:</span>
+      <span class="hljs-attr">context:</span> <span class="hljs-string">./docker/migration</span>
+    <span class="hljs-attr">volumes:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">./migrations:/work</span>
+    <span class="hljs-attr">depends_on:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">db</span>
+</code></pre>
+<p>migration 用の Dockerfile はこんな感じ。</p>
+<pre><code class="hljs language-Dockerfile">FROM golang:1.17.3
+
+WORKDIR /work
+RUN go get -v github.com/rubenv/sql-migrate/...
+</code></pre>
+<p>migration コンテナにマウントしてる <code>./migrations</code> にはマイグレーション用の SQL と <code>dbconfig.yml</code> を置いている。</p>
+<p><code>dbconfig.yml</code> では接続する DB の設定を書いておく。</p>
+<pre><code class="hljs language-yml"><span class="hljs-attr">development:</span>
+    <span class="hljs-attr">dialect:</span> <span class="hljs-string">mysql</span>
+    <span class="hljs-attr">datasource:</span> <span class="hljs-string">user:pass@tcp(db:3306)/app?parseTime=true</span>
+    <span class="hljs-attr">dir:</span> <span class="hljs-string">.</span>
+</code></pre>
+<p>また sql ファイルには <code>-- +migrate Up</code> と <code>-- +migrate Down</code> の記述が必要。</p>
+<pre><code class="hljs language-sql"><span class="hljs-comment">-- +migrate Up</span>
+<span class="hljs-keyword">CREATE TABLE</span> topics (
+  id <span class="hljs-type">varchar</span>(<span class="hljs-number">255</span>),
+  title <span class="hljs-type">varchar</span>(<span class="hljs-number">255</span>),
+  detail <span class="hljs-type">varchar</span>(<span class="hljs-number">255</span>)
+);
+
+<span class="hljs-comment">-- +migrate Down</span>
+<span class="hljs-keyword">DROP</span> <span class="hljs-keyword">TABLE</span> IF <span class="hljs-keyword">EXISTS</span> topics;
+</code></pre>
+<h2>実行</h2>
+<pre><code class="hljs language-bash">$ docker-compose -f docker-compose.migration.yml run migration bash
+$ sql-migrate up
+</code></pre>0:{"buildId":"Mc6Th0Rmyk9pcJ5CRitSL","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"sql-migrateを試す"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,"$L3"]}],"loading":null,"isPartial":false}
+3:["$","$L4",null,{"children":["$","$5",null,{"name":"Next.MetadataOutlet","children":"$@6"}]}]
+6:null

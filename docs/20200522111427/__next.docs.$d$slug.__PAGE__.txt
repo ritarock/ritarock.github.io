@@ -1,0 +1,48 @@
+1:"$Sreact.fragment"
+4:I[25151,["/_next/static/chunks/cc5639b053815f24.js","/_next/static/chunks/4904848246fadb45.js"],"OutletBoundary"]
+5:"$Sreact.suspense"
+2:Teb5,<h2>通常の実行</h2>
+<pre><code class="hljs language-ts"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">"Wellcome to Deno"</span>);
+</code></pre>
+<pre><code class="hljs language-bash">$ deno run hello.ts
+Wellcome to Deno
+</code></pre>
+<h2>http request があるとき</h2>
+<pre><code class="hljs language-ts"><span class="hljs-keyword">const</span> url = <span class="hljs-title class_">Deno</span>.<span class="hljs-property">args</span>[<span class="hljs-number">0</span>];
+<span class="hljs-keyword">const</span> res = <span class="hljs-keyword">await</span> <span class="hljs-title function_">fetch</span>(url);
+
+<span class="hljs-keyword">const</span> body = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Uint8Array</span>(<span class="hljs-keyword">await</span> res.<span class="hljs-title function_">arrayBuffer</span>());
+<span class="hljs-keyword">await</span> <span class="hljs-title class_">Deno</span>.<span class="hljs-property">stdout</span>.<span class="hljs-title function_">write</span>(body);
+</code></pre>
+<p><code>--allow-net</code> をつける。</p>
+<pre><code class="hljs language-bash">$ deno run --allow-net http.ts https://deno.land/manual/getting_started/first_steps
+</code></pre>
+<h3>コマンドラインで引数を渡す</h3>
+<pre><code class="hljs language-ts"><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title class_">Deno</span>.<span class="hljs-property">args</span>)
+</code></pre>
+<pre><code class="hljs language-bash">$ deno run args.ts 1 2 3
+[ <span class="hljs-string">"1"</span>, <span class="hljs-string">"2"</span>, <span class="hljs-string">"3"</span> ]
+</code></pre>
+<h2>ファイル読み込み</h2>
+<pre><code class="hljs language-ts"><span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &#x3C; <span class="hljs-title class_">Deno</span>.<span class="hljs-property">args</span>.<span class="hljs-property">length</span>; i++) {
+    <span class="hljs-keyword">let</span> filename = <span class="hljs-title class_">Deno</span>.<span class="hljs-property">args</span>[i];
+    <span class="hljs-keyword">let</span> file = <span class="hljs-keyword">await</span> <span class="hljs-title class_">Deno</span>.<span class="hljs-title function_">open</span>(filename);
+    <span class="hljs-keyword">await</span> <span class="hljs-title class_">Deno</span>.<span class="hljs-title function_">copy</span>(file, <span class="hljs-title class_">Deno</span>.<span class="hljs-property">stdout</span>);
+    file.<span class="hljs-title function_">close</span>();
+}
+</code></pre>
+<p><code>--allow-read</code> をつける。</p>
+<pre><code class="hljs language-bash">$ deno run --allow-read read.ts args.ts
+console.log(Deno.args);
+</code></pre>
+<h2>server を起動</h2>
+<pre><code class="hljs language-ts"><span class="hljs-keyword">const</span> listener = <span class="hljs-title class_">Deno</span>.<span class="hljs-title function_">listen</span>({ <span class="hljs-attr">port</span>: <span class="hljs-number">8080</span>  });
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">"listening on 0.0.0.0:8080"</span>);
+<span class="hljs-keyword">for</span> <span class="hljs-title function_">await</span> (<span class="hljs-keyword">const</span> conn <span class="hljs-keyword">of</span> listener) {
+      <span class="hljs-title class_">Deno</span>.<span class="hljs-title function_">copy</span>(conn, conn);
+}
+</code></pre>
+<pre><code class="hljs language-bash">$ deno run --allow-net server.ts
+</code></pre>0:{"buildId":"Mc6Th0Rmyk9pcJ5CRitSL","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"denoを触ってみる"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,"$L3"]}],"loading":null,"isPartial":false}
+3:["$","$L4",null,{"children":["$","$5",null,{"name":"Next.MetadataOutlet","children":"$@6"}]}]
+6:null

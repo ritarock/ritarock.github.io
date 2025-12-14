@@ -1,0 +1,66 @@
+1:"$Sreact.fragment"
+3:I[25151,["/_next/static/chunks/cc5639b053815f24.js","/_next/static/chunks/4904848246fadb45.js"],"OutletBoundary"]
+4:"$Sreact.suspense"
+2:Tc5a,<h2>開発環境</h2>
+<ul>
+<li>Ubuntu/trusty64</li>
+</ul>
+<h2>Docker のインストール</h2>
+<pre><code class="hljs language-bash">$ <span class="hljs-built_in">sudo</span> apt-get update
+$ <span class="hljs-built_in">sudo</span> apt-get -y install \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    software-properties-common
+$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | <span class="hljs-built_in">sudo</span> apt-key add -
+$ <span class="hljs-built_in">sudo</span> apt-key fingerprint 0EBFCD88
+$ <span class="hljs-built_in">sudo</span> add-apt-repository -y  \
+   <span class="hljs-string">"deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   <span class="hljs-subst">$(lsb_release -cs)</span> \
+   stable"</span>
+$ <span class="hljs-built_in">sudo</span> apt-get update
+$ <span class="hljs-built_in">sudo</span> apt-get install -y docker-ce
+</code></pre>
+<h2>Docker コマンド</h2>
+<h3>ローカルに保存された docker イメージの一覧を取得</h3>
+<pre><code class="hljs language-bash">$ docker images
+</code></pre>
+<h3>docker hub にあるイメージを検索</h3>
+<pre><code class="hljs language-bash">$ docker search &#x3C;イメージ>
+</code></pre>
+<h3>docker hub にあるイメージをローカルに取得する</h3>
+<pre><code class="hljs language-bash">$ docker pull &#x3C;イメージ>
+</code></pre>
+<h3>コンテナでプロセスを起動する</h3>
+<pre><code class="hljs language-bash">$ docker run -it &#x3C;イメージ> /bin/bash
+</code></pre>
+<h3>プロセスを確認する ( 停止されたものも含む )</h3>
+<pre><code class="hljs language-bash">$ docker ps -a
+</code></pre>
+<h3>停止されたコンテナの削除</h3>
+<pre><code class="hljs language-bash">$ docker <span class="hljs-built_in">rm</span> &#x3C;コンテナ<span class="hljs-built_in">id</span>>
+</code></pre>
+<p>id は一意なので頭の 4 桁程度入力すれば OK。</p>
+<h3>コンテナを全て削除</h3>
+<pre><code class="hljs language-bash">$ docker <span class="hljs-built_in">rm</span> $(docker ps -aq)
+</code></pre>
+<h3>exit と同時にコンテナの削除</h3>
+<pre><code class="hljs language-bash">$ docker run --<span class="hljs-built_in">rm</span> -it &#x3C;イメージ> /bin/bash
+</code></pre>
+<h3>ポートをホスト側に公開して起動</h3>
+<pre><code class="hljs language-bash">$ docker run -it -p 80:80 &#x3C;イメージ> /bin/bash
+</code></pre>
+<h3>外部ファイルを取り込む</h3>
+<pre><code class="hljs language-bash">$ docker run -it -v &#x3C;ホスト側のパス>:&#x3C;コンテナ側のパス> &#x3C;イメージ> /bin/bash
+</code></pre>
+<h2>Dockerfile 作成してからの流れ</h2>
+<h3>Dockerfile からイメージを作成</h3>
+<pre><code class="hljs language-bash">$ docker build -t &#x3C;作成するイメージ名> .
+</code></pre>
+<h3>作成したイメージからコンテナを起動</h3>
+<pre><code class="hljs language-bash">$ docker run --name &#x3C;起動するコンテナ名> -d -p &#x3C;イメージ名>
+</code></pre>
+<h3>コンテナの停止</h3>
+<pre><code class="hljs language-bash">$ docker stop &#x3C;コンテナ名>
+</code></pre>0:{"buildId":"Mc6Th0Rmyk9pcJ5CRitSL","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"Dockerのインストールからコンテナ作成まで"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"loading":null,"isPartial":false}
+5:null

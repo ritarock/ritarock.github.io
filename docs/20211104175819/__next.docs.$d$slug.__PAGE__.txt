@@ -1,0 +1,101 @@
+1:"$Sreact.fragment"
+4:I[25151,["/_next/static/chunks/cc5639b053815f24.js","/_next/static/chunks/4904848246fadb45.js"],"OutletBoundary"]
+5:"$Sreact.suspense"
+2:T1091,<p><code>goroutine</code> が効果を発揮するのは、<code>I/O</code> が絡むケース。メモリや CPU のみを使う計算処理を並行処理してもそれほど効果を発揮しない。</p>
+<h2>競合状態</h2>
+<p>データ処理に順番ありの可能性がある。処理の間に 1 時間掛かっても問題ないか?と考える。</p>
+<h2>アトミック性</h2>
+<p>処理が行われたか、行われたかったかの 2 パターンしかない。処理を分解したときにこれ以上分解できない単位。
+<code>i++</code> は非アトミック。</p>
+<ul>
+<li>i の値を取得する</li>
+<li>i の値を 1 増やす</li>
+<li>i の値を保存する</li>
+</ul>
+<p>アトミックな処理であれば複数のゴルーチンで安全に扱える。</p>
+<h2>メモリアクセス同期</h2>
+<p>排他処理が必要。 <code>sync.Mutex</code> で解決できる。</p>
+<h2>デッドロック</h2>
+<ul>
+<li>相互排他
+<ul>
+<li>ある並行プロセスがリソースに対して排他的な権利をどの時点でも保持している</li>
+</ul>
+</li>
+<li>条件待ち
+<ul>
+<li>ある並行プロセスがリソースの保持と追加のリソース待ちを同時に行う</li>
+</ul>
+</li>
+<li>横取り不可
+<ul>
+<li>ある並行プロセスによって保持されているリソースはそのプロセスによってのみ開放される</li>
+</ul>
+</li>
+<li>循環待ち
+<ul>
+<li>ある並行プロセス ( P1 ) は他の並行プロセス ( P2 ) を待たなければならない。そして P2 は P1 を待っている</li>
+</ul>
+</li>
+</ul>
+<h2>ライブロック</h2>
+<p>ライブロックが起こる原因の多くは、試行回数に上限がない。 2 つの並行プロセスが互いのデッドロックを予防して起こる。</p>
+<h2>リソース枯渇</h2>
+<p>ライブロックのように 1 つ以上の貪欲なプロセスが他のリソースを奪うことで起こる。</p>
+<pre><code class="hljs language-go"><span class="hljs-keyword">package</span> main
+
+<span class="hljs-keyword">import</span> (
+	<span class="hljs-string">"fmt"</span>
+	<span class="hljs-string">"sync"</span>
+	<span class="hljs-string">"time"</span>
+)
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
+	<span class="hljs-keyword">var</span> wg sync.WaitGroup
+	<span class="hljs-keyword">var</span> sharedLock sync.Mutex
+	<span class="hljs-keyword">const</span> RUNTIME = <span class="hljs-number">1</span> * time.Second
+
+	greedWorker := <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> {
+		<span class="hljs-keyword">defer</span> wg.Done()
+
+		<span class="hljs-keyword">var</span> count <span class="hljs-type">int</span>
+		<span class="hljs-keyword">for</span> begin := time.Now(); time.Since(begin) &#x3C;= RUNTIME; {
+			sharedLock.Lock()
+			time.Sleep(<span class="hljs-number">3</span> * time.Nanosecond)
+			sharedLock.Unlock()
+			count++
+		}
+		fmt.Printf(<span class="hljs-string">"greed worker loops: %v\n"</span>, count)
+	}
+
+	politeWorker := <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> {
+		<span class="hljs-keyword">defer</span> wg.Done()
+
+		<span class="hljs-keyword">var</span> count <span class="hljs-type">int</span>
+		<span class="hljs-keyword">for</span> begin := time.Now(); time.Since(begin) &#x3C;= RUNTIME; {
+			sharedLock.Lock()
+			time.Sleep(<span class="hljs-number">1</span> * time.Nanosecond)
+			sharedLock.Unlock()
+			sharedLock.Lock()
+			time.Sleep(<span class="hljs-number">1</span> * time.Nanosecond)
+			sharedLock.Unlock()
+			sharedLock.Lock()
+			time.Sleep(<span class="hljs-number">1</span> * time.Nanosecond)
+			sharedLock.Unlock()
+			count++
+		}
+		fmt.Printf(<span class="hljs-string">"polite worker loops: %v\n"</span>, count)
+	}
+
+	wg.Add(<span class="hljs-number">2</span>)
+	<span class="hljs-keyword">go</span> greedWorker()
+	<span class="hljs-keyword">go</span> politeWorker()
+	wg.Wait()
+}
+</code></pre>
+<pre><code class="hljs language-bash">$ go run main.go 
+greed worker loops: 867215
+polite worker loops: 524996
+</code></pre>0:{"buildId":"Mc6Th0Rmyk9pcJ5CRitSL","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"並行処理の考え方"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,"$L3"]}],"loading":null,"isPartial":false}
+3:["$","$L4",null,{"children":["$","$5",null,{"name":"Next.MetadataOutlet","children":"$@6"}]}]
+6:null

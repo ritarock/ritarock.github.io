@@ -1,0 +1,74 @@
+1:"$Sreact.fragment"
+4:I[25151,["/_next/static/chunks/cc5639b053815f24.js","/_next/static/chunks/4904848246fadb45.js"],"OutletBoundary"]
+5:"$Sreact.suspense"
+2:Td7f,<h2>form_with</h2>
+<p>新しいバージョンの rails なら <code>form_for, form_tag</code> は使用せずに <code>form_with</code> を使う事ができる。</p>
+<p>モデルの有無で書き方が変わる。</p>
+<h3>モデルが有るとき</h3>
+<pre><code class="hljs language-ruby">form_with <span class="hljs-symbol">model:</span> <span class="hljs-string">'モデル名'</span> <span class="hljs-keyword">do</span> |<span class="hljs-params">form</span>|
+  <span class="hljs-comment"># 中身</span>
+<span class="hljs-keyword">end</span>
+</code></pre>
+<h3>モデルが無いとき</h3>
+<ul>
+<li>URL で指定する</li>
+</ul>
+<pre><code class="hljs language-ruby">form_with <span class="hljs-symbol">model:</span> <span class="hljs-string">'URL'</span> <span class="hljs-keyword">do</span> |<span class="hljs-params">form</span>|
+  <span class="hljs-comment"># 中身</span>
+<span class="hljs-keyword">end</span>
+</code></pre>
+<ul>
+<li>PATH で指定する</li>
+</ul>
+<pre><code class="hljs language-ruby">form_with <span class="hljs-symbol">model:</span> <span class="hljs-string">'PATH'</span> <span class="hljs-keyword">do</span> |<span class="hljs-params">form</span>|
+  <span class="hljs-comment"># 中身</span>
+<span class="hljs-keyword">end</span>
+</code></pre>
+<h2>オプション</h2>
+<p>よく使うもの。</p>
+<table>
+<thead>
+<tr>
+<th>オプション</th>
+<th>説明</th>
+<th>デフォルト値</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>:url</td>
+<td>URL を指定</td>
+<td>-</td>
+</tr>
+<tr>
+<td>:method</td>
+<td>HTTP メソッド</td>
+<td>POST</td>
+</tr>
+<tr>
+<td>:local</td>
+<td>リモート送信を無効</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<h2>URL からフォームを作成 ( form_for 的な使い方 )</h2>
+<pre><code class="hljs language-slim">= form_with url :posts_path do |f|
+  = f.text_field :title
+</code></pre>
+<p>生成される HTML。</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">form</span> <span class="hljs-attr">action</span>=<span class="hljs-string">"/pots"</span> <span class="hljs-attr">method</span>=<span class="hljs-string">"post"</span> <span class="hljs-attr">data-remote</span>=<span class="hljs-string">"true"</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"title"</span>></span>
+<span class="hljs-tag">&#x3C;/<span class="hljs-name">form</span>></span>
+</code></pre>
+<h2>モデルを指定してフォームを作成 ( form_for 的な使い方 )</h2>
+<pre><code class="hljs language-slim">= form_with model: Post.new do |f|
+  = f.text_field :title
+</code></pre>
+<p>生成される HTML。</p>
+<pre><code class="hljs language-html"><span class="hljs-tag">&#x3C;<span class="hljs-name">form</span> <span class="hljs-attr">action</span>=<span class="hljs-string">"/pots"</span> <span class="hljs-attr">method</span>=<span class="hljs-string">"post"</span> <span class="hljs-attr">data-remote</span>=<span class="hljs-string">"true"</span>></span>
+  <span class="hljs-tag">&#x3C;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"post[title]"</span>></span>
+<span class="hljs-tag">&#x3C;/<span class="hljs-name">form</span>></span>
+</code></pre>0:{"buildId":"Mc6Th0Rmyk9pcJ5CRitSL","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"form_withの使い方"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,"$L3"]}],"loading":null,"isPartial":false}
+3:["$","$L4",null,{"children":["$","$5",null,{"name":"Next.MetadataOutlet","children":"$@6"}]}]
+6:null

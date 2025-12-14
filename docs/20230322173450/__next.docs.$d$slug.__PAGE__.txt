@@ -1,0 +1,25 @@
+1:"$Sreact.fragment"
+3:I[25151,["/_next/static/chunks/cc5639b053815f24.js","/_next/static/chunks/4904848246fadb45.js"],"OutletBoundary"]
+4:"$Sreact.suspense"
+2:T50f,<p>構成は、slack => API Gateway => Lambda。</p>
+<p>event を <code>Decode</code> する必要がある。</p>
+<pre><code class="hljs language-go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Handler</span><span class="hljs-params">(event events.APIGatewayProxyRequest)</span></span> (Response, <span class="hljs-type">error</span>) {
+	<span class="hljs-keyword">if</span> err := ensureDecode(&#x26;event); err != <span class="hljs-literal">nil</span> {
+		<span class="hljs-built_in">panic</span>(err)
+	}
+	fmt.Println(event.Body)
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">ensureDecode</span><span class="hljs-params">(event *events.APIGatewayProxyRequest)</span></span> <span class="hljs-type">error</span> {
+	<span class="hljs-keyword">if</span> event.IsBase64Encoded {
+		body, err := base64.StdEncoding.DecodeString(event.Body)
+		<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+			<span class="hljs-keyword">return</span> err
+		}
+		event.Body = <span class="hljs-type">string</span>(body)
+		event.IsBase64Encoded = <span class="hljs-literal">false</span>
+	}
+	<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>
+}
+</code></pre>0:{"buildId":"Mc6Th0Rmyk9pcJ5CRitSL","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"SlackのスラッシュコマンドをLambdaで受け取る"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"loading":null,"isPartial":false}
+5:null

@@ -1,0 +1,278 @@
+1:"$Sreact.fragment"
+4:I[25151,["/_next/static/chunks/cc5639b053815f24.js","/_next/static/chunks/4904848246fadb45.js"],"OutletBoundary"]
+5:"$Sreact.suspense"
+2:T3578,<h2>goroutine</h2>
+<p>goroutine は軽量なスレッド。</p>
+<pre><code class="hljs language-go"><span class="hljs-keyword">go</span> f(x, y)
+</code></pre>
+<p>と書くだけ。</p>
+<pre><code class="hljs language-go"><span class="hljs-keyword">package</span> main
+
+<span class="hljs-keyword">import</span> (
+	<span class="hljs-string">"fmt"</span>
+	<span class="hljs-string">"time"</span>
+)
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">say</span><span class="hljs-params">(s <span class="hljs-type">string</span>)</span></span> {
+	<span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &#x3C; <span class="hljs-number">5</span>; i++ {
+		time.Sleep(<span class="hljs-number">100</span> * time.Millisecond)
+		fmt.Println(s)
+	}
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
+	<span class="hljs-keyword">go</span> say(<span class="hljs-string">"hello"</span>)
+	say(<span class="hljs-string">"world"</span>)
+}
+
+<span class="hljs-comment">// hello</span>
+<span class="hljs-comment">// world</span>
+<span class="hljs-comment">// world</span>
+<span class="hljs-comment">// hello</span>
+<span class="hljs-comment">// hello</span>
+<span class="hljs-comment">// world</span>
+<span class="hljs-comment">// hello</span>
+<span class="hljs-comment">// world</span>
+<span class="hljs-comment">// world</span>
+<span class="hljs-comment">// hello</span>
+</code></pre>
+<h2>channel</h2>
+<p>channel 型は <code>&#x3C;-</code> を用いて値の送受信を行う。</p>
+<pre><code class="hljs language-go">ch &#x3C;- v <span class="hljs-comment">// v をチャネル ch に送信する</span>
+v := &#x3C;- ch <span class="hljs-comment">// チャネル ch から変数を v に割り当てる</span>
+</code></pre>
+<p>チャネルは <code>make</code> で作る。</p>
+<pre><code class="hljs language-go">ch := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-type">int</span>)
+</code></pre>
+<p>通常、片方の準備ができるまで送受信はブロックされる。</p>
+<pre><code class="hljs language-go"><span class="hljs-keyword">package</span> main
+
+<span class="hljs-keyword">import</span> <span class="hljs-string">"fmt"</span>
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">sum</span><span class="hljs-params">(s []<span class="hljs-type">int</span>, c <span class="hljs-keyword">chan</span> <span class="hljs-type">int</span>)</span></span> {
+	sum := <span class="hljs-number">0</span>
+	<span class="hljs-keyword">for</span> _, v := <span class="hljs-keyword">range</span> s {
+		sum += v
+	}
+	c &#x3C;- sum
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
+	s := []<span class="hljs-type">int</span>{<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>, <span class="hljs-number">10</span>}
+	c := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-type">int</span>)
+
+	<span class="hljs-keyword">go</span> sum(s[:<span class="hljs-built_in">len</span>(s)/<span class="hljs-number">2</span>], c)
+	<span class="hljs-keyword">go</span> sum(s[<span class="hljs-built_in">len</span>(s)/<span class="hljs-number">2</span>:], c)
+	<span class="hljs-keyword">go</span> sum(s, c)
+
+	x, y := &#x3C;-c, &#x3C;-c
+	z := &#x3C;-c
+
+	fmt.Println(x, y, z)
+}
+
+<span class="hljs-comment">// 55 15 40</span>
+<span class="hljs-comment">// 55 40 15</span>
+<span class="hljs-comment">// 処理終わった順かな？</span>
+</code></pre>
+<h3>バッファ</h3>
+<p>チャネルはバッファとして使える。 make の 2 つ目の引数にバッファの長さを指定できる。</p>
+<pre><code class="hljs language-go">ch := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-type">int</span>, <span class="hljs-number">10</span>)
+</code></pre>
+<p>バッファ数を超えると deadlock になる。</p>
+<pre><code class="hljs language-go"><span class="hljs-keyword">package</span> main
+
+<span class="hljs-keyword">import</span> <span class="hljs-string">"fmt"</span>
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
+	ch := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-type">bool</span>, <span class="hljs-number">2</span>)
+	ch &#x3C;- <span class="hljs-literal">true</span>
+	ch &#x3C;- <span class="hljs-literal">true</span>
+	v := &#x3C;-ch
+	ch &#x3C;- <span class="hljs-literal">true</span>
+	<span class="hljs-comment">// ch &#x3C;- true // この行を入れると deadlock</span>
+
+	fmt.Println(<span class="hljs-built_in">len</span>(ch))
+	fmt.Println(&#x3C;-ch)
+	fmt.Println(&#x3C;-ch)
+	fmt.Println(v)
+	fmt.Println(<span class="hljs-built_in">len</span>(ch))
+}
+
+<span class="hljs-comment">// 2</span>
+<span class="hljs-comment">// true</span>
+<span class="hljs-comment">// true</span>
+<span class="hljs-comment">// true</span>
+<span class="hljs-comment">// 0</span>
+</code></pre>
+<h3>close</h3>
+<p>送信側はチャネルを <code>close</code> できる。
+受信側はチャネルを <code>close</code> しているか確認できる。
+受信する値はなく、かつチャネルが閉じているなら <code>ok</code> は <code>false</code> になる。</p>
+<pre><code class="hljs language-go">v, ok := &#x3C;- ch
+</code></pre>
+<p>ループのときはチャネルを使うとチャネルが閉じるまで値を受信し続ける。</p>
+<pre><code class="hljs language-go"><span class="hljs-keyword">package</span> main
+
+<span class="hljs-keyword">import</span> <span class="hljs-string">"fmt"</span>
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">fibonacci</span><span class="hljs-params">(n <span class="hljs-type">int</span>, c <span class="hljs-keyword">chan</span> <span class="hljs-type">int</span>)</span></span> {
+	x, y := <span class="hljs-number">0</span>, <span class="hljs-number">1</span>
+	<span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &#x3C; n; i++ {
+		c &#x3C;- x
+		x, y = y, x+y
+	}
+	<span class="hljs-built_in">close</span>(c)
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
+	c := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-type">int</span>, <span class="hljs-number">10</span>)
+	<span class="hljs-keyword">go</span> fibonacci(<span class="hljs-built_in">cap</span>(c), c)
+	<span class="hljs-keyword">for</span> i := <span class="hljs-keyword">range</span> c {
+		fmt.Println(i)
+	}
+}
+
+<span class="hljs-comment">// 0</span>
+<span class="hljs-comment">// 1</span>
+<span class="hljs-comment">// 1</span>
+<span class="hljs-comment">// 2</span>
+<span class="hljs-comment">// 3</span>
+<span class="hljs-comment">// 5</span>
+<span class="hljs-comment">// 8</span>
+<span class="hljs-comment">// 13</span>
+<span class="hljs-comment">// 21</span>
+<span class="hljs-comment">// 34</span>
+</code></pre>
+<h2>select</h2>
+<p><code>select</code> は goroutine を複数の通信操作で待たせる。
+case の準備ができるまでブロックする。複数の case が準備できている場合、 case はランダムに実行される。</p>
+<pre><code class="hljs language-go"><span class="hljs-keyword">package</span> main
+
+<span class="hljs-keyword">import</span> <span class="hljs-string">"fmt"</span>
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">fibonacci</span><span class="hljs-params">(c, quit <span class="hljs-keyword">chan</span> <span class="hljs-type">int</span>)</span></span> {
+	x, y := <span class="hljs-number">0</span>, <span class="hljs-number">1</span>
+	<span class="hljs-keyword">for</span> {
+		<span class="hljs-keyword">select</span> {
+		<span class="hljs-keyword">case</span> c &#x3C;- x:
+			x, y = y, x+y
+		<span class="hljs-keyword">case</span> &#x3C;-quit:
+			fmt.Println(<span class="hljs-string">"quit"</span>)
+			<span class="hljs-keyword">return</span>
+		}
+	}
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
+	c := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-type">int</span>)
+	quit := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-type">int</span>)
+
+	<span class="hljs-keyword">go</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> {
+		<span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &#x3C; <span class="hljs-number">10</span>; i++ {
+			fmt.Println(&#x3C;-c)
+		}
+		quit &#x3C;- <span class="hljs-number">0</span>
+	}()
+	fibonacci(c, quit)
+}
+
+<span class="hljs-comment">// 0</span>
+<span class="hljs-comment">// 1</span>
+<span class="hljs-comment">// 1</span>
+<span class="hljs-comment">// 2</span>
+<span class="hljs-comment">// 3</span>
+<span class="hljs-comment">// 5</span>
+<span class="hljs-comment">// 8</span>
+<span class="hljs-comment">// 13</span>
+<span class="hljs-comment">// 21</span>
+<span class="hljs-comment">// 34</span>
+<span class="hljs-comment">// quit</span>
+</code></pre>
+<h3>default</h3>
+<p>ブロックせずに送受信したいときには default を使う。</p>
+<pre><code class="hljs language-go"><span class="hljs-keyword">package</span> main
+
+<span class="hljs-keyword">import</span> (
+	<span class="hljs-string">"fmt"</span>
+	<span class="hljs-string">"time"</span>
+)
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
+	tick := time.Tick(<span class="hljs-number">100</span> * time.Millisecond)
+	boom := time.Tick(<span class="hljs-number">500</span> * time.Millisecond)
+
+	<span class="hljs-keyword">for</span> {
+		<span class="hljs-keyword">select</span> {
+		<span class="hljs-keyword">case</span> &#x3C;-tick:
+			fmt.Println(<span class="hljs-string">"tick"</span>)
+		<span class="hljs-keyword">case</span> &#x3C;-boom:
+			fmt.Println(<span class="hljs-string">"boom"</span>)
+			<span class="hljs-keyword">return</span>
+		<span class="hljs-keyword">default</span>:
+			fmt.Println(<span class="hljs-string">"   ."</span>)
+			time.Sleep(<span class="hljs-number">50</span> * time.Millisecond)
+		}
+	}
+}
+
+<span class="hljs-comment">//    .</span>
+<span class="hljs-comment">//    .</span>
+<span class="hljs-comment">// tick</span>
+<span class="hljs-comment">//    .</span>
+<span class="hljs-comment">//    .</span>
+<span class="hljs-comment">// tick</span>
+<span class="hljs-comment">//    .</span>
+<span class="hljs-comment">//    .</span>
+<span class="hljs-comment">// tick</span>
+<span class="hljs-comment">//    .</span>
+<span class="hljs-comment">//    .</span>
+<span class="hljs-comment">// tick</span>
+<span class="hljs-comment">//    .</span>
+<span class="hljs-comment">//    .</span>
+<span class="hljs-comment">// boom</span>
+</code></pre>
+<h2>sync.Mutex</h2>
+<p>コンフリクトを避け、 1 度に 1 つの goroutine だけが変数にアクセスできる。
+Golang の標準パッケージは,排他制御を <code>sync.Mutex</code> と <code>Lock</code> 、 <code>Unlock</code> で提供している。</p>
+<pre><code class="hljs language-go"><span class="hljs-keyword">package</span> main
+
+<span class="hljs-keyword">import</span> (
+	<span class="hljs-string">"fmt"</span>
+	<span class="hljs-string">"sync"</span>
+	<span class="hljs-string">"time"</span>
+)
+
+<span class="hljs-keyword">type</span> SafeCounter <span class="hljs-keyword">struct</span> {
+	mu sync.Mutex
+	v  <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-type">int</span>
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(c *SafeCounter)</span></span> Inc(key <span class="hljs-type">string</span>) {
+	c.mu.Lock()
+	c.v[key]++
+	c.mu.Unlock()
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(c *SafeCounter)</span></span> Value(key <span class="hljs-type">string</span>) <span class="hljs-type">int</span> {
+	c.mu.Lock()
+	<span class="hljs-keyword">defer</span> c.mu.Unlock()
+	<span class="hljs-keyword">return</span> c.v[key]
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
+	c := SafeCounter{
+		v: <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-type">int</span>),
+	}
+
+	<span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &#x3C; <span class="hljs-number">1000</span>; i++ {
+		<span class="hljs-keyword">go</span> c.Inc(<span class="hljs-string">"somekey"</span>)
+	}
+	time.Sleep(time.Second)
+	fmt.Println(c.Value(<span class="hljs-string">"somekey"</span>))
+}
+
+<span class="hljs-comment">// 1000</span>
+</code></pre>0:{"buildId":"Mc6Th0Rmyk9pcJ5CRitSL","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"Golangのgoroutine/channelとか"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,"$L3"]}],"loading":null,"isPartial":false}
+3:["$","$L4",null,{"children":["$","$5",null,{"name":"Next.MetadataOutlet","children":"$@6"}]}]
+6:null

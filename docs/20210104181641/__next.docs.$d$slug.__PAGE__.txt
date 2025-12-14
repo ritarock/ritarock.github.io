@@ -1,0 +1,48 @@
+1:"$Sreact.fragment"
+4:I[25151,["/_next/static/chunks/cc5639b053815f24.js","/_next/static/chunks/4904848246fadb45.js"],"OutletBoundary"]
+5:"$Sreact.suspense"
+2:Td51,<p><a href="https://github.com/ritarock/moniterinstance">インスタンスのCPUをCLIで確認する</a></p>
+<p>この CLI を作るにあたってハマったところとその解決法。</p>
+<h2>時間でソートする</h2>
+<h3>配列のソート</h3>
+<p>Golang の場合、お決まりのやり方があるみたいでググると大体同じやり方でやっている。</p>
+<p>struct を定義して、<code>Len, Less, Swap</code> メソッドを用意する。</p>
+<pre><code class="hljs language-go"><span class="hljs-keyword">type</span> Bytime []*cloudwatch.Datapoint
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(arr Bytime)</span></span> Len() <span class="hljs-type">int</span> {
+	<span class="hljs-keyword">return</span> <span class="hljs-built_in">len</span>(arr)
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(arr Bytime)</span></span> Less(i, j <span class="hljs-type">int</span>) <span class="hljs-type">bool</span> {
+	<span class="hljs-keyword">return</span> arr[i].Timestamp.Before(*arr[j].Timestamp)
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(arr Bytime)</span></span> Swap(i, j <span class="hljs-type">int</span>) {
+	arr[i], arr[j] = arr[j], arr[i]
+}
+</code></pre>
+<p>実際にソートするときは、別の配列を用意した。</p>
+<pre><code class="hljs language-go"><span class="hljs-keyword">var</span> sortedResp Bytime = resp.Datapoints
+sort.Sort(sortedResp)
+</code></pre>
+<h3>時間の比較</h3>
+<p>timeA(2020-01-01 00:00:00 +0000 UTC) と timeB(2021-01-01 00:00:00 +0000 UTC) があるとする。</p>
+<pre><code class="hljs language-go">timeA, timeB := time.Date(<span class="hljs-number">2020</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span> , <span class="hljs-number">0</span>, time.UTC), time.Date(<span class="hljs-number">2021</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span> , <span class="hljs-number">0</span>, time.UTC)
+</code></pre>
+<p>時間の流れは <code>timeA => timeB</code>。</p>
+<p>このときの時間の比較は以下のようにできる。</p>
+<pre><code class="hljs language-go">timeA.Equal(timeB) <span class="hljs-comment">// false</span>
+
+timeA.Before(timeB) <span class="hljs-comment">// true</span>
+
+timeA.After(timeB) <span class="hljs-comment">// false</span>
+</code></pre>
+<h2>UTCをJSTに変更</h2>
+<pre><code class="hljs language-go">timeA := time.Date(<span class="hljs-number">2020</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span> , <span class="hljs-number">0</span>, time.UTC)
+loc, _ := time.LoadLocation(<span class="hljs-string">"Asia/Tokyo"</span>)
+
+fmt.Println(<span class="hljs-string">"UTC "</span> + timeA.String()) <span class="hljs-comment">// UTC 2020-01-01 00:00:00 +0000 UTC</span>
+fmt.Println(<span class="hljs-string">"JST "</span> + timeA.In(loc).String()) <span class="hljs-comment">// JST 2020-01-01 09:00:00 +0900 JST</span>
+</code></pre>0:{"buildId":"Mc6Th0Rmyk9pcJ5CRitSL","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"Golangで時間操作とソート"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,"$L3"]}],"loading":null,"isPartial":false}
+3:["$","$L4",null,{"children":["$","$5",null,{"name":"Next.MetadataOutlet","children":"$@6"}]}]
+6:null

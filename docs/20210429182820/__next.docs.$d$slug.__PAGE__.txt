@@ -1,0 +1,389 @@
+1:"$Sreact.fragment"
+4:I[25151,["/_next/static/chunks/cc5639b053815f24.js","/_next/static/chunks/4904848246fadb45.js"],"OutletBoundary"]
+5:"$Sreact.suspense"
+2:T4426,<h2>並列 / 並行 処理</h2>
+<ul>
+<li>並列処理
+<ul>
+<li>Parallelism
+<ul>
+<li>同時に同じ処理が複数走る</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>並行処理
+<ul>
+<li>Concurrency
+<ul>
+<li>同時に色々な処理が走る</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2>channel を使う</h2>
+<pre><code class="hljs language-go"><span class="hljs-keyword">package</span> main
+
+<span class="hljs-keyword">import</span> (
+	<span class="hljs-string">"fmt"</span>
+	<span class="hljs-string">"time"</span>
+)
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">process</span><span class="hljs-params">(num <span class="hljs-type">int</span>, str <span class="hljs-type">string</span>)</span></span> {
+	<span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &#x3C; num; i++ {
+		time.Sleep(<span class="hljs-number">1</span> * time.Second)
+		fmt.Println(i, str)
+	}
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
+	fmt.Println(<span class="hljs-string">"Start"</span>)
+	process(<span class="hljs-number">2</span>, <span class="hljs-string">"A"</span>)
+	process(<span class="hljs-number">2</span>, <span class="hljs-string">"B"</span>)
+	process(<span class="hljs-number">2</span>, <span class="hljs-string">"C"</span>)
+	fmt.Println(<span class="hljs-string">"Finish"</span>)
+}
+
+<span class="hljs-comment">// Start</span>
+<span class="hljs-comment">// 0 A</span>
+<span class="hljs-comment">// 1 A</span>
+<span class="hljs-comment">// 0 B</span>
+<span class="hljs-comment">// 1 B</span>
+<span class="hljs-comment">// 0 C</span>
+<span class="hljs-comment">// 1 C</span>
+<span class="hljs-comment">// Finish</span>
+<span class="hljs-comment">// </span>
+<span class="hljs-comment">// ________________________________________________________</span>
+<span class="hljs-comment">// Executed in    6.30 secs      fish           external</span>
+<span class="hljs-comment">//    usr time  192.00 millis  172.00 micros  191.83 millis</span>
+<span class="hljs-comment">//    sys time  201.91 millis  759.00 micros  201.15 millis</span>
+</code></pre>
+<p>process の処理を並列化する。</p>
+<pre><code class="hljs language-go"><span class="hljs-keyword">package</span> main
+
+<span class="hljs-keyword">import</span> (
+	<span class="hljs-string">"fmt"</span>
+	<span class="hljs-string">"time"</span>
+)
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">process</span><span class="hljs-params">(num <span class="hljs-type">int</span>, str <span class="hljs-type">string</span>)</span></span> {
+	<span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &#x3C; num; i++ {
+		time.Sleep(<span class="hljs-number">1</span> * time.Second)
+		fmt.Println(i, str)
+	}
+}
+
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
+	chA := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-type">bool</span>)
+	chB := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-type">bool</span>)
+	chC := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-type">bool</span>)
+	fmt.Println(<span class="hljs-string">"Start"</span>)
+
+	<span class="hljs-keyword">go</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> {
+		process(<span class="hljs-number">2</span>, <span class="hljs-string">"A"</span>)
+		chA &#x3C;- <span class="hljs-literal">true</span>
+	}()
+
+	<span class="hljs-keyword">go</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> {
+		process(<span class="hljs-number">2</span>, <span class="hljs-string">"B"</span>)
+		chB &#x3C;- <span class="hljs-literal">true</span>
+	}()
+
+	<span class="hljs-keyword">go</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> {
+		process(<span class="hljs-number">2</span>, <span class="hljs-string">"C"</span>)
+		chC &#x3C;- <span class="hljs-literal">true</span>
+	}()
+
+	&#x3C;-chA
+	&#x3C;-chB
+	&#x3C;-chC
+
+	fmt.Println(<span class="hljs-string">"Finish"</span>)
+}
+
+<span class="hljs-comment">// Start</span>
+<span class="hljs-comment">// 0 B</span>
+<span class="hljs-comment">// 0 A</span>
+<span class="hljs-comment">// 0 C</span>
+<span class="hljs-comment">// 1 C</span>
+<span class="hljs-comment">// 1 A</span>
+<span class="hljs-comment">// 1 B</span>
+<span class="hljs-comment">// Finish</span>
+<span class="hljs-comment">// </span>
+<span class="hljs-comment">// ________________________________________________________</span>
+<span class="hljs-comment">// Executed in    2.29 secs      fish           external</span>
+<span class="hljs-comment">//    usr time  194.02 millis  178.00 micros  193.84 millis</span>
+<span class="hljs-comment">//    sys time  207.43 millis  862.00 micros  206.57 millis</span>
+</code></pre>
+<h2>sync.WaitGroup を使う</h2>
+<pre><code class="hljs language-go"><span class="hljs-keyword">package</span> main
+
+<span class="hljs-keyword">import</span> <span class="hljs-string">"fmt"</span>
+
+<span class="hljs-keyword">type</span> Item <span class="hljs-keyword">struct</span> {
+	Id   <span class="hljs-type">int</span>
+	Name <span class="hljs-type">string</span>
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">execLoop</span><span class="hljs-params">(list []Item)</span></span> {
+	<span class="hljs-keyword">for</span> _, item := <span class="hljs-keyword">range</span> list {
+		doSomething(item)
+	}
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">doSomething</span><span class="hljs-params">(item Item)</span></span> {
+	item.Id += <span class="hljs-number">10</span>
+	fmt.Println(item)
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
+	list := []Item{
+		{Id: <span class="hljs-number">1</span>, Name: <span class="hljs-string">"item1"</span>},
+		{Id: <span class="hljs-number">2</span>, Name: <span class="hljs-string">"item2"</span>},
+		{Id: <span class="hljs-number">3</span>, Name: <span class="hljs-string">"item3"</span>},
+		{Id: <span class="hljs-number">4</span>, Name: <span class="hljs-string">"item4"</span>},
+		{Id: <span class="hljs-number">5</span>, Name: <span class="hljs-string">"item5"</span>},
+	}
+
+	execLoop(list)
+}
+
+<span class="hljs-comment">// {11 item1}</span>
+<span class="hljs-comment">// {12 item2}</span>
+<span class="hljs-comment">// {13 item3}</span>
+<span class="hljs-comment">// {14 item4}</span>
+<span class="hljs-comment">// {15 item5}</span>
+</code></pre>
+<p>ループ内の処理を並列化する。</p>
+<pre><code class="hljs language-go"><span class="hljs-keyword">package</span> main
+
+<span class="hljs-keyword">import</span> (
+	<span class="hljs-string">"fmt"</span>
+	<span class="hljs-string">"sync"</span>
+)
+
+<span class="hljs-keyword">type</span> Item <span class="hljs-keyword">struct</span> {
+	Id   <span class="hljs-type">int</span>
+	Name <span class="hljs-type">string</span>
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">execLoop</span><span class="hljs-params">(list []Item)</span></span> {
+	<span class="hljs-keyword">var</span> wg sync.WaitGroup
+	<span class="hljs-keyword">for</span> _, item := <span class="hljs-keyword">range</span> list {
+		wg.Add(<span class="hljs-number">1</span>)
+		<span class="hljs-keyword">go</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(item2 Item)</span></span> {
+			<span class="hljs-keyword">defer</span> wg.Done()
+			doSomething(item2)
+		}(item)
+	}
+	wg.Wait()
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">doSomething</span><span class="hljs-params">(item Item)</span></span> {
+	item.Id += <span class="hljs-number">10</span>
+	fmt.Println(item)
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
+	list := []Item{
+		{Id: <span class="hljs-number">1</span>, Name: <span class="hljs-string">"item1"</span>},
+		{Id: <span class="hljs-number">2</span>, Name: <span class="hljs-string">"item2"</span>},
+		{Id: <span class="hljs-number">3</span>, Name: <span class="hljs-string">"item3"</span>},
+		{Id: <span class="hljs-number">4</span>, Name: <span class="hljs-string">"item4"</span>},
+		{Id: <span class="hljs-number">5</span>, Name: <span class="hljs-string">"item5"</span>},
+	}
+
+	execLoop(list)
+}
+
+<span class="hljs-comment">// {15 item5}</span>
+<span class="hljs-comment">// {11 item1}</span>
+<span class="hljs-comment">// {14 item4}</span>
+<span class="hljs-comment">// {13 item3}</span>
+<span class="hljs-comment">// {12 item2}</span>
+</code></pre>
+<h2>sync.Mutex を使う</h2>
+<pre><code class="hljs language-go"><span class="hljs-keyword">package</span> main
+
+<span class="hljs-keyword">import</span> <span class="hljs-string">"fmt"</span>
+
+<span class="hljs-keyword">type</span> myClass <span class="hljs-keyword">struct</span> {
+	AttributeName <span class="hljs-type">string</span>
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
+	sourceSlice := <span class="hljs-built_in">make</span>([]myClass, <span class="hljs-number">100</span>)
+	destSlice := <span class="hljs-built_in">make</span>([]myClass, <span class="hljs-number">0</span>)
+
+	<span class="hljs-keyword">for</span> _, myObj := <span class="hljs-keyword">range</span> sourceSlice {
+		<span class="hljs-keyword">var</span> tmpObj myClass
+		tmpObj.AttributeName = myObj.AttributeName
+		destSlice = <span class="hljs-built_in">append</span>(destSlice, tmpObj)
+	}
+	fmt.Println(<span class="hljs-built_in">len</span>(destSlice))
+}
+
+<span class="hljs-comment">// 100</span>
+</code></pre>
+<p>sync.WaitGroup を使う。 ( ダメな例 )
+append はスレッドセーフではないので件数が減る。</p>
+<pre><code class="hljs language-go"><span class="hljs-keyword">package</span> main
+
+<span class="hljs-keyword">import</span> (
+	<span class="hljs-string">"fmt"</span>
+	<span class="hljs-string">"sync"</span>
+)
+
+<span class="hljs-keyword">type</span> myClass <span class="hljs-keyword">struct</span> {
+	AttributeName <span class="hljs-type">string</span>
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
+	sourceSlice := <span class="hljs-built_in">make</span>([]myClass, <span class="hljs-number">100</span>)
+	destSlice := <span class="hljs-built_in">make</span>([]myClass, <span class="hljs-number">0</span>)
+
+	<span class="hljs-keyword">var</span> wg sync.WaitGroup
+	<span class="hljs-keyword">for</span> _, myObj := <span class="hljs-keyword">range</span> sourceSlice {
+		wg.Add(<span class="hljs-number">1</span>)
+		<span class="hljs-keyword">go</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(myObj2 myClass)</span></span> {
+			<span class="hljs-keyword">defer</span> wg.Done()
+			<span class="hljs-keyword">var</span> tmpObj myClass
+			tmpObj.AttributeName = myObj2.AttributeName
+			destSlice = <span class="hljs-built_in">append</span>(destSlice, tmpObj)
+		}(myObj)
+	}
+	wg.Wait()
+	fmt.Println(<span class="hljs-built_in">len</span>(destSlice))
+}
+
+<span class="hljs-comment">// 75</span>
+</code></pre>
+<p><code>-race</code> を付けることで競合のチェックができる。</p>
+<pre><code class="hljs language-bash">$ go run -race main.go
+
+~~ 省略 ~~
+==================
+97
+</code></pre>
+<p>sync.Mutex を使う。</p>
+<pre><code class="hljs language-go"><span class="hljs-keyword">package</span> main
+
+<span class="hljs-keyword">import</span> (
+	<span class="hljs-string">"fmt"</span>
+	<span class="hljs-string">"sync"</span>
+)
+
+<span class="hljs-keyword">type</span> myClass <span class="hljs-keyword">struct</span> {
+	AttributeName <span class="hljs-type">string</span>
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
+	sourceSlice := <span class="hljs-built_in">make</span>([]myClass, <span class="hljs-number">100</span>)
+	destSlice := <span class="hljs-built_in">make</span>([]myClass, <span class="hljs-number">0</span>)
+
+	<span class="hljs-keyword">var</span> wg sync.WaitGroup
+	mu := &#x26;sync.Mutex{}
+	<span class="hljs-keyword">for</span> _, myObj := <span class="hljs-keyword">range</span> sourceSlice {
+		wg.Add(<span class="hljs-number">1</span>)
+		<span class="hljs-keyword">go</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(myObj2 myClass)</span></span> {
+			<span class="hljs-keyword">defer</span> wg.Done()
+			<span class="hljs-keyword">var</span> tmpObj myClass
+			tmpObj.AttributeName = myObj2.AttributeName
+			mu.Lock()
+			destSlice = <span class="hljs-built_in">append</span>(destSlice, tmpObj)
+			mu.Unlock()
+		}(myObj)
+	}
+	wg.Wait()
+	fmt.Println(<span class="hljs-built_in">len</span>(destSlice))
+}
+
+<span class="hljs-comment">// 100</span>
+</code></pre>
+<h2>ポーリング</h2>
+<p><code>len(q)</code> は溜まったバッファ数を返す。
+<code>make</code> で作るときはバッファ数を 2 以上で作らないと <code>len(q)</code> は常に 0 を返す。</p>
+<pre><code class="hljs language-go"><span class="hljs-keyword">package</span> main
+
+<span class="hljs-keyword">import</span> (
+	<span class="hljs-string">"fmt"</span>
+	<span class="hljs-string">"time"</span>
+)
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
+	q := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-keyword">struct</span>{}, <span class="hljs-number">2</span>)
+
+	<span class="hljs-keyword">go</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> {
+		<span class="hljs-comment">// 重たい処理</span>
+		time.Sleep(<span class="hljs-number">3</span> * time.Second)
+		q &#x3C;- <span class="hljs-keyword">struct</span>{}{}
+	}()
+
+	<span class="hljs-keyword">for</span> {
+		<span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(q) > <span class="hljs-number">0</span> {
+			fmt.Println(<span class="hljs-string">"完了"</span>)
+			<span class="hljs-keyword">break</span>
+		}
+		time.Sleep(<span class="hljs-number">1</span> * time.Second)
+		fmt.Println(<span class="hljs-string">"実行中"</span>)
+	}
+}
+
+<span class="hljs-comment">// 実行中</span>
+<span class="hljs-comment">// 実行中</span>
+<span class="hljs-comment">// 実行中</span>
+<span class="hljs-comment">// 完了</span>
+</code></pre>
+<h2>ワーカー</h2>
+<p><code>close(q)</code> されたら <code>str, ok := &#x3C;- q</code> の <code>ok</code> が <code>false</code> になる。</p>
+<pre><code class="hljs language-go"><span class="hljs-keyword">package</span> main
+
+<span class="hljs-keyword">import</span> (
+	<span class="hljs-string">"fmt"</span>
+	<span class="hljs-string">"sync"</span>
+	<span class="hljs-string">"time"</span>
+)
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">printString</span><span class="hljs-params">(wg *sync.WaitGroup, q <span class="hljs-keyword">chan</span> <span class="hljs-type">string</span>)</span></span> {
+	<span class="hljs-keyword">defer</span> wg.Done()
+
+	<span class="hljs-keyword">for</span> {
+		str, ok := &#x3C;-q
+		<span class="hljs-keyword">if</span> !ok {
+			<span class="hljs-keyword">return</span>
+		}
+
+		fmt.Println(str)
+		time.Sleep(<span class="hljs-number">3</span> * time.Second)
+	}
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
+	<span class="hljs-keyword">const</span> workerNum = <span class="hljs-number">3</span>
+	<span class="hljs-keyword">var</span> wg sync.WaitGroup
+	q := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-type">string</span>, <span class="hljs-number">5</span>)
+
+	<span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &#x3C; workerNum; i++ {
+		wg.Add(<span class="hljs-number">1</span>)
+		<span class="hljs-keyword">go</span> printString(&#x26;wg, q)
+	}
+
+	q &#x3C;- <span class="hljs-string">"test1"</span>
+	q &#x3C;- <span class="hljs-string">"test2"</span>
+	q &#x3C;- <span class="hljs-string">"test3"</span>
+	q &#x3C;- <span class="hljs-string">"test4"</span>
+	q &#x3C;- <span class="hljs-string">"test5"</span>
+	<span class="hljs-built_in">close</span>(q)
+	wg.Wait()
+}
+
+<span class="hljs-comment">// test2</span>
+<span class="hljs-comment">// test1</span>
+<span class="hljs-comment">// test3</span>
+<span class="hljs-comment">// test5</span>
+<span class="hljs-comment">// test4</span>
+</code></pre>0:{"buildId":"Mc6Th0Rmyk9pcJ5CRitSL","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"Golangの並列/並行処理でいろいろ"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,"$L3"]}],"loading":null,"isPartial":false}
+3:["$","$L4",null,{"children":["$","$5",null,{"name":"Next.MetadataOutlet","children":"$@6"}]}]
+6:null

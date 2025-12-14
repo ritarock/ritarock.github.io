@@ -1,0 +1,181 @@
+1:"$Sreact.fragment"
+4:I[25151,["/_next/static/chunks/cc5639b053815f24.js","/_next/static/chunks/4904848246fadb45.js"],"OutletBoundary"]
+5:"$Sreact.suspense"
+2:T2148,<p>最小構成。</p>
+<pre><code class="hljs language-bash">$ go get github.com/labstack/echo/v4
+</code></pre>
+<pre><code class="hljs language-go"><span class="hljs-keyword">package</span> main
+
+<span class="hljs-keyword">import</span> (
+	<span class="hljs-string">"net/http"</span>
+
+	<span class="hljs-string">"github.com/labstack/echo/v4"</span>
+)
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
+	e := echo.New()
+	e.GET(<span class="hljs-string">"/"</span>, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(c echo.Context)</span></span> <span class="hljs-type">error</span> {
+		<span class="hljs-keyword">return</span> c.String(http.StatusOK, <span class="hljs-string">"Hello World!"</span>)
+	})
+	e.Logger.Fatal(e.Start(<span class="hljs-string">":8080"</span>))
+}
+</code></pre>
+<h2>path parameters</h2>
+<p><code>http://localhost:8080/users/1</code></p>
+<p><code>1</code> が返ってくる。</p>
+<pre><code class="hljs language-go"><span class="hljs-keyword">package</span> main
+
+<span class="hljs-keyword">import</span> (
+	<span class="hljs-string">"net/http"</span>
+
+	<span class="hljs-string">"github.com/labstack/echo/v4"</span>
+)
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
+	e := echo.New()
+	e.GET(<span class="hljs-string">"/users/:id"</span>, getUser)
+	e.Logger.Fatal(e.Start(<span class="hljs-string">":8080"</span>))
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">getUser</span><span class="hljs-params">(c echo.Context)</span></span> <span class="hljs-type">error</span> {
+	id := c.Param(<span class="hljs-string">"id"</span>)
+	<span class="hljs-keyword">return</span> c.String(http.StatusOK, id)
+}
+</code></pre>
+<h2>query parameters</h2>
+<p><code>http://localhost:8080/show?team=x-men&#x26;member=wolverine</code></p>
+<p><code>team: x-men, member: wolverine</code> が返ってくる。</p>
+<pre><code class="hljs language-go"><span class="hljs-keyword">package</span> main
+
+<span class="hljs-keyword">import</span> (
+	<span class="hljs-string">"net/http"</span>
+
+	<span class="hljs-string">"github.com/labstack/echo/v4"</span>
+)
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
+	e := echo.New()
+	e.GET(<span class="hljs-string">"/show"</span>, show)
+	e.Logger.Fatal(e.Start(<span class="hljs-string">":8080"</span>))
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">show</span><span class="hljs-params">(c echo.Context)</span></span> <span class="hljs-type">error</span> {
+	team := c.QueryParam(<span class="hljs-string">"team"</span>)
+	member := c.QueryParam(<span class="hljs-string">"member"</span>)
+	<span class="hljs-keyword">return</span> c.String(http.StatusOK, <span class="hljs-string">"team: "</span>+team+<span class="hljs-string">", member: "</span>+member)
+}
+</code></pre>
+<h2>json を返す</h2>
+<p><code>http://localhost:8080/json</code></p>
+<p>json を返す。</p>
+<pre><code class="hljs language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"name"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"Jon"</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"email"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"json@sample.com"</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+<pre><code class="hljs language-go"><span class="hljs-keyword">package</span> main
+
+<span class="hljs-keyword">import</span> (
+	<span class="hljs-string">"net/http"</span>
+
+	<span class="hljs-string">"github.com/labstack/echo/v4"</span>
+)
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
+	e := echo.New()
+	e.GET(<span class="hljs-string">"/json"</span>, json)
+	e.Logger.Fatal(e.Start(<span class="hljs-string">":8080"</span>))
+}
+
+<span class="hljs-keyword">type</span> User <span class="hljs-keyword">struct</span> {
+	Name  <span class="hljs-type">string</span> <span class="hljs-string">`json:"name"`</span>
+	Email <span class="hljs-type">string</span> <span class="hljs-string">`json:"email"`</span>
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">json</span><span class="hljs-params">(c echo.Context)</span></span> <span class="hljs-type">error</span> {
+	user := &#x26;User{
+		Name:  <span class="hljs-string">"Jon"</span>,
+		Email: <span class="hljs-string">"json@sample.com"</span>,
+	}
+	<span class="hljs-keyword">return</span> c.JSON(http.StatusOK, user)
+}
+</code></pre>
+<p><code>context.JSON</code> は内部では <code>json.Marshal</code> を使っている。
+大きな JSON では非効率なので、その場合は直接 JSON をストリームできる。</p>
+<pre><code class="hljs language-go"><span class="hljs-keyword">package</span> main
+
+<span class="hljs-keyword">import</span> (
+	<span class="hljs-string">"encoding/json"</span>
+	<span class="hljs-string">"net/http"</span>
+
+	<span class="hljs-string">"github.com/labstack/echo/v4"</span>
+)
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
+	e := echo.New()
+	e.GET(<span class="hljs-string">"/jsonStream"</span>, jsonStream)
+	e.Logger.Fatal(e.Start(<span class="hljs-string">":8080"</span>))
+}
+
+<span class="hljs-keyword">type</span> User <span class="hljs-keyword">struct</span> {
+	Name  <span class="hljs-type">string</span> <span class="hljs-string">`json:"name"`</span>
+	Email <span class="hljs-type">string</span> <span class="hljs-string">`json:"email"`</span>
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">jsonStream</span><span class="hljs-params">(c echo.Context)</span></span> <span class="hljs-type">error</span> {
+	user := &#x26;User{
+		Name:  <span class="hljs-string">"Jon"</span>,
+		Email: <span class="hljs-string">"json@sample.com"</span>,
+	}
+	c.Response().Header().Set(echo.HeaderContentType, echo.MIMEApplicationJSONCharsetUTF8)
+	c.Response().WriteHeader(http.StatusOK)
+	<span class="hljs-keyword">return</span> json.NewEncoder(c.Response()).Encode(user)
+}
+</code></pre>
+<h2>Bind</h2>
+<p><code>Context.Bind</code> を使って、ソースからデータ構造にバインドさせる。</p>
+<pre><code class="hljs language-bash">$ curl -X POST http://localhost:8080/users \
+       -H <span class="hljs-string">'Content-Type: application/json'</span> \
+       -d <span class="hljs-string">'{"name":"Jon","email":"json@sample.com"}'</span>
+{
+  <span class="hljs-string">"name"</span>:<span class="hljs-string">"Jon"</span>,
+  <span class="hljs-string">"email"</span>:<span class="hljs-string">"json@sample.com"</span>
+}
+</code></pre>
+<pre><code class="hljs language-go"><span class="hljs-keyword">package</span> main
+
+<span class="hljs-keyword">import</span> (
+	<span class="hljs-string">"fmt"</span>
+	<span class="hljs-string">"net/http"</span>
+
+	<span class="hljs-string">"github.com/labstack/echo/v4"</span>
+)
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
+	e := echo.New()
+	e.POST(<span class="hljs-string">"/users"</span>, create)
+	e.Logger.Fatal(e.Start(<span class="hljs-string">":8080"</span>))
+}
+
+<span class="hljs-keyword">type</span> User <span class="hljs-keyword">struct</span> {
+	Name  <span class="hljs-type">string</span> <span class="hljs-string">`json:"name"`</span>
+	Email <span class="hljs-type">string</span> <span class="hljs-string">`json:"email"`</span>
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">create</span><span class="hljs-params">(c echo.Context)</span></span> <span class="hljs-type">error</span> {
+	user := <span class="hljs-built_in">new</span>(User)
+	<span class="hljs-keyword">if</span> err := c.Bind(user); err != <span class="hljs-literal">nil</span> {
+		<span class="hljs-keyword">return</span> err
+	}
+	fmt.Println(user)
+
+	bindUser := &#x26;User{
+		Name:  user.Name,
+		Email: user.Email,
+	}
+
+	<span class="hljs-keyword">return</span> c.JSON(http.StatusOK, bindUser)
+}
+</code></pre>0:{"buildId":"Mc6Th0Rmyk9pcJ5CRitSL","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"echoを触ってみる"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,"$L3"]}],"loading":null,"isPartial":false}
+3:["$","$L4",null,{"children":["$","$5",null,{"name":"Next.MetadataOutlet","children":"$@6"}]}]
+6:null

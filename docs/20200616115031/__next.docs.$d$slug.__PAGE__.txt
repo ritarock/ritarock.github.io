@@ -1,0 +1,63 @@
+1:"$Sreact.fragment"
+4:I[25151,["/_next/static/chunks/cc5639b053815f24.js","/_next/static/chunks/4904848246fadb45.js"],"OutletBoundary"]
+5:"$Sreact.suspense"
+2:T16d5,<p>結局公式が一番わかりやすかった。</p>
+<h2>apply</h2>
+<p><a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Function/apply">https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Function/apply</a></p>
+<blockquote>
+<p>> apply() メソッドは、 this 値を指定して関数を呼び出し、 arguments は配列 (または配列風オブジェクト) として提供します。</p>
+</blockquote>
+<p>apply は配列を受け取る。</p>
+<pre><code class="hljs language-js"><span class="hljs-keyword">const</span> numbers = [<span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">7</span>];
+
+<span class="hljs-keyword">const</span> max = <span class="hljs-title class_">Math</span>.<span class="hljs-property">max</span>.<span class="hljs-title function_">apply</span>(<span class="hljs-literal">null</span>, numbers); <span class="hljs-comment">// 7</span>
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(max);
+
+<span class="hljs-keyword">const</span> min = <span class="hljs-title class_">Math</span>.<span class="hljs-property">min</span>.<span class="hljs-title function_">apply</span>(<span class="hljs-literal">null</span>, numbers); <span class="hljs-comment">// 2</span>
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(min);
+</code></pre>
+<h2>call</h2>
+<p><a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Function/call">https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Function/call</a></p>
+<blockquote>
+<p>> このメソッドの構文は apply() とほぼ同じですが、基本的な違いは call() が引数リストを受け取るのに対して、 apply() は引数の単一の配列を受け取る点です。</p>
+</blockquote>
+<pre><code class="hljs language-js"><span class="hljs-keyword">function</span> <span class="hljs-title function_">Product</span>(<span class="hljs-params">name, price</span>) {
+  <span class="hljs-variable language_">this</span>.<span class="hljs-property">name</span> = name;
+  <span class="hljs-variable language_">this</span>.<span class="hljs-property">price</span> = price;
+}
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">Food</span>(<span class="hljs-params">name, price</span>) {
+  <span class="hljs-title class_">Product</span>.<span class="hljs-title function_">call</span>(<span class="hljs-variable language_">this</span>, name, price);
+  <span class="hljs-variable language_">this</span>.<span class="hljs-property">category</span> = <span class="hljs-string">'food'</span>;
+}
+
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Food</span>(<span class="hljs-string">'cheese'</span>, <span class="hljs-number">5</span>).<span class="hljs-property">name</span>); <span class="hljs-comment">// "cheese"</span>
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title class_">JSON</span>.<span class="hljs-title function_">stringify</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Food</span>(<span class="hljs-string">'cheese'</span>, <span class="hljs-number">5</span>))); <span class="hljs-comment">// "{"name":"cheese","price":5,"category":"food"}"</span>
+</code></pre>
+<h2>bind</h2>
+<p><a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Function/bind">https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Function/bind</a></p>
+<blockquote>
+<p>> bind() メソッドは、呼び出された際に this キーワードに指定された値が設定される新しい関数を生成します。この値は新しい関数が呼び出されたとき、一連の引数の前に置かれます。</p>
+</blockquote>
+<p>関数が返って来るから実行のときは()をつけてあげないといけない。もしくは call で呼び出す。</p>
+<pre><code class="hljs language-js"><span class="hljs-keyword">const</span> <span class="hljs-variable language_">module</span> = {
+  <span class="hljs-attr">x</span>: <span class="hljs-number">42</span>,
+  <span class="hljs-attr">getX</span>: <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) {
+    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">x</span>;
+  }
+};
+
+<span class="hljs-keyword">const</span> unboundGetX = <span class="hljs-variable language_">module</span>.<span class="hljs-property">getX</span>;
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title function_">unboundGetX</span>()); <span class="hljs-comment">// undefined</span>
+
+<span class="hljs-keyword">const</span> boundGetX = unboundGetX.<span class="hljs-title function_">bind</span>(<span class="hljs-variable language_">module</span>);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-title function_">boundGetX</span>()); <span class="hljs-comment">// 42</span>
+
+<span class="hljs-comment">// call で呼び出すとき</span>
+<span class="hljs-keyword">const</span> callGetX = unboundGetX.<span class="hljs-title function_">call</span>(<span class="hljs-variable language_">module</span>);
+<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(boundGetX); <span class="hljs-comment">// 42</span>
+</code></pre>0:{"buildId":"Mc6Th0Rmyk9pcJ5CRitSL","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"JavaScriptのcall/apply/bind"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,"$L3"]}],"loading":null,"isPartial":false}
+3:["$","$L4",null,{"children":["$","$5",null,{"name":"Next.MetadataOutlet","children":"$@6"}]}]
+6:null

@@ -1,0 +1,307 @@
+1:"$Sreact.fragment"
+4:I[25151,["/_next/static/chunks/cc5639b053815f24.js","/_next/static/chunks/4904848246fadb45.js"],"OutletBoundary"]
+5:"$Sreact.suspense"
+2:T4b2f,<h2>ent</h2>
+<h3>インストール</h3>
+<p>ent と DB の client をインストールする。</p>
+<pre><code class="hljs language-bash">$ go get -d entgo.io/ent/cmd/ent
+$ go get github.com/mattn/go-sqlite3
+</code></pre>
+<h3>スキーマの作成</h3>
+<pre><code class="hljs language-bash">$ go run entgo.io/ent/cmd/ent init Todo
+</code></pre>
+<p><code>ent/schema/todo.go</code> を編集する。</p>
+<pre><code class="hljs language-go"><span class="hljs-comment">// Fields of the Todo.</span>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(Todo)</span></span> Fields() []ent.Field {
+	<span class="hljs-keyword">return</span> []ent.Field{
+		field.String(<span class="hljs-string">"name"</span>).
+			Default(<span class="hljs-string">""</span>),
+		field.Bool(<span class="hljs-string">"status"</span>).
+			Default(<span class="hljs-literal">false</span>),
+		field.Time(<span class="hljs-string">"created_at"</span>).
+			Default(<span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> time.Time {
+				<span class="hljs-keyword">return</span> time.Now()
+			}),
+	}
+}
+</code></pre>
+<h3>コード生成</h3>
+<p>shema ファイルを元にコードを生成するので編集後は実行する必要がある。</p>
+<pre><code class="hljs language-bash">$ go generate ./ent
+</code></pre>
+<h3>マイグレーション部分を実装</h3>
+<pre><code class="hljs language-go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
+
+	client, err := ent.Open(<span class="hljs-string">"sqlite3"</span>, <span class="hljs-string">"file:todo.sqlite?cache=shared&#x26;_fk=1"</span>)
+	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+		log.Fatalf(<span class="hljs-string">"faild opening connection to sqlit"</span>)
+	}
+	<span class="hljs-keyword">defer</span> client.Close()
+
+	<span class="hljs-keyword">if</span> err := client.Schema.Create(context.Background()); err != <span class="hljs-literal">nil</span> {
+		log.Fatalf(<span class="hljs-string">"faild creating schema"</span>)
+	}
+}
+</code></pre>
+<h2>echo</h2>
+<p><code>Todo</code> の struct を定義。</p>
+<pre><code class="hljs language-go"><span class="hljs-keyword">type</span> Todo <span class="hljs-keyword">struct</span> {
+	Name   <span class="hljs-type">string</span> <span class="hljs-string">`json:"name"`</span>
+	Status <span class="hljs-type">bool</span>   <span class="hljs-string">`json:"status"`</span>
+}
+</code></pre>
+<p>今回は CRUD 可能な Todo アプリを作りたいので以下のハンドラを作成する。</p>
+<pre><code class="hljs language-go">e := echo.New()
+
+e.POST(<span class="hljs-string">"/todo"</span>, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(c echo.Context)</span></span> <span class="hljs-type">error</span> {
+	<span class="hljs-keyword">return</span> c.JSON(http.StatusOK, <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-type">string</span>{<span class="hljs-string">"message"</span>: <span class="hljs-string">"ok"</span>})
+})
+e.GET(<span class="hljs-string">"/todo/:id"</span>, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(c echo.Context)</span></span> <span class="hljs-type">error</span> {
+	<span class="hljs-keyword">return</span> c.JSON(http.StatusOK, <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-type">string</span>{<span class="hljs-string">"message"</span>: <span class="hljs-string">"ok"</span>})
+})
+e.PUT(<span class="hljs-string">"/todo/:id"</span>, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(c echo.Context)</span></span> <span class="hljs-type">error</span> {
+	<span class="hljs-keyword">return</span> c.JSON(http.StatusOK, <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-type">string</span>{<span class="hljs-string">"message"</span>: <span class="hljs-string">"ok"</span>})
+})
+e.DELETE(<span class="hljs-string">"/todo/:id"</span>, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(c echo.Context)</span></span> <span class="hljs-type">error</span> {
+	<span class="hljs-keyword">return</span> c.JSON(http.StatusOK, <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-type">string</span>{<span class="hljs-string">"message"</span>: <span class="hljs-string">"ok"</span>})
+})
+
+e.Logger.Fatal(e.Start(<span class="hljs-string">":8080"</span>))
+</code></pre>
+<h2>create を実装</h2>
+<pre><code class="hljs language-go">e.POST(<span class="hljs-string">"/todo"</span>, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(c echo.Context)</span></span> <span class="hljs-type">error</span> {
+	t := &#x26;Todo{}
+	<span class="hljs-keyword">if</span> err := c.Bind(t); err != <span class="hljs-literal">nil</span> {
+		<span class="hljs-keyword">return</span> c.JSON(http.StatusInternalServerError, <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-type">string</span>{
+			<span class="hljs-string">"message"</span>: http.StatusText(http.StatusInternalServerError),
+		})
+	}
+	todo, err := client.Todo.
+		Create().
+		SetName(t.Name).
+		SetStatus(t.Status).
+		SetCreatedAt(time.Now()).
+		Save(context.Background())
+	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+		<span class="hljs-keyword">return</span> c.JSON(http.StatusInternalServerError, <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-type">string</span>{
+			<span class="hljs-string">"message"</span>: http.StatusText(http.StatusInternalServerError),
+		})
+	}
+
+	<span class="hljs-keyword">return</span> c.JSON(http.StatusOK, <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-type">string</span>{
+		<span class="hljs-string">"name"</span>:   todo.Name,
+		<span class="hljs-string">"status"</span>: strconv.FormatBool(todo.Status),
+	})
+})
+</code></pre>
+<p>実行。</p>
+<pre><code class="hljs language-bash">$ curl --location --request POST <span class="hljs-string">'http://localhost:8080/todo'</span> \
+       --header <span class="hljs-string">'Content-Type: application/json'</span> \
+       --data-raw <span class="hljs-string">'{"name": "todo1"}'</span>
+{<span class="hljs-string">"name"</span>:<span class="hljs-string">"todo1"</span>,<span class="hljs-string">"status"</span>:<span class="hljs-string">"false"</span>}
+</code></pre>
+<h2>READ を実装</h2>
+<pre><code class="hljs language-go">e.GET(<span class="hljs-string">"/todo/:id"</span>, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(c echo.Context)</span></span> <span class="hljs-type">error</span> {
+	id, _ := strconv.Atoi(c.Param(<span class="hljs-string">"id"</span>))
+
+	todo, err := client.Todo.
+		Query().
+		Where(todo.ID(id)).
+		Only(context.Background())
+	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+		<span class="hljs-keyword">return</span> c.JSON(http.StatusInternalServerError, <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-type">string</span>{
+			<span class="hljs-string">"message"</span>: http.StatusText(http.StatusInternalServerError),
+		})
+	}
+	<span class="hljs-keyword">return</span> c.JSON(http.StatusOK, <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-type">string</span>{
+		<span class="hljs-string">"name"</span>:       todo.Name,
+		<span class="hljs-string">"status"</span>:     strconv.FormatBool(todo.Status),
+		<span class="hljs-string">"created_at"</span>: todo.CreatedAt.String(),
+	})
+})
+</code></pre>
+<p>実行。</p>
+<pre><code class="hljs language-bash">$ curl http://localhost:8080/todo/1
+{<span class="hljs-string">"created_at"</span>:<span class="hljs-string">"2022-01-09 15:30:02.059031 +0900 +0900"</span>,<span class="hljs-string">"name"</span>:<span class="hljs-string">"todo1"</span>,<span class="hljs-string">"status"</span>:<span class="hljs-string">"false"</span>}
+</code></pre>
+<h2>UPDATE を実装</h2>
+<pre><code class="hljs language-go">e.PUT(<span class="hljs-string">"/todo/:id"</span>, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(c echo.Context)</span></span> <span class="hljs-type">error</span> {
+	id, _ := strconv.Atoi(c.Param(<span class="hljs-string">"id"</span>))
+	t := &#x26;Todo{}
+	<span class="hljs-keyword">if</span> err := c.Bind(t); err != <span class="hljs-literal">nil</span> {
+		<span class="hljs-keyword">return</span> c.JSON(http.StatusInternalServerError, <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-type">string</span>{
+			<span class="hljs-string">"message"</span>: http.StatusText(http.StatusInternalServerError),
+		})
+	}
+
+	todo, err := client.Todo.
+		UpdateOneID(id).
+		SetName(t.Name).
+		SetStatus(t.Status).
+		Save(context.Background())
+	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+		<span class="hljs-keyword">return</span> c.JSON(http.StatusInternalServerError, <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-type">string</span>{
+			<span class="hljs-string">"message"</span>: http.StatusText(http.StatusInternalServerError),
+		})
+	}
+
+	<span class="hljs-keyword">return</span> c.JSON(http.StatusOK, <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-type">string</span>{
+		<span class="hljs-string">"name"</span>:       todo.Name,
+		<span class="hljs-string">"status"</span>:     strconv.FormatBool(todo.Status),
+		<span class="hljs-string">"created_at"</span>: todo.CreatedAt.String(),
+	})
+})
+</code></pre>
+<pre><code class="hljs language-bash">$ curl --location --request PUT <span class="hljs-string">'http://localhost:8080/todo/1'</span> \
+       --header <span class="hljs-string">'Content-Type: application/json'</span> \
+       --data-raw <span class="hljs-string">'{"name": "todo1", "status": true}'</span>
+{<span class="hljs-string">"created_at"</span>:<span class="hljs-string">"2022-01-09 15:30:02.059031 +0900 +0900"</span>,<span class="hljs-string">"name"</span>:<span class="hljs-string">"todo1"</span>,<span class="hljs-string">"status"</span>:<span class="hljs-string">"true"</span>}
+</code></pre>
+<h2>DELETE を実装</h2>
+<pre><code class="hljs language-go">e.DELETE(<span class="hljs-string">"/todo/:id"</span>, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(c echo.Context)</span></span> <span class="hljs-type">error</span> {
+	id, _ := strconv.Atoi(c.Param(<span class="hljs-string">"id"</span>))
+	err := client.Todo.
+		DeleteOneID(id).
+		Exec(context.Background())
+	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+		<span class="hljs-keyword">return</span> c.JSON(http.StatusInternalServerError, <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-type">string</span>{
+			<span class="hljs-string">"message"</span>: http.StatusText(http.StatusInternalServerError),
+		})
+	}
+
+	<span class="hljs-keyword">return</span> c.JSON(http.StatusOK, <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-type">string</span>{
+		<span class="hljs-string">"message"</span>: fmt.Sprintf(<span class="hljs-string">"DELETE: %v"</span>, id),
+	})
+})
+</code></pre>
+<p>実行。</p>
+<pre><code class="hljs language-bash">curl --location --request DELETE <span class="hljs-string">'http://localhost:8080/todo/1'</span>
+{<span class="hljs-string">"message"</span>:<span class="hljs-string">"DELETE: 1"</span>}
+</code></pre>
+<h3>コード全体</h3>
+<pre><code class="hljs language-go"><span class="hljs-keyword">package</span> main
+
+<span class="hljs-keyword">import</span> (
+	<span class="hljs-string">"context"</span>
+	<span class="hljs-string">"echo-ent-crud/ent"</span>
+	<span class="hljs-string">"echo-ent-crud/ent/todo"</span>
+	<span class="hljs-string">"fmt"</span>
+	<span class="hljs-string">"log"</span>
+	<span class="hljs-string">"net/http"</span>
+	<span class="hljs-string">"strconv"</span>
+	<span class="hljs-string">"time"</span>
+
+	<span class="hljs-string">"github.com/labstack/echo/v4"</span>
+	_ <span class="hljs-string">"github.com/mattn/go-sqlite3"</span>
+)
+
+<span class="hljs-keyword">type</span> Todo <span class="hljs-keyword">struct</span> {
+	Name   <span class="hljs-type">string</span> <span class="hljs-string">`json:"name"`</span>
+	Status <span class="hljs-type">bool</span>   <span class="hljs-string">`json:"status"`</span>
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
+	client, err := ent.Open(<span class="hljs-string">"sqlite3"</span>, <span class="hljs-string">"file:todo.sqlite?cache=shared&#x26;_fk=1"</span>)
+	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+		log.Fatalf(<span class="hljs-string">"faild opening connection to sqlit"</span>)
+	}
+	<span class="hljs-keyword">defer</span> client.Close()
+
+	<span class="hljs-keyword">if</span> err := client.Schema.Create(context.Background()); err != <span class="hljs-literal">nil</span> {
+		log.Fatalf(<span class="hljs-string">"faild creating schema"</span>)
+	}
+
+	e := echo.New()
+
+	e.POST(<span class="hljs-string">"/todo"</span>, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(c echo.Context)</span></span> <span class="hljs-type">error</span> {
+		t := &#x26;Todo{}
+		<span class="hljs-keyword">if</span> err := c.Bind(t); err != <span class="hljs-literal">nil</span> {
+			<span class="hljs-keyword">return</span> c.JSON(http.StatusInternalServerError, <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-type">string</span>{
+				<span class="hljs-string">"message"</span>: http.StatusText(http.StatusInternalServerError),
+			})
+		}
+		todo, err := client.Todo.
+			Create().
+			SetName(t.Name).
+			SetStatus(t.Status).
+			SetCreatedAt(time.Now()).
+			Save(context.Background())
+		<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+			<span class="hljs-keyword">return</span> c.JSON(http.StatusInternalServerError, <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-type">string</span>{
+				<span class="hljs-string">"message"</span>: http.StatusText(http.StatusInternalServerError),
+			})
+		}
+
+		<span class="hljs-keyword">return</span> c.JSON(http.StatusOK, <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-type">string</span>{
+			<span class="hljs-string">"name"</span>:   todo.Name,
+			<span class="hljs-string">"status"</span>: strconv.FormatBool(todo.Status),
+		})
+	})
+
+	e.GET(<span class="hljs-string">"/todo/:id"</span>, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(c echo.Context)</span></span> <span class="hljs-type">error</span> {
+		id, _ := strconv.Atoi(c.Param(<span class="hljs-string">"id"</span>))
+
+		todo, err := client.Todo.
+			Query().
+			Where(todo.ID(id)).
+			Only(context.Background())
+		<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+			<span class="hljs-keyword">return</span> c.JSON(http.StatusInternalServerError, <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-type">string</span>{
+				<span class="hljs-string">"message"</span>: http.StatusText(http.StatusInternalServerError),
+			})
+		}
+		<span class="hljs-keyword">return</span> c.JSON(http.StatusOK, <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-type">string</span>{
+			<span class="hljs-string">"name"</span>:       todo.Name,
+			<span class="hljs-string">"status"</span>:     strconv.FormatBool(todo.Status),
+			<span class="hljs-string">"created_at"</span>: todo.CreatedAt.String(),
+		})
+	})
+
+	e.PUT(<span class="hljs-string">"/todo/:id"</span>, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(c echo.Context)</span></span> <span class="hljs-type">error</span> {
+		id, _ := strconv.Atoi(c.Param(<span class="hljs-string">"id"</span>))
+		t := &#x26;Todo{}
+		<span class="hljs-keyword">if</span> err := c.Bind(t); err != <span class="hljs-literal">nil</span> {
+			<span class="hljs-keyword">return</span> c.JSON(http.StatusInternalServerError, <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-type">string</span>{
+				<span class="hljs-string">"message"</span>: http.StatusText(http.StatusInternalServerError),
+			})
+		}
+
+		todo, err := client.Todo.
+			UpdateOneID(id).
+			SetName(t.Name).
+			SetStatus(t.Status).
+			Save(context.Background())
+		<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+			<span class="hljs-keyword">return</span> c.JSON(http.StatusInternalServerError, <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-type">string</span>{
+				<span class="hljs-string">"message"</span>: http.StatusText(http.StatusInternalServerError),
+			})
+		}
+
+		<span class="hljs-keyword">return</span> c.JSON(http.StatusOK, <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-type">string</span>{
+			<span class="hljs-string">"name"</span>:       todo.Name,
+			<span class="hljs-string">"status"</span>:     strconv.FormatBool(todo.Status),
+			<span class="hljs-string">"created_at"</span>: todo.CreatedAt.String(),
+		})
+	})
+
+	e.DELETE(<span class="hljs-string">"/todo/:id"</span>, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(c echo.Context)</span></span> <span class="hljs-type">error</span> {
+		id, _ := strconv.Atoi(c.Param(<span class="hljs-string">"id"</span>))
+		err := client.Todo.
+			DeleteOneID(id).
+			Exec(context.Background())
+		<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+			<span class="hljs-keyword">return</span> c.JSON(http.StatusInternalServerError, <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-type">string</span>{
+				<span class="hljs-string">"message"</span>: http.StatusText(http.StatusInternalServerError),
+			})
+		}
+
+		<span class="hljs-keyword">return</span> c.JSON(http.StatusOK, <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-type">string</span>{
+			<span class="hljs-string">"message"</span>: fmt.Sprintf(<span class="hljs-string">"DELETE: %v"</span>, id),
+		})
+	})
+
+	e.Logger.Fatal(e.Start(<span class="hljs-string">":8080"</span>))
+}
+</code></pre>0:{"buildId":"Mc6Th0Rmyk9pcJ5CRitSL","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"entとechoでAPIを作る"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,"$L3"]}],"loading":null,"isPartial":false}
+3:["$","$L4",null,{"children":["$","$5",null,{"name":"Next.MetadataOutlet","children":"$@6"}]}]
+6:null

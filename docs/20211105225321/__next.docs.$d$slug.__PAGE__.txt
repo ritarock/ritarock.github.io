@@ -1,0 +1,79 @@
+1:"$Sreact.fragment"
+4:I[25151,["/_next/static/chunks/cc5639b053815f24.js","/_next/static/chunks/4904848246fadb45.js"],"OutletBoundary"]
+5:"$Sreact.suspense"
+2:T1438,<p>最終的な <code>.textlintrc</code> は以下の通り。</p>
+<pre><code class="hljs language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"filters"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"allowlist"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"allow"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+        <span class="hljs-string">"\"{ register } で指定."</span>
+      <span class="hljs-punctuation">]</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"rules"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"textlint-rule-preset-ja-spacing"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"ja-space-between-half-and-full-width"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+        <span class="hljs-attr">"space"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"always"</span>
+      <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"ja-space-around-code"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+        <span class="hljs-attr">"before"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span>
+        <span class="hljs-attr">"after"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span>
+      <span class="hljs-punctuation">}</span>
+    <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"textlint-rule-preset-ja-technical-writing"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"sentence-length"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+        <span class="hljs-attr">"max"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">90</span>
+      <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"ja-no-mixed-period"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+        <span class="hljs-attr">"periodMark"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"."</span>
+      <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"no-exclamation-question-mark"</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+<p>上から見ていく。</p>
+<h2>filters</h2>
+<p><code>textlint-filter-rule-allowlist</code> のインストールが必要。</p>
+<pre><code class="hljs language-json">  <span class="hljs-attr">"filters"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"allowlist"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"allow"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+        <span class="hljs-string">"\"{ register } で指定."</span>
+      <span class="hljs-punctuation">]</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+</code></pre>
+<p><code>allow</code> のリストに error を無視する文字列や文章を入れることで、対象を無視する。</p>
+<h2>rules</h2>
+<p>今回は下記 2 つのプリセットをインストールした。</p>
+<ul>
+<li><code>textlint-rule-preset-ja-spacing</code></li>
+<li><code>textlint-rule-preset-ja-technical-writing</code></li>
+</ul>
+<h3>textlint-rule-preset-ja-spacing</h3>
+<ul>
+<li><code>ja-space-between-half-and-full-width</code></li>
+</ul>
+<p>半角文字と全角文字の間にスペースを入れるか指定できる。
+デフォルトは <code>never</code> ( スペースを入れない )</p>
+<ul>
+<li><code>ja-space-around-code</code></li>
+</ul>
+<p>インラインコードの前後にスペースを入れるか指定できる。
+デフォルトは <code>false</code> ( スペースを入れない )</p>
+<h3>textlint-rule-preset-ja-technical-writing</h3>
+<ul>
+<li><code>sentence-length</code></li>
+</ul>
+<p>1 文の長さ。
+デフォルトは 100 。</p>
+<ul>
+<li><code>ja-no-mixed-period</code></li>
+</ul>
+<p>文末の句点のチェック。</p>
+<ul>
+<li><code>no-exclamation-question-mark</code></li>
+</ul>
+<p><code>?!？！</code> を許可しない。</p>0:{"buildId":"Mc6Th0Rmyk9pcJ5CRitSL","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"textlintの設定を見直した"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,"$L3"]}],"loading":null,"isPartial":false}
+3:["$","$L4",null,{"children":["$","$5",null,{"name":"Next.MetadataOutlet","children":"$@6"}]}]
+6:null

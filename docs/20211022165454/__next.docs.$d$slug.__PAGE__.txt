@@ -1,0 +1,670 @@
+1:"$Sreact.fragment"
+4:I[25151,["/_next/static/chunks/cc5639b053815f24.js","/_next/static/chunks/4904848246fadb45.js"],"OutletBoundary"]
+5:"$Sreact.suspense"
+2:T8126,<h2>prisma のセットアップ</h2>
+<p>まずは project の作成から。</p>
+<pre><code class="hljs language-bash">$ go mod init backend
+</code></pre>
+<p>client のインストール。</p>
+<pre><code class="hljs language-bash">$ go get github.com/prisma/prisma-client-go
+</code></pre>
+<p>スキーマの作成。</p>
+<pre><code class="hljs language-bash">$ npx prisma init
+</code></pre>
+<p><code>prisma/schema.prisma</code> と <code>.env</code> (と .gitignore ) が生成される。</p>
+<p><code>.env</code> ファイルは <code>DATABASE_URL</code> を修正。</p>
+<pre><code class="hljs language-env"># Environment variables declared in this file are automatically made available to Prisma.
+# See the documentation for more detail: https://pris.ly/d/prisma-schema#using-environment-variables
+
+# Prisma supports the native connection string format for PostgreSQL, MySQL, SQLite, SQL Server and MongoDB (Preview).
+# See the documentation for all the connection string options: https://pris.ly/d/connection-strings
+
+DATABASE_URL="mysql://app:password@localhost:3306/app"
+</code></pre>
+<p><code>prisma/schema.prisma</code> は <code>client</code> を <code>prisma-client-go</code> に、 <code>datasource</code> を <code>mysql</code> に修正。</p>
+<pre><code class="hljs language-schema.prisma">// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "go run github.com/prisma/prisma-client-go"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+</code></pre>
+<p><code>Task</code> モデルを定義する。</p>
+<pre><code class="hljs language-schema.prisma">// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "go run github.com/prisma/prisma-client-go"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Task {
+  id String @default(cuid()) @id
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  title String
+  status Boolean
+  desc String?
+}
+</code></pre>
+<p>prisma クライアントの作成.
+<code>prisma/db/</code> が生成される。</p>
+<pre><code class="hljs language-bash">$ go run github.com/prisma/prisma-client-go generate
+</code></pre>
+<p>DB にスキーマを反映させる。</p>
+<pre><code class="hljs language-bash">$ go run github.com/prisma/prisma-client-go migrate dev --name create_task
+
+~~
+~~
+migrations/
+  └─ 20211022082219_create_task/
+    └─ migration.sql
+
+Your database is now <span class="hljs-keyword">in</span> <span class="hljs-built_in">sync</span> with your schema.
+</code></pre>
+<p>既にスキーマファイルが存在する場合。</p>
+<pre><code class="hljs language-bash">go run github.com/prisma/prisma-client-go migrate dev
+</code></pre>
+<p><code>prisma/migrations/20211022082219_create_task/migration.sql</code> を見てみる。</p>
+<pre><code class="hljs language-sql"><span class="hljs-comment">-- CreateTable</span>
+<span class="hljs-keyword">CREATE TABLE</span> `Task` (
+    `id` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">191</span>) <span class="hljs-keyword">NOT NULL</span>,
+    `createdAt` DATETIME(<span class="hljs-number">3</span>) <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-built_in">CURRENT_TIMESTAMP</span>(<span class="hljs-number">3</span>),
+    `updatedAt` DATETIME(<span class="hljs-number">3</span>) <span class="hljs-keyword">NOT NULL</span>,
+    `title` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">191</span>) <span class="hljs-keyword">NOT NULL</span>,
+    `status` <span class="hljs-type">BOOLEAN</span> <span class="hljs-keyword">NOT NULL</span>,
+    `<span class="hljs-keyword">desc</span>` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">191</span>) <span class="hljs-keyword">NULL</span>,
+
+    <span class="hljs-keyword">PRIMARY KEY</span> (`id`)
+) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">CHARACTER SET</span> utf8mb4 <span class="hljs-keyword">COLLATE</span> utf8mb4_unicode_ci;
+</code></pre>
+<p>テーブルも作成されている。</p>
+<pre><code class="hljs language-mysql">mysql> show tables;
++--------------------+
+| Tables_in_app      |
++--------------------+
+| _prisma_migrations |
+| Task               |
++--------------------+
+</code></pre>
+<p><code>Comment</code> モデルを定義し、 <code>Task</code> モデルと関連付けを行う。</p>
+<pre><code class="hljs language-schema.prisma">model Task {
+  id String @default(cuid()) @id
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  title String
+  status Boolean
+  desc String?
+
+  comments Comment[]
+}
+
+model Comment {
+  id String @default(cuid()) @id
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  content String
+
+  task Task @relation(fields: [taskId], references: [id])
+  taskId String
+</code></pre>
+<p>migration を行う。</p>
+<pre><code class="hljs language-bash">$ go run github.com/prisma/prisma-client-go migrate dev --name add_comment_model
+
+~~
+~~
+migrations/
+  └─ 20211022083117_add_comment_model/
+    └─ migration.sql
+
+Your database is now <span class="hljs-keyword">in</span> <span class="hljs-built_in">sync</span> with your schema.
+</code></pre>
+<p><code>migrations/20211022083117_add_comment_model/migration.sql</code> を見る。</p>
+<pre><code class="hljs language-sql"><span class="hljs-comment">-- CreateTable</span>
+<span class="hljs-keyword">CREATE TABLE</span> `Comment` (
+    `id` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">191</span>) <span class="hljs-keyword">NOT NULL</span>,
+    `createdAt` DATETIME(<span class="hljs-number">3</span>) <span class="hljs-keyword">NOT NULL</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-built_in">CURRENT_TIMESTAMP</span>(<span class="hljs-number">3</span>),
+    `updatedAt` DATETIME(<span class="hljs-number">3</span>) <span class="hljs-keyword">NOT NULL</span>,
+    `content` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">191</span>) <span class="hljs-keyword">NOT NULL</span>,
+    `taskId` <span class="hljs-type">VARCHAR</span>(<span class="hljs-number">191</span>) <span class="hljs-keyword">NOT NULL</span>,
+
+    <span class="hljs-keyword">PRIMARY KEY</span> (`id`)
+) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">CHARACTER SET</span> utf8mb4 <span class="hljs-keyword">COLLATE</span> utf8mb4_unicode_ci;
+
+<span class="hljs-comment">-- AddForeignKey</span>
+<span class="hljs-keyword">ALTER TABLE</span> `Comment` <span class="hljs-keyword">ADD CONSTRAINT</span> `Comment_taskId_fkey` <span class="hljs-keyword">FOREIGN KEY</span> (`taskId`) <span class="hljs-keyword">REFERENCES</span> `Task`(`id`) <span class="hljs-keyword">ON</span> <span class="hljs-keyword">DELETE</span> RESTRICT <span class="hljs-keyword">ON</span> <span class="hljs-keyword">UPDATE</span> CASCADE;
+</code></pre>
+<h2>Prisma Studio を使う</h2>
+<p><code>localhost:5555</code> で起動する。</p>
+<pre><code class="hljs language-bash">$ npx prisma studio
+</code></pre>
+<h2>prisma api syntax</h2>
+<h3>全件取得する</h3>
+<pre><code class="hljs language-go">tasks, err := client.Task.FindMany().Exec(context.Background())
+</code></pre>
+<h3>クエリで取得する</h3>
+<pre><code class="hljs language-go">tasks, err := client.Task.FindMany(
+  db.Task.Title.Equals(<span class="hljs-string">"1st task"</span>)
+  <span class="hljs-comment">// &#x3C;model>.&#x3C;field>.&#x3C;method>.(value) 基本的にこの形式で使う</span>
+).Exec(context.Background())
+</code></pre>
+<h3>一意なデータを取得する</h3>
+<p><code>schema.prisma</code> で <code>@id</code> 、 <code>@unique</code> でマークされたもののみに使用可能。</p>
+<pre><code class="hljs language-go">task, err := client.Task.FindUnique(
+  db.Task.ID.Equals(<span class="hljs-string">"1234567890"</span>)
+).Exec(context.Background())
+</code></pre>
+<h3>最初に見つかった 1 件を取得する</h3>
+<pre><code class="hljs language-go">task, err := client.Task.FindFirst(
+  db.Task.Title.Equals(<span class="hljs-string">"1st task"</span>)
+).Exec(context.Background())
+</code></pre>
+<h3>スキーマのデータ型によってよしなにできる</h3>
+<ul>
+<li><code>String Filter</code></li>
+</ul>
+<pre><code class="hljs language-go">tasks, err := client.Task.FindMany(
+  <span class="hljs-comment">// Title が "1st task" と一致する Task を取得</span>
+  db.Task.Title.Equals(<span class="hljs-string">"1st task"</span>)
+
+  <span class="hljs-comment">// Title に "task" を含む Task を取得</span>
+  <span class="hljs-comment">// db.Task.Title.Contains("task")</span>
+
+  <span class="hljs-comment">// Title が "1st" から始まる Task を取得</span>
+  <span class="hljs-comment">// db.Task.Title.StartsWith("1st")</span>
+
+  <span class="hljs-comment">// Title が "task" で終わる Task を取得</span>
+  <span class="hljs-comment">// db.Task.Title.EndsWith("task")</span>
+).Exec(context.Background())
+</code></pre>
+<ul>
+<li><code>Number Filter</code></li>
+</ul>
+<pre><code class="hljs language-go"><span class="hljs-comment">// &#x3C;Field> が 50 である &#x3C;Model> を取得</span>
+db.&#x3C;Model>.&#x3C;Field>.Equals(<span class="hljs-number">50</span>).Exec(context.Background())
+
+<span class="hljs-comment">// &#x3C;Field> が 50 以下の &#x3C;Model> を取得</span>
+db.&#x3C;Model>.&#x3C;Field>.Lte(<span class="hljs-number">50</span>).Exec(context.Background())
+
+<span class="hljs-comment">// &#x3C;Field> が 50 未満の &#x3C;Model> を取得</span>
+db.&#x3C;Model>.&#x3C;Field>.Lt(<span class="hljs-number">50</span>).Exec(context.Background())
+
+<span class="hljs-comment">// &#x3C;Field> が 50 以上の &#x3C;Model> を取得</span>
+db.&#x3C;Model>.&#x3C;Field>.Gte(<span class="hljs-number">50</span>).Exec(context.Background())
+
+<span class="hljs-comment">// &#x3C;Field> が 50 より大きいの &#x3C;Model> を取得</span>
+db.&#x3C;Model>.&#x3C;Field>.Gte(<span class="hljs-number">50</span>).Exec(context.Background())
+</code></pre>
+<ul>
+<li><code>Time Filter</code></li>
+</ul>
+<pre><code class="hljs language-go">tasks, err := client.Task.FindMany(
+  <span class="hljs-comment">// 昨日作成された task を取得する</span>
+  db.Task.CreatedAt.Equals(yesterday)
+
+  <span class="hljs-comment">// 過去 6 時間で作られた task を取得する (createdAt > 6 hours ago)</span>
+  <span class="hljs-comment">// db.Task.Gt(time.Now().Add(-6 * time.Hour))</span>
+
+  <span class="hljs-comment">// 過去 6 時間で作られた task を取得する (createdAt >= 6 hours ago)</span>
+  <span class="hljs-comment">// db.Task.Gte(time.Now().Add(-6 * time.Hour))</span>
+
+  <span class="hljs-comment">// 昨日作成された task を取得する</span>
+  <span class="hljs-comment">// db.Task.Lt(time.Now().Truncate(24 * time.Hour))</span>
+
+  <span class="hljs-comment">// 昨日作成された task を取得する (本日 00:00:00 を含む)</span>
+  <span class="hljs-comment">// db.Task.Lte(time.Now().Truncate(24 * time.Hour))</span>
+).Exec(context.Background())
+</code></pre>
+<h3>NULL 関連</h3>
+<p>null であるものを取得する。</p>
+<pre><code class="hljs language-go">db.Task.Content.EqualsOptional(<span class="hljs-literal">nil</span>).Exec(context.Background())
+
+content := <span class="hljs-string">"string"</span>
+db.Task.Content.EqualsOptional(&#x26;content).Exec(context.Background())
+</code></pre>
+<h3>他にも</h3>
+<ul>
+<li><code>Not</code></li>
+</ul>
+<pre><code class="hljs language-go">db.Task.Not(
+  db.Task.Title.Equals(<span class="hljs-string">"1st task"</span>)
+).Exec(context.Background())
+</code></pre>
+<ul>
+<li><code>Or</code></li>
+</ul>
+<pre><code class="hljs language-go">db.Task.Or(
+  db.Task.Title.Equals(<span class="hljs-string">"1st task"</span>),
+  db.Task.Desc.Equals(<span class="hljs-string">"new task"</span>)
+).Exec(context.Background())
+</code></pre>
+<h3>関連付けされたクエリ</h3>
+<p>task の title が "1st task" で comment が "new content" であるもの task を取得する。</p>
+<pre><code class="hljs language-go">tasks, err := client.Task.FindMany(
+  db.Task.Title.Equals(<span class="hljs-string">"1st task"</span>)
+  db.Task.Comments.Some(
+    db.Comment.Content.Equals(<span class="hljs-string">"new content"</span>),
+  ),
+).Exec(context.Background())
+</code></pre>
+<h3>create</h3>
+<pre><code class="hljs language-go">created, err := client.Task.CreateOne(
+  db.Task.Title.Set(newTask.Title),
+  db.Task.Status.Set(newTask.Status),
+  db.Task.Desc.Set(newTask.Desc),
+).Exec(context.Background())
+</code></pre>
+<p>関連付けのあるデータの場合。</p>
+<pre><code class="hljs language-go">created, err := client.Comment.CreateOne(
+  db.Comment.Content.Set(newComment.Content),
+  db.Comment.Task.Link(
+    db.Task.ID.Equals(taskId),
+  ),
+).Exec(context.Background())
+</code></pre>
+<h3>update</h3>
+<pre><code class="hljs language-go">updated, err := client.Task.FindUnique(
+  db.Task.ID.Equals(taskId),
+).Update(
+  db.Task.Title.Set(newTask.Title),
+  db.Task.Status.Set(newTask.Status),
+  db.Task.Desc.Set(newTask.Desc),
+).Exec(context.Background())
+</code></pre>
+<h3>delete</h3>
+<pre><code class="hljs language-go">_, err := client.Task.FindUnique(
+  db.Task.ID.Equals(taskId),
+).Delete().Exec(context.Background())
+</code></pre>
+<h3>ソースコード全体</h3>
+<p>今回は <code>github.com/gorilla/mux</code> を使って API サーバを作った。</p>
+<pre><code class="hljs language-go"><span class="hljs-keyword">package</span> main
+
+<span class="hljs-keyword">import</span> (
+	<span class="hljs-string">"backend/prisma/db"</span>
+	<span class="hljs-string">"context"</span>
+	<span class="hljs-string">"encoding/json"</span>
+	<span class="hljs-string">"io"</span>
+	<span class="hljs-string">"net/http"</span>
+
+	<span class="hljs-string">"github.com/gorilla/mux"</span>
+)
+
+<span class="hljs-keyword">type</span> Task <span class="hljs-keyword">struct</span> {
+	Id        <span class="hljs-type">string</span> <span class="hljs-string">`json:"id"`</span>
+	CreatedAt <span class="hljs-type">string</span> <span class="hljs-string">`json:"created_at"`</span>
+	UpdatedAt <span class="hljs-type">string</span> <span class="hljs-string">`json:"updated_at"`</span>
+	Title     <span class="hljs-type">string</span> <span class="hljs-string">`json:"title"`</span>
+	Status    <span class="hljs-type">bool</span>   <span class="hljs-string">`json:"status"`</span>
+	Desc      <span class="hljs-type">string</span> <span class="hljs-string">`json:"string"`</span>
+}
+<span class="hljs-keyword">type</span> Comment <span class="hljs-keyword">struct</span> {
+	Id        <span class="hljs-type">string</span> <span class="hljs-string">`json:"id"`</span>
+	CreatedAt <span class="hljs-type">string</span> <span class="hljs-string">`json:"created_at"`</span>
+	UpdatedAt <span class="hljs-type">string</span> <span class="hljs-string">`json:"updated_at"`</span>
+	Content   <span class="hljs-type">string</span> <span class="hljs-string">`json:"content"`</span>
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
+	client := db.NewClient()
+	<span class="hljs-keyword">if</span> err := client.Prisma.Connect(); err != <span class="hljs-literal">nil</span> {
+		<span class="hljs-built_in">panic</span>(err)
+	}
+	<span class="hljs-keyword">defer</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> {
+		<span class="hljs-keyword">if</span> err := client.Prisma.Disconnect(); err != <span class="hljs-literal">nil</span> {
+			<span class="hljs-built_in">panic</span>(err)
+		}
+	}()
+
+	router := mux.NewRouter()
+
+	router.HandleFunc(<span class="hljs-string">"/tasks"</span>, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(w http.ResponseWriter, r *http.Request)</span></span> {
+		<span class="hljs-keyword">var</span> newTask Task
+		err := r.ParseForm()
+		<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+			io.WriteString(w, <span class="hljs-string">"ERROR: create task"</span>)
+		}
+		json.NewDecoder(r.Body).Decode(&#x26;newTask)
+
+		created, err := client.Task.CreateOne(
+			db.Task.Title.Set(newTask.Title),
+			db.Task.Status.Set(newTask.Status),
+			db.Task.Desc.Set(newTask.Desc),
+		).Exec(context.Background())
+		<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+			io.WriteString(w, <span class="hljs-string">"ERROR: create task"</span>)
+		}
+
+		<span class="hljs-keyword">var</span> response <span class="hljs-keyword">struct</span> {
+			Code <span class="hljs-type">int</span>    <span class="hljs-string">`json:"code"`</span>
+			Data []Task <span class="hljs-string">`json:"data"`</span>
+		}
+		response.Code = <span class="hljs-number">200</span>
+		response.Data = <span class="hljs-built_in">append</span>(response.Data, Task{
+			Id:        created.ID,
+			CreatedAt: created.CreatedAt.String(),
+			UpdatedAt: created.UpdatedAt.String(),
+			Title:     created.Title,
+			Status:    created.Status,
+			Desc: <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> <span class="hljs-type">string</span> {
+				desc, ok := created.Desc()
+				<span class="hljs-keyword">if</span> !ok {
+					desc = <span class="hljs-string">""</span>
+				}
+				<span class="hljs-keyword">return</span> desc
+			}(),
+		})
+		resp, _ := json.Marshal(response)
+		w.Header().Set(<span class="hljs-string">"Content-Type"</span>, <span class="hljs-string">"application/json"</span>)
+		w.Write(resp)
+	}).Methods(<span class="hljs-string">"POST"</span>)
+
+	router.HandleFunc(<span class="hljs-string">"/tasks/{task_id}"</span>, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(w http.ResponseWriter, r *http.Request)</span></span> {
+		params := mux.Vars(r)
+		taskId := params[<span class="hljs-string">"task_id"</span>]
+
+		task, err := client.Task.FindUnique(
+			db.Task.ID.Equals(taskId),
+		).Exec(context.Background())
+		<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+			io.WriteString(w, <span class="hljs-string">"ERROR: read task"</span>)
+		}
+
+		<span class="hljs-keyword">var</span> response <span class="hljs-keyword">struct</span> {
+			Code <span class="hljs-type">int</span>    <span class="hljs-string">`json:"code"`</span>
+			Data []Task <span class="hljs-string">`json:"data"`</span>
+		}
+		response.Code = <span class="hljs-number">200</span>
+		response.Data = <span class="hljs-built_in">append</span>(response.Data, Task{
+			Id:        task.ID,
+			CreatedAt: task.CreatedAt.String(),
+			UpdatedAt: task.UpdatedAt.String(),
+			Title:     task.Title,
+			Status:    task.Status,
+			Desc: <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> <span class="hljs-type">string</span> {
+				desc, ok := task.Desc()
+				<span class="hljs-keyword">if</span> !ok {
+					desc = <span class="hljs-string">""</span>
+				}
+				<span class="hljs-keyword">return</span> desc
+			}(),
+		})
+		resp, _ := json.Marshal(response)
+		w.Header().Set(<span class="hljs-string">"Content-Type"</span>, <span class="hljs-string">"application/json"</span>)
+		w.Write(resp)
+	}).Methods(<span class="hljs-string">"GET"</span>)
+
+	router.HandleFunc(<span class="hljs-string">"/tasks/{task_id}"</span>, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(w http.ResponseWriter, r *http.Request)</span></span> {
+		params := mux.Vars(r)
+		taskId := params[<span class="hljs-string">"task_id"</span>]
+		<span class="hljs-keyword">var</span> newTask Task
+		err := r.ParseForm()
+		<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+			io.WriteString(w, <span class="hljs-string">"ERROR: update task"</span>)
+		}
+		json.NewDecoder(r.Body).Decode(&#x26;newTask)
+
+		updated, err := client.Task.FindUnique(
+			db.Task.ID.Equals(taskId),
+		).Update(
+			db.Task.Title.Set(newTask.Title),
+			db.Task.Status.Set(newTask.Status),
+			db.Task.Desc.Set(newTask.Desc),
+		).Exec(context.Background())
+		<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+			io.WriteString(w, <span class="hljs-string">"ERROR: update task"</span>)
+		}
+		<span class="hljs-keyword">var</span> response <span class="hljs-keyword">struct</span> {
+			Code <span class="hljs-type">int</span>    <span class="hljs-string">`json:"code"`</span>
+			Data []Task <span class="hljs-string">`json:"data"`</span>
+		}
+		response.Code = <span class="hljs-number">200</span>
+		response.Data = <span class="hljs-built_in">append</span>(response.Data, Task{
+			Id:        updated.ID,
+			CreatedAt: updated.CreatedAt.String(),
+			UpdatedAt: updated.UpdatedAt.String(),
+			Title:     updated.Title,
+			Status:    updated.Status,
+			Desc: <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> <span class="hljs-type">string</span> {
+				desc, ok := updated.Desc()
+				<span class="hljs-keyword">if</span> !ok {
+					desc = <span class="hljs-string">""</span>
+				}
+				<span class="hljs-keyword">return</span> desc
+			}(),
+		})
+		resp, _ := json.Marshal(response)
+		w.Header().Set(<span class="hljs-string">"Content-Type"</span>, <span class="hljs-string">"application/json"</span>)
+		w.Write(resp)
+	}).Methods(<span class="hljs-string">"POST"</span>)
+
+	router.HandleFunc(<span class="hljs-string">"/tasks/{task_id}"</span>, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(w http.ResponseWriter, r *http.Request)</span></span> {
+		params := mux.Vars(r)
+		taskId := params[<span class="hljs-string">"task_id"</span>]
+
+		_, err := client.Task.FindUnique(
+			db.Task.ID.Equals(taskId),
+		).Delete().Exec(context.Background())
+		<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+			io.WriteString(w, <span class="hljs-string">"ERROR: delete task"</span>)
+		}
+
+		tasks, err := client.Task.FindMany().Exec(context.Background())
+		<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+			io.WriteString(w, <span class="hljs-string">"ERROR: read all task"</span>)
+		}
+		<span class="hljs-keyword">var</span> responseData []Task
+		<span class="hljs-keyword">for</span> _, task := <span class="hljs-keyword">range</span> tasks {
+			responseData = <span class="hljs-built_in">append</span>(responseData, Task{
+				Id:        task.ID,
+				CreatedAt: task.CreatedAt.String(),
+				UpdatedAt: task.UpdatedAt.String(),
+				Title:     task.Title,
+				Status:    <span class="hljs-literal">false</span>,
+				Desc: <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> <span class="hljs-type">string</span> {
+					desc, ok := task.Desc()
+					<span class="hljs-keyword">if</span> !ok {
+						desc = <span class="hljs-string">""</span>
+					}
+					<span class="hljs-keyword">return</span> desc
+				}(),
+			})
+		}
+		<span class="hljs-keyword">var</span> response <span class="hljs-keyword">struct</span> {
+			Code <span class="hljs-type">int</span>    <span class="hljs-string">`json:"code"`</span>
+			Data []Task <span class="hljs-string">`json:"data"`</span>
+		}
+		response.Code = <span class="hljs-number">200</span>
+		response.Data = <span class="hljs-built_in">append</span>(response.Data, responseData...)
+		resp, _ := json.Marshal(response)
+		w.Header().Set(<span class="hljs-string">"Content-Type"</span>, <span class="hljs-string">"application/json"</span>)
+		w.Write(resp)
+	}).Methods(<span class="hljs-string">"DELETE"</span>)
+
+	router.HandleFunc(<span class="hljs-string">"/tasks"</span>, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(w http.ResponseWriter, r *http.Request)</span></span> {
+		tasks, err := client.Task.FindMany().Exec(context.Background())
+		<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+			io.WriteString(w, <span class="hljs-string">"ERROR: read all task"</span>)
+		}
+		<span class="hljs-keyword">var</span> responseData []Task
+		<span class="hljs-keyword">for</span> _, task := <span class="hljs-keyword">range</span> tasks {
+			responseData = <span class="hljs-built_in">append</span>(responseData, Task{
+				Id:        task.ID,
+				CreatedAt: task.CreatedAt.String(),
+				UpdatedAt: task.UpdatedAt.String(),
+				Title:     task.Title,
+				Status:    <span class="hljs-literal">false</span>,
+				Desc: <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> <span class="hljs-type">string</span> {
+					desc, ok := task.Desc()
+					<span class="hljs-keyword">if</span> !ok {
+						desc = <span class="hljs-string">""</span>
+					}
+					<span class="hljs-keyword">return</span> desc
+				}(),
+			})
+		}
+		<span class="hljs-keyword">var</span> response <span class="hljs-keyword">struct</span> {
+			Code <span class="hljs-type">int</span>    <span class="hljs-string">`json:"code"`</span>
+			Data []Task <span class="hljs-string">`json:"data"`</span>
+		}
+		response.Code = <span class="hljs-number">200</span>
+		response.Data = <span class="hljs-built_in">append</span>(response.Data, responseData...)
+		resp, _ := json.Marshal(response)
+		w.Header().Set(<span class="hljs-string">"Content-Type"</span>, <span class="hljs-string">"application/json"</span>)
+		w.Write(resp)
+	}).Methods(<span class="hljs-string">"GET"</span>)
+
+	router.HandleFunc(<span class="hljs-string">"/tasks/{task_id}/comments"</span>, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(w http.ResponseWriter, r *http.Request)</span></span> {
+		params := mux.Vars(r)
+		taskId := params[<span class="hljs-string">"task_id"</span>]
+		<span class="hljs-keyword">var</span> newComment Comment
+		err := r.ParseForm()
+		<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+			io.WriteString(w, <span class="hljs-string">"ERROR: create comment"</span>)
+		}
+		json.NewDecoder(r.Body).Decode(&#x26;newComment)
+
+		created, err := client.Comment.CreateOne(
+			db.Comment.Content.Set(newComment.Content),
+			db.Comment.Task.Link(
+				db.Task.ID.Equals(taskId),
+			),
+		).Exec(context.Background())
+		<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+			io.WriteString(w, <span class="hljs-string">"ERROR: create comment"</span>)
+		}
+		<span class="hljs-keyword">var</span> response <span class="hljs-keyword">struct</span> {
+			Code <span class="hljs-type">int</span>       <span class="hljs-string">`json:"code"`</span>
+			Data []Comment <span class="hljs-string">`json:"data"`</span>
+		}
+		response.Code = <span class="hljs-number">200</span>
+		response.Data = <span class="hljs-built_in">append</span>(response.Data, Comment{
+			Id:        created.ID,
+			CreatedAt: created.CreatedAt.String(),
+			UpdatedAt: created.UpdatedAt.String(),
+			Content:   created.Content,
+		})
+		resp, _ := json.Marshal(response)
+		w.Header().Set(<span class="hljs-string">"Content-Type"</span>, <span class="hljs-string">"application/json"</span>)
+		w.Write(resp)
+	}).Methods(<span class="hljs-string">"POST"</span>)
+
+	router.HandleFunc(<span class="hljs-string">"/tasks/{task_id}/comments"</span>, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(w http.ResponseWriter, r *http.Request)</span></span> {
+		params := mux.Vars(r)
+		taskId := params[<span class="hljs-string">"task_id"</span>]
+		comments, err := client.Comment.FindMany(
+			db.Comment.TaskID.Equals(taskId),
+		).Exec(context.Background())
+		<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+			io.WriteString(w, <span class="hljs-string">"ERROR: read comment"</span>)
+		}
+		<span class="hljs-keyword">var</span> responseData []Comment
+		<span class="hljs-keyword">for</span> _, comment := <span class="hljs-keyword">range</span> comments {
+			responseData = <span class="hljs-built_in">append</span>(responseData, Comment{
+				Id:        comment.ID,
+				CreatedAt: comment.CreatedAt.String(),
+				UpdatedAt: comment.UpdatedAt.String(),
+				Content:   comment.Content,
+			})
+		}
+		<span class="hljs-keyword">var</span> response <span class="hljs-keyword">struct</span> {
+			Code <span class="hljs-type">int</span>       <span class="hljs-string">`json:"code"`</span>
+			Data []Comment <span class="hljs-string">`json:"data"`</span>
+		}
+		response.Code = <span class="hljs-number">200</span>
+		response.Data = <span class="hljs-built_in">append</span>(response.Data, responseData...)
+		resp, _ := json.Marshal(response)
+		w.Header().Set(<span class="hljs-string">"Content-Type"</span>, <span class="hljs-string">"application/json"</span>)
+		w.Write(resp)
+	}).Methods(<span class="hljs-string">"GET"</span>)
+
+	router.HandleFunc(<span class="hljs-string">"/tasks/{task_id}/comments/{comment_id}"</span>, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(w http.ResponseWriter, r *http.Request)</span></span> {
+		params := mux.Vars(r)
+		commentId := params[<span class="hljs-string">"comment_id"</span>]
+		<span class="hljs-keyword">var</span> newComment Comment
+		err := r.ParseForm()
+		<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+			io.WriteString(w, <span class="hljs-string">"ERROR: update comment"</span>)
+		}
+		json.NewDecoder(r.Body).Decode(&#x26;newComment)
+
+		updated, err := client.Comment.FindUnique(
+			db.Comment.ID.Equals(commentId),
+		).Update(
+			db.Comment.Content.Set(newComment.Content),
+		).Exec(context.Background())
+		<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+			io.WriteString(w, <span class="hljs-string">"update error"</span>)
+		}
+		<span class="hljs-keyword">var</span> response <span class="hljs-keyword">struct</span> {
+			Code <span class="hljs-type">int</span>       <span class="hljs-string">`json:"code"`</span>
+			Data []Comment <span class="hljs-string">`json:"comment"`</span>
+		}
+		response.Code = <span class="hljs-number">200</span>
+		response.Data = <span class="hljs-built_in">append</span>(response.Data, Comment{
+			Id:        updated.ID,
+			CreatedAt: updated.CreatedAt.String(),
+			UpdatedAt: updated.UpdatedAt.String(),
+			Content:   updated.Content,
+		})
+		resp, _ := json.Marshal(response)
+		w.Header().Set(<span class="hljs-string">"Content-Type"</span>, <span class="hljs-string">"application/json"</span>)
+		w.Write(resp)
+	}).Methods(<span class="hljs-string">"POST"</span>)
+
+	router.HandleFunc(<span class="hljs-string">"/tasks/{task_id}/comments/{comment_id}"</span>, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(w http.ResponseWriter, r *http.Request)</span></span> {
+		params := mux.Vars(r)
+		taskId := params[<span class="hljs-string">"task_id"</span>]
+		commentId := params[<span class="hljs-string">"comment_id"</span>]
+
+		_, err := client.Comment.FindUnique(
+			db.Comment.ID.Equals(commentId),
+		).Delete().Exec(context.Background())
+		<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+			io.WriteString(w, <span class="hljs-string">"ERROR: delete comment"</span>)
+		}
+
+		comments, err := client.Comment.FindMany(
+			db.Comment.TaskID.Equals(taskId),
+		).Exec(context.Background())
+		<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+			io.WriteString(w, <span class="hljs-string">"ERROR: read all comment"</span>)
+		}
+		<span class="hljs-keyword">var</span> responseData []Comment
+		<span class="hljs-keyword">for</span> _, comment := <span class="hljs-keyword">range</span> comments {
+			responseData = <span class="hljs-built_in">append</span>(responseData, Comment{
+				Id:        comment.ID,
+				CreatedAt: comment.CreatedAt.String(),
+				UpdatedAt: comment.UpdatedAt.String(),
+				Content:   comment.Content,
+			})
+		}
+		<span class="hljs-keyword">var</span> response <span class="hljs-keyword">struct</span> {
+			Code <span class="hljs-type">int</span>       <span class="hljs-string">`json:"code"`</span>
+			Data []Comment <span class="hljs-string">`json:"data"`</span>
+		}
+		response.Code = <span class="hljs-number">200</span>
+		response.Data = <span class="hljs-built_in">append</span>(response.Data, responseData...)
+		resp, _ := json.Marshal(response)
+		w.Header().Set(<span class="hljs-string">"Content-Type"</span>, <span class="hljs-string">"application/json"</span>)
+		w.Write(resp)
+	}).Methods(<span class="hljs-string">"DELETE"</span>)
+
+	server := http.Server{
+		Addr:    <span class="hljs-string">"0.0.0.0:8080"</span>,
+		Handler: router,
+	}
+	server.ListenAndServe()
+}
+</code></pre>0:{"buildId":"Mc6Th0Rmyk9pcJ5CRitSL","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"prisma-client-goを試した"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,"$L3"]}],"loading":null,"isPartial":false}
+3:["$","$L4",null,{"children":["$","$5",null,{"name":"Next.MetadataOutlet","children":"$@6"}]}]
+6:null

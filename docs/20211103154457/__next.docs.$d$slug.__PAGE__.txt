@@ -1,0 +1,113 @@
+1:"$Sreact.fragment"
+4:I[25151,["/_next/static/chunks/cc5639b053815f24.js","/_next/static/chunks/4904848246fadb45.js"],"OutletBoundary"]
+5:"$Sreact.suspense"
+2:T1bfe,<h2>context パッケージ</h2>
+<p>context パッケージを見てみる。</p>
+<pre><code class="hljs language-go"><span class="hljs-keyword">type</span> Context <span class="hljs-keyword">interface</span> {
+	Deadline() (deadline time.Time, ok <span class="hljs-type">bool</span>)
+	Done() &#x3C;-<span class="hljs-keyword">chan</span> <span class="hljs-keyword">struct</span>{}
+	Err() <span class="hljs-type">error</span>
+	Value(key <span class="hljs-keyword">interface</span>{}) <span class="hljs-keyword">interface</span>{}
+}
+</code></pre>
+<p>context パッケージのざっくりとした目的は以下の通り。</p>
+<ul>
+<li>適切なキャンセルを行う機能を提供する</li>
+<li>リクエストのデータの置き場を提供する</li>
+</ul>
+<p>キャンセルには 3 つ側面がある。</p>
+<ul>
+<li>ゴルーチンの親がキャンセルしたい場合</li>
+<li>ゴルーチンの子をキャンセルしたい場合</li>
+<li>ゴルーチン内のブロックしている処理がキャンセルされるように中断できる必要がある場合</li>
+</ul>
+<h2>使い方</h2>
+<p>Context の空インスタンスを作る関数は以下の 2 つ。</p>
+<ul>
+<li><code>func Background() Context</code>
+<ul>
+<li>通常使うのはこっち。空の Context を返す</li>
+</ul>
+</li>
+<li><code>func TODO() Context</code>
+<ul>
+<li>本番環境で使われることを想定していない。どの Context を使っていいかわからないとき、もしくは上流の実装が終わっていないときに使う</li>
+</ul>
+</li>
+</ul>
+<h3>Done / Deadline メソッド</h3>
+<p>キャンセルに使う。</p>
+<ul>
+<li><code>context.WithCancel</code></li>
+</ul>
+<pre><code class="hljs language-go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">context</span>.<span class="hljs-title">WithCancel</span><span class="hljs-params">(parent context.Context)</span></span> (ctx context.Context, cancel context.CancelFunc)
+</code></pre>
+<p>キャンセルする側は <code>context.WithCancel()</code> によって生成された cancal 関数を実行する.
+そのタイミングで、キャンセルされる側の context の Done メソッドが close される。</p>
+<pre><code class="hljs language-go">ctx, cancel := context.WithCancel(context.Background())
+<span class="hljs-comment">// 処理</span>
+cancel()
+</code></pre>
+<p>キャンセルされる側は <code>ctx.Done()</code> からキャンセルを受け取る。</p>
+<pre><code class="hljs language-go">&#x3C;-ctx.Done()
+</code></pre>
+<ul>
+<li><code>context.WithDeadline</code></li>
+</ul>
+<pre><code class="hljs language-go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">context</span>.<span class="hljs-title">WithDeadline</span><span class="hljs-params">(parent context.Context, d time.Time)</span></span> (context.Context, context.CancelFunc)
+</code></pre>
+<p>キャンセルする側は <code>context.WithDeadline</code> の生成時に停止したい時刻を設定することでその時刻を超えたタイミングでキャンセルが実行される。</p>
+<pre><code class="hljs language-go">ctx, cancel := context.WithDeadline(context.Background(), time.Now().Add(time.Second))
+</code></pre>
+<ul>
+<li><code>context.Timeout</code></li>
+</ul>
+<pre><code class="hljs language-go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">context</span>.<span class="hljs-title">WithTimeout</span><span class="hljs-params">(parent context.Context, timeout time.Duration)</span></span> (context.Context, context.CancelFunc)
+</code></pre>
+<p>キャンセルする側は <code>context.Timeout</code> の生成時に停止したい時間は設定することでその時間を超えたタイミングでキャンセルが実行される。</p>
+<pre><code class="hljs language-go">ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+</code></pre>
+<p><code>ctx.WithDeadline</code> 、 <code>ctx.Timeout</code> を使ったキャンセルされる側は <code>ctx.WithCancel</code> と同様に <code>ctx.Done()</code> からキャンセルを受け取る。
+context 生成時に得られる canacl は close されたチャネルには何も実行されないので、タイムアウトの処理をしていても明示的に cancel は呼ぶほうが良い。</p>
+<p>context に対してタイムアウトが設定されているかどうかを確認するには、 context の <code>Deadline</code> メソッドを実行する。</p>
+<pre><code class="hljs language-go"><span class="hljs-keyword">type</span> Context <span class="hljs-keyword">interface</span> {
+	Deadline() (deadline time.Time, ok <span class="hljs-type">bool</span>)
+}
+</code></pre>
+<p>設定されている場合、第 2 返り値は true で第 1 返り値にはその時刻が設定されている。</p>
+<h3>Err メソッド</h3>
+<pre><code class="hljs language-go"><span class="hljs-keyword">type</span> Context <span class="hljs-keyword">interface</span> {
+	Err() <span class="hljs-type">error</span>
+}
+</code></pre>
+<ul>
+<li>context がキャンセルされていない場合は <code>nil</code></li>
+<li>context が明示的にキャンセルされている場合は <code>Canceled</code></li>
+<li>context がタイムアウトしていた場合は <code>DeadlineExceeded</code></li>
+</ul>
+<pre><code class="hljs language-go">LOOP:
+	<span class="hljs-keyword">for</span> {
+		<span class="hljs-keyword">select</span> {
+		<span class="hljs-keyword">case</span> &#x3C;-ctx.Done():
+			<span class="hljs-keyword">if</span> err := ctx.Err(); errors.Is(err, context.Canceled) {
+				fmt.Println(<span class="hljs-string">"Canceled"</span>)
+			} <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> errors.Is(err, context.DeadlineExceeded) {
+				fmt.Println(<span class="hljs-string">"DeadlineExceeded"</span>)
+			}
+			<span class="hljs-keyword">break</span> LOOP
+		}
+	}
+</code></pre>
+<h3>Value メソッド</h3>
+<pre><code class="hljs language-go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">context</span>.<span class="hljs-title">WithValue</span><span class="hljs-params">(parent context.Context, key <span class="hljs-keyword">interface</span>{}, val <span class="hljs-keyword">interface</span>{})</span></span> context.Context
+</code></pre>
+<p><code>WithValue</code> を使うと context に key-value 形式でデータを保持できる。</p>
+<pre><code class="hljs language-go">ctx, cancel := context.WithCancel(context.Background())
+ctx = context.WithValue(ctx, <span class="hljs-string">"id"</span>, <span class="hljs-number">1</span>)
+ctx = context.WithValue(ctx, <span class="hljs-string">"user"</span>, <span class="hljs-string">"abc"</span>)
+</code></pre>
+<p>取り出すときはアサーションして値を取り出す。</p>
+<pre><code class="hljs language-go">id, user := ctx.Value(<span class="hljs-string">"id"</span>).(<span class="hljs-type">int</span>), ctx.Value(<span class="hljs-string">"user"</span>).(<span class="hljs-type">string</span>)
+</code></pre>0:{"buildId":"Mc6Th0Rmyk9pcJ5CRitSL","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"Goのcontext"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,"$L3"]}],"loading":null,"isPartial":false}
+3:["$","$L4",null,{"children":["$","$5",null,{"name":"Next.MetadataOutlet","children":"$@6"}]}]
+6:null

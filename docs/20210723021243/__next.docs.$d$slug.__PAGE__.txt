@@ -1,0 +1,174 @@
+1:"$Sreact.fragment"
+4:I[25151,["/_next/static/chunks/cc5639b053815f24.js","/_next/static/chunks/4904848246fadb45.js"],"OutletBoundary"]
+5:"$Sreact.suspense"
+2:T2e6e,<h2>サーバ</h2>
+<p>何もしないサーバを起動。</p>
+<pre><code class="hljs language-go"><span class="hljs-keyword">package</span> main
+
+<span class="hljs-keyword">import</span> <span class="hljs-string">"net/http"</span>
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
+	http.ListenAndServe(<span class="hljs-string">""</span>, <span class="hljs-literal">nil</span>)
+}
+</code></pre>
+<p><code>ListenAndServe</code> はネットワークアドレスとハンドラを引数で受け取る。ハンドラが nil の場合は <code>DefaultServerMux</code> が使われる。</p>
+<p>Server の構造体はこんな感じ。</p>
+<pre><code class="hljs language-go"><span class="hljs-keyword">type</span> Server <span class="hljs-keyword">struct</span> {
+	Addr <span class="hljs-type">string</span>
+	Handler Handler
+	TLSConfig *tls.Config
+	ReadTimeout time.Duration
+	ReadHeaderTimeout time.Duration
+	WriteTimeout time.Duration
+	IdleTimeout time.Duration
+	MaxHeaderBytes <span class="hljs-type">int</span>
+	TLSNextProto <span class="hljs-keyword">map</span>[<span class="hljs-type">string</span>]<span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(*Server, *tls.Conn, Handler)</span></span>
+	ConnState <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(net.Conn, ConnState)</span></span>
+	ErrorLog *log.Logger
+	BaseContext <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(net.Listener)</span></span> context.Context
+	ConnContext <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(ctx context.Context, c net.Conn)</span></span> context.Context
+	inShutdown atomicBool
+	disableKeepAlives <span class="hljs-type">int32</span>
+	nextProtoOnce     sync.Once
+	nextProtoErr      <span class="hljs-type">error</span>
+	mu         sync.Mutex
+	listeners  <span class="hljs-keyword">map</span>[*net.Listener]<span class="hljs-keyword">struct</span>{}
+	activeConn <span class="hljs-keyword">map</span>[*conn]<span class="hljs-keyword">struct</span>{}
+	doneChan   <span class="hljs-keyword">chan</span> <span class="hljs-keyword">struct</span>{}
+	onShutdown []<span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span>
+}
+</code></pre>
+<p>設定を変更する場合は Server の構造体に値を指定する。</p>
+<pre><code class="hljs language-go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
+	server := http.Server{
+		Addr:    <span class="hljs-string">"0.0.0.0:8080"</span>,
+		Handler: <span class="hljs-literal">nil</span>,
+	}
+	server.ListenAndServe()
+</code></pre>
+<h3>ハンドラとハンドラ関数</h3>
+<p>ハンドラがない場合すべてのリクエストで 404 を返す。</p>
+<p>ハンドラとは、 <code>ServerHTTP メソッド</code> を持ったインターフェースのことを指す。
+このメソッドは、 <code>インターフェース HTTPResponseWriter</code> と <code>構造体 Request のポインタ</code> の 2 つの引数を取る。
+つまり、 <code>ServerHTTP(http.ResponseWriter, *http.Request)</code> をもつインターフェースがハンドラになる。</p>
+<pre><code class="hljs language-go"><span class="hljs-keyword">type</span> HelloHandler <span class="hljs-keyword">struct</span>{}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(h *HelloHandler)</span></span> ServeHTTP(writer http.ResponseWriter, request *http.Request) {
+	fmt.Fprintf(writer, <span class="hljs-string">"hello"</span>)
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
+	helloHandler := <span class="hljs-built_in">new</span>(HelloHandler)
+	server := http.Server{
+		Addr:    <span class="hljs-string">"0.0.0.0:8080"</span>,
+		Handler: helloHandler,
+	}
+	server.ListenAndServe()
+}
+</code></pre>
+<p>この状態だと、すべてのアクセスが 1 つのハンドラに行く。</p>
+<p>実際は URL ごとに異なるハンドラで処理する必要があるため Handler フィールドに値を指定しない ( デフォルトで DefaultServerMux を使う ) 。</p>
+<pre><code class="hljs language-go"><span class="hljs-keyword">type</span> HelloHandler <span class="hljs-keyword">struct</span>{}
+<span class="hljs-keyword">type</span> WorldHandler <span class="hljs-keyword">struct</span>{}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(h *HelloHandler)</span></span> ServeHTTP(writer http.ResponseWriter, request *http.Request) {
+	fmt.Fprintf(writer, <span class="hljs-string">"hello"</span>)
+}
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(w *WorldHandler)</span></span> ServeHTTP(writer http.ResponseWriter, request *http.Request) {
+	fmt.Fprintf(writer, <span class="hljs-string">"world"</span>)
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
+	helloHandler := <span class="hljs-built_in">new</span>(HelloHandler)
+	worldHandler := <span class="hljs-built_in">new</span>(WorldHandler)
+	server := http.Server{
+		Addr: <span class="hljs-string">"0.0.0.0:8080"</span>,
+	}
+	http.Handle(<span class="hljs-string">"/hello"</span>, helloHandler)
+	http.Handle(<span class="hljs-string">"/world"</span>, worldHandler)
+	server.ListenAndServe()
+}
+</code></pre>
+<p><code>http.Handle</code> は実際には DefaultServeMux の Handle メソッドを呼び出している。</p>
+<pre><code class="hljs language-go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Handle</span><span class="hljs-params">(pattern <span class="hljs-type">string</span>, handler Handler)</span></span> { DefaultServeMux.Handle(pattern, handler) }
+</code></pre>
+<p>ハンドラとは、 <code>ServerHTTP(http.ResponseWriter, *http.Request)</code> をもつインターフェースのこと。
+ハンドラ関数とは、ハンドラのように振る舞う関数。リクエストのポインタを受け取ることができる。</p>
+<pre><code class="hljs language-go"><span class="hljs-keyword">package</span> main
+
+<span class="hljs-keyword">import</span> (
+	<span class="hljs-string">"fmt"</span>
+	<span class="hljs-string">"net/http"</span>
+)
+
+<span class="hljs-keyword">type</span> HelloHandler <span class="hljs-keyword">struct</span>{}
+<span class="hljs-keyword">type</span> WorldHandler <span class="hljs-keyword">struct</span>{}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(h *HelloHandler)</span></span> ServeHTTP(writer http.ResponseWriter, request *http.Request) {
+	fmt.Fprintf(writer, <span class="hljs-string">"hello"</span>)
+}
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(w *WorldHandler)</span></span> ServeHTTP(writer http.ResponseWriter, request *http.Request) {
+	fmt.Fprintf(writer, <span class="hljs-string">"world"</span>)
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">hello</span><span class="hljs-params">(writer http.ResponseWriter, request *http.Request)</span></span> {
+	fmt.Fprintf(writer, <span class="hljs-string">"hello"</span>)
+}
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">world</span><span class="hljs-params">(writer http.ResponseWriter, request *http.Request)</span></span> {
+	fmt.Fprintf(writer, <span class="hljs-string">"world"</span>)
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
+	helloHandler := <span class="hljs-built_in">new</span>(HelloHandler)
+	worldHandler := <span class="hljs-built_in">new</span>(WorldHandler)
+	server := http.Server{
+		Addr: <span class="hljs-string">"0.0.0.0:8080"</span>,
+	}
+	http.Handle(<span class="hljs-string">"/hello"</span>, helloHandler)
+	http.Handle(<span class="hljs-string">"/world"</span>, worldHandler)
+	http.HandleFunc(<span class="hljs-string">"/hello2"</span>, hello)
+	http.HandleFunc(<span class="hljs-string">"/world2"</span>, world)
+	server.ListenAndServe()
+}
+</code></pre>
+<h3>何が違うのか</h3>
+<p>やってることは <code>DefaultServeMux.Handle(pattern, handler)</code> なので同じ。
+既存のインターフェースがある場合は、 <code>ServeHTTP</code> メソッドを追加するだけでハンドラになるからそういった場合は、 <code>http.Handle</code> のほうが手軽。</p>
+<pre><code class="hljs language-go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Handle</span><span class="hljs-params">(pattern <span class="hljs-type">string</span>, handler Handler)</span></span> { DefaultServeMux.Handle(pattern, handler) }
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">HandleFunc</span><span class="hljs-params">(pattern <span class="hljs-type">string</span>, handler <span class="hljs-keyword">func</span>(ResponseWriter, *Request)</span></span>) {
+	DefaultServeMux.HandleFunc(pattern, handler)
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(mux *ServeMux)</span></span> HandleFunc(pattern <span class="hljs-type">string</span>, handler <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(ResponseWriter, *Request)</span></span>) {
+	<span class="hljs-keyword">if</span> handler == <span class="hljs-literal">nil</span> {
+		<span class="hljs-built_in">panic</span>(<span class="hljs-string">"http: nil handler"</span>)
+	}
+	mux.Handle(pattern, HandlerFunc(handler))
+}
+</code></pre>
+<h2>サードパーティー製のマルチプレクサ</h2>
+<p>標準でも特に辛くない。 <code>request.Method</code> でメソッドも取得できるのでかなり使い勝手もいい。</p>
+<pre><code class="hljs language-go">mux.HandleFunc(<span class="hljs-string">"/users/create"</span>, createUsers)
+mux.HandleFunc(<span class="hljs-string">"/users/read/"</span>, readUsers)
+mux.HandleFunc(<span class="hljs-string">"/users/update/"</span>, updateUsers)
+mux.HandleFunc(<span class="hljs-string">"/users/delete/"</span>, deleteUsers)
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">readerUsers</span><span class="hljs-params">(writer http.ResponseWriter, request *http.Request)</span></span> {
+	sub := strings.TrimPrefix(request.URL.Path, <span class="hljs-string">"/users/read/"</span>)
+	userId, err := strconv.Atoi(sub) <span class="hljs-comment">// これで /users/read/:id の id を取得できる</span>
+}
+</code></pre>
+<p>下記のような、 <code>/users/:user_id/tasks/:task_id</code> みたいに解析を結構頑張らないといけない場合は結構辛い。</p>
+<pre><code class="hljs language-go">mux.HandleFunc(<span class="hljs-string">"/users/2/tasks/create"</span>, createUsers)
+mux.HandleFunc(<span class="hljs-string">"/users/2/tasks/read/"</span>, readUsers)
+mux.HandleFunc(<span class="hljs-string">"/users/2/tasks/update/"</span>, updateUsers)
+mux.HandleFunc(<span class="hljs-string">"/users/2/tasks/delete/"</span>, deleteUsers)
+</code></pre>
+<p>この辺が良さそう。</p>
+<ul>
+<li><a href="https://github.com/gorilla/mux">https://github.com/gorilla/mux</a></li>
+<li><a href="https://github.com/julienschmidt/httprouter">https://github.com/julienschmidt/httprouter</a></li>
+</ul>0:{"buildId":"Mc6Th0Rmyk9pcJ5CRitSL","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"Golangのhttp/netについて調べた"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,"$L3"]}],"loading":null,"isPartial":false}
+3:["$","$L4",null,{"children":["$","$5",null,{"name":"Next.MetadataOutlet","children":"$@6"}]}]
+6:null

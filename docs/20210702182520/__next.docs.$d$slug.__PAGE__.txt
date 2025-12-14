@@ -1,0 +1,41 @@
+1:"$Sreact.fragment"
+3:I[25151,["/_next/static/chunks/cc5639b053815f24.js","/_next/static/chunks/4904848246fadb45.js"],"OutletBoundary"]
+4:"$Sreact.suspense"
+2:Ta74,<p>使うたびにググっていたので。</p>
+<h2>go build</h2>
+<p>ソースコードのコンパイルを行う。</p>
+<ul>
+<li>通常のパッケージの場合、 <code>go build</code> を行ったあとは何もファイルを生成しない</li>
+<li>main パッケージの場合、 <code>go build</code> を行ったあとはカレントディレクトリ直下にバイナリファイルが生成される</li>
+<li><code>go build</code> は通常、カレントディレクトリにあるすべての go ファイルをコンパイルする。ファイル名を指定することで、単一ファイルのみコンパイルできる</li>
+<li><code>-o</code> オプションでコンパイル後に生成されるファイル名を指定できる。デフォルトだとパッケージ名になる</li>
+<li><code>go build</code> は <code>_</code> 、 <code>.</code> で始まるファイルは無視する</li>
+<li><code>-v</code> オプションは、コンパイル中のパッケージ名を出力する</li>
+</ul>
+<h2>go fmt</h2>
+<p>ファイルの整形。</p>
+<h2>go get</h2>
+<p>リモートパッケージを取得する。正確には、パッケージのダウンロードしてから、 <code>go install</code> を行う。</p>
+<ul>
+<li><code>-d</code> オプションは、ダウンロードのみでインストールは行わない</li>
+<li><code>-u</code> オプションは、パッケージとその依存パッケージを更新する</li>
+<li><code>-f</code> オプションは、 <code>-u</code> を使うときのみ有効で、 import 内の各パッケージが取得されているか検証しない。ローカルにフォークしたパッケージを使いたいときなどに使う</li>
+</ul>
+<h2>go install</h2>
+<p><code>go build</code> して生成されたバイナリファイルを <code>$HOME/bin</code> に移動している。</p>
+<h2>go test</h2>
+<p>カレントディレクトリ配下のすべての <code>\*.test.go</code> ファイルのテストを行う。</p>
+<ul>
+<li><code>-cover</code> はテストカバー率を表示する</li>
+</ul>
+<h2>go generate</h2>
+<p><code>go build</code> 前にコードを自動で生成する場合に使用する。</p>
+<h2>go mod</h2>
+<p>依存モジュールの検知、バージョン固定、バージョンアップ検知ができる。</p>
+<ul>
+<li><code>go mod init</code> で初期化する</li>
+<li><code>go build</code> で依存モジュールを自動インストールする</li>
+<li><code>go get</code> で依存モジュールの追加やバージョンアップを行う</li>
+<li><code>go mod tidy</code> で使われていないモジュールを削除する</li>
+</ul>0:{"buildId":"Mc6Th0Rmyk9pcJ5CRitSL","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"Goのコマンド"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"loading":null,"isPartial":false}
+5:null

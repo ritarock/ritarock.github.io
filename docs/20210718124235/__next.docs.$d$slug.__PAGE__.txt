@@ -1,0 +1,256 @@
+1:"$Sreact.fragment"
+4:I[25151,["/_next/static/chunks/cc5639b053815f24.js","/_next/static/chunks/4904848246fadb45.js"],"OutletBoundary"]
+5:"$Sreact.suspense"
+2:T3171,<h2>JSON の解析</h2>
+<p>今回使う JSON ファイル。</p>
+<pre><code class="hljs language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"id"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"content"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"Hello"</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"author"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"id"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"name"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"author1"</span>
+  <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"comments"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+    <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"id"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"content"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"comment1"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"author"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"author2"</span>
+    <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"id"</span><span class="hljs-punctuation">:</span> <span class="hljs-number">2</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"content"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"comment2"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"author"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"author3"</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">]</span>
+<span class="hljs-punctuation">}</span>
+
+</code></pre>
+<h3>Unmarshal を使う</h3>
+<p>文字列データの場合は Unmarshal を使う。</p>
+<ul>
+<li>構造体を定義</li>
+<li>JSON を構造体に格納</li>
+</ul>
+<pre><code class="hljs language-go"><span class="hljs-keyword">package</span> main
+
+<span class="hljs-keyword">import</span> (
+	<span class="hljs-string">"encoding/json"</span>
+	<span class="hljs-string">"fmt"</span>
+	<span class="hljs-string">"io/ioutil"</span>
+	<span class="hljs-string">"os"</span>
+)
+
+<span class="hljs-keyword">type</span> Post <span class="hljs-keyword">struct</span> {
+	Id      <span class="hljs-type">int</span>    <span class="hljs-string">`json:"id"`</span>
+	Content <span class="hljs-type">string</span> <span class="hljs-string">`json:"content"`</span>
+	Author  <span class="hljs-keyword">struct</span> {
+		Id   <span class="hljs-type">int</span>    <span class="hljs-string">`json:"id"`</span>
+		Name <span class="hljs-type">string</span> <span class="hljs-string">`json:"name"`</span>
+	} <span class="hljs-string">`json:"author"`</span>
+	Comments []<span class="hljs-keyword">struct</span> {
+		Id      <span class="hljs-type">int</span>    <span class="hljs-string">`json:"id"`</span>
+		Content <span class="hljs-type">string</span> <span class="hljs-string">`json:"content"`</span>
+		Author  <span class="hljs-type">string</span> <span class="hljs-string">`json:"author"`</span>
+	} <span class="hljs-string">`json:"comments"`</span>
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
+	jsonFile, err := os.Open(<span class="hljs-string">"file.json"</span>)
+	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+		fmt.Println(err)
+		<span class="hljs-keyword">return</span>
+	}
+	<span class="hljs-keyword">defer</span> jsonFile.Close()
+
+	jsonData, err := ioutil.ReadAll(jsonFile)
+	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+		fmt.Println(err)
+		<span class="hljs-keyword">return</span>
+	}
+
+	<span class="hljs-keyword">var</span> post Post
+	json.Unmarshal(jsonData, &#x26;post)
+	fmt.Println(post) <span class="hljs-comment">// {1 Hello {0 author1} [{1 comment1 author2} {2 comment2 author3}]}</span>
+}
+</code></pre>
+<h3>デコーダを使う</h3>
+<p>http.Request の Body のように <code>io.Reader</code> のストリームからデータが入ってくる場合に使う。</p>
+<ul>
+<li>構造体を定義</li>
+<li>デコーダを作成する</li>
+<li>JSON を順次処理してデコードする</li>
+</ul>
+<pre><code class="hljs language-go"><span class="hljs-keyword">package</span> main
+
+<span class="hljs-keyword">import</span> (
+	<span class="hljs-string">"encoding/json"</span>
+	<span class="hljs-string">"fmt"</span>
+	<span class="hljs-string">"io"</span>
+	<span class="hljs-string">"os"</span>
+)
+
+<span class="hljs-keyword">type</span> Post <span class="hljs-keyword">struct</span> {
+	Id      <span class="hljs-type">int</span>    <span class="hljs-string">`json:"id"`</span>
+	Content <span class="hljs-type">string</span> <span class="hljs-string">`json:"content"`</span>
+	Author  <span class="hljs-keyword">struct</span> {
+		Id   <span class="hljs-type">int</span>    <span class="hljs-string">`json:"id"`</span>
+		Name <span class="hljs-type">string</span> <span class="hljs-string">`json:"name"`</span>
+	} <span class="hljs-string">`json:"author"`</span>
+	Comments []<span class="hljs-keyword">struct</span> {
+		Id      <span class="hljs-type">int</span>    <span class="hljs-string">`json:"id"`</span>
+		Content <span class="hljs-type">string</span> <span class="hljs-string">`json:"content"`</span>
+		Author  <span class="hljs-type">string</span> <span class="hljs-string">`json:"author"`</span>
+	} <span class="hljs-string">`json:"comments"`</span>
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
+	jsonFile, err := os.Open(<span class="hljs-string">"file.json"</span>)
+	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+		fmt.Println(err)
+		<span class="hljs-keyword">return</span>
+	}
+	<span class="hljs-keyword">defer</span> jsonFile.Close()
+
+	decoder := json.NewDecoder(jsonFile)
+	<span class="hljs-keyword">for</span> {
+		<span class="hljs-keyword">var</span> post Post
+		err := decoder.Decode(&#x26;post)
+		<span class="hljs-keyword">if</span> err == io.EOF {
+			<span class="hljs-keyword">break</span>
+		}
+		<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+			fmt.Println(err)
+			<span class="hljs-keyword">return</span>
+		}
+		fmt.Println(post) <span class="hljs-comment">// {1 Hello {1 author1} [{1 comment1 author2} {2 comment2 author3}]}</span>
+	}
+}
+</code></pre>
+<h2>JSON データを作成する</h2>
+<ul>
+<li>構造体を定義</li>
+<li>構造体を JSON データに組み換え</li>
+</ul>
+<pre><code class="hljs language-go"><span class="hljs-keyword">package</span> main
+
+<span class="hljs-keyword">import</span> (
+	<span class="hljs-string">"encoding/json"</span>
+	<span class="hljs-string">"fmt"</span>
+	<span class="hljs-string">"io/ioutil"</span>
+)
+
+<span class="hljs-keyword">type</span> Post <span class="hljs-keyword">struct</span> {
+	Id       <span class="hljs-type">int</span>       <span class="hljs-string">`json:"id"`</span>
+	Content  <span class="hljs-type">string</span>    <span class="hljs-string">`json:"content"`</span>
+	Author   Author    <span class="hljs-string">`json:"author"`</span>
+	Comments []Comment <span class="hljs-string">`json:"comments"`</span>
+}
+<span class="hljs-keyword">type</span> Author <span class="hljs-keyword">struct</span> {
+	Id   <span class="hljs-type">int</span>    <span class="hljs-string">`json:"id"`</span>
+	Name <span class="hljs-type">string</span> <span class="hljs-string">`json:"name"`</span>
+}
+<span class="hljs-keyword">type</span> Comment <span class="hljs-keyword">struct</span> {
+	Id      <span class="hljs-type">int</span>    <span class="hljs-string">`json:"id"`</span>
+	Content <span class="hljs-type">string</span> <span class="hljs-string">`json:"content"`</span>
+	Author  <span class="hljs-type">string</span> <span class="hljs-string">`json:"author"`</span>
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
+	post := Post{
+		Id:      <span class="hljs-number">1</span>,
+		Content: <span class="hljs-string">"Hello"</span>,
+		Author: Author{
+			Id:   <span class="hljs-number">1</span>,
+			Name: <span class="hljs-string">"author1"</span>,
+		},
+		Comments: []Comment{
+			{
+				Id:      <span class="hljs-number">1</span>,
+				Content: <span class="hljs-string">"comment1"</span>,
+				Author:  <span class="hljs-string">"author2"</span>,
+			},
+			{
+				Id:      <span class="hljs-number">2</span>,
+				Content: <span class="hljs-string">"comment2"</span>,
+				Author:  <span class="hljs-string">"author3"</span>,
+			},
+		},
+	}
+	output, err := json.MarshalIndent(&#x26;post, <span class="hljs-string">""</span>, <span class="hljs-string">"\t\t"</span>)
+	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+		fmt.Println(err)
+		<span class="hljs-keyword">return</span>
+	}
+	err = ioutil.WriteFile(<span class="hljs-string">"created.json"</span>, output, <span class="hljs-number">0644</span>)
+	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+		fmt.Println(err)
+		<span class="hljs-keyword">return</span>
+	}
+}
+</code></pre>
+<h3>エンコーダを使う</h3>
+<ul>
+<li>構造体を定義</li>
+<li>エンコーダを作成する</li>
+<li>エンコーダを使い構造体を JSON ファイルにエンコード</li>
+</ul>
+<pre><code class="hljs language-go"><span class="hljs-keyword">package</span> main
+
+<span class="hljs-keyword">import</span> (
+	<span class="hljs-string">"encoding/json"</span>
+	<span class="hljs-string">"fmt"</span>
+	<span class="hljs-string">"os"</span>
+)
+
+<span class="hljs-keyword">type</span> Post <span class="hljs-keyword">struct</span> {
+	Id       <span class="hljs-type">int</span>       <span class="hljs-string">`json:"id"`</span>
+	Content  <span class="hljs-type">string</span>    <span class="hljs-string">`json:"content"`</span>
+	Author   Author    <span class="hljs-string">`json:"author"`</span>
+	Comments []Comment <span class="hljs-string">`json:"comments"`</span>
+}
+<span class="hljs-keyword">type</span> Author <span class="hljs-keyword">struct</span> {
+	Id   <span class="hljs-type">int</span>    <span class="hljs-string">`json:"id"`</span>
+	Name <span class="hljs-type">string</span> <span class="hljs-string">`json:"name"`</span>
+}
+<span class="hljs-keyword">type</span> Comment <span class="hljs-keyword">struct</span> {
+	Id      <span class="hljs-type">int</span>    <span class="hljs-string">`json:"id"`</span>
+	Content <span class="hljs-type">string</span> <span class="hljs-string">`json:"content"`</span>
+	Author  <span class="hljs-type">string</span> <span class="hljs-string">`json:"author"`</span>
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
+	post := Post{
+		Id:      <span class="hljs-number">1</span>,
+		Content: <span class="hljs-string">"Hello"</span>,
+		Author: Author{
+			Id:   <span class="hljs-number">1</span>,
+			Name: <span class="hljs-string">"author1"</span>,
+		},
+		Comments: []Comment{
+			{
+				Id:      <span class="hljs-number">1</span>,
+				Content: <span class="hljs-string">"comment1"</span>,
+				Author:  <span class="hljs-string">"author2"</span>,
+			},
+			{
+				Id:      <span class="hljs-number">2</span>,
+				Content: <span class="hljs-string">"comment2"</span>,
+				Author:  <span class="hljs-string">"author3"</span>,
+			},
+		},
+	}
+	jsonFile, err := os.Create(<span class="hljs-string">"created.json"</span>)
+	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+		fmt.Println(err)
+		<span class="hljs-keyword">return</span>
+	}
+	encoder := json.NewEncoder(jsonFile)
+	err = encoder.Encode(&#x26;post)
+	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+		fmt.Println(err)
+		<span class="hljs-keyword">return</span>
+	}
+}
+</code></pre>0:{"buildId":"Mc6Th0Rmyk9pcJ5CRitSL","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"Golangでjsonを操作する"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,"$L3"]}],"loading":null,"isPartial":false}
+3:["$","$L4",null,{"children":["$","$5",null,{"name":"Next.MetadataOutlet","children":"$@6"}]}]
+6:null

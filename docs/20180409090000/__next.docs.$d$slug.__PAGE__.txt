@@ -1,0 +1,70 @@
+1:"$Sreact.fragment"
+4:I[25151,["/_next/static/chunks/cc5639b053815f24.js","/_next/static/chunks/4904848246fadb45.js"],"OutletBoundary"]
+5:"$Sreact.suspense"
+2:T1236,<p>MacBook の環境を管理する。</p>
+<h2>環境</h2>
+<pre><code class="hljs language-bash"><span class="hljs-comment"># brew と brew cask は導入済み</span>
+$ brew install ansible
+
+$ ansible --version
+ansible 2.5.0
+</code></pre>
+<p>今回用意した 2 つのファイル。</p>
+<ul>
+<li>hosts</li>
+</ul>
+<pre><code class="hljs language-hosts">localhost
+</code></pre>
+<ul>
+<li>localhost.yml</li>
+</ul>
+<pre><code class="hljs language-yaml"><span class="hljs-meta">---</span>
+  <span class="hljs-bullet">-</span> <span class="hljs-attr">hosts:</span> <span class="hljs-string">localhost</span>
+    <span class="hljs-attr">connection:</span> <span class="hljs-string">local</span>
+    <span class="hljs-attr">gather_facts:</span> <span class="hljs-literal">no</span>
+    <span class="hljs-attr">become:</span> <span class="hljs-literal">no</span>
+
+    <span class="hljs-attr">vars:</span>
+      <span class="hljs-attr">homebrew_packages:</span>
+        <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">fish</span>
+        <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">git</span>
+        <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">node</span>
+        <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">pyenv</span>
+        <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">python</span>
+        <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">tree</span>
+        <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">vim</span>
+
+      <span class="hljs-attr">homebrew_cask_packages:</span>
+        <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">atom</span>
+        <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">docker</span>
+        <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">dropbox</span>
+        <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">evernote</span>
+        <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">google-chrome</span>
+        <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">google-drive</span>
+        <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">iTerm2</span>
+        <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">slack</span>
+        <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">vagrant</span>
+        <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">virtualbox</span>
+
+    <span class="hljs-attr">tasks:</span>
+        <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">update</span> <span class="hljs-string">homebrew</span>
+          <span class="hljs-attr">homebrew:</span> <span class="hljs-string">update_homebrew=yes</span>
+
+        <span class="hljs-comment"># brew</span>
+        <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">install</span> <span class="hljs-string">homebrew_packages</span>
+          <span class="hljs-attr">homebrew:</span>
+            <span class="hljs-string">name={{</span> <span class="hljs-string">item.name</span> <span class="hljs-string">}}</span>
+          <span class="hljs-attr">with_items:</span> <span class="hljs-string">'{{ homebrew_packages }}'</span>
+
+        <span class="hljs-comment"># homebrew_cask</span>
+        <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">install</span> <span class="hljs-string">homebrew_cask_packages</span>
+          <span class="hljs-attr">homebrew_cask:</span>
+            <span class="hljs-string">name={{</span> <span class="hljs-string">item.name</span> <span class="hljs-string">}}</span>
+          <span class="hljs-attr">with_items:</span> <span class="hljs-string">'{{ homebrew_cask_packages }}'</span>
+</code></pre>
+<p>実行。</p>
+<pre><code class="hljs language-bash">$ ansible-playbook -i hosts localhostsyml
+</code></pre>
+<p><a href="https://github.com/ritarock/dotfiles/tree/master/macbook-provisioning">ソースコード</a></p>0:{"buildId":"Mc6Th0Rmyk9pcJ5CRitSL","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"AnsibleでMacBookを管理"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,"$L3"]}],"loading":null,"isPartial":false}
+3:["$","$L4",null,{"children":["$","$5",null,{"name":"Next.MetadataOutlet","children":"$@6"}]}]
+6:null

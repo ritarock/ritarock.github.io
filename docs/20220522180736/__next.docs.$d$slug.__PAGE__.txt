@@ -1,0 +1,552 @@
+1:"$Sreact.fragment"
+4:I[25151,["/_next/static/chunks/cc5639b053815f24.js","/_next/static/chunks/4904848246fadb45.js"],"OutletBoundary"]
+5:"$Sreact.suspense"
+2:T67de,<h2>cobra-cli を使う</h2>
+<h3>go.mod を作成</h3>
+<pre><code class="hljs language-bash">$ go mod init sample
+go: creating new go.mod: module sample
+</code></pre>
+<h3>project の開始</h3>
+<p><code>init</code> コマンドを実行。</p>
+<pre><code class="hljs language-bash">$ go run -mod=mod github.com/spf13/cobra-cli@latest init
+
+$ tree
+tree
+.
+├── LICENSE
+├── cmd
+│   └── root.go
+├── go.mod
+├── go.sum
+└── main.go
+</code></pre>
+<p><code>main.go</code> は <code>cmd.Execute()</code> を呼び出しているだけ。</p>
+<pre><code class="hljs language-go"><span class="hljs-comment">/*
+Copyright © 2022 NAME HERE &#x3C;EMAIL ADDRESS>
+
+*/</span>
+<span class="hljs-keyword">package</span> main
+
+<span class="hljs-keyword">import</span> <span class="hljs-string">"sample/cmd"</span>
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
+	cmd.Execute()
+}
+</code></pre>
+<p><code>cmd/root.go</code> を編集。実行したら <code>Hello</code> を出力する。</p>
+<pre><code class="hljs language-go"><span class="hljs-comment">/*
+Copyright © 2022 NAME HERE &#x3C;EMAIL ADDRESS>
+
+*/</span>
+<span class="hljs-keyword">package</span> cmd
+
+<span class="hljs-keyword">import</span> (
+	<span class="hljs-string">"fmt"</span>
+	<span class="hljs-string">"os"</span>
+
+	<span class="hljs-string">"github.com/spf13/cobra"</span>
+)
+
+<span class="hljs-comment">// rootCmd represents the base command when called without any subcommands</span>
+<span class="hljs-keyword">var</span> rootCmd = &#x26;cobra.Command{
+	Use:   <span class="hljs-string">"sample"</span>,
+	Short: <span class="hljs-string">"挨拶をします"</span>,
+	RunE: <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(cmd *cobra.Command, args []<span class="hljs-type">string</span>)</span></span> <span class="hljs-type">error</span> {
+		fmt.Println(<span class="hljs-string">"Hello"</span>)
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>
+	},
+}
+
+<span class="hljs-comment">// Execute adds all child commands to the root command and sets flags appropriately.</span>
+<span class="hljs-comment">// This is called by main.main(). It only needs to happen once to the rootCmd.</span>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Execute</span><span class="hljs-params">()</span></span> {
+	err := rootCmd.Execute()
+	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+		os.Exit(<span class="hljs-number">1</span>)
+	}
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">init</span><span class="hljs-params">()</span></span> {
+}
+</code></pre>
+<p>実行。</p>
+<pre><code class="hljs language-bash">$ go run main.go
+Hello
+</code></pre>
+<p>help を見る。</p>
+<pre><code class="hljs language-bash">$ go run main.go -h
+挨拶をします
+
+Usage:
+  sample [flags]
+
+Flags:
+  -h, --<span class="hljs-built_in">help</span>   <span class="hljs-built_in">help</span> <span class="hljs-keyword">for</span> sample
+</code></pre>
+<h2>フラグを設定</h2>
+<h3>グローバルフラグを設定</h3>
+<p><code>--night</code> をつければ <code>Good night</code> を出力する。</p>
+<pre><code class="hljs language-go"><span class="hljs-comment">/*
+Copyright © 2022 NAME HERE &#x3C;EMAIL ADDRESS>
+
+*/</span>
+<span class="hljs-keyword">package</span> cmd
+
+<span class="hljs-keyword">import</span> (
+	<span class="hljs-string">"fmt"</span>
+	<span class="hljs-string">"os"</span>
+
+	<span class="hljs-string">"github.com/spf13/cobra"</span>
+)
+
+<span class="hljs-keyword">var</span> night <span class="hljs-type">bool</span>
+
+<span class="hljs-comment">// rootCmd represents the base command when called without any subcommands</span>
+<span class="hljs-keyword">var</span> rootCmd = &#x26;cobra.Command{
+	Use:   <span class="hljs-string">"sample"</span>,
+	Short: <span class="hljs-string">"挨拶をします"</span>,
+	RunE: <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(cmd *cobra.Command, args []<span class="hljs-type">string</span>)</span></span> <span class="hljs-type">error</span> {
+		<span class="hljs-keyword">if</span> night {
+			fmt.Println(<span class="hljs-string">"Good night"</span>)
+			<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>
+		}
+		fmt.Println(<span class="hljs-string">"Hello"</span>)
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>
+	},
+}
+
+<span class="hljs-comment">// Execute adds all child commands to the root command and sets flags appropriately.</span>
+<span class="hljs-comment">// This is called by main.main(). It only needs to happen once to the rootCmd.</span>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Execute</span><span class="hljs-params">()</span></span> {
+	err := rootCmd.Execute()
+	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+		os.Exit(<span class="hljs-number">1</span>)
+	}
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">init</span><span class="hljs-params">()</span></span> {
+	rootCmd.PersistentFlags().BoolVar(&#x26;night, <span class="hljs-string">"night"</span>, <span class="hljs-literal">false</span>, <span class="hljs-string">"night フラグの説明文です"</span>)
+}
+</code></pre>
+<p>実行。</p>
+<pre><code class="hljs language-bash">$ go run main.go -h
+挨拶をします
+
+Usage:
+  sample [flags]
+
+Flags:
+  -h, --<span class="hljs-built_in">help</span>    <span class="hljs-built_in">help</span> <span class="hljs-keyword">for</span> sample
+      --night   night フラグの説明文です
+
+$ go run main.go
+Hello
+
+$ go run main.go --night
+Good night
+</code></pre>
+<h4>shorthand で設定する</h4>
+<pre><code class="hljs language-go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">init</span><span class="hljs-params">()</span></span> {
+	<span class="hljs-comment">// rootCmd.PersistentFlags().BoolVar(&#x26;night, "night", false, "night フラグの説明文です")</span>
+	rootCmd.PersistentFlags().BoolVarP(&#x26;night, <span class="hljs-string">"night"</span>, <span class="hljs-string">"n"</span>, <span class="hljs-literal">false</span>, <span class="hljs-string">"night フラグの説明文です"</span>)
+}
+</code></pre>
+<p>実行。</p>
+<pre><code class="hljs language-bash">$ go run main.go -h
+挨拶をします
+
+Usage:
+  sample [flags]
+
+Flags:
+  -h, --<span class="hljs-built_in">help</span>    <span class="hljs-built_in">help</span> <span class="hljs-keyword">for</span> sample
+  -n, --night   night フラグの説明文です
+
+$ go run main.go -n
+Good night
+</code></pre>
+<h3>ローカルフラグを設定する</h3>
+<p><code>--name</code> をつければ挨拶の後に名前を出力する。
+今度は変数を設定しないでフラグの値を取得してみる。</p>
+<pre><code class="hljs language-go"><span class="hljs-comment">/*
+Copyright © 2022 NAME HERE &#x3C;EMAIL ADDRESS>
+
+*/</span>
+<span class="hljs-keyword">package</span> cmd
+
+<span class="hljs-keyword">import</span> (
+	<span class="hljs-string">"fmt"</span>
+	<span class="hljs-string">"os"</span>
+
+	<span class="hljs-string">"github.com/spf13/cobra"</span>
+)
+
+<span class="hljs-keyword">var</span> night <span class="hljs-type">bool</span>
+
+<span class="hljs-comment">// rootCmd represents the base command when called without any subcommands</span>
+<span class="hljs-keyword">var</span> rootCmd = &#x26;cobra.Command{
+	Use:   <span class="hljs-string">"sample"</span>,
+	Short: <span class="hljs-string">"挨拶をします"</span>,
+	RunE: <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(cmd *cobra.Command, args []<span class="hljs-type">string</span>)</span></span> <span class="hljs-type">error</span> {
+		name, _ := cmd.Flags().GetString(<span class="hljs-string">"name"</span>)
+		<span class="hljs-keyword">if</span> night {
+			fmt.Println(<span class="hljs-string">"Good night "</span> + name)
+			<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>
+		}
+		fmt.Println(<span class="hljs-string">"Hello "</span> + name)
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>
+	},
+}
+
+<span class="hljs-comment">// Execute adds all child commands to the root command and sets flags appropriately.</span>
+<span class="hljs-comment">// This is called by main.main(). It only needs to happen once to the rootCmd.</span>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Execute</span><span class="hljs-params">()</span></span> {
+	err := rootCmd.Execute()
+	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+		os.Exit(<span class="hljs-number">1</span>)
+	}
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">init</span><span class="hljs-params">()</span></span> {
+	rootCmd.PersistentFlags().BoolVarP(&#x26;night, <span class="hljs-string">"night"</span>, <span class="hljs-string">"n"</span>, <span class="hljs-literal">false</span>, <span class="hljs-string">"night フラグの説明文です"</span>)
+	rootCmd.Flags().StringP(<span class="hljs-string">"name"</span>, <span class="hljs-string">"a"</span>, <span class="hljs-string">""</span>, <span class="hljs-string">"name フラグの説明文です"</span>)
+}
+</code></pre>
+<p>実行。</p>
+<pre><code class="hljs language-bash">$ go run main.go -h
+挨拶をします
+
+Usage:
+  sample [flags]
+
+Flags:
+  -h, --<span class="hljs-built_in">help</span>          <span class="hljs-built_in">help</span> <span class="hljs-keyword">for</span> sample
+  -a, --name string   name フラグの説明文です
+  -n, --night         night フラグの説明文です
+
+$ go run main.go
+Hello 
+$ go run main.go -a aaa
+Hello aaa
+
+$ go run main.go -a aaa --night
+Good night aaa
+</code></pre>
+<h4>フラグの値の取得方法</h4>
+<p><code>~P</code> がついている方は <code>shorthand</code> を設定できる。
+<code>~Var</code> がついている方は直接値を設定できる。</p>
+<pre><code class="hljs language-go">rootCmd.Flags().String(<span class="hljs-string">"name"</span>, <span class="hljs-string">""</span>, <span class="hljs-string">"name フラグの説明文です"</span>)
+rootCmd.Flags().StringP(<span class="hljs-string">"name"</span>, <span class="hljs-string">"a"</span>, <span class="hljs-string">""</span>, <span class="hljs-string">"name フラグの説明文です"</span>)
+rootCmd.Flags().StringVar(&#x26;name, <span class="hljs-string">"name"</span>, <span class="hljs-string">""</span>, <span class="hljs-string">"name フラグの説明文です"</span>)
+rootCmd.Flags().StringVarP(&#x26;name, <span class="hljs-string">"name"</span>, <span class="hljs-string">"a"</span>, <span class="hljs-string">""</span>, <span class="hljs-string">"name フラグの説明文です"</span>)
+</code></pre>
+<h3>必須フラグ</h3>
+<pre><code class="hljs language-go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">init</span><span class="hljs-params">()</span></span> {
+	rootCmd.PersistentFlags().BoolVarP(&#x26;night, <span class="hljs-string">"night"</span>, <span class="hljs-string">"n"</span>, <span class="hljs-literal">false</span>, <span class="hljs-string">"night フラグの説明文です"</span>)
+	rootCmd.Flags().StringP(<span class="hljs-string">"name"</span>, <span class="hljs-string">"a"</span>, <span class="hljs-string">""</span>, <span class="hljs-string">"name フラグの説明文です (required)"</span>)
+	rootCmd.MarkFlagRequired(<span class="hljs-string">"name"</span>)
+}
+</code></pre>
+<p>実行。</p>
+<pre><code class="hljs language-bash">$ go run main.go
+Error: required flag(s) <span class="hljs-string">"name"</span> not <span class="hljs-built_in">set</span>
+Usage:
+  sample [flags]
+
+Flags:
+  -h, --<span class="hljs-built_in">help</span>          <span class="hljs-built_in">help</span> <span class="hljs-keyword">for</span> sample
+  -a, --name string   name フラグの説明文です (required)
+  -n, --night         night フラグの説明文です
+
+$ go run main.go -a aaa
+Hello aaa
+</code></pre>
+<h3>引数の設定</h3>
+<p>引数に数字を 2 つ与えるとその合計を出力する。</p>
+<pre><code class="hljs language-go"><span class="hljs-comment">// rootCmd represents the base command when called without any subcommands</span>
+<span class="hljs-keyword">var</span> rootCmd = &#x26;cobra.Command{
+	Use:   <span class="hljs-string">"sample"</span>,
+	Short: <span class="hljs-string">"挨拶をします"</span>,
+	RunE: <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(cmd *cobra.Command, args []<span class="hljs-type">string</span>)</span></span> <span class="hljs-type">error</span> {
+		name, _ := cmd.Flags().GetString(<span class="hljs-string">"name"</span>)
+
+		<span class="hljs-keyword">if</span> night {
+			fmt.Println(<span class="hljs-string">"Good night "</span> + name)
+			<span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(args) > <span class="hljs-number">0</span> {
+				firstNum, _ := strconv.Atoi(args[<span class="hljs-number">0</span>])
+				secondNum, _ := strconv.Atoi(args[<span class="hljs-number">1</span>])
+				fmt.Printf(<span class="hljs-string">"SUM: %v\n"</span>, firstNum+secondNum)
+			}
+			<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>
+		}
+
+		fmt.Println(<span class="hljs-string">"Hello "</span> + name)
+		<span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(args) > <span class="hljs-number">0</span> {
+			firstNum, _ := strconv.Atoi(args[<span class="hljs-number">0</span>])
+			secondNum, _ := strconv.Atoi(args[<span class="hljs-number">1</span>])
+			fmt.Printf(<span class="hljs-string">"SUM: %v\n"</span>, firstNum+secondNum)
+		}
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>
+	},
+}
+</code></pre>
+<p>実行。</p>
+<pre><code class="hljs language-bash">$ go run main.go -a aaa
+Hello aaa
+
+$ go run main.go -a aaa 1 99
+Hello aaa
+SUM: 100
+</code></pre>
+<h4>バリデーションチェック</h4>
+<p>これらのメソッドが用意されている。</p>
+<table>
+<thead>
+<tr>
+<th>メソッド</th>
+<th>機能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NoArgs</td>
+<td>引数が存在したらエラーを返す</td>
+</tr>
+<tr>
+<td>OnlyValidArgs</td>
+<td>ValidArgs に含まれていないとエラーを返す</td>
+</tr>
+<tr>
+<td>ArbitraryArgs</td>
+<td>エラーを返さない</td>
+</tr>
+<tr>
+<td>MinimumNArgs(n)</td>
+<td>少なくとも n 個の引数がないとエラーを返す</td>
+</tr>
+<tr>
+<td>MaximumNArgs(n)</td>
+<td>n 個以上の引数があるとエラーを返す</td>
+</tr>
+<tr>
+<td>ExactArgs(n)</td>
+<td>n 個の引数以外だとエラーを返す</td>
+</tr>
+<tr>
+<td>ExactValidArgs(int)</td>
+<td>n 個の引数以外 or ValidArgs フィールドにない位置引数がある場合はエラーを返す</td>
+</tr>
+<tr>
+<td>RangeArgs(min, max)</td>
+<td>範囲内の値でないとエラーを返す</td>
+</tr>
+</tbody>
+</table>
+<p>こんな感じで設定できる。</p>
+<pre><code class="hljs language-go">Args:  cobra.ExactArgs(<span class="hljs-number">1</span>),
+</code></pre>
+<p>複数のバリデーションをチェックする場合は <code>MatchAll</code> を使えば良さそう。</p>
+<pre><code class="hljs language-go"><span class="hljs-comment">// MatchAll allows combining several PositionalArgs to work in concert.</span>
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">MatchAll</span><span class="hljs-params">(pargs ...PositionalArgs)</span></span> PositionalArgs {
+	<span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(cmd *Command, args []<span class="hljs-type">string</span>)</span></span> <span class="hljs-type">error</span> {
+		<span class="hljs-keyword">for</span> _, parg := <span class="hljs-keyword">range</span> pargs {
+			<span class="hljs-keyword">if</span> err := parg(cmd, args); err != <span class="hljs-literal">nil</span> {
+				<span class="hljs-keyword">return</span> err
+			}
+		}
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>
+	}
+}
+</code></pre>
+<p>今回は 2 個の引数のみ受け付ける。かつ、値が数値であることのみ許可する。</p>
+<pre><code class="hljs language-go"><span class="hljs-keyword">var</span> rootCmd = &#x26;cobra.Command{
+	Use:   <span class="hljs-string">"sample"</span>,
+	Short: <span class="hljs-string">"挨拶をします。2 つの int を渡すと計算もします"</span>,
+	Args: <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(cmd *cobra.Command, args []<span class="hljs-type">string</span>)</span></span> <span class="hljs-type">error</span> {
+		<span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(args) == <span class="hljs-number">0</span> {
+			<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>
+		} <span class="hljs-keyword">else</span> {
+			<span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(args) != <span class="hljs-number">2</span> {
+				<span class="hljs-keyword">return</span> errors.New(<span class="hljs-string">"引数の数が不正です"</span>)
+			}
+			_, err1 := strconv.Atoi(args[<span class="hljs-number">0</span>])
+			_, err2 := strconv.Atoi(args[<span class="hljs-number">1</span>])
+			<span class="hljs-keyword">if</span> err1 != <span class="hljs-literal">nil</span> || err2 != <span class="hljs-literal">nil</span> {
+				<span class="hljs-keyword">return</span> errors.New(<span class="hljs-string">"引数の型が不正です"</span>)
+			}
+		}
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>
+	},
+	RunE: <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(cmd *cobra.Command, args []<span class="hljs-type">string</span>)</span></span> <span class="hljs-type">error</span> {
+		name, _ := cmd.Flags().GetString(<span class="hljs-string">"name"</span>)
+
+		<span class="hljs-keyword">if</span> night {
+			fmt.Println(<span class="hljs-string">"Good night "</span> + name)
+			<span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(args) > <span class="hljs-number">0</span> {
+				firstNum, _ := strconv.Atoi(args[<span class="hljs-number">0</span>])
+				secondNum, _ := strconv.Atoi(args[<span class="hljs-number">1</span>])
+				fmt.Printf(<span class="hljs-string">"SUM: %v\n"</span>, firstNum+secondNum)
+			}
+			<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>
+		}
+
+		fmt.Println(<span class="hljs-string">"Hello "</span> + name)
+		<span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(args) > <span class="hljs-number">0</span> {
+			firstNum, _ := strconv.Atoi(args[<span class="hljs-number">0</span>])
+			secondNum, _ := strconv.Atoi(args[<span class="hljs-number">1</span>])
+			fmt.Printf(<span class="hljs-string">"SUM: %v\n"</span>, firstNum+secondNum)
+		}
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>
+	},
+}
+</code></pre>
+<p>実行。</p>
+<pre><code class="hljs language-bash">$ go run main.go -a aaa
+Hello aaa
+
+$ go run main.go -a aaa 1 99
+Hello aaa
+SUM: 100
+
+$ go run main.go -a aaa 1 abc
+Error: 引数の型が不正です
+Usage:
+  sample [flags]
+
+Flags:
+  -h, --<span class="hljs-built_in">help</span>          <span class="hljs-built_in">help</span> <span class="hljs-keyword">for</span> sample
+  -a, --name string   name フラグの説明文です (required)
+  -n, --night         night フラグの説明文です
+</code></pre>
+<h3>PreRun / PostRun Hooks</h3>
+<p>実行前と実行後の処理を設定できる。</p>
+<pre><code class="hljs language-go"><span class="hljs-keyword">var</span> rootCmd = &#x26;cobra.Command{
+	Use:   <span class="hljs-string">"sample"</span>,
+	Short: <span class="hljs-string">"挨拶をします。2 つの int を渡すと計算もします"</span>,
+	Args: <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(cmd *cobra.Command, args []<span class="hljs-type">string</span>)</span></span> <span class="hljs-type">error</span> {
+		<span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(args) == <span class="hljs-number">0</span> {
+			<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>
+		} <span class="hljs-keyword">else</span> {
+			<span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(args) != <span class="hljs-number">2</span> {
+				<span class="hljs-keyword">return</span> errors.New(<span class="hljs-string">"引数の数が不正です"</span>)
+			}
+			_, err1 := strconv.Atoi(args[<span class="hljs-number">0</span>])
+			_, err2 := strconv.Atoi(args[<span class="hljs-number">1</span>])
+			<span class="hljs-keyword">if</span> err1 != <span class="hljs-literal">nil</span> || err2 != <span class="hljs-literal">nil</span> {
+				<span class="hljs-keyword">return</span> errors.New(<span class="hljs-string">"引数の型が不正です"</span>)
+			}
+		}
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>
+	},
+	PreRun: <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(cmd *cobra.Command, args []<span class="hljs-type">string</span>)</span></span> {
+		fmt.Println(<span class="hljs-string">"=== PreRun ==="</span>)
+	},
+	RunE: <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(cmd *cobra.Command, args []<span class="hljs-type">string</span>)</span></span> <span class="hljs-type">error</span> {
+		name, _ := cmd.Flags().GetString(<span class="hljs-string">"name"</span>)
+
+		<span class="hljs-keyword">if</span> night {
+			fmt.Println(<span class="hljs-string">"Good night "</span> + name)
+			<span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(args) > <span class="hljs-number">0</span> {
+				firstNum, _ := strconv.Atoi(args[<span class="hljs-number">0</span>])
+				secondNum, _ := strconv.Atoi(args[<span class="hljs-number">1</span>])
+				fmt.Printf(<span class="hljs-string">"SUM: %v\n"</span>, firstNum+secondNum)
+			}
+			<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>
+		}
+
+		fmt.Println(<span class="hljs-string">"Hello "</span> + name)
+		<span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(args) > <span class="hljs-number">0</span> {
+			firstNum, _ := strconv.Atoi(args[<span class="hljs-number">0</span>])
+			secondNum, _ := strconv.Atoi(args[<span class="hljs-number">1</span>])
+			fmt.Printf(<span class="hljs-string">"SUM: %v\n"</span>, firstNum+secondNum)
+		}
+		<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>
+	},
+	PostRun: <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(cmd *cobra.Command, args []<span class="hljs-type">string</span>)</span></span> {
+		fmt.Println(<span class="hljs-string">"=== PostRun ==="</span>)
+	},
+}
+</code></pre>
+<p>実行。</p>
+<pre><code class="hljs language-bash">$ go run main.go -a aaa
+=== PreRun ===
+Hello aaa
+=== PostRun ===
+</code></pre>
+<h3>subcommand</h3>
+<pre><code class="hljs language-bash">$ go run -mod=mod github.com/spf13/cobra-cli@latest add server
+
+$ tree
+.
+├── LICENSE
+├── cmd
+│   ├── root.go
+│   └── server.go
+├── go.mod
+├── go.sum
+└── main.go
+</code></pre>
+<p><code>cmd</code> 配下にファイルが生成されている。</p>
+<pre><code class="hljs language-go"><span class="hljs-comment">/*
+Copyright © 2022 NAME HERE &#x3C;EMAIL ADDRESS>
+
+*/</span>
+<span class="hljs-keyword">package</span> cmd
+
+<span class="hljs-keyword">import</span> (
+	<span class="hljs-string">"fmt"</span>
+
+	<span class="hljs-string">"github.com/spf13/cobra"</span>
+)
+
+<span class="hljs-comment">// serverCmd represents the server command</span>
+<span class="hljs-keyword">var</span> serverCmd = &#x26;cobra.Command{
+	Use:   <span class="hljs-string">"server"</span>,
+	Short: <span class="hljs-string">"server を起動します"</span>,
+	Run: <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(cmd *cobra.Command, args []<span class="hljs-type">string</span>)</span></span> {
+		fmt.Println(<span class="hljs-string">"server called"</span>)
+	},
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">init</span><span class="hljs-params">()</span></span> {
+	rootCmd.AddCommand(serverCmd)
+}
+</code></pre>
+<p>実行。</p>
+<pre><code class="hljs language-bash">$ go run main.go -h
+挨拶をします。2 つの int を渡すと計算もします
+
+Usage:
+  sample [flags]
+  sample [<span class="hljs-built_in">command</span>]
+
+Available Commands:
+  completion  Generate the autocompletion script <span class="hljs-keyword">for</span> the specified shell
+  <span class="hljs-built_in">help</span>        Help about any <span class="hljs-built_in">command</span>
+  server      A brief description of your <span class="hljs-built_in">command</span>
+
+Flags:
+  -h, --<span class="hljs-built_in">help</span>          <span class="hljs-built_in">help</span> <span class="hljs-keyword">for</span> sample
+  -a, --name string   name フラグの説明文です (required)
+  -n, --night         night フラグの説明文です
+
+Use <span class="hljs-string">"sample [command] --help"</span> <span class="hljs-keyword">for</span> more information about a <span class="hljs-built_in">command</span>.
+</code></pre>
+<p><code>server</code> のヘルプをみる。</p>
+<pre><code class="hljs language-bash">$ go run main.go server -h
+server を起動します
+
+Usage:
+  sample server [flags]
+
+Flags:
+  -h, --<span class="hljs-built_in">help</span>   <span class="hljs-built_in">help</span> <span class="hljs-keyword">for</span> server
+
+Global Flags:
+  -n, --night   night フラグの説明文です
+$ go run main.go server
+server called
+</code></pre>
+<p>subcommand も簡単に実装できそう。</p>0:{"buildId":"Mc6Th0Rmyk9pcJ5CRitSL","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"cobra-cliを使う"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,"$L3"]}],"loading":null,"isPartial":false}
+3:["$","$L4",null,{"children":["$","$5",null,{"name":"Next.MetadataOutlet","children":"$@6"}]}]
+6:null

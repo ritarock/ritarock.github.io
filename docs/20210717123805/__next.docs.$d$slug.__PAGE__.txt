@@ -1,0 +1,109 @@
+1:"$Sreact.fragment"
+4:I[25151,["/_next/static/chunks/cc5639b053815f24.js","/_next/static/chunks/4904848246fadb45.js"],"OutletBoundary"]
+5:"$Sreact.suspense"
+2:T14ab,<p>試したリポジトリはここ。</p>
+<p><a href="https://github.com/ritarock/sandbox/tree/master/golang/sample_gorm">https://github.com/ritarock/sandbox/tree/master/golang/sample_gorm</a></p>
+<h2>DB に接続</h2>
+<p><code>gorm.Open(dialect string, args ...interface{})</code> の第一引数は接続するデータベース、第二引数には接続情報。</p>
+<p>今回は Docker で実行したのでコンテナが起動しても mysql は起動していない場合があったので 30 秒待つ処理を入れた。</p>
+<pre><code class="hljs language-go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">gormConnect</span><span class="hljs-params">()</span></span> *gorm.DB {
+	DBMS := <span class="hljs-string">"mysql"</span>
+	PROTOCOL := <span class="hljs-string">"tcp(db:3306)"</span>
+	USER := <span class="hljs-string">"user"</span>
+	PASS := <span class="hljs-string">"password"</span>
+	DBNAME := <span class="hljs-string">"app"</span>
+	CONNECT := USER + <span class="hljs-string">":"</span> + PASS + <span class="hljs-string">"@"</span> + PROTOCOL + <span class="hljs-string">"/"</span> + DBNAME + <span class="hljs-string">"?parseTime=true"</span>
+
+	<span class="hljs-keyword">var</span> err <span class="hljs-type">error</span>
+	db, err := gorm.Open(DBMS, CONNECT)
+	<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> {
+		fmt.Println(<span class="hljs-string">"Not ready"</span>)
+		time.Sleep(time.Second)
+		count++
+		<span class="hljs-keyword">if</span> count > <span class="hljs-number">30</span> {
+			<span class="hljs-built_in">panic</span>(err.Error())
+		}
+		<span class="hljs-keyword">return</span> gormConnect()
+	}
+	fmt.Println(<span class="hljs-string">"Success connect"</span>)
+	<span class="hljs-keyword">return</span> db
+}
+</code></pre>
+<h2>モデル</h2>
+<p>構造体を定義する。</p>
+<p>フィールドの <code>ID</code> は gorm では主キーとなる。 <code>CreatedAt</code> と <code>UpdatedAt</code> はレコードの作成時と更新時に自動的で設定される。</p>
+<pre><code class="hljs language-go"><span class="hljs-keyword">type</span> Post <span class="hljs-keyword">struct</span> {
+	ID        <span class="hljs-type">int</span>
+	Content   <span class="hljs-type">string</span>
+	Author    <span class="hljs-type">string</span> <span class="hljs-string">`sql:"not null"`</span>
+	Comments  []Comment
+	CreatedAt time.Time
+}
+
+<span class="hljs-keyword">type</span> Comment <span class="hljs-keyword">struct</span> {
+	ID        <span class="hljs-type">int</span>
+	Content   <span class="hljs-type">string</span>
+	Author    <span class="hljs-type">string</span> <span class="hljs-string">`sql:"not null"`</span>
+	PostId    <span class="hljs-type">int</span>
+	CreatedAt time.Time
+}
+</code></pre>
+<p>gorm ではフィールドタグ <code>gorm:""</code> を設定すること制約などの設定を行える。</p>
+<p>設定できるものは <a href="https://gorm.io/ja_JP/docs/models.html#Fields-Tags">ここ</a> を参照。</p>
+<h2>belongs to</h2>
+<p>User は Company に所属している。</p>
+<pre><code class="hljs language-go"><span class="hljs-keyword">type</span> User <span class="hljs-keyword">struct</span> {
+  gorm.Model
+  Name      <span class="hljs-type">string</span>
+  CompanyID <span class="hljs-type">int</span>
+  Company   Company
+}
+
+<span class="hljs-keyword">type</span> Company <span class="hljs-keyword">struct</span> {
+  ID   <span class="hljs-type">int</span>
+  Name <span class="hljs-type">string</span>
+}
+</code></pre>
+<h2>has one</h2>
+<p>別のモデルと 1 対 1 の関係。</p>
+<pre><code class="hljs language-go"><span class="hljs-keyword">type</span> User <span class="hljs-keyword">struct</span> {
+  gorm.Model
+  CreditCard CreditCard
+}
+
+<span class="hljs-keyword">type</span> CreditCard <span class="hljs-keyword">struct</span> {
+  gorm.Model
+  Number <span class="hljs-type">string</span>
+  UserID <span class="hljs-type">uint</span>
+}
+</code></pre>
+<h2>has many</h2>
+<p>User は CreditCard を複数持っている。</p>
+<pre><code class="hljs language-go"><span class="hljs-keyword">type</span> User <span class="hljs-keyword">struct</span> {
+  gorm.Model
+  CreditCards []CreditCard
+}
+
+<span class="hljs-keyword">type</span> CreditCard <span class="hljs-keyword">struct</span> {
+  gorm.Model
+  Number <span class="hljs-type">string</span>
+  UserID <span class="hljs-type">uint</span>
+}
+</code></pre>
+<h2>many to many</h2>
+<p>Book は複数の Author を持ち、 Author は複数の本を持っている。</p>
+<pre><code class="hljs language-go"><span class="hljs-keyword">type</span> Book <span class="hljs-keyword">struct</span> {
+  gorm.Model
+  Authors []Author <span class="hljs-string">`gorm:"many2many:author_books"`</span>
+}
+<span class="hljs-keyword">type</span> Author <span class="hljs-keyword">struct</span> {
+  gorm.Model
+  Books []Book <span class="hljs-string">`gorm:"many2many:author_books"`</span>
+}
+</code></pre>
+<h2>マイグレーション</h2>
+<p>足りないカラムの追加、変更、インデックスの作成は行うが、不要になったカラムの削除等は行われない。</p>
+<pre><code class="hljs language-go">db.AutoMigrate(&#x26;Post{}, &#x26;Comment{})
+</code></pre>0:{"buildId":"Mc6Th0Rmyk9pcJ5CRitSL","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"GolangのORM試した"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,"$L3"]}],"loading":null,"isPartial":false}
+3:["$","$L4",null,{"children":["$","$5",null,{"name":"Next.MetadataOutlet","children":"$@6"}]}]
+6:null
