@@ -169,6 +169,6 @@ mux.HandleFunc(<span class="hljs-string">"/users/2/tasks/delete/"</span>, delete
 <ul>
 <li><a href="https://github.com/gorilla/mux">https://github.com/gorilla/mux</a></li>
 <li><a href="https://github.com/julienschmidt/httprouter">https://github.com/julienschmidt/httprouter</a></li>
-</ul>0:{"buildId":"Mc6Th0Rmyk9pcJ5CRitSL","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"Golangのhttp/netについて調べた"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,"$L3"]}],"loading":null,"isPartial":false}
+</ul>0:{"buildId":"XcW8xoQAKlCXMZtt-Fu59","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"Golangのhttp/netについて調べた"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,"$L3"]}],"loading":null,"isPartial":false}
 3:["$","$L4",null,{"children":["$","$5",null,{"name":"Next.MetadataOutlet","children":"$@6"}]}]
 6:null

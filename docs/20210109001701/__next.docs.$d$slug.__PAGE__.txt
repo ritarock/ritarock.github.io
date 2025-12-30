@@ -287,6 +287,6 @@ traceroute とだいたい同じ。</p>
 <p>コマンドの履歴を表示。</p>
 <p><code>-d</code> で指定した番号の履歴を削除する。</p>
 <pre><code class="hljs language-bash">$ <span class="hljs-built_in">history</span> -d 10
-</code></pre>0:{"buildId":"Mc6Th0Rmyk9pcJ5CRitSL","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"コマンドいろいろ"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,"$L3"]}],"loading":null,"isPartial":false}
+</code></pre>0:{"buildId":"XcW8xoQAKlCXMZtt-Fu59","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"コマンドいろいろ"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,"$L3"]}],"loading":null,"isPartial":false}
 3:["$","$L4",null,{"children":["$","$5",null,{"name":"Next.MetadataOutlet","children":"$@6"}]}]
 6:null
