@@ -1,8 +1,24 @@
 1:"$Sreact.fragment"
 4:I[25151,["/_next/static/chunks/cc5639b053815f24.js","/_next/static/chunks/4904848246fadb45.js"],"OutletBoundary"]
 5:"$Sreact.suspense"
-2:T4822,<p>コードを殆ど書かずに実装してみた。成果物は <a href="https://github.com/ritarock/bbs-app">これ</a> 。</p>
-<p>やったことは、全体のアーキテクチャを考えてカスタムスラッシュコマンドをつくっただけ。</p>
+2:T4bba,<p>コードを殆ど書かずに実装してみた。成果物は <a href="https://github.com/ritarock/bbs-app">これ</a> 。</p>
+<p>使っているものは以下の通り。</p>
+<ul>
+<li>sqlc: database 処理のコードを自動生成</li>
+<li>TypeSpec: OpenAPI を自動生成</li>
+<li>ogen: OpenAPI から handler 処理のコードを自動生成</li>
+<li>Orval: OpenAPI からフロントのクライアントコードを自動生成</li>
+</ul>
+<p>実際のバックエンドの実装の流れはこんな感じ。</p>
+<ul>
+<li>step1: database を定義、sqlc を使ってデータベースロジックを自動生成</li>
+<li>step2: エンドポイントを定義、TypeSpec と ogen を使って handler のロジックを自動生成</li>
+<li>step3: domain ロジックを実装</li>
+<li>step4 application ロジックを実装</li>
+<li>step5: infra ロジックを実装</li>
+</ul>
+<p>このやりかたであれば、スキーマ定義と、エンドポイントの定義さえやれば、domain ロジックと、application ロジックの実装にのみ集中できる。</p>
+<p>今回は、このやりかたをスラッシュコマンドに落とし込んだ。</p>
 <ul>
 <li><a href="https://github.com/ritarock/bbs-app/blob/main/.claude/commands/api-gen-spec.md">api-gen-spec</a></li>
 <li><a href="https://github.com/ritarock/bbs-app/blob/main/.claude/commands/api-gen-domain.md">api-gen-domain</a></li>
@@ -521,6 +537,6 @@
      - web/src/components/CommentList.tsx
      - web/src/components/CommentItem.tsx
      - web/src/components/CommentForm.tsx
-</code></pre>0:{"buildId":"XcW8xoQAKlCXMZtt-Fu59","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"AI駆動開発"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,"$L3"]}],"loading":null,"isPartial":false}
+</code></pre>0:{"buildId":"XFF_xr2yNMvd2gthIQmOW","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"AI駆動開発"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,"$L3"]}],"loading":null,"isPartial":false}
 3:["$","$L4",null,{"children":["$","$5",null,{"name":"Next.MetadataOutlet","children":"$@6"}]}]
 6:null

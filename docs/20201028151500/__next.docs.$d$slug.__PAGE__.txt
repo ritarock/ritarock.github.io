@@ -1,5 +1,5 @@
 1:"$Sreact.fragment"
 2:I[25151,["/_next/static/chunks/cc5639b053815f24.js","/_next/static/chunks/4904848246fadb45.js"],"OutletBoundary"]
 3:"$Sreact.suspense"
-0:{"buildId":"XcW8xoQAKlCXMZtt-Fu59","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"watchコマンド"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"<pre><code class=\"hljs language-bash\">$ watch -n 1 <span class=\"hljs-string\">'date'</span>\n</code></pre>\n<p>1 秒間隔で <code>date</code> コマンドを繰り返す。</p>"}}]]}],null,["$","$L2",null,{"children":["$","$3",null,{"name":"Next.MetadataOutlet","children":"$@4"}]}]]}],"loading":null,"isPartial":false}
+0:{"buildId":"XFF_xr2yNMvd2gthIQmOW","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"watchコマンド"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"<pre><code class=\"hljs language-bash\">$ watch -n 1 <span class=\"hljs-string\">'date'</span>\n</code></pre>\n<p>1 秒間隔で <code>date</code> コマンドを繰り返す。</p>"}}]]}],null,["$","$L2",null,{"children":["$","$3",null,{"name":"Next.MetadataOutlet","children":"$@4"}]}]]}],"loading":null,"isPartial":false}
 4:null
