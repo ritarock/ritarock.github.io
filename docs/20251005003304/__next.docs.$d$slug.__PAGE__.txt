@@ -1,5 +1,5 @@
 1:"$Sreact.fragment"
 2:I[25151,["/_next/static/chunks/cc5639b053815f24.js","/_next/static/chunks/4904848246fadb45.js"],"OutletBoundary"]
 3:"$Sreact.suspense"
-0:{"buildId":"k4nLm51W6XhhWj7FO7xal","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"ブログを作り直した"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"<p>何度目かわからない作り直し。</p>\n<p>このブログは作り直すためだけに存在していると言っても過言ではない。</p>"}}]]}],null,["$","$L2",null,{"children":["$","$3",null,{"name":"Next.MetadataOutlet","children":"$@4"}]}]]}],"loading":null,"isPartial":false}
+0:{"buildId":"ROZU_QHru1ydEfuu8RhUc","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"ブログを作り直した"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"<p>何度目かわからない作り直し。</p>\n<p>このブログは作り直すためだけに存在していると言っても過言ではない。</p>"}}]]}],null,["$","$L2",null,{"children":["$","$3",null,{"name":"Next.MetadataOutlet","children":"$@4"}]}]]}],"loading":null,"isPartial":false}
 4:null

@@ -1,7 +1,7 @@
 1:"$Sreact.fragment"
 4:I[25151,["/_next/static/chunks/cc5639b053815f24.js","/_next/static/chunks/4904848246fadb45.js"],"OutletBoundary"]
 5:"$Sreact.suspense"
-2:T139e,<p>nix で全て完結させようと思ったけど、大変だったので困るまでは Devbox + chezmoi の組み合わせで行くことにする。</p>
+2:T13b1,<p>nix で全て完結させようと思ったけど、大変だったので困るまでは Devbox + chezmoi の組み合わせで行くことにする。</p>
 <h2>Devboxのインストール</h2>
 <p><a href="https://www.jetify.com/docs/devbox/installing-devbox">install手順</a></p>
 <pre><code class="hljs language-bash">~ ❯ curl -fsSL https://get.jetify.com/devbox | bash
@@ -92,9 +92,7 @@
 <code>chezmoi</code> のスクリプトを使う。</p>
 <p><code>run_onchange_brew_install.sh.tmpl</code> を作る。
 <code>run_onchange_</code> から始まるスクリプトは変更があったタイミングで <code>chezmoi apply</code> で実行される。</p>
-<pre><code># run_onchange_brew_install.sh.tmpl
-
-#!/bin/bash
+<pre><code class="hljs language-sh"><span class="hljs-meta">#!/bin/bash</span>
 
 brew install --cask \
     brave-browser \
@@ -115,6 +113,6 @@ brew install --cask \
     zoom
 </code></pre>
 <p>ひとまずこれでよさそう。
-<a href="https://github.com/ritarock/dotfiles">https://github.com/ritarock/dotfiles</a></p>0:{"buildId":"k4nLm51W6XhhWj7FO7xal","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"Devbox+chezmoiで環境構築"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,"$L3"]}],"loading":null,"isPartial":false}
+<a href="https://github.com/ritarock/dotfiles">https://github.com/ritarock/dotfiles</a></p>0:{"buildId":"ROZU_QHru1ydEfuu8RhUc","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"Devbox+chezmoiで環境構築"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,"$L3"]}],"loading":null,"isPartial":false}
 3:["$","$L4",null,{"children":["$","$5",null,{"name":"Next.MetadataOutlet","children":"$@6"}]}]
 6:null

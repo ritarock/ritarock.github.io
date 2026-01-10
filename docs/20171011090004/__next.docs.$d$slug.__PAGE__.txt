@@ -56,5 +56,5 @@ $ <span class="hljs-built_in">sudo</span> pip install Django
 </code></pre>
 <p>Django を動かす。</p>
 <pre><code class="hljs language-bash">$ python3 manage.py runserver 0.0.0.0:8000
-</code></pre>0:{"buildId":"k4nLm51W6XhhWj7FO7xal","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"Vagrant + Ubuntu 16.04 LTSでDjango開発環境を構築"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"loading":null,"isPartial":false}
+</code></pre>0:{"buildId":"ROZU_QHru1ydEfuu8RhUc","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"Vagrant + Ubuntu 16.04 LTSでDjango開発環境を構築"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"loading":null,"isPartial":false}
 5:null
