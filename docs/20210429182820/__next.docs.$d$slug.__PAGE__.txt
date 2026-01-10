@@ -384,6 +384,6 @@ append はスレッドセーフではないので件数が減る。</p>
 <span class="hljs-comment">// test3</span>
 <span class="hljs-comment">// test5</span>
 <span class="hljs-comment">// test4</span>
-</code></pre>0:{"buildId":"XFF_xr2yNMvd2gthIQmOW","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"Golangの並列/並行処理でいろいろ"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,"$L3"]}],"loading":null,"isPartial":false}
+</code></pre>0:{"buildId":"k4nLm51W6XhhWj7FO7xal","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"Golangの並列/並行処理でいろいろ"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,"$L3"]}],"loading":null,"isPartial":false}
 3:["$","$L4",null,{"children":["$","$5",null,{"name":"Next.MetadataOutlet","children":"$@6"}]}]
 6:null

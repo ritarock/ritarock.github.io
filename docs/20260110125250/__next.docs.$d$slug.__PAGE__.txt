@@ -1,0 +1,120 @@
+1:"$Sreact.fragment"
+4:I[25151,["/_next/static/chunks/cc5639b053815f24.js","/_next/static/chunks/4904848246fadb45.js"],"OutletBoundary"]
+5:"$Sreact.suspense"
+2:T139e,<p>nix で全て完結させようと思ったけど、大変だったので困るまでは Devbox + chezmoi の組み合わせで行くことにする。</p>
+<h2>Devboxのインストール</h2>
+<p><a href="https://www.jetify.com/docs/devbox/installing-devbox">install手順</a></p>
+<pre><code class="hljs language-bash">~ ❯ curl -fsSL https://get.jetify.com/devbox | bash
+</code></pre>
+<h3>nixのインストール</h3>
+<p>devbox add のタイミングでインストールされるみたいだけど、以前 nix をインストールしてアンインストールしてたせいでエラーになったので、インストールし直す。</p>
+<p><a href="https://nixos.org/download/#nix-install-macos">オフィシャル</a> からコピペした。</p>
+<pre><code class="hljs language-bash">~ ❯ sh &#x3C;(curl --proto <span class="hljs-string">'=https'</span> --tlsv1.2 -L https://nixos.org/nix/install)
+</code></pre>
+<h2>chezmoiのインストール</h2>
+<pre><code class="hljs language-bash">~ ❯ devbox global add chezmoi
+</code></pre>
+<h2>chezmoiのセットアップ</h2>
+<p>既に dotfiles があるため、github のユーザネームを指定。</p>
+<pre><code class="hljs language-bash">~ ❯ chezmoi init ritarock
+</code></pre>
+<p><code>~/.local/share/chezmoi</code> に dotfiles の中身がクローンされる。</p>
+<h2>dotfile群をaddしていく</h2>
+<p>この際、もう使ってない設定ファイル (fish とか) は管理しないようにする。
+ひとまず、この辺を add する。</p>
+<ul>
+<li>zsh</li>
+</ul>
+<pre><code class="hljs language-bash">~ ❯ chezmoi add ~/.zshrc
+~ ❯ chezmoi add ~/.zshrc
+~ ❯ chezmoi add ~/.config/zsh/aliases.zsh
+~ ❯ chezmoi add ~/.config/zsh/env.zsh
+~ ❯ chezmoi add ~/.config/zsh/function.zsh
+~ ❯ chezmoi add ~/.config/zsh/git_aliases.zsh
+</code></pre>
+<ul>
+<li>ghostty</li>
+</ul>
+<pre><code class="hljs language-bash">~ ❯ chezmoi add ~/.config/ghostty/config
+</code></pre>
+<ul>
+<li>git</li>
+</ul>
+<pre><code class="hljs language-bash">~ ❯ chezmoi add ~/.config/git/config
+</code></pre>
+<ul>
+<li>sheldon</li>
+</ul>
+<pre><code class="hljs language-bash">~ ❯ chezmoi add ~/.config/sheldon/plugins.toml
+</code></pre>
+<ul>
+<li>vim</li>
+</ul>
+<pre><code class="hljs language-bash">~ ❯ chezmoi add ~/.vimrc
+~ ❯ chezmoi add ~/.vim/colors/molokai.vim
+</code></pre>
+<ul>
+<li>tmux</li>
+</ul>
+<pre><code class="hljs language-bash">~ ❯ chezmoi add ~/.tmux.conf
+</code></pre>
+<ul>
+<li>starship</li>
+</ul>
+<pre><code class="hljs language-bash">~ ❯ chezmoi add ~/.config/starship.toml
+</code></pre>
+<h2>変更の適用</h2>
+<p><code>--dry-run --verbose</code> をつければドライランできる。</p>
+<pre><code class="hljs language-bash">~ ❯ chezmoi apply --dry-run --verbose
+</code></pre>
+<h2>Devboxの設定</h2>
+<pre><code class="hljs language-bash">~ ❯ devbox init
+</code></pre>
+<p>ホームに <code>devbox.json</code> が作成される。</p>
+<h2>試しに neovim をインストールしてみる。</h2>
+<p><a href="https://search.nixos.org/packages">NixOS Search</a> で <code>neovim</code> を探してみる。</p>
+<pre><code class="hljs language-bash">~ ❯ devbox global add neovim
+</code></pre>
+<p>global にインストールしたものは <code>~/.local/share/devbox/global/default/devbox.json</code> で管理される。
+なので、 <code>~/.local/share/devbox/global/default/devbox.json</code> を <code>chezmoi</code> で管理すれば良い。</p>
+<p>global で管理されているパッケージは <code>devbox global install</code> で一括インストールできる。</p>
+<h2>brewからdevboxへ移行</h2>
+<p>まずは brew から削除せずに devbox でインストールしていく。</p>
+<pre><code class="hljs language-bash">~ ❯ devbox global add jq
+~ ❯ <span class="hljs-built_in">which</span> jq
+/Users/osakiryota/.local/share/devbox/global/default/.devbox/nix/profile/default/bin/jq
+</code></pre>
+<p>動作に問題なければ削除する。これを全パッケージでやる。</p>
+<pre><code class="hljs language-bash">~ ❯ brew uninstall jq
+</code></pre>
+<h2>caskの管理</h2>
+<p>nix 使えば何とかなるみたいだけどそこまで頑張りたくないので、cask に関しては brew のままでいく。
+<code>chezmoi</code> のスクリプトを使う。</p>
+<p><code>run_onchange_brew_install.sh.tmpl</code> を作る。
+<code>run_onchange_</code> から始まるスクリプトは変更があったタイミングで <code>chezmoi apply</code> で実行される。</p>
+<pre><code># run_onchange_brew_install.sh.tmpl
+
+#!/bin/bash
+
+brew install --cask \
+    brave-browser \
+    claude-code \
+    discord \
+    ghostty \
+    godot \
+    google-chrome \
+    google-japanese-ime \
+    mapture \
+    notion \
+    obsidian \
+    postman \
+    raycast \
+    renpy \
+    shotcut \
+    visual-studio-code \
+    zoom
+</code></pre>
+<p>ひとまずこれでよさそう。
+<a href="https://github.com/ritarock/dotfiles">https://github.com/ritarock/dotfiles</a></p>0:{"buildId":"k4nLm51W6XhhWj7FO7xal","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"Devbox+chezmoiで環境構築"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,"$L3"]}],"loading":null,"isPartial":false}
+3:["$","$L4",null,{"children":["$","$5",null,{"name":"Next.MetadataOutlet","children":"$@6"}]}]
+6:null
