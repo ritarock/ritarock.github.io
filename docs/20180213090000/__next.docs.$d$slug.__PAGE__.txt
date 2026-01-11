@@ -62,5 +62,5 @@ $ <span class="hljs-built_in">sudo</span> apt-get install -y docker-ce
 </code></pre>
 <h3>コンテナの停止</h3>
 <pre><code class="hljs language-bash">$ docker stop &#x3C;コンテナ名>
-</code></pre>0:{"buildId":"ROZU_QHru1ydEfuu8RhUc","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"Dockerのインストールからコンテナ作成まで"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"loading":null,"isPartial":false}
+</code></pre>0:{"buildId":"8QSxw4F4bh0VYVQeifkV_","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"Dockerのインストールからコンテナ作成まで"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"loading":null,"isPartial":false}
 5:null

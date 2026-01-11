@@ -1,13 +1,13 @@
 1:"$Sreact.fragment"
 4:I[25151,["/_next/static/chunks/cc5639b053815f24.js","/_next/static/chunks/4904848246fadb45.js"],"OutletBoundary"]
 5:"$Sreact.suspense"
-2:T13b1,<p>nix で全て完結させようと思ったけど、大変だったので困るまでは Devbox + chezmoi の組み合わせで行くことにする。</p>
+2:T13ad,<p>nix で全て完結させようと思ったけど、大変だったので困るまでは Devbox + chezmoi の組み合わせで行くことにする。</p>
 <h2>Devboxのインストール</h2>
 <p><a href="https://www.jetify.com/docs/devbox/installing-devbox">install手順</a></p>
 <pre><code class="hljs language-bash">~ ❯ curl -fsSL https://get.jetify.com/devbox | bash
 </code></pre>
 <h3>nixのインストール</h3>
-<p>devbox add のタイミングでインストールされるみたいだけど、以前 nix をインストールしてアンインストールしてたせいでエラーになったので、インストールし直す。</p>
+<p>devbox add のタイミングでインストールされるみたいだけど、以前 nix をインストール、アンインストールしてたせいで謎のエラーでハマった。ということでインストールし直した。</p>
 <p><a href="https://nixos.org/download/#nix-install-macos">オフィシャル</a> からコピペした。</p>
 <pre><code class="hljs language-bash">~ ❯ sh &#x3C;(curl --proto <span class="hljs-string">'=https'</span> --tlsv1.2 -L https://nixos.org/nix/install)
 </code></pre>
@@ -64,13 +64,10 @@
 <pre><code class="hljs language-bash">~ ❯ chezmoi add ~/.config/starship.toml
 </code></pre>
 <h2>変更の適用</h2>
-<p><code>--dry-run --verbose</code> をつければドライランできる。</p>
+<p><code>--dry-run</code> をつければドライランできる。</p>
 <pre><code class="hljs language-bash">~ ❯ chezmoi apply --dry-run --verbose
 </code></pre>
 <h2>Devboxの設定</h2>
-<pre><code class="hljs language-bash">~ ❯ devbox init
-</code></pre>
-<p>ホームに <code>devbox.json</code> が作成される。</p>
 <h2>試しに neovim をインストールしてみる。</h2>
 <p><a href="https://search.nixos.org/packages">NixOS Search</a> で <code>neovim</code> を探してみる。</p>
 <pre><code class="hljs language-bash">~ ❯ devbox global add neovim
@@ -112,7 +109,7 @@ brew install --cask \
     visual-studio-code \
     zoom
 </code></pre>
-<p>ひとまずこれでよさそう。
-<a href="https://github.com/ritarock/dotfiles">https://github.com/ritarock/dotfiles</a></p>0:{"buildId":"ROZU_QHru1ydEfuu8RhUc","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"Devbox+chezmoiで環境構築"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,"$L3"]}],"loading":null,"isPartial":false}
+<p>最低限はこれで良さそう。あとは、PC の環境によってインストールするものの切り替えができるようになれば一旦OK。
+<a href="https://github.com/ritarock/dotfiles">https://github.com/ritarock/dotfiles</a></p>0:{"buildId":"8QSxw4F4bh0VYVQeifkV_","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"Devbox+chezmoiで環境構築"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,"$L3"]}],"loading":null,"isPartial":false}
 3:["$","$L4",null,{"children":["$","$5",null,{"name":"Next.MetadataOutlet","children":"$@6"}]}]
 6:null
