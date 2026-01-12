@@ -510,6 +510,6 @@ BREAK_LABEL:
 }
 
 <span class="hljs-title function_">main</span>(<span class="hljs-built_in">require</span>(<span class="hljs-string">"fs"</span>).<span class="hljs-title function_">readFileSync</span>(<span class="hljs-string">"/dev/stdin"</span>, <span class="hljs-string">"utf8"</span>));
-</code></pre>0:{"buildId":"8QSxw4F4bh0VYVQeifkV_","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"atcorder過去問精鋭10問をGolangで解いた"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,"$L3"]}],"loading":null,"isPartial":false}
+</code></pre>0:{"buildId":"ccrZrYM0gSZpESt3T0Ome","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"atcorder過去問精鋭10問をGolangで解いた"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,"$L3"]}],"loading":null,"isPartial":false}
 3:["$","$L4",null,{"children":["$","$5",null,{"name":"Next.MetadataOutlet","children":"$@6"}]}]
 6:null
