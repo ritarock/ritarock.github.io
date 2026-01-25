@@ -65,6 +65,6 @@ ansible 2.5.0
 <p>実行。</p>
 <pre><code class="hljs language-bash">$ ansible-playbook -i hosts localhostsyml
 </code></pre>
-<p><a href="https://github.com/ritarock/dotfiles/tree/master/macbook-provisioning">ソースコード</a></p>0:{"buildId":"ccrZrYM0gSZpESt3T0Ome","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"AnsibleでMacBookを管理"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,"$L3"]}],"loading":null,"isPartial":false}
+<p><a href="https://github.com/ritarock/dotfiles/tree/master/macbook-provisioning">ソースコード</a></p>0:{"buildId":"QRjg6Z3YyASrzbC3YDNw_","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"AnsibleでMacBookを管理"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,"$L3"]}],"loading":null,"isPartial":false}
 3:["$","$L4",null,{"children":["$","$5",null,{"name":"Next.MetadataOutlet","children":"$@6"}]}]
 6:null

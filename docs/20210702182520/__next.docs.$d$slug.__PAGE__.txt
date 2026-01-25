@@ -37,5 +37,5 @@
 <li><code>go build</code> で依存モジュールを自動インストールする</li>
 <li><code>go get</code> で依存モジュールの追加やバージョンアップを行う</li>
 <li><code>go mod tidy</code> で使われていないモジュールを削除する</li>
-</ul>0:{"buildId":"ccrZrYM0gSZpESt3T0Ome","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"Goのコマンド"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"loading":null,"isPartial":false}
+</ul>0:{"buildId":"QRjg6Z3YyASrzbC3YDNw_","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"Goのコマンド"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"loading":null,"isPartial":false}
 5:null

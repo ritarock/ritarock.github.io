@@ -1,5 +1,5 @@
 1:"$Sreact.fragment"
 2:I[25151,["/_next/static/chunks/cc5639b053815f24.js","/_next/static/chunks/4904848246fadb45.js"],"OutletBoundary"]
 3:"$Sreact.suspense"
-0:{"buildId":"ccrZrYM0gSZpESt3T0Ome","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"PythonでYYYY-MM-DD形式で日付を扱う"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"<pre><code class=\"hljs language-python\"><span class=\"hljs-keyword\">import</span> datetime\n\ntoday = datetime.date.today()\ntoday.isoformat()\n</code></pre>"}}]]}],null,["$","$L2",null,{"children":["$","$3",null,{"name":"Next.MetadataOutlet","children":"$@4"}]}]]}],"loading":null,"isPartial":false}
+0:{"buildId":"QRjg6Z3YyASrzbC3YDNw_","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"PythonでYYYY-MM-DD形式で日付を扱う"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"<pre><code class=\"hljs language-python\"><span class=\"hljs-keyword\">import</span> datetime\n\ntoday = datetime.date.today()\ntoday.isoformat()\n</code></pre>"}}]]}],null,["$","$L2",null,{"children":["$","$3",null,{"name":"Next.MetadataOutlet","children":"$@4"}]}]]}],"loading":null,"isPartial":false}
 4:null

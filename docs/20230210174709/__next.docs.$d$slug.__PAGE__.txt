@@ -16,5 +16,5 @@
 	<span class="hljs-keyword">return</span> cfg, <span class="hljs-literal">nil</span>
 }
 </code></pre>
-<p><a href="https://github.com/turbot/steampipe-plugin-aws/blob/main/aws/service.go#L1437-L1460">このコード</a> が参考になった。</p>0:{"buildId":"ccrZrYM0gSZpESt3T0Ome","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"aws-sdk-go-v2でprofileを使う"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"loading":null,"isPartial":false}
+<p><a href="https://github.com/turbot/steampipe-plugin-aws/blob/main/aws/service.go#L1437-L1460">このコード</a> が参考になった。</p>0:{"buildId":"QRjg6Z3YyASrzbC3YDNw_","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"aws-sdk-go-v2でprofileを使う"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"loading":null,"isPartial":false}
 5:null

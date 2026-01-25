@@ -104,6 +104,6 @@
 <h2>マイグレーション</h2>
 <p>足りないカラムの追加、変更、インデックスの作成は行うが、不要になったカラムの削除等は行われない。</p>
 <pre><code class="hljs language-go">db.AutoMigrate(&#x26;Post{}, &#x26;Comment{})
-</code></pre>0:{"buildId":"ccrZrYM0gSZpESt3T0Ome","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"GolangのORM試した"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,"$L3"]}],"loading":null,"isPartial":false}
+</code></pre>0:{"buildId":"QRjg6Z3YyASrzbC3YDNw_","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"GolangのORM試した"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,"$L3"]}],"loading":null,"isPartial":false}
 3:["$","$L4",null,{"children":["$","$5",null,{"name":"Next.MetadataOutlet","children":"$@6"}]}]
 6:null
