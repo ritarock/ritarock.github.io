@@ -21,5 +21,5 @@
         <span class="hljs-attr">run:</span> <span class="hljs-string">|
           echo ${{ env.CURRENT_DATETIME }}
 </span></code></pre>
-<p>run の中で環境変数の <code>CURRENT_DATETIME</code> に設定することで、以降は <code>${{ env.CURRENT_DATETIME }}</code> で使うことができる。</p>0:{"buildId":"QRjg6Z3YyASrzbC3YDNw_","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"github actionで日付を扱う"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"loading":null,"isPartial":false}
+<p>run の中で環境変数の <code>CURRENT_DATETIME</code> に設定することで、以降は <code>${{ env.CURRENT_DATETIME }}</code> で使うことができる。</p>0:{"buildId":"TAMWZv1rJ9L760JAn29x0","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"github actionで日付を扱う"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"loading":null,"isPartial":false}
 5:null
