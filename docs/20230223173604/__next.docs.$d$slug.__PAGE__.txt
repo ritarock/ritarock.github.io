@@ -1,5 +1,5 @@
 1:"$Sreact.fragment"
-4:I[25151,["/_next/static/chunks/cc5639b053815f24.js","/_next/static/chunks/4904848246fadb45.js"],"OutletBoundary"]
+4:I[35417,["/_next/static/chunks/26ca110782d86623.js","/_next/static/chunks/81f0f13d25d49d65.js"],"OutletBoundary"]
 5:"$Sreact.suspense"
 2:T1e38,<h2>database の準備</h2>
 <pre><code class="hljs language-bash">$ go run -mod=mod entgo.io/ent/cmd/ent new Todo
@@ -242,6 +242,6 @@ func main() {
     ]
   }
 }
-</code></pre>0:{"buildId":"TAMWZv1rJ9L760JAn29x0","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"gqlgenを触る"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,"$L3"]}],"loading":null,"isPartial":false}
+</code></pre>0:{"buildId":"Ui61jZApT7GtKcnil8WO0","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"gqlgenを触る"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,"$L3"]}],"loading":null,"isPartial":false}
 3:["$","$L4",null,{"children":["$","$5",null,{"name":"Next.MetadataOutlet","children":"$@6"}]}]
 6:null

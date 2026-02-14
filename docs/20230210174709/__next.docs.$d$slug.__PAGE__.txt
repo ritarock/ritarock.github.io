@@ -1,5 +1,5 @@
 1:"$Sreact.fragment"
-3:I[25151,["/_next/static/chunks/cc5639b053815f24.js","/_next/static/chunks/4904848246fadb45.js"],"OutletBoundary"]
+3:I[35417,["/_next/static/chunks/26ca110782d86623.js","/_next/static/chunks/81f0f13d25d49d65.js"],"OutletBoundary"]
 4:"$Sreact.suspense"
 2:T55d,<p>profile を指定している場合は profile を使うが、指定していない場合は IAM ロールを使う。</p>
 <pre><code class="hljs language-go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">session</span><span class="hljs-params">(ctx context.Context, profile <span class="hljs-type">string</span>)</span></span> (aws.Config, <span class="hljs-type">error</span>) {
@@ -16,5 +16,5 @@
 	<span class="hljs-keyword">return</span> cfg, <span class="hljs-literal">nil</span>
 }
 </code></pre>
-<p><a href="https://github.com/turbot/steampipe-plugin-aws/blob/main/aws/service.go#L1437-L1460">このコード</a> が参考になった。</p>0:{"buildId":"TAMWZv1rJ9L760JAn29x0","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"aws-sdk-go-v2でprofileを使う"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"loading":null,"isPartial":false}
+<p><a href="https://github.com/turbot/steampipe-plugin-aws/blob/main/aws/service.go#L1437-L1460">このコード</a> が参考になった。</p>0:{"buildId":"Ui61jZApT7GtKcnil8WO0","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"aws-sdk-go-v2でprofileを使う"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"loading":null,"isPartial":false}
 5:null

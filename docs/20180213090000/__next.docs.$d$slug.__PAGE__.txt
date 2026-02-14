@@ -1,5 +1,5 @@
 1:"$Sreact.fragment"
-3:I[25151,["/_next/static/chunks/cc5639b053815f24.js","/_next/static/chunks/4904848246fadb45.js"],"OutletBoundary"]
+3:I[35417,["/_next/static/chunks/26ca110782d86623.js","/_next/static/chunks/81f0f13d25d49d65.js"],"OutletBoundary"]
 4:"$Sreact.suspense"
 2:Tc5a,<h2>開発環境</h2>
 <ul>
@@ -62,5 +62,5 @@ $ <span class="hljs-built_in">sudo</span> apt-get install -y docker-ce
 </code></pre>
 <h3>コンテナの停止</h3>
 <pre><code class="hljs language-bash">$ docker stop &#x3C;コンテナ名>
-</code></pre>0:{"buildId":"TAMWZv1rJ9L760JAn29x0","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"Dockerのインストールからコンテナ作成まで"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"loading":null,"isPartial":false}
+</code></pre>0:{"buildId":"Ui61jZApT7GtKcnil8WO0","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"Dockerのインストールからコンテナ作成まで"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"loading":null,"isPartial":false}
 5:null
