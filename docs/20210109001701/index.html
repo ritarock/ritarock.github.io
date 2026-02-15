@@ -1,0 +1,253 @@
+<!DOCTYPE html><html lang="ja" data-astro-cid-sckkx6r4> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="icon" href="/favicon.ico"><meta name="generator" content="Astro v5.17.2"><meta name="description" content="my-docs"><title>コマンドいろいろ | my-docs</title><style>[data-astro-cid-sckkx6r4]{margin:0;padding:0;box-sizing:border-box}html{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif;line-height:1.7;color:#333;background-color:#fafafa}.container[data-astro-cid-sckkx6r4]{max-width:900px;margin:0 auto;padding:0 1.5rem;min-height:100dvh;display:flex;flex-direction:column}.header[data-astro-cid-sckkx6r4]{display:flex;justify-content:space-between;align-items:center;padding:.5rem 0;padding-bottom:0}.header-title[data-astro-cid-sckkx6r4]{font-size:1.5rem;font-weight:700;color:#111;text-decoration:none}nav[data-astro-cid-sckkx6r4]{display:flex;gap:1.5rem}nav[data-astro-cid-sckkx6r4] a[data-astro-cid-sckkx6r4]{color:#555;text-decoration:none;font-size:.9rem}nav[data-astro-cid-sckkx6r4] a[data-astro-cid-sckkx6r4]:hover{color:#111}main[data-astro-cid-sckkx6r4]{flex:1;padding:1rem 0}
+.post-header[data-astro-cid-bvzihdzo]{margin-bottom:2rem}.post-header[data-astro-cid-bvzihdzo] h1[data-astro-cid-bvzihdzo]{font-size:2rem;font-weight:700;color:#111;line-height:1.3;margin-bottom:.75rem}.post-meta[data-astro-cid-bvzihdzo]{font-size:.9rem;color:#888}.updated[data-astro-cid-bvzihdzo]{margin-left:.5rem}.tags[data-astro-cid-bvzihdzo]{display:flex;gap:.5rem;margin-top:.75rem;flex-wrap:wrap}.tag[data-astro-cid-bvzihdzo]{font-size:.8rem;background-color:#f0f0f0;color:#555;padding:.2rem .6rem;border-radius:4px}.post-content[data-astro-cid-bvzihdzo]{font-size:1rem;line-height:1.85;color:#333}.post-content[data-astro-cid-bvzihdzo] h2{font-size:1.5rem;font-weight:700;margin-top:2.5rem;margin-bottom:1rem;color:#111}.post-content[data-astro-cid-bvzihdzo] h3{font-size:1.25rem;font-weight:600;margin-top:2rem;margin-bottom:.75rem;color:#222}.post-content[data-astro-cid-bvzihdzo] p{margin-bottom:1.25rem}.post-content[data-astro-cid-bvzihdzo] ul,.post-content[data-astro-cid-bvzihdzo] ol{margin-bottom:1.25rem;padding-left:1.5rem}.post-content[data-astro-cid-bvzihdzo] li{margin-bottom:.4rem}.post-content[data-astro-cid-bvzihdzo] code{font-family:SF Mono,Fira Code,Fira Mono,Menlo,monospace;font-size:.9em;background-color:#f5f5f5;padding:.15rem .35rem;border-radius:3px}.post-content[data-astro-cid-bvzihdzo] pre{background-color:#1e1e1e;color:#d4d4d4;padding:1.25rem;border-radius:6px;overflow-x:auto;margin-bottom:1.25rem}.post-content[data-astro-cid-bvzihdzo] pre code{background:none;padding:0;font-size:.85rem}.post-content[data-astro-cid-bvzihdzo] blockquote{border-left:3px solid #ddd;padding-left:1rem;color:#666;margin-bottom:1.25rem}.post-footer[data-astro-cid-bvzihdzo]{margin-top:3rem;padding-top:1.5rem;border-top:1px solid #e0e0e0}.post-footer[data-astro-cid-bvzihdzo] a[data-astro-cid-bvzihdzo]{color:#555;text-decoration:none;font-size:.9rem}.post-footer[data-astro-cid-bvzihdzo] a[data-astro-cid-bvzihdzo]:hover{color:#111}
+</style></head> <body data-astro-cid-sckkx6r4> <div class="container" data-astro-cid-sckkx6r4> <header class="header" data-astro-cid-sckkx6r4> <a href="/" class="header-title" data-astro-cid-sckkx6r4>my-docs</a> </header> <main data-astro-cid-sckkx6r4>  <article class="post" data-astro-cid-bvzihdzo> <header class="post-header" data-astro-cid-bvzihdzo> <h1 data-astro-cid-bvzihdzo>コマンドいろいろ</h1> <div class="post-meta" data-astro-cid-bvzihdzo> <time datetime="2021-01-09T00:17:01.000Z" data-astro-cid-bvzihdzo>2021-01-09</time>  </div> <div class="tags" data-astro-cid-bvzihdzo> <span class="tag" data-astro-cid-bvzihdzo>linux</span> </div> </header> <div class="post-content" data-astro-cid-bvzihdzo>  <p><a href="https://roadmap.sh/roadmaps">Developer Roadmaps</a> にあった DevOps コマンドをまとめておく。</p>
+<h2 id="文字列操作">文字列操作</h2>
+<h3 id="awk">awk</h3>
+<p>列を抽出する。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> echo</span><span style="color:#79B8FF"> 1</span><span style="color:#79B8FF"> 2</span><span style="color:#79B8FF"> 3</span><span style="color:#79B8FF"> 4</span><span style="color:#F97583">|</span><span style="color:#B392F0">awk</span><span style="color:#9ECBFF"> '{print $1}'</span></span>
+<span class="line"><span style="color:#B392F0">1</span></span>
+<span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> echo</span><span style="color:#79B8FF"> 1</span><span style="color:#79B8FF"> 2</span><span style="color:#79B8FF"> 3</span><span style="color:#79B8FF"> 4</span><span style="color:#F97583">|</span><span style="color:#B392F0">awk</span><span style="color:#9ECBFF"> '{print $2}'</span></span>
+<span class="line"><span style="color:#B392F0">2</span></span></code></pre>
+<p><code>$0</code> だとすべて。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> echo</span><span style="color:#79B8FF"> 1</span><span style="color:#79B8FF"> 2</span><span style="color:#79B8FF"> 3</span><span style="color:#79B8FF"> 4</span><span style="color:#F97583">|</span><span style="color:#B392F0">awk</span><span style="color:#9ECBFF"> '{print $0}'</span></span>
+<span class="line"><span style="color:#B392F0">1</span><span style="color:#79B8FF"> 2</span><span style="color:#79B8FF"> 3</span><span style="color:#79B8FF"> 4</span></span></code></pre>
+<p>区切り文字の指定もできる。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> echo</span><span style="color:#9ECBFF"> 1:2:3:4</span><span style="color:#F97583">|</span><span style="color:#B392F0">awk</span><span style="color:#79B8FF"> -F</span><span style="color:#9ECBFF">'[:]'</span><span style="color:#9ECBFF"> '{print $1}'</span></span>
+<span class="line"><span style="color:#B392F0">1</span></span></code></pre>
+<h3 id="sed">sed</h3>
+<p>文字列置換。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> cat</span><span style="color:#9ECBFF"> test.txt</span></span>
+<span class="line"><span style="color:#B392F0">1</span><span style="color:#79B8FF"> 2</span><span style="color:#79B8FF"> 3</span><span style="color:#79B8FF"> 4</span><span style="color:#79B8FF"> 5</span></span>
+<span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> sed</span><span style="color:#9ECBFF"> 's/3/333/g'</span><span style="color:#9ECBFF"> test.txt</span></span>
+<span class="line"><span style="color:#B392F0">1</span><span style="color:#79B8FF"> 2</span><span style="color:#79B8FF"> 333</span><span style="color:#79B8FF"> 4</span><span style="color:#79B8FF"> 5</span></span></code></pre>
+<h3 id="grep">grep</h3>
+<p>文字列検索。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> cat</span><span style="color:#9ECBFF"> test.txt</span></span>
+<span class="line"><span style="color:#B392F0">1</span></span>
+<span class="line"><span style="color:#B392F0">2</span></span>
+<span class="line"><span style="color:#B392F0">3</span></span>
+<span class="line"><span style="color:#B392F0">4</span></span>
+<span class="line"><span style="color:#B392F0">5</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> cat</span><span style="color:#9ECBFF"> test.txt</span><span style="color:#F97583"> |</span><span style="color:#B392F0"> grep</span><span style="color:#79B8FF"> 3</span></span>
+<span class="line"><span style="color:#B392F0">3</span></span></code></pre>
+<p><code>-v</code> は一致しないものを検索する。</p>
+<h3 id="sort">sort</h3>
+<p>ソートする。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> cat</span><span style="color:#9ECBFF"> test.txt</span></span>
+<span class="line"><span style="color:#B392F0">1</span></span>
+<span class="line"><span style="color:#B392F0">12</span></span>
+<span class="line"><span style="color:#B392F0">3</span></span>
+<span class="line"><span style="color:#B392F0">23</span></span>
+<span class="line"><span style="color:#B392F0">55</span></span>
+<span class="line"><span style="color:#B392F0">22</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> sort</span><span style="color:#9ECBFF"> test.txt</span></span>
+<span class="line"><span style="color:#B392F0">1</span></span>
+<span class="line"><span style="color:#B392F0">12</span></span>
+<span class="line"><span style="color:#B392F0">22</span></span>
+<span class="line"><span style="color:#B392F0">23</span></span>
+<span class="line"><span style="color:#B392F0">3</span></span>
+<span class="line"><span style="color:#B392F0">55</span></span></code></pre>
+<p><code>-n</code> は数値として並べる。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> sort</span><span style="color:#79B8FF"> -n</span><span style="color:#9ECBFF"> test.txt</span></span>
+<span class="line"><span style="color:#B392F0">1</span></span>
+<span class="line"><span style="color:#B392F0">3</span></span>
+<span class="line"><span style="color:#B392F0">12</span></span>
+<span class="line"><span style="color:#B392F0">22</span></span>
+<span class="line"><span style="color:#B392F0">23</span></span>
+<span class="line"><span style="color:#B392F0">55</span></span></code></pre>
+<p><code>-r</code> は逆順として並べる。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> sort</span><span style="color:#79B8FF"> -n</span><span style="color:#79B8FF"> -r</span><span style="color:#9ECBFF"> test.txt</span></span>
+<span class="line"><span style="color:#B392F0">55</span></span>
+<span class="line"><span style="color:#B392F0">23</span></span>
+<span class="line"><span style="color:#B392F0">22</span></span>
+<span class="line"><span style="color:#B392F0">12</span></span>
+<span class="line"><span style="color:#B392F0">3</span></span>
+<span class="line"><span style="color:#B392F0">1</span></span></code></pre>
+<h3 id="uniq">uniq</h3>
+<p>重複した行を削除。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> cat</span><span style="color:#9ECBFF"> test.txt</span></span>
+<span class="line"><span style="color:#B392F0">0123456789</span></span>
+<span class="line"><span style="color:#B392F0">abcdefghij</span></span>
+<span class="line"><span style="color:#B392F0">abcdefghij</span></span>
+<span class="line"><span style="color:#B392F0">ABCDEFGHIJ</span></span>
+<span class="line"><span style="color:#B392F0">9876543210</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> uniq</span><span style="color:#9ECBFF"> test.txt</span></span>
+<span class="line"><span style="color:#B392F0">0123456789</span></span>
+<span class="line"><span style="color:#B392F0">abcdefghij</span></span>
+<span class="line"><span style="color:#B392F0">ABCDEFGHIJ</span></span>
+<span class="line"><span style="color:#B392F0">9876543210</span></span></code></pre>
+<p><code>-i</code> は大文字小文字を無視する。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> uniq</span><span style="color:#79B8FF"> -i</span><span style="color:#9ECBFF"> test.txt</span></span>
+<span class="line"><span style="color:#B392F0">0123456789</span></span>
+<span class="line"><span style="color:#B392F0">abcdefghij</span></span>
+<span class="line"><span style="color:#B392F0">9876543210</span></span></code></pre>
+<h3 id="cat">cat</h3>
+<p>ファイル出力。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> cat</span><span style="color:#9ECBFF"> test.txt</span></span>
+<span class="line"><span style="color:#B392F0">0123456789</span></span>
+<span class="line"><span style="color:#B392F0">abcdefghij</span></span>
+<span class="line"><span style="color:#B392F0">abcdefghij</span></span>
+<span class="line"><span style="color:#B392F0">ABCDEFGHIJ</span></span>
+<span class="line"><span style="color:#B392F0">9876543210</span></span></code></pre>
+<h3 id="cut">cut</h3>
+<p>awk で良さそう。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> cat</span><span style="color:#9ECBFF"> test.txt</span></span>
+<span class="line"><span style="color:#B392F0">1:2:3</span></span>
+<span class="line"><span style="color:#B392F0">4:5:6</span></span>
+<span class="line"><span style="color:#B392F0">7:8:9</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> cut</span><span style="color:#79B8FF"> -f</span><span style="color:#79B8FF"> 2</span><span style="color:#79B8FF"> -d</span><span style="color:#9ECBFF"> ":"</span><span style="color:#9ECBFF"> test.txt</span></span>
+<span class="line"><span style="color:#B392F0">2</span></span>
+<span class="line"><span style="color:#B392F0">5</span></span>
+<span class="line"><span style="color:#B392F0">8</span></span></code></pre>
+<p><code>awk</code> でやる場合。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> cat</span><span style="color:#9ECBFF"> test.txt</span><span style="color:#F97583"> |</span><span style="color:#B392F0">awk</span><span style="color:#79B8FF"> -F</span><span style="color:#9ECBFF"> ':'</span><span style="color:#9ECBFF"> '{print $2}'</span></span>
+<span class="line"><span style="color:#B392F0">2</span></span>
+<span class="line"><span style="color:#B392F0">5</span></span>
+<span class="line"><span style="color:#B392F0">8</span></span></code></pre>
+<h3 id="echo">echo</h3>
+<p>文字列を表示する。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> echo</span><span style="color:#9ECBFF"> 'aaa'</span></span>
+<span class="line"><span style="color:#B392F0">aaa</span></span></code></pre>
+<h3 id="fmt">fmt</h3>
+<p>整形。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> cat</span><span style="color:#9ECBFF"> test.txt</span></span>
+<span class="line"><span style="color:#B392F0">1</span><span style="color:#79B8FF"> 2</span><span style="color:#79B8FF"> 3</span></span>
+<span class="line"><span style="color:#B392F0">4</span><span style="color:#79B8FF"> 5</span><span style="color:#79B8FF"> 6</span></span>
+<span class="line"><span style="color:#B392F0">7</span><span style="color:#79B8FF"> 8</span><span style="color:#79B8FF"> 9</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> fmt</span><span style="color:#9ECBFF"> test.txt</span></span>
+<span class="line"><span style="color:#B392F0">1</span><span style="color:#79B8FF"> 2</span><span style="color:#79B8FF"> 3</span><span style="color:#79B8FF"> 4</span><span style="color:#79B8FF"> 5</span><span style="color:#79B8FF"> 6</span><span style="color:#79B8FF"> 7</span><span style="color:#79B8FF"> 8</span><span style="color:#79B8FF"> 9</span></span></code></pre>
+<h3 id="tr">tr</h3>
+<p>文字の変換、削除する。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> cat</span><span style="color:#9ECBFF"> test.txt</span></span>
+<span class="line"><span style="color:#B392F0">12345</span></span>
+<span class="line"><span style="color:#B392F0">abcde</span></span>
+<span class="line"><span style="color:#B392F0">ABCDE</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> cat</span><span style="color:#9ECBFF"> test.txt</span><span style="color:#F97583"> |</span><span style="color:#B392F0"> tr</span><span style="color:#9ECBFF"> abc</span><span style="color:#9ECBFF"> XYZ</span></span>
+<span class="line"><span style="color:#B392F0">12345</span></span>
+<span class="line"><span style="color:#B392F0">XYZde</span></span>
+<span class="line"><span style="color:#B392F0">ABCDE</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> cat</span><span style="color:#9ECBFF"> test.txt</span><span style="color:#F97583"> |</span><span style="color:#B392F0"> tr</span><span style="color:#79B8FF"> -d</span><span style="color:#79B8FF"> 123</span></span>
+<span class="line"><span style="color:#B392F0">45</span></span>
+<span class="line"><span style="color:#B392F0">abcde</span></span>
+<span class="line"><span style="color:#B392F0">ABCDE</span></span></code></pre>
+<h3 id="nl">nl</h3>
+<p>行数表示できる。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> nl</span><span style="color:#9ECBFF"> test.txt</span></span>
+<span class="line"><span style="color:#B392F0">     1</span><span style="color:#79B8FF"> 12345</span></span>
+<span class="line"><span style="color:#B392F0">     2</span><span style="color:#9ECBFF"> abcde</span></span>
+<span class="line"><span style="color:#B392F0">     3</span><span style="color:#9ECBFF"> ABCDE</span></span></code></pre>
+<p>cat でやるなら <code>-b</code> を使う。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> cat</span><span style="color:#79B8FF"> -b</span><span style="color:#9ECBFF"> test.txt</span></span>
+<span class="line"><span style="color:#B392F0">     1</span><span style="color:#79B8FF"> 12345</span></span>
+<span class="line"><span style="color:#B392F0">     2</span><span style="color:#9ECBFF"> abcde</span></span>
+<span class="line"><span style="color:#B392F0">     3</span><span style="color:#9ECBFF"> ABCDE</span></span></code></pre>
+<h3 id="egrep">egrep</h3>
+<p><code>grep -E</code> と同じ意味。</p>
+<p>拡張正規表現ってのが使える.普通の正規表現と何が違うかはよくわからない。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> cat</span><span style="color:#9ECBFF"> test.txt</span></span>
+<span class="line"><span style="color:#B392F0">12345</span></span>
+<span class="line"><span style="color:#B392F0">bar</span></span>
+<span class="line"><span style="color:#B392F0">foo</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> grep</span><span style="color:#79B8FF"> -E</span><span style="color:#9ECBFF"> '^(bar|foo)'</span><span style="color:#9ECBFF"> test.txt</span></span>
+<span class="line"><span style="color:#B392F0">bar</span></span>
+<span class="line"><span style="color:#B392F0">foo</span></span></code></pre>
+<h3 id="fgrep">fgrep</h3>
+<p><code>grep -F</code> と同じ意味。</p>
+<p>正規表現文字をそのまま検索できる。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> cat</span><span style="color:#9ECBFF"> test.txt</span></span>
+<span class="line"><span style="color:#B392F0">12345</span></span>
+<span class="line"><span style="color:#B392F0">bar.foo</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> grep</span><span style="color:#79B8FF"> -F</span><span style="color:#9ECBFF"> 'bar.foo'</span><span style="color:#9ECBFF"> test.txt</span></span>
+<span class="line"><span style="color:#B392F0">bar.foo</span></span></code></pre>
+<h3 id="wc">wc</h3>
+<p>行数、単語数を数える。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> cat</span><span style="color:#9ECBFF"> test.txt</span></span>
+<span class="line"><span style="color:#B392F0">Hello</span><span style="color:#9ECBFF"> World!</span></span></code></pre>
+<p><code>-m</code> は文字数を数える。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> wc</span><span style="color:#79B8FF"> -m</span><span style="color:#9ECBFF"> test.txt</span></span>
+<span class="line"><span style="color:#B392F0">      13</span><span style="color:#9ECBFF"> test.txt</span></span></code></pre>
+<p><code>-w</code> は単語数を数える。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> wc</span><span style="color:#79B8FF"> -w</span><span style="color:#9ECBFF"> test.txt</span></span>
+<span class="line"><span style="color:#B392F0">       2</span><span style="color:#9ECBFF"> test.txt</span></span></code></pre>
+<h2 id="プロセス管理">プロセス管理</h2>
+<h3 id="ps">ps</h3>
+<p>全プロセスを表示する。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> ps</span><span style="color:#9ECBFF"> aux</span></span></code></pre>
+<h3 id="top">top</h3>
+<p>プロセス、CPU、メモリを表示。</p>
+<p>デフォルトだと CPU 使用率順にソート。</p>
+<p><code>-a</code> でメモリ使用順にソート。</p>
+<h3 id="htop">htop</h3>
+<p>top より見やすい。</p>
+<p>Shift + P で CPU 使用率、Shift + M でメモリ使用率順。</p>
+<h3 id="atop">atop</h3>
+<p>top コマンドの代替。</p>
+<p>htop のほうが良さそう。</p>
+<h3 id="lsof">lsof</h3>
+<p>特定のポート番号を待ち受けているか、もしくはファイルを読み込んでいるかを調べるとき。</p>
+<p>80 番ポートで実行中のプロセスを調べる。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> lsof</span><span style="color:#79B8FF"> -i:80</span><span style="color:#79B8FF"> -P</span></span></code></pre>
+<p>特定のファイルを開いているプロセスを調べる。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> lsof</span><span style="color:#F97583"> &#x3C;</span><span style="color:#9ECBFF">FIL</span><span style="color:#E1E4E8">E</span><span style="color:#F97583">></span></span></code></pre>
+<p>コマンドを指定する。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> lsof</span><span style="color:#79B8FF"> -c</span><span style="color:#F97583"> &#x3C;</span><span style="color:#9ECBFF">COMMAN</span><span style="color:#E1E4E8">D</span><span style="color:#F97583">></span></span></code></pre>
+<h2 id="ネットワーク">ネットワーク</h2>
+<h3 id="nmap">nmap</h3>
+<p>サーバの開いているポートを調べる。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> nmap</span><span style="color:#F97583"> &#x3C;</span><span style="color:#9ECBFF">SERVE</span><span style="color:#E1E4E8">R</span><span style="color:#F97583">></span></span></code></pre>
+<h3 id="tcpdump">tcpdump</h3>
+<p>パケットをキャプチャする。</p>
+<p>ホストを指定してキャプチャする。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> tcpdump</span><span style="color:#9ECBFF"> host</span><span style="color:#F97583"> &#x3C;</span><span style="color:#9ECBFF">HOS</span><span style="color:#E1E4E8">T</span><span style="color:#F97583">></span></span></code></pre>
+<p>port を指定する。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> tcpdump</span><span style="color:#9ECBFF"> host</span><span style="color:#F97583"> &#x3C;</span><span style="color:#9ECBFF">HOS</span><span style="color:#E1E4E8">T</span><span style="color:#F97583">></span><span style="color:#9ECBFF"> and</span><span style="color:#9ECBFF"> port</span><span style="color:#79B8FF"> 22</span></span>
+<span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> tcpdump</span><span style="color:#9ECBFF"> host</span><span style="color:#F97583"> &#x3C;</span><span style="color:#9ECBFF">HOS</span><span style="color:#E1E4E8">T</span><span style="color:#F97583">></span><span style="color:#9ECBFF"> or</span><span style="color:#9ECBFF"> port</span><span style="color:#79B8FF"> 22</span></span></code></pre>
+<h3 id="ping">ping</h3>
+<p>パケットを送信して通信を確認。</p>
+<h3 id="traceroute">traceroute</h3>
+<p>経路と応答を調べる。</p>
+<p><code>&#x3C;TARGET></code> までの経路と応答を調べる。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> traceroute</span><span style="color:#F97583"> &#x3C;</span><span style="color:#9ECBFF">TARGE</span><span style="color:#E1E4E8">T</span><span style="color:#F97583">></span></span></code></pre>
+<h3 id="mtr">mtr</h3>
+<p>経路と応答を調べる.
+traceroute とだいたい同じ。</p>
+<h3 id="dig">dig</h3>
+<p>ドメイン名に対する IP を調べる。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> dig</span><span style="color:#9ECBFF"> www.google.co.jp</span></span></code></pre>
+<h3 id="netstat">netstat</h3>
+<p>ネットワーク関連の情報を表示。</p>
+<p><code>-r</code> でルーティングテーブルを表示する。</p>
+<h2 id="システムパフォーマンス">システムパフォーマンス</h2>
+<h3 id="nmon">nmon</h3>
+<p>OS のベンチマークをとったりできる。</p>
+<h3 id="iostat">iostat</h3>
+<p>CPU 使用率と I/O デバイスの使用状況を調べる。</p>
+<h3 id="sar">sar</h3>
+<p>メモリ、プロセス、スワップ、 CPU 等の統計情報を調べる。</p>
+<h3 id="vmstat">vmstat</h3>
+<p>仮想メモリや CPU 、ディスク I/O の統計情報を調べる。</p>
+<h2 id="その他">その他</h2>
+<h3 id="strace">strace</h3>
+<p>実行コマンドをトレースする。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> strace</span><span style="color:#9ECBFF"> ls</span></span></code></pre>
+<h3 id="uname">uname</h3>
+<p>カーネル名を表示。</p>
+<p><code>-a</code> で全ての情報を表示する。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> uname</span><span style="color:#79B8FF"> -a</span></span></code></pre>
+<h3 id="df">df</h3>
+<p>ディスクの空き容量を調べる。</p>
+<p><code>-h</code> で読みやすく表示。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> df</span><span style="color:#79B8FF"> -h</span></span></code></pre>
+<h3 id="history">history</h3>
+<p>コマンドの履歴を表示。</p>
+<p><code>-d</code> で指定した番号の履歴を削除する。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> history</span><span style="color:#79B8FF"> -d</span><span style="color:#79B8FF"> 10</span></span></code></pre>  </div> <footer class="post-footer" data-astro-cid-bvzihdzo> <a href="/" data-astro-cid-bvzihdzo>&larr; 一覧に戻る</a> </footer> </article>  </main> </div> </body></html> 

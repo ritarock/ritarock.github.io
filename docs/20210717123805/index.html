@@ -1,0 +1,99 @@
+<!DOCTYPE html><html lang="ja" data-astro-cid-sckkx6r4> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="icon" href="/favicon.ico"><meta name="generator" content="Astro v5.17.2"><meta name="description" content="my-docs"><title>GolangのORM試した | my-docs</title><style>[data-astro-cid-sckkx6r4]{margin:0;padding:0;box-sizing:border-box}html{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif;line-height:1.7;color:#333;background-color:#fafafa}.container[data-astro-cid-sckkx6r4]{max-width:900px;margin:0 auto;padding:0 1.5rem;min-height:100dvh;display:flex;flex-direction:column}.header[data-astro-cid-sckkx6r4]{display:flex;justify-content:space-between;align-items:center;padding:.5rem 0;padding-bottom:0}.header-title[data-astro-cid-sckkx6r4]{font-size:1.5rem;font-weight:700;color:#111;text-decoration:none}nav[data-astro-cid-sckkx6r4]{display:flex;gap:1.5rem}nav[data-astro-cid-sckkx6r4] a[data-astro-cid-sckkx6r4]{color:#555;text-decoration:none;font-size:.9rem}nav[data-astro-cid-sckkx6r4] a[data-astro-cid-sckkx6r4]:hover{color:#111}main[data-astro-cid-sckkx6r4]{flex:1;padding:1rem 0}
+.post-header[data-astro-cid-bvzihdzo]{margin-bottom:2rem}.post-header[data-astro-cid-bvzihdzo] h1[data-astro-cid-bvzihdzo]{font-size:2rem;font-weight:700;color:#111;line-height:1.3;margin-bottom:.75rem}.post-meta[data-astro-cid-bvzihdzo]{font-size:.9rem;color:#888}.updated[data-astro-cid-bvzihdzo]{margin-left:.5rem}.tags[data-astro-cid-bvzihdzo]{display:flex;gap:.5rem;margin-top:.75rem;flex-wrap:wrap}.tag[data-astro-cid-bvzihdzo]{font-size:.8rem;background-color:#f0f0f0;color:#555;padding:.2rem .6rem;border-radius:4px}.post-content[data-astro-cid-bvzihdzo]{font-size:1rem;line-height:1.85;color:#333}.post-content[data-astro-cid-bvzihdzo] h2{font-size:1.5rem;font-weight:700;margin-top:2.5rem;margin-bottom:1rem;color:#111}.post-content[data-astro-cid-bvzihdzo] h3{font-size:1.25rem;font-weight:600;margin-top:2rem;margin-bottom:.75rem;color:#222}.post-content[data-astro-cid-bvzihdzo] p{margin-bottom:1.25rem}.post-content[data-astro-cid-bvzihdzo] ul,.post-content[data-astro-cid-bvzihdzo] ol{margin-bottom:1.25rem;padding-left:1.5rem}.post-content[data-astro-cid-bvzihdzo] li{margin-bottom:.4rem}.post-content[data-astro-cid-bvzihdzo] code{font-family:SF Mono,Fira Code,Fira Mono,Menlo,monospace;font-size:.9em;background-color:#f5f5f5;padding:.15rem .35rem;border-radius:3px}.post-content[data-astro-cid-bvzihdzo] pre{background-color:#1e1e1e;color:#d4d4d4;padding:1.25rem;border-radius:6px;overflow-x:auto;margin-bottom:1.25rem}.post-content[data-astro-cid-bvzihdzo] pre code{background:none;padding:0;font-size:.85rem}.post-content[data-astro-cid-bvzihdzo] blockquote{border-left:3px solid #ddd;padding-left:1rem;color:#666;margin-bottom:1.25rem}.post-footer[data-astro-cid-bvzihdzo]{margin-top:3rem;padding-top:1.5rem;border-top:1px solid #e0e0e0}.post-footer[data-astro-cid-bvzihdzo] a[data-astro-cid-bvzihdzo]{color:#555;text-decoration:none;font-size:.9rem}.post-footer[data-astro-cid-bvzihdzo] a[data-astro-cid-bvzihdzo]:hover{color:#111}
+</style></head> <body data-astro-cid-sckkx6r4> <div class="container" data-astro-cid-sckkx6r4> <header class="header" data-astro-cid-sckkx6r4> <a href="/" class="header-title" data-astro-cid-sckkx6r4>my-docs</a> </header> <main data-astro-cid-sckkx6r4>  <article class="post" data-astro-cid-bvzihdzo> <header class="post-header" data-astro-cid-bvzihdzo> <h1 data-astro-cid-bvzihdzo>GolangのORM試した</h1> <div class="post-meta" data-astro-cid-bvzihdzo> <time datetime="2021-07-17T12:38:05.000Z" data-astro-cid-bvzihdzo>2021-07-17</time>  </div> <div class="tags" data-astro-cid-bvzihdzo> <span class="tag" data-astro-cid-bvzihdzo>golang</span> </div> </header> <div class="post-content" data-astro-cid-bvzihdzo>  <p>試したリポジトリはここ。</p>
+<p><a href="https://github.com/ritarock/sandbox/tree/master/golang/sample_gorm">https://github.com/ritarock/sandbox/tree/master/golang/sample_gorm</a></p>
+<h2 id="db-に接続">DB に接続</h2>
+<p><code>gorm.Open(dialect string, args ...interface{})</code> の第一引数は接続するデータベース、第二引数には接続情報。</p>
+<p>今回は Docker で実行したのでコンテナが起動しても mysql は起動していない場合があったので 30 秒待つ処理を入れた。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#F97583">func</span><span style="color:#B392F0"> gormConnect</span><span style="color:#E1E4E8">() </span><span style="color:#F97583">*</span><span style="color:#B392F0">gorm</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">DB</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">	DBMS </span><span style="color:#F97583">:=</span><span style="color:#9ECBFF"> "mysql"</span></span>
+<span class="line"><span style="color:#E1E4E8">	PROTOCOL </span><span style="color:#F97583">:=</span><span style="color:#9ECBFF"> "tcp(db:3306)"</span></span>
+<span class="line"><span style="color:#E1E4E8">	USER </span><span style="color:#F97583">:=</span><span style="color:#9ECBFF"> "user"</span></span>
+<span class="line"><span style="color:#E1E4E8">	PASS </span><span style="color:#F97583">:=</span><span style="color:#9ECBFF"> "password"</span></span>
+<span class="line"><span style="color:#E1E4E8">	DBNAME </span><span style="color:#F97583">:=</span><span style="color:#9ECBFF"> "app"</span></span>
+<span class="line"><span style="color:#E1E4E8">	CONNECT </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> USER </span><span style="color:#F97583">+</span><span style="color:#9ECBFF"> ":"</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> PASS </span><span style="color:#F97583">+</span><span style="color:#9ECBFF"> "@"</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> PROTOCOL </span><span style="color:#F97583">+</span><span style="color:#9ECBFF"> "/"</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> DBNAME </span><span style="color:#F97583">+</span><span style="color:#9ECBFF"> "?parseTime=true"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">	var</span><span style="color:#E1E4E8"> err </span><span style="color:#F97583">error</span></span>
+<span class="line"><span style="color:#E1E4E8">	db, err </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> gorm.</span><span style="color:#B392F0">Open</span><span style="color:#E1E4E8">(DBMS, CONNECT)</span></span>
+<span class="line"><span style="color:#F97583">	if</span><span style="color:#E1E4E8"> err </span><span style="color:#F97583">!=</span><span style="color:#79B8FF"> nil</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">		fmt.</span><span style="color:#B392F0">Println</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Not ready"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">		time.</span><span style="color:#B392F0">Sleep</span><span style="color:#E1E4E8">(time.Second)</span></span>
+<span class="line"><span style="color:#E1E4E8">		count</span><span style="color:#F97583">++</span></span>
+<span class="line"><span style="color:#F97583">		if</span><span style="color:#E1E4E8"> count </span><span style="color:#F97583">></span><span style="color:#79B8FF"> 30</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">			panic</span><span style="color:#E1E4E8">(err.</span><span style="color:#B392F0">Error</span><span style="color:#E1E4E8">())</span></span>
+<span class="line"><span style="color:#E1E4E8">		}</span></span>
+<span class="line"><span style="color:#F97583">		return</span><span style="color:#B392F0"> gormConnect</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#E1E4E8">	}</span></span>
+<span class="line"><span style="color:#E1E4E8">	fmt.</span><span style="color:#B392F0">Println</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Success connect"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">	return</span><span style="color:#E1E4E8"> db</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h2 id="モデル">モデル</h2>
+<p>構造体を定義する。</p>
+<p>フィールドの <code>ID</code> は gorm では主キーとなる。 <code>CreatedAt</code> と <code>UpdatedAt</code> はレコードの作成時と更新時に自動的で設定される。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#F97583">type</span><span style="color:#B392F0"> Post</span><span style="color:#F97583"> struct</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">	ID        </span><span style="color:#F97583">int</span></span>
+<span class="line"><span style="color:#E1E4E8">	Content   </span><span style="color:#F97583">string</span></span>
+<span class="line"><span style="color:#E1E4E8">	Author    </span><span style="color:#F97583">string</span><span style="color:#9ECBFF"> `sql:"not null"`</span></span>
+<span class="line"><span style="color:#E1E4E8">	Comments  []</span><span style="color:#B392F0">Comment</span></span>
+<span class="line"><span style="color:#E1E4E8">	CreatedAt </span><span style="color:#B392F0">time</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">Time</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">type</span><span style="color:#B392F0"> Comment</span><span style="color:#F97583"> struct</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">	ID        </span><span style="color:#F97583">int</span></span>
+<span class="line"><span style="color:#E1E4E8">	Content   </span><span style="color:#F97583">string</span></span>
+<span class="line"><span style="color:#E1E4E8">	Author    </span><span style="color:#F97583">string</span><span style="color:#9ECBFF"> `sql:"not null"`</span></span>
+<span class="line"><span style="color:#E1E4E8">	PostId    </span><span style="color:#F97583">int</span></span>
+<span class="line"><span style="color:#E1E4E8">	CreatedAt </span><span style="color:#B392F0">time</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">Time</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p>gorm ではフィールドタグ <code>gorm:""</code> を設定すること制約などの設定を行える。</p>
+<p>設定できるものは <a href="https://gorm.io/ja_JP/docs/models.html#Fields-Tags">ここ</a> を参照。</p>
+<h2 id="belongs-to">belongs to</h2>
+<p>User は Company に所属している。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#F97583">type</span><span style="color:#B392F0"> User</span><span style="color:#F97583"> struct</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">  gorm</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">Model</span></span>
+<span class="line"><span style="color:#E1E4E8">  Name      </span><span style="color:#F97583">string</span></span>
+<span class="line"><span style="color:#E1E4E8">  CompanyID </span><span style="color:#F97583">int</span></span>
+<span class="line"><span style="color:#E1E4E8">  Company   </span><span style="color:#B392F0">Company</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">type</span><span style="color:#B392F0"> Company</span><span style="color:#F97583"> struct</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">  ID   </span><span style="color:#F97583">int</span></span>
+<span class="line"><span style="color:#E1E4E8">  Name </span><span style="color:#F97583">string</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h2 id="has-one">has one</h2>
+<p>別のモデルと 1 対 1 の関係。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#F97583">type</span><span style="color:#B392F0"> User</span><span style="color:#F97583"> struct</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">  gorm</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">Model</span></span>
+<span class="line"><span style="color:#E1E4E8">  CreditCard </span><span style="color:#B392F0">CreditCard</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">type</span><span style="color:#B392F0"> CreditCard</span><span style="color:#F97583"> struct</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">  gorm</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">Model</span></span>
+<span class="line"><span style="color:#E1E4E8">  Number </span><span style="color:#F97583">string</span></span>
+<span class="line"><span style="color:#E1E4E8">  UserID </span><span style="color:#F97583">uint</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h2 id="has-many">has many</h2>
+<p>User は CreditCard を複数持っている。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#F97583">type</span><span style="color:#B392F0"> User</span><span style="color:#F97583"> struct</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">  gorm</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">Model</span></span>
+<span class="line"><span style="color:#E1E4E8">  CreditCards []</span><span style="color:#B392F0">CreditCard</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">type</span><span style="color:#B392F0"> CreditCard</span><span style="color:#F97583"> struct</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">  gorm</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">Model</span></span>
+<span class="line"><span style="color:#E1E4E8">  Number </span><span style="color:#F97583">string</span></span>
+<span class="line"><span style="color:#E1E4E8">  UserID </span><span style="color:#F97583">uint</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h2 id="many-to-many">many to many</h2>
+<p>Book は複数の Author を持ち、 Author は複数の本を持っている。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#F97583">type</span><span style="color:#B392F0"> Book</span><span style="color:#F97583"> struct</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">  gorm</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">Model</span></span>
+<span class="line"><span style="color:#E1E4E8">  Authors []</span><span style="color:#B392F0">Author</span><span style="color:#9ECBFF"> `gorm:"many2many:author_books"`</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"><span style="color:#F97583">type</span><span style="color:#B392F0"> Author</span><span style="color:#F97583"> struct</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">  gorm</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">Model</span></span>
+<span class="line"><span style="color:#E1E4E8">  Books []</span><span style="color:#B392F0">Book</span><span style="color:#9ECBFF"> `gorm:"many2many:author_books"`</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<h2 id="マイグレーション">マイグレーション</h2>
+<p>足りないカラムの追加、変更、インデックスの作成は行うが、不要になったカラムの削除等は行われない。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#E1E4E8">db.</span><span style="color:#B392F0">AutoMigrate</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">&#x26;</span><span style="color:#B392F0">Post</span><span style="color:#E1E4E8">{}, </span><span style="color:#F97583">&#x26;</span><span style="color:#B392F0">Comment</span><span style="color:#E1E4E8">{})</span></span></code></pre>  </div> <footer class="post-footer" data-astro-cid-bvzihdzo> <a href="/" data-astro-cid-bvzihdzo>&larr; 一覧に戻る</a> </footer> </article>  </main> </div> </body></html> 

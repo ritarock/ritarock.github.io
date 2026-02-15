@@ -1,0 +1,337 @@
+<!DOCTYPE html><html lang="ja" data-astro-cid-sckkx6r4> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="icon" href="/favicon.ico"><meta name="generator" content="Astro v5.17.2"><meta name="description" content="my-docs"><title>golangのイテレータを触ってみる | my-docs</title><style>[data-astro-cid-sckkx6r4]{margin:0;padding:0;box-sizing:border-box}html{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif;line-height:1.7;color:#333;background-color:#fafafa}.container[data-astro-cid-sckkx6r4]{max-width:900px;margin:0 auto;padding:0 1.5rem;min-height:100dvh;display:flex;flex-direction:column}.header[data-astro-cid-sckkx6r4]{display:flex;justify-content:space-between;align-items:center;padding:.5rem 0;padding-bottom:0}.header-title[data-astro-cid-sckkx6r4]{font-size:1.5rem;font-weight:700;color:#111;text-decoration:none}nav[data-astro-cid-sckkx6r4]{display:flex;gap:1.5rem}nav[data-astro-cid-sckkx6r4] a[data-astro-cid-sckkx6r4]{color:#555;text-decoration:none;font-size:.9rem}nav[data-astro-cid-sckkx6r4] a[data-astro-cid-sckkx6r4]:hover{color:#111}main[data-astro-cid-sckkx6r4]{flex:1;padding:1rem 0}
+.post-header[data-astro-cid-bvzihdzo]{margin-bottom:2rem}.post-header[data-astro-cid-bvzihdzo] h1[data-astro-cid-bvzihdzo]{font-size:2rem;font-weight:700;color:#111;line-height:1.3;margin-bottom:.75rem}.post-meta[data-astro-cid-bvzihdzo]{font-size:.9rem;color:#888}.updated[data-astro-cid-bvzihdzo]{margin-left:.5rem}.tags[data-astro-cid-bvzihdzo]{display:flex;gap:.5rem;margin-top:.75rem;flex-wrap:wrap}.tag[data-astro-cid-bvzihdzo]{font-size:.8rem;background-color:#f0f0f0;color:#555;padding:.2rem .6rem;border-radius:4px}.post-content[data-astro-cid-bvzihdzo]{font-size:1rem;line-height:1.85;color:#333}.post-content[data-astro-cid-bvzihdzo] h2{font-size:1.5rem;font-weight:700;margin-top:2.5rem;margin-bottom:1rem;color:#111}.post-content[data-astro-cid-bvzihdzo] h3{font-size:1.25rem;font-weight:600;margin-top:2rem;margin-bottom:.75rem;color:#222}.post-content[data-astro-cid-bvzihdzo] p{margin-bottom:1.25rem}.post-content[data-astro-cid-bvzihdzo] ul,.post-content[data-astro-cid-bvzihdzo] ol{margin-bottom:1.25rem;padding-left:1.5rem}.post-content[data-astro-cid-bvzihdzo] li{margin-bottom:.4rem}.post-content[data-astro-cid-bvzihdzo] code{font-family:SF Mono,Fira Code,Fira Mono,Menlo,monospace;font-size:.9em;background-color:#f5f5f5;padding:.15rem .35rem;border-radius:3px}.post-content[data-astro-cid-bvzihdzo] pre{background-color:#1e1e1e;color:#d4d4d4;padding:1.25rem;border-radius:6px;overflow-x:auto;margin-bottom:1.25rem}.post-content[data-astro-cid-bvzihdzo] pre code{background:none;padding:0;font-size:.85rem}.post-content[data-astro-cid-bvzihdzo] blockquote{border-left:3px solid #ddd;padding-left:1rem;color:#666;margin-bottom:1.25rem}.post-footer[data-astro-cid-bvzihdzo]{margin-top:3rem;padding-top:1.5rem;border-top:1px solid #e0e0e0}.post-footer[data-astro-cid-bvzihdzo] a[data-astro-cid-bvzihdzo]{color:#555;text-decoration:none;font-size:.9rem}.post-footer[data-astro-cid-bvzihdzo] a[data-astro-cid-bvzihdzo]:hover{color:#111}
+</style></head> <body data-astro-cid-sckkx6r4> <div class="container" data-astro-cid-sckkx6r4> <header class="header" data-astro-cid-sckkx6r4> <a href="/" class="header-title" data-astro-cid-sckkx6r4>my-docs</a> </header> <main data-astro-cid-sckkx6r4>  <article class="post" data-astro-cid-bvzihdzo> <header class="post-header" data-astro-cid-bvzihdzo> <h1 data-astro-cid-bvzihdzo>golangのイテレータを触ってみる</h1> <div class="post-meta" data-astro-cid-bvzihdzo> <time datetime="2024-08-18T15:55:06.000Z" data-astro-cid-bvzihdzo>2024-08-18</time>  </div> <div class="tags" data-astro-cid-bvzihdzo> <span class="tag" data-astro-cid-bvzihdzo>golang</span> </div> </header> <div class="post-content" data-astro-cid-bvzihdzo>  <h2 id="イテレータ">イテレータ</h2>
+<p>下記の 3 種類が存在する。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#F97583">func</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">func</span><span style="color:#E1E4E8">() </span><span style="color:#F97583">bool</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">func</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">func</span><span style="color:#E1E4E8">(K) </span><span style="color:#F97583">bool</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">func</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">func</span><span style="color:#E1E4E8">(K, V) </span><span style="color:#F97583">bool</span><span style="color:#E1E4E8">)</span></span></code></pre>
+<h2 id="slices">slices</h2>
+<h3 id="all">All</h3>
+<p>インデックスと値に対するイテレータを返す。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#F97583">package</span><span style="color:#B392F0"> main</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">fmt</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">slices</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">func</span><span style="color:#B392F0"> main</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#E1E4E8">	s </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> []</span><span style="color:#F97583">string</span><span style="color:#E1E4E8">{</span><span style="color:#9ECBFF">"a"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"b"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"c"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"d"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"e"</span><span style="color:#E1E4E8">}</span></span>
+<span class="line"><span style="color:#E1E4E8">	itr </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> slices.</span><span style="color:#B392F0">All</span><span style="color:#E1E4E8">(s)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">	for</span><span style="color:#E1E4E8"> i, v </span><span style="color:#F97583">:=</span><span style="color:#F97583"> range</span><span style="color:#E1E4E8"> itr {</span></span>
+<span class="line"><span style="color:#E1E4E8">		fmt.</span><span style="color:#B392F0">Println</span><span style="color:#E1E4E8">(i, v)</span></span>
+<span class="line"><span style="color:#E1E4E8">	}</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// 0 a</span></span>
+<span class="line"><span style="color:#6A737D">// 1 b</span></span>
+<span class="line"><span style="color:#6A737D">// 2 c</span></span>
+<span class="line"><span style="color:#6A737D">// 3 d</span></span>
+<span class="line"><span style="color:#6A737D">// 4 e</span></span></code></pre>
+<h3 id="values">Values</h3>
+<p>スライス要素のイテレータを返す。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#F97583">package</span><span style="color:#B392F0"> main</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">fmt</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">slices</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">func</span><span style="color:#B392F0"> main</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#E1E4E8">	s </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> []</span><span style="color:#F97583">string</span><span style="color:#E1E4E8">{</span><span style="color:#9ECBFF">"a"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"b"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"c"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"d"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"e"</span><span style="color:#E1E4E8">}</span></span>
+<span class="line"><span style="color:#E1E4E8">	itr </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> slices.</span><span style="color:#B392F0">Values</span><span style="color:#E1E4E8">(s)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">	for</span><span style="color:#E1E4E8"> v </span><span style="color:#F97583">:=</span><span style="color:#F97583"> range</span><span style="color:#E1E4E8"> itr {</span></span>
+<span class="line"><span style="color:#E1E4E8">		fmt.</span><span style="color:#B392F0">Println</span><span style="color:#E1E4E8">(v)</span></span>
+<span class="line"><span style="color:#E1E4E8">	}</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// a</span></span>
+<span class="line"><span style="color:#6A737D">// b</span></span>
+<span class="line"><span style="color:#6A737D">// c</span></span>
+<span class="line"><span style="color:#6A737D">// d</span></span>
+<span class="line"><span style="color:#6A737D">// e</span></span></code></pre>
+<h3 id="backward">Backward</h3>
+<p>スライスを逆方向にループするイテレータを返す。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#F97583">package</span><span style="color:#B392F0"> main</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">fmt</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">slices</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">func</span><span style="color:#B392F0"> main</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#E1E4E8">	s </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> []</span><span style="color:#F97583">string</span><span style="color:#E1E4E8">{</span><span style="color:#9ECBFF">"a"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"b"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"c"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"d"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"e"</span><span style="color:#E1E4E8">}</span></span>
+<span class="line"><span style="color:#E1E4E8">	itr </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> slices.</span><span style="color:#B392F0">Backward</span><span style="color:#E1E4E8">(s)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">	for</span><span style="color:#E1E4E8"> i, v </span><span style="color:#F97583">:=</span><span style="color:#F97583"> range</span><span style="color:#E1E4E8"> itr {</span></span>
+<span class="line"><span style="color:#E1E4E8">		fmt.</span><span style="color:#B392F0">Println</span><span style="color:#E1E4E8">(i, v)</span></span>
+<span class="line"><span style="color:#E1E4E8">	}</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// 4 e</span></span>
+<span class="line"><span style="color:#6A737D">// 3 d</span></span>
+<span class="line"><span style="color:#6A737D">// 2 c</span></span>
+<span class="line"><span style="color:#6A737D">// 1 b</span></span>
+<span class="line"><span style="color:#6A737D">// 0 a</span></span></code></pre>
+<h3 id="collect">Collect</h3>
+<p>イテレータから新しいスライスに値を収集する。</p>
+<p>下記は、<code>iter.Seq[V]</code> のイテレータを <code>[]V</code> の slice に集約している。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#F97583">package</span><span style="color:#B392F0"> main</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">fmt</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">slices</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">func</span><span style="color:#B392F0"> main</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#E1E4E8">	s </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> []</span><span style="color:#F97583">string</span><span style="color:#E1E4E8">{</span><span style="color:#9ECBFF">"a"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"b"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"c"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"d"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"e"</span><span style="color:#E1E4E8">}</span></span>
+<span class="line"><span style="color:#E1E4E8">	itr </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> slices.</span><span style="color:#B392F0">Values</span><span style="color:#E1E4E8">(s)</span></span>
+<span class="line"><span style="color:#E1E4E8">	s2 </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> slices.</span><span style="color:#B392F0">Collect</span><span style="color:#E1E4E8">(itr)</span></span>
+<span class="line"><span style="color:#E1E4E8">	fmt.</span><span style="color:#B392F0">Println</span><span style="color:#E1E4E8">(s2)</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// [a b c d e]</span></span></code></pre>
+<h3 id="appendseq">AppendSeq</h3>
+<p>イテレータの値を既存のスライスに追加する。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#F97583">package</span><span style="color:#B392F0"> main</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">fmt</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">slices</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">func</span><span style="color:#B392F0"> main</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#E1E4E8">	s </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> []</span><span style="color:#F97583">string</span><span style="color:#E1E4E8">{</span><span style="color:#9ECBFF">"a"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"b"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"c"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"d"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"e"</span><span style="color:#E1E4E8">}</span></span>
+<span class="line"><span style="color:#E1E4E8">	s2 </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> []</span><span style="color:#F97583">string</span><span style="color:#E1E4E8">{</span><span style="color:#9ECBFF">"f"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"g"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"h"</span><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">	itr </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> slices.</span><span style="color:#B392F0">Values</span><span style="color:#E1E4E8">(s)</span></span>
+<span class="line"><span style="color:#E1E4E8">	s3 </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> slices.</span><span style="color:#B392F0">AppendSeq</span><span style="color:#E1E4E8">(s2, itr)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">	fmt.</span><span style="color:#B392F0">Println</span><span style="color:#E1E4E8">(s3) </span><span style="color:#6A737D">// この s3 の型は []string</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// [f g h a b c d e]</span></span></code></pre>
+<h3 id="sorted">Sorted</h3>
+<p>イテレータから新しいスライスに値を集め、ソートする。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#F97583">package</span><span style="color:#B392F0"> main</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">fmt</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">slices</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">func</span><span style="color:#B392F0"> main</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#E1E4E8">	s </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> []</span><span style="color:#F97583">string</span><span style="color:#E1E4E8">{</span><span style="color:#9ECBFF">"z"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"a"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"b"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"c"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"d"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"e"</span><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">	itr </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> slices.</span><span style="color:#B392F0">Values</span><span style="color:#E1E4E8">(s)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">	s2 </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> slices.</span><span style="color:#B392F0">Sorted</span><span style="color:#E1E4E8">(itr)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">	fmt.</span><span style="color:#B392F0">Println</span><span style="color:#E1E4E8">(s2)</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// [a b c d e z]</span></span></code></pre>
+<h3 id="sortedfunc">SortedFunc</h3>
+<p>ソート方法を指定できる。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#F97583">package</span><span style="color:#B392F0"> main</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">fmt</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">slices</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">strings</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">func</span><span style="color:#B392F0"> main</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#E1E4E8">	s </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> []</span><span style="color:#F97583">string</span><span style="color:#E1E4E8">{</span><span style="color:#9ECBFF">"z"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"a"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"b"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"c"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"d"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"e"</span><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">	itr </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> slices.</span><span style="color:#B392F0">Values</span><span style="color:#E1E4E8">(s)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">	s2 </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> slices.</span><span style="color:#B392F0">SortedFunc</span><span style="color:#E1E4E8">(itr, </span><span style="color:#F97583">func</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">a</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">b</span><span style="color:#F97583"> string</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">int</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">		return</span><span style="color:#E1E4E8"> strings.</span><span style="color:#B392F0">Compare</span><span style="color:#E1E4E8">(b, a)</span></span>
+<span class="line"><span style="color:#E1E4E8">	})</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">	fmt.</span><span style="color:#B392F0">Println</span><span style="color:#E1E4E8">(s2)</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// [z e d c b a]</span></span></code></pre>
+<h3 id="sortedstablefunc">SortedStableFunc</h3>
+<p>安定したソートアルゴリズムを使う。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#F97583">package</span><span style="color:#B392F0"> main</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">fmt</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">slices</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">strings</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">func</span><span style="color:#B392F0"> main</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#E1E4E8">	s </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> []</span><span style="color:#F97583">string</span><span style="color:#E1E4E8">{</span><span style="color:#9ECBFF">"z"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"a"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"b"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"c"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"d"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"e"</span><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">	itr </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> slices.</span><span style="color:#B392F0">Values</span><span style="color:#E1E4E8">(s)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">	s2 </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> slices.</span><span style="color:#B392F0">SortedStableFunc</span><span style="color:#E1E4E8">(itr, </span><span style="color:#F97583">func</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">a</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">b</span><span style="color:#F97583"> string</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">int</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">		return</span><span style="color:#E1E4E8"> strings.</span><span style="color:#B392F0">Compare</span><span style="color:#E1E4E8">(b, a)</span></span>
+<span class="line"><span style="color:#E1E4E8">	})</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">	fmt.</span><span style="color:#B392F0">Println</span><span style="color:#E1E4E8">(s2)</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// [z e d c b a]</span></span></code></pre>
+<h3 id="chunk">Chunk</h3>
+<p>スライスを指定された要素数のサブスライスのイテレータとして返す。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#F97583">package</span><span style="color:#B392F0"> main</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">fmt</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">slices</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">func</span><span style="color:#B392F0"> main</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#E1E4E8">	s </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> []</span><span style="color:#F97583">string</span><span style="color:#E1E4E8">{</span><span style="color:#9ECBFF">"a"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"b"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"c"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"d"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"e"</span><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">	itr </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> slices.</span><span style="color:#B392F0">Chunk</span><span style="color:#E1E4E8">(s, </span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">	for</span><span style="color:#E1E4E8"> s </span><span style="color:#F97583">:=</span><span style="color:#F97583"> range</span><span style="color:#E1E4E8"> itr {</span></span>
+<span class="line"><span style="color:#E1E4E8">		fmt.</span><span style="color:#B392F0">Println</span><span style="color:#E1E4E8">(s)</span></span>
+<span class="line"><span style="color:#E1E4E8">	}</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// [a b c]</span></span>
+<span class="line"><span style="color:#6A737D">// [d e]</span></span></code></pre>
+<h2 id="maps">maps</h2>
+<h3 id="all-1">All</h3>
+<p>map から key-value ペアのイテレータを返す。
+ただし、順番は保証されていない。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#F97583">package</span><span style="color:#B392F0"> main</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">fmt</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">maps</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">func</span><span style="color:#B392F0"> main</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#E1E4E8">	m </span><span style="color:#F97583">:=</span><span style="color:#F97583"> map</span><span style="color:#E1E4E8">[</span><span style="color:#F97583">int</span><span style="color:#E1E4E8">]</span><span style="color:#F97583">string</span><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#79B8FF">		1</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"a"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">		2</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"b"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">		3</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"c"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">	}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">	itr </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> maps.</span><span style="color:#B392F0">All</span><span style="color:#E1E4E8">(m)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">	for</span><span style="color:#E1E4E8"> i, v </span><span style="color:#F97583">:=</span><span style="color:#F97583"> range</span><span style="color:#E1E4E8"> itr {</span></span>
+<span class="line"><span style="color:#E1E4E8">		fmt.</span><span style="color:#B392F0">Println</span><span style="color:#E1E4E8">(i, v)</span></span>
+<span class="line"><span style="color:#E1E4E8">	}</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// 2 b</span></span>
+<span class="line"><span style="color:#6A737D">// 3 c</span></span>
+<span class="line"><span style="color:#6A737D">// 1 a</span></span></code></pre>
+<h3 id="keys">Keys</h3>
+<p>map の key に対するイテレータを返す。
+ただし、順番は保証されていない。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#F97583">package</span><span style="color:#B392F0"> main</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">fmt</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">maps</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">func</span><span style="color:#B392F0"> main</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#E1E4E8">	m </span><span style="color:#F97583">:=</span><span style="color:#F97583"> map</span><span style="color:#E1E4E8">[</span><span style="color:#F97583">int</span><span style="color:#E1E4E8">]</span><span style="color:#F97583">string</span><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#79B8FF">		1</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"a"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">		2</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"b"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">		3</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"c"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">	}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">	itr </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> maps.</span><span style="color:#B392F0">Keys</span><span style="color:#E1E4E8">(m)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">	for</span><span style="color:#E1E4E8"> k </span><span style="color:#F97583">:=</span><span style="color:#F97583"> range</span><span style="color:#E1E4E8"> itr {</span></span>
+<span class="line"><span style="color:#E1E4E8">		fmt.</span><span style="color:#B392F0">Println</span><span style="color:#E1E4E8">(k)</span></span>
+<span class="line"><span style="color:#E1E4E8">	}</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// 3</span></span>
+<span class="line"><span style="color:#6A737D">// 1</span></span>
+<span class="line"><span style="color:#6A737D">// 2</span></span></code></pre>
+<h3 id="values-1">Values</h3>
+<p>map の value に対するイテレータを返す。
+ただし、順番は保証されていない。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#F97583">package</span><span style="color:#B392F0"> main</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">fmt</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">maps</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">func</span><span style="color:#B392F0"> main</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#E1E4E8">	m </span><span style="color:#F97583">:=</span><span style="color:#F97583"> map</span><span style="color:#E1E4E8">[</span><span style="color:#F97583">int</span><span style="color:#E1E4E8">]</span><span style="color:#F97583">string</span><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#79B8FF">		1</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"a"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">		2</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"b"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">		3</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"c"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">	}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">	itr </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> maps.</span><span style="color:#B392F0">Values</span><span style="color:#E1E4E8">(m)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">	for</span><span style="color:#E1E4E8"> v </span><span style="color:#F97583">:=</span><span style="color:#F97583"> range</span><span style="color:#E1E4E8"> itr {</span></span>
+<span class="line"><span style="color:#E1E4E8">		fmt.</span><span style="color:#B392F0">Println</span><span style="color:#E1E4E8">(v)</span></span>
+<span class="line"><span style="color:#E1E4E8">	}</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// c</span></span>
+<span class="line"><span style="color:#6A737D">// a</span></span>
+<span class="line"><span style="color:#6A737D">// b</span></span></code></pre>
+<h3 id="insert">Insert</h3>
+<p>イテレータから key と value のペアを既存の map に追加する。
+重複する key がある場合、上書きされる。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#F97583">package</span><span style="color:#B392F0"> main</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">fmt</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">maps</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">func</span><span style="color:#B392F0"> main</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#E1E4E8">	m </span><span style="color:#F97583">:=</span><span style="color:#F97583"> map</span><span style="color:#E1E4E8">[</span><span style="color:#F97583">int</span><span style="color:#E1E4E8">]</span><span style="color:#F97583">string</span><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#79B8FF">		1</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"a"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">		2</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"b"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">		3</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"c"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">	}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">	m2 </span><span style="color:#F97583">:=</span><span style="color:#F97583"> map</span><span style="color:#E1E4E8">[</span><span style="color:#F97583">int</span><span style="color:#E1E4E8">]</span><span style="color:#F97583">string</span><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#79B8FF">		3</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"d"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">		4</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"e"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">		5</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"f"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">	}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">	maps.</span><span style="color:#B392F0">Insert</span><span style="color:#E1E4E8">(m, maps.</span><span style="color:#B392F0">All</span><span style="color:#E1E4E8">(m2))</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">	fmt.</span><span style="color:#B392F0">Println</span><span style="color:#E1E4E8">(m)</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// map[1:a 2:b 3:d 4:e 5:f]</span></span></code></pre>
+<h3 id="collect-1">Collect</h3>
+<p>イテレータから新しい map に key-value のペアを収集する。</p>
+<p>下記は、<code>iter.Seq[K, V]</code> のイテレータを <code>map[K]V</code> の map に集約している。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#F97583">package</span><span style="color:#B392F0"> main</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">fmt</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">maps</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">func</span><span style="color:#B392F0"> main</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#E1E4E8">	m </span><span style="color:#F97583">:=</span><span style="color:#F97583"> map</span><span style="color:#E1E4E8">[</span><span style="color:#F97583">int</span><span style="color:#E1E4E8">]</span><span style="color:#F97583">string</span><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#79B8FF">		1</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"a"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">		2</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"b"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#79B8FF">		3</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"c"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">	}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">	itr </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> maps.</span><span style="color:#B392F0">All</span><span style="color:#E1E4E8">(m)</span></span>
+<span class="line"><span style="color:#E1E4E8">	m2 </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> maps.</span><span style="color:#B392F0">Collect</span><span style="color:#E1E4E8">(itr)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">	fmt.</span><span style="color:#B392F0">Println</span><span style="color:#E1E4E8">(m2)</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// map[1:a 2:b 3:c]</span></span></code></pre>  </div> <footer class="post-footer" data-astro-cid-bvzihdzo> <a href="/" data-astro-cid-bvzihdzo>&larr; 一覧に戻る</a> </footer> </article>  </main> </div> </body></html> 

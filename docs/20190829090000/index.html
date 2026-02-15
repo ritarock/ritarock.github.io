@@ -1,0 +1,93 @@
+<!DOCTYPE html><html lang="ja" data-astro-cid-sckkx6r4> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="icon" href="/favicon.ico"><meta name="generator" content="Astro v5.17.2"><meta name="description" content="my-docs"><title>docker-composeでRailsとMysqlを使う | my-docs</title><style>[data-astro-cid-sckkx6r4]{margin:0;padding:0;box-sizing:border-box}html{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif;line-height:1.7;color:#333;background-color:#fafafa}.container[data-astro-cid-sckkx6r4]{max-width:900px;margin:0 auto;padding:0 1.5rem;min-height:100dvh;display:flex;flex-direction:column}.header[data-astro-cid-sckkx6r4]{display:flex;justify-content:space-between;align-items:center;padding:.5rem 0;padding-bottom:0}.header-title[data-astro-cid-sckkx6r4]{font-size:1.5rem;font-weight:700;color:#111;text-decoration:none}nav[data-astro-cid-sckkx6r4]{display:flex;gap:1.5rem}nav[data-astro-cid-sckkx6r4] a[data-astro-cid-sckkx6r4]{color:#555;text-decoration:none;font-size:.9rem}nav[data-astro-cid-sckkx6r4] a[data-astro-cid-sckkx6r4]:hover{color:#111}main[data-astro-cid-sckkx6r4]{flex:1;padding:1rem 0}
+.post-header[data-astro-cid-bvzihdzo]{margin-bottom:2rem}.post-header[data-astro-cid-bvzihdzo] h1[data-astro-cid-bvzihdzo]{font-size:2rem;font-weight:700;color:#111;line-height:1.3;margin-bottom:.75rem}.post-meta[data-astro-cid-bvzihdzo]{font-size:.9rem;color:#888}.updated[data-astro-cid-bvzihdzo]{margin-left:.5rem}.tags[data-astro-cid-bvzihdzo]{display:flex;gap:.5rem;margin-top:.75rem;flex-wrap:wrap}.tag[data-astro-cid-bvzihdzo]{font-size:.8rem;background-color:#f0f0f0;color:#555;padding:.2rem .6rem;border-radius:4px}.post-content[data-astro-cid-bvzihdzo]{font-size:1rem;line-height:1.85;color:#333}.post-content[data-astro-cid-bvzihdzo] h2{font-size:1.5rem;font-weight:700;margin-top:2.5rem;margin-bottom:1rem;color:#111}.post-content[data-astro-cid-bvzihdzo] h3{font-size:1.25rem;font-weight:600;margin-top:2rem;margin-bottom:.75rem;color:#222}.post-content[data-astro-cid-bvzihdzo] p{margin-bottom:1.25rem}.post-content[data-astro-cid-bvzihdzo] ul,.post-content[data-astro-cid-bvzihdzo] ol{margin-bottom:1.25rem;padding-left:1.5rem}.post-content[data-astro-cid-bvzihdzo] li{margin-bottom:.4rem}.post-content[data-astro-cid-bvzihdzo] code{font-family:SF Mono,Fira Code,Fira Mono,Menlo,monospace;font-size:.9em;background-color:#f5f5f5;padding:.15rem .35rem;border-radius:3px}.post-content[data-astro-cid-bvzihdzo] pre{background-color:#1e1e1e;color:#d4d4d4;padding:1.25rem;border-radius:6px;overflow-x:auto;margin-bottom:1.25rem}.post-content[data-astro-cid-bvzihdzo] pre code{background:none;padding:0;font-size:.85rem}.post-content[data-astro-cid-bvzihdzo] blockquote{border-left:3px solid #ddd;padding-left:1rem;color:#666;margin-bottom:1.25rem}.post-footer[data-astro-cid-bvzihdzo]{margin-top:3rem;padding-top:1.5rem;border-top:1px solid #e0e0e0}.post-footer[data-astro-cid-bvzihdzo] a[data-astro-cid-bvzihdzo]{color:#555;text-decoration:none;font-size:.9rem}.post-footer[data-astro-cid-bvzihdzo] a[data-astro-cid-bvzihdzo]:hover{color:#111}
+</style></head> <body data-astro-cid-sckkx6r4> <div class="container" data-astro-cid-sckkx6r4> <header class="header" data-astro-cid-sckkx6r4> <a href="/" class="header-title" data-astro-cid-sckkx6r4>my-docs</a> </header> <main data-astro-cid-sckkx6r4>  <article class="post" data-astro-cid-bvzihdzo> <header class="post-header" data-astro-cid-bvzihdzo> <h1 data-astro-cid-bvzihdzo>docker-composeでRailsとMysqlを使う</h1> <div class="post-meta" data-astro-cid-bvzihdzo> <time datetime="2019-08-29T09:00:00.000Z" data-astro-cid-bvzihdzo>2019-08-29</time>  </div> <div class="tags" data-astro-cid-bvzihdzo> <span class="tag" data-astro-cid-bvzihdzo>docker</span><span class="tag" data-astro-cid-bvzihdzo>rails</span><span class="tag" data-astro-cid-bvzihdzo>setup</span> </div> </header> <div class="post-content" data-astro-cid-bvzihdzo>  <h2 id="ディレクトリ構成">ディレクトリ構成</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">./</span></span>
+<span class="line"><span style="color:#B392F0">├──</span><span style="color:#9ECBFF"> Dockerfile</span></span>
+<span class="line"><span style="color:#B392F0">├──</span><span style="color:#9ECBFF"> docker-compose.yml</span></span>
+<span class="line"><span style="color:#B392F0">├──</span><span style="color:#9ECBFF"> db_volume/</span></span>
+<span class="line"><span style="color:#B392F0">├──</span><span style="color:#9ECBFF"> mysql-confd/</span></span>
+<span class="line"><span style="color:#B392F0">│  </span><span style="color:#9ECBFF"> └──</span><span style="color:#9ECBFF"> default_authentication.cnf</span></span>
+<span class="line"><span style="color:#B392F0">└──</span><span style="color:#9ECBFF"> src/</span></span>
+<span class="line"><span style="color:#B392F0">    ├──</span><span style="color:#9ECBFF"> Gemfile</span></span>
+<span class="line"><span style="color:#B392F0">    └──</span><span style="color:#9ECBFF"> Gemfile.lock</span></span></code></pre>
+<h2 id="ファイルの説明">ファイルの説明</h2>
+<h3 id="dockerfile">Dockerfile</h3>
+<p>Rails のアプリ用の Dockerfile を定義する。
+MySQL と連携するために mysql-client をインストールしている。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>FROM ruby:latest</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>RUN apt-get update -qq &#x26;&#x26; \</span></span>
+<span class="line"><span>    apt-get install -y build-essential &#x26;&#x26; \</span></span>
+<span class="line"><span>    apt-get install -y libpq-dev &#x26;&#x26; \</span></span>
+<span class="line"><span>    apt-get install -y mysql-client &#x26;&#x26; \</span></span>
+<span class="line"><span>    apt-get install -y nodejs</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>RUN mkdir /myapp</span></span>
+<span class="line"><span>ENV APP_ROOT /myapp</span></span>
+<span class="line"><span>WORKDIR $APP_ROOT</span></span>
+<span class="line"><span>ADD ./src/Gemfile $APP_ROOT/Gemfile</span></span>
+<span class="line"><span>ADD ./src/Gemfile.lock $APP_ROOT/Gemfile.lock</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>RUN bundle install</span></span>
+<span class="line"><span>ADD ./src/ $APP_ROOT</span></span></code></pre>
+<h3 id="docker-compose">docker-compose</h3>
+<p>MySQL のバージョンが 8 以上だと認証でエラーになるので設定ファイルをにマウントする。
+また <code>./db_volume:/var/lib/mysql</code> で DB を永続化している。</p>
+<p><a href="https://qiita.com/yensaki/items/9e453b7320ca2d0461c7">参考</a></p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="yaml"><code><span class="line"><span style="color:#85E89D">version</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">'3'</span></span>
+<span class="line"><span style="color:#85E89D">services</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#85E89D">  db</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#85E89D">    image</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">mysql:latest</span></span>
+<span class="line"><span style="color:#85E89D">    volumes</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">      - </span><span style="color:#9ECBFF">./mysql-confd:/etc/mysql/conf.d</span></span>
+<span class="line"><span style="color:#E1E4E8">      - </span><span style="color:#9ECBFF">./db_volume:/var/lib/mysql</span></span>
+<span class="line"><span style="color:#85E89D">    environment</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#85E89D">      MYSQL_ROOT_PASSWORD</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">root</span></span>
+<span class="line"><span style="color:#85E89D">      MYSQL_DATABASE</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">root</span></span>
+<span class="line"><span style="color:#85E89D">    ports</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">      - </span><span style="color:#9ECBFF">"3306:3306"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#85E89D">  web</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#85E89D">    build</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">.</span></span>
+<span class="line"><span style="color:#85E89D">    command</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">bundle exec rails s -p 3000 -b '0.0.0.0'</span></span>
+<span class="line"><span style="color:#85E89D">    volumes</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">      - </span><span style="color:#9ECBFF">./src:/myapp</span></span>
+<span class="line"><span style="color:#85E89D">    ports</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">      - </span><span style="color:#9ECBFF">"3000:3000"</span></span>
+<span class="line"><span style="color:#85E89D">    links</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">      - </span><span style="color:#9ECBFF">db</span></span></code></pre>
+<h3 id="default_authenticationcnf">default_authentication.cnf</h3>
+<p>認証用の設定ファイル。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>[mysqld]</span></span>
+<span class="line"><span>default_authentication_plugin= mysql_native_password</span></span></code></pre>
+<h3 id="gemfile">Gemfile</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>source 'https://rubygems.org'</span></span>
+<span class="line"><span>gem 'rails', '5.1.6'</span></span></code></pre>
+<p>Gemfile.lock も作成しておく ( 中身は空 ) 。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> touch</span><span style="color:#9ECBFF"> ./src/Gemfile.lock</span></span></code></pre>
+<h2 id="プロジェクトの構築">プロジェクトの構築</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> docker-compose</span><span style="color:#9ECBFF"> run</span><span style="color:#9ECBFF"> web</span><span style="color:#9ECBFF"> rails</span><span style="color:#9ECBFF"> new</span><span style="color:#9ECBFF"> .</span><span style="color:#79B8FF"> --force</span><span style="color:#79B8FF"> --database=mysql</span><span style="color:#79B8FF"> --skip-bundle</span></span></code></pre>
+<p><code>--skip-bundle</code> で gem のインストールを回避。
+実行後 <code>./src</code> 配下に新しいアプリケーションが作成されている。</p>
+<h2 id="データベースに接続">データベースに接続</h2>
+<p><code>./src/config/database.yml</code> の password と host を docker-compose で定義した内容に変更。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="yaml"><code><span class="line"><span style="color:#85E89D">default</span><span style="color:#E1E4E8">: </span><span style="color:#F97583">&#x26;</span><span style="color:#B392F0">default</span></span>
+<span class="line"><span style="color:#85E89D">  adapter</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">mysql2</span></span>
+<span class="line"><span style="color:#85E89D">  encoding</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">utf8</span></span>
+<span class="line"><span style="color:#85E89D">  pool</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&#x3C;%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %></span></span>
+<span class="line"><span style="color:#85E89D">  username</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">root</span></span>
+<span class="line"><span style="color:#85E89D">  password</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">root</span></span>
+<span class="line"><span style="color:#85E89D">  host</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">db</span></span></code></pre>
+<h2 id="dockerの起動">dockerの起動</h2>
+<p>ビルド。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> docker-compose</span><span style="color:#9ECBFF"> build</span></span></code></pre>
+<p>起動。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> docker-compose</span><span style="color:#9ECBFF"> up</span></span></code></pre>
+<h2 id="dbの作成">DBの作成</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> docker-compose</span><span style="color:#9ECBFF"> run</span><span style="color:#9ECBFF"> web</span><span style="color:#9ECBFF"> rails</span><span style="color:#9ECBFF"> db:create</span></span></code></pre>
+<h2 id="確認">確認</h2>
+<p>ブラウザで localhost:3000 にアクセス。</p>
+<p>Rails のコンテナにアクセスして DB との接続確認。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> docker</span><span style="color:#9ECBFF"> exec</span><span style="color:#79B8FF"> -it</span><span style="color:#9ECBFF"> コンテナID</span><span style="color:#9ECBFF"> /bin/bash</span></span></code></pre>
+<p>接続したコンテナから DB に接続。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> rails</span><span style="color:#9ECBFF"> dbconsole</span></span></code></pre>  </div> <footer class="post-footer" data-astro-cid-bvzihdzo> <a href="/" data-astro-cid-bvzihdzo>&larr; 一覧に戻る</a> </footer> </article>  </main> </div> </body></html> 

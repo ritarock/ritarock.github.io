@@ -1,0 +1,235 @@
+<!DOCTYPE html><html lang="ja" data-astro-cid-sckkx6r4> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="icon" href="/favicon.ico"><meta name="generator" content="Astro v5.17.2"><meta name="description" content="my-docs"><title>データベース操作 | my-docs</title><style>[data-astro-cid-sckkx6r4]{margin:0;padding:0;box-sizing:border-box}html{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif;line-height:1.7;color:#333;background-color:#fafafa}.container[data-astro-cid-sckkx6r4]{max-width:900px;margin:0 auto;padding:0 1.5rem;min-height:100dvh;display:flex;flex-direction:column}.header[data-astro-cid-sckkx6r4]{display:flex;justify-content:space-between;align-items:center;padding:.5rem 0;padding-bottom:0}.header-title[data-astro-cid-sckkx6r4]{font-size:1.5rem;font-weight:700;color:#111;text-decoration:none}nav[data-astro-cid-sckkx6r4]{display:flex;gap:1.5rem}nav[data-astro-cid-sckkx6r4] a[data-astro-cid-sckkx6r4]{color:#555;text-decoration:none;font-size:.9rem}nav[data-astro-cid-sckkx6r4] a[data-astro-cid-sckkx6r4]:hover{color:#111}main[data-astro-cid-sckkx6r4]{flex:1;padding:1rem 0}
+.post-header[data-astro-cid-bvzihdzo]{margin-bottom:2rem}.post-header[data-astro-cid-bvzihdzo] h1[data-astro-cid-bvzihdzo]{font-size:2rem;font-weight:700;color:#111;line-height:1.3;margin-bottom:.75rem}.post-meta[data-astro-cid-bvzihdzo]{font-size:.9rem;color:#888}.updated[data-astro-cid-bvzihdzo]{margin-left:.5rem}.tags[data-astro-cid-bvzihdzo]{display:flex;gap:.5rem;margin-top:.75rem;flex-wrap:wrap}.tag[data-astro-cid-bvzihdzo]{font-size:.8rem;background-color:#f0f0f0;color:#555;padding:.2rem .6rem;border-radius:4px}.post-content[data-astro-cid-bvzihdzo]{font-size:1rem;line-height:1.85;color:#333}.post-content[data-astro-cid-bvzihdzo] h2{font-size:1.5rem;font-weight:700;margin-top:2.5rem;margin-bottom:1rem;color:#111}.post-content[data-astro-cid-bvzihdzo] h3{font-size:1.25rem;font-weight:600;margin-top:2rem;margin-bottom:.75rem;color:#222}.post-content[data-astro-cid-bvzihdzo] p{margin-bottom:1.25rem}.post-content[data-astro-cid-bvzihdzo] ul,.post-content[data-astro-cid-bvzihdzo] ol{margin-bottom:1.25rem;padding-left:1.5rem}.post-content[data-astro-cid-bvzihdzo] li{margin-bottom:.4rem}.post-content[data-astro-cid-bvzihdzo] code{font-family:SF Mono,Fira Code,Fira Mono,Menlo,monospace;font-size:.9em;background-color:#f5f5f5;padding:.15rem .35rem;border-radius:3px}.post-content[data-astro-cid-bvzihdzo] pre{background-color:#1e1e1e;color:#d4d4d4;padding:1.25rem;border-radius:6px;overflow-x:auto;margin-bottom:1.25rem}.post-content[data-astro-cid-bvzihdzo] pre code{background:none;padding:0;font-size:.85rem}.post-content[data-astro-cid-bvzihdzo] blockquote{border-left:3px solid #ddd;padding-left:1rem;color:#666;margin-bottom:1.25rem}.post-footer[data-astro-cid-bvzihdzo]{margin-top:3rem;padding-top:1.5rem;border-top:1px solid #e0e0e0}.post-footer[data-astro-cid-bvzihdzo] a[data-astro-cid-bvzihdzo]{color:#555;text-decoration:none;font-size:.9rem}.post-footer[data-astro-cid-bvzihdzo] a[data-astro-cid-bvzihdzo]:hover{color:#111}
+</style></head> <body data-astro-cid-sckkx6r4> <div class="container" data-astro-cid-sckkx6r4> <header class="header" data-astro-cid-sckkx6r4> <a href="/" class="header-title" data-astro-cid-sckkx6r4>my-docs</a> </header> <main data-astro-cid-sckkx6r4>  <article class="post" data-astro-cid-bvzihdzo> <header class="post-header" data-astro-cid-bvzihdzo> <h1 data-astro-cid-bvzihdzo>データベース操作</h1> <div class="post-meta" data-astro-cid-bvzihdzo> <time datetime="2019-11-03T01:57:27.000Z" data-astro-cid-bvzihdzo>2019-11-03</time>  </div> <div class="tags" data-astro-cid-bvzihdzo> <span class="tag" data-astro-cid-bvzihdzo>mysql</span> </div> </header> <div class="post-content" data-astro-cid-bvzihdzo>  <h2 id="データベースの作成">データベースの作成</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#F97583">CREATE</span><span style="color:#F97583"> DATABASE</span><span style="color:#B392F0"> database_name</span><span style="color:#E1E4E8">;</span></span></code></pre>
+<h2 id="データベースの削除">データベースの削除</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#F97583">DROP</span><span style="color:#F97583"> DATABASE</span><span style="color:#F97583"> database_name</span><span style="color:#E1E4E8">;</span></span></code></pre>
+<h2 id="テーブルの作成">テーブルの作成</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#F97583">CREATE</span><span style="color:#F97583"> TABLE</span><span style="color:#B392F0"> table_name</span><span style="color:#E1E4E8"> (col_name </span><span style="color:#F97583">type</span><span style="color:#E1E4E8">, ...);</span></span></code></pre>
+<h3 id="主キー">主キー</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#F97583">CREATE</span><span style="color:#F97583"> TABLE</span><span style="color:#B392F0"> table_name</span><span style="color:#E1E4E8"> (col_name </span><span style="color:#F97583">type</span><span style="color:#E1E4E8">, ..., </span><span style="color:#F97583">PRIMARY KEY</span><span style="color:#E1E4E8"> (col_name));</span></span></code></pre>
+<ul>
+<li>PRIMARY KEY の重複と NULL は NG</li>
+<li>複数の列を指定できる (複合主キー)
+<ul>
+<li>PRIMARY KEY (列名 1, 列名 2 )</li>
+</ul>
+</li>
+</ul>
+<h3 id="外部キー">外部キー</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#F97583">CREATE</span><span style="color:#F97583"> TABLE</span><span style="color:#B392F0"> table_name</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#E1E4E8">  col_name </span><span style="color:#F97583">type</span><span style="color:#E1E4E8">, ...,</span></span>
+<span class="line"><span style="color:#F97583">  FOREIGN KEY</span><span style="color:#E1E4E8"> (col_name) </span><span style="color:#F97583">REFERENCES</span><span style="color:#E1E4E8"> parent_table_name(col_name)</span></span>
+<span class="line"><span style="color:#E1E4E8">);</span></span></code></pre>
+<ul>
+<li>子テーブルの外部キーの値は親テーブルに存在しないといけない</li>
+<li>参照される値 (親テーブル) の UPDATE / DELETE は NG</li>
+</ul>
+<h4 id="親テーブルの-update--delete-時の設定">親テーブルの UPDATE / DELETE 時の設定</h4>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#F97583">CREATE</span><span style="color:#F97583"> TABLE</span><span style="color:#B392F0"> table_name</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#E1E4E8">  col_name </span><span style="color:#F97583">type</span><span style="color:#E1E4E8">, ...,</span></span>
+<span class="line"><span style="color:#F97583">  FOREIGN KEY</span><span style="color:#E1E4E8"> (col_name) </span><span style="color:#F97583">REFERENCES</span><span style="color:#E1E4E8"> parent_table_name(col_name)</span></span>
+<span class="line"><span style="color:#F97583">  ON DELETE</span><span style="color:#E1E4E8"> [ アクション ]</span></span>
+<span class="line"><span style="color:#F97583">  ON UPDATE</span><span style="color:#E1E4E8"> [ アクション ]</span></span>
+<span class="line"><span style="color:#E1E4E8">);</span></span>
+<span class="line"></span></code></pre>
+<p>設定できるアクション。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>アクション</th><th>詳細</th></tr></thead><tbody><tr><td>RESTRICT</td><td>親テーブルに対して UPDATE / DELETE を行うとエラーになる ( デフォルト )</td></tr><tr><td>CASCADE</td><td>親テーブルに対して UPDATE / DELETE を行うと、子テーブルの一致する行に自動的に UPDATE / DELETE を行う</td></tr><tr><td>SET NULL</td><td>親テーブルに対して UPDATE / DELETE を行うと、子テーブルの外部キーを NULL に設定する</td></tr></tbody></table>
+<h2 id="データの検索">データの検索</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#F97583">SELECT</span><span style="color:#E1E4E8"> col_name1, col_name2, ... </span><span style="color:#F97583">FROM</span><span style="color:#E1E4E8"> table_name [ 条件 ];</span></span></code></pre>
+<h3 id="条件">条件</h3>
+<ul>
+<li>比較演算子</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>演算子</th><th>意味</th></tr></thead><tbody><tr><td>”=“</td><td>等しい</td></tr><tr><td>”&#x3C;“</td><td>小さい</td></tr><tr><td>”>“</td><td>大きい</td></tr><tr><td>”&#x3C;=“</td><td>以下</td></tr><tr><td>”>=“</td><td>以上</td></tr><tr><td>”&#x3C;>“</td><td>等しくない</td></tr></tbody></table>
+<ul>
+<li>BETWEEN</li>
+</ul>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#F97583">SELECT</span><span style="color:#F97583"> *</span><span style="color:#F97583"> FROM</span><span style="color:#E1E4E8"> table_name </span><span style="color:#F97583">WHERE</span><span style="color:#F97583"> BETWEEN</span><span style="color:#E1E4E8"> value1 </span><span style="color:#F97583">AND</span><span style="color:#E1E4E8"> value2;</span></span></code></pre>
+<p>指定した範囲に値があるものを取得。</p>
+<ul>
+<li>IN</li>
+</ul>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#F97583">SELECT</span><span style="color:#F97583"> *</span><span style="color:#F97583"> FROM</span><span style="color:#E1E4E8"> table_name </span><span style="color:#F97583">WHERE</span><span style="color:#E1E4E8"> col_name </span><span style="color:#F97583">IN</span><span style="color:#E1E4E8"> (</span><span style="color:#9ECBFF">'value1'</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">'value2'</span><span style="color:#E1E4E8">);</span></span></code></pre>
+<p>指定した値のリストの中にあるものを取得。</p>
+<ul>
+<li>LIKE</li>
+</ul>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#F97583">SELECT</span><span style="color:#F97583"> *</span><span style="color:#F97583"> FROM</span><span style="color:#E1E4E8"> table_name </span><span style="color:#F97583">WHERE</span><span style="color:#E1E4E8"> col_name </span><span style="color:#F97583">LIKE</span><span style="color:#9ECBFF"> '_100%'</span><span style="color:#E1E4E8">;</span></span></code></pre>
+<p><code>%</code> は任意の文字数の任意の文字、 <code>_</code> は 1 文字の任意の文字。</p>
+<ul>
+<li>サブクエリ</li>
+</ul>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#F97583">SELECT</span><span style="color:#F97583"> *</span><span style="color:#F97583"> FROM</span><span style="color:#E1E4E8"> table_name</span></span>
+<span class="line"><span style="color:#F97583">WHERE</span><span style="color:#E1E4E8"> col_name1 </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#F97583">  SELECT</span><span style="color:#F97583"> *</span><span style="color:#F97583"> FROM</span><span style="color:#E1E4E8"> table_name </span><span style="color:#F97583">WHERE</span><span style="color:#E1E4E8"> col_name2 </span><span style="color:#F97583">=</span><span style="color:#F97583"> value</span></span>
+<span class="line"><span style="color:#E1E4E8">);</span></span></code></pre>
+<p>副問合せ。</p>
+<h3 id="distinct">DISTINCT</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#F97583">SELECT DISTINCT</span><span style="color:#E1E4E8"> col_name1, col_name2, ... </span><span style="color:#F97583">FROM</span><span style="color:#E1E4E8"> table_name;</span></span></code></pre>
+<p>SELECT の結果から重複業を除外できる。</p>
+<p><code>GROUP BY</code> でも重複削除できる。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#F97583">SELECT</span><span style="color:#E1E4E8"> col_name1, col_name2, ... </span><span style="color:#F97583">FROM</span><span style="color:#E1E4E8"> table_name </span><span style="color:#F97583">GROUP BY</span><span style="color:#E1E4E8"> col_name1;</span></span></code></pre>
+<h3 id="order-by">ORDER BY</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#F97583">SELECT</span><span style="color:#F97583"> *</span><span style="color:#F97583"> FROM</span><span style="color:#E1E4E8"> table_name </span><span style="color:#F97583">ORDER BY</span><span style="color:#E1E4E8"> col_name1 </span><span style="color:#F97583">ASC</span><span style="color:#E1E4E8">, col_name2 </span><span style="color:#F97583">DESC</span><span style="color:#E1E4E8">;</span></span></code></pre>
+<p>ASC は昇順。 DESC は降順。 ASC は省略可能。</p>
+<h3 id="limit">LIMIT</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#F97583">SELECT</span><span style="color:#F97583"> *</span><span style="color:#F97583"> FROM</span><span style="color:#E1E4E8"> table_name </span><span style="color:#F97583">ORDER BY</span><span style="color:#E1E4E8"> col_name </span><span style="color:#F97583">LIMIT</span><span style="color:#79B8FF"> 5</span><span style="color:#E1E4E8">;</span></span></code></pre>
+<h3 id="集約関数">集約関数</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#F97583">SELECT</span><span style="color:#E1E4E8"> col_name, </span><span style="color:#79B8FF">MAX</span><span style="color:#E1E4E8">(col_name) </span><span style="color:#F97583">FROM</span><span style="color:#E1E4E8"> table_name;</span></span></code></pre>
+<p>基本的に NULL は無視される。
+集約関数の種類。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>関数</th><th>意味</th></tr></thead><tbody><tr><td>MAX</td><td>最大値</td></tr><tr><td>MIN</td><td>最小値</td></tr><tr><td>SUM</td><td>合計</td></tr><tr><td>AVG</td><td>平均</td></tr><tr><td>COUNT</td><td>カウント</td></tr></tbody></table>
+<p>SUM / AVG / COUNT は DISTINCT をサポートしている。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#F97583">SELECT</span><span style="color:#E1E4E8"> col_name, </span><span style="color:#79B8FF">COUNT</span><span style="color:#E1E4E8">( </span><span style="color:#F97583">DISTINCT</span><span style="color:#E1E4E8"> col_name ) </span><span style="color:#F97583">FROM</span><span style="color:#E1E4E8"> table_name;</span></span></code></pre>
+<h3 id="group-by">GROUP BY</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#F97583">SELECT</span><span style="color:#E1E4E8"> col_name, </span><span style="color:#79B8FF">COUNT</span><span style="color:#E1E4E8">(col_name) </span><span style="color:#F97583">FROM</span><span style="color:#E1E4E8"> table_name </span><span style="color:#F97583">GROUP BY</span><span style="color:#E1E4E8"> col_name;</span></span></code></pre>
+<p>テーブルを集約キーでグループ分けしてから集計する。</p>
+<h3 id="having">HAVING</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#F97583">SELECT</span><span style="color:#79B8FF"> COUNT</span><span style="color:#E1E4E8">(col_name1) </span><span style="color:#F97583">FROM</span><span style="color:#E1E4E8"> table_name </span><span style="color:#F97583">GROUP BY</span><span style="color:#E1E4E8"> col_name1 </span><span style="color:#F97583">HAVING</span><span style="color:#79B8FF"> COUNT</span><span style="color:#E1E4E8">(col_name1) </span><span style="color:#F97583">>=</span><span style="color:#F97583"> value</span><span style="color:#E1E4E8">;</span></span></code></pre>
+<p><code>GROUP BY</code> されたグループに対して条件を指定できる。</p>
+<p>この場合、列名 1 で集計した値をカウントしてから HAVING で指定した条件のもののみを取得する。</p>
+<h2 id="結合--join">結合 ( JOIN )</h2>
+<p>結合の種類は 3 つ。</p>
+<ul>
+<li>クロス結合 ( CROSS JOIN )</li>
+<li>内部結合 ( INNER JOIN )</li>
+<li>外部結合 ( OUTER JOIN )</li>
+</ul>
+<h3 id="クロス結合--cross-join">クロス結合 ( CROSS JOIN )</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#F97583">SELECT</span><span style="color:#F97583"> *</span></span>
+<span class="line"><span style="color:#F97583">FROM</span><span style="color:#E1E4E8"> table_name1 </span><span style="color:#F97583">CROSS JOIN</span><span style="color:#E1E4E8"> table_name2;</span></span></code></pre>
+<p>すべてのテーブルの組み合わせを作る。</p>
+<h3 id="内部結合--inner-join">内部結合 ( INNER JOIN )</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#F97583">SELECT</span><span style="color:#E1E4E8"> table_name1.</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">table_name2</span><span style="color:#E1E4E8">.</span><span style="color:#79B8FF">col_name</span><span style="color:#E1E4E8">, ...</span></span>
+<span class="line"><span style="color:#F97583">FROM</span><span style="color:#E1E4E8"> table_name1 </span><span style="color:#F97583">INNER JOIN</span><span style="color:#E1E4E8"> table_name2</span></span>
+<span class="line"><span style="color:#F97583">ON</span><span style="color:#79B8FF"> table_name1</span><span style="color:#E1E4E8">.</span><span style="color:#79B8FF">col_name1</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> table_name2</span><span style="color:#E1E4E8">.</span><span style="color:#79B8FF">col_name1</span><span style="color:#E1E4E8">;</span></span></code></pre>
+<p>クロス結合の部分集合。条件一致したものだけを取得する。</p>
+<p><code>USING</code> でも書ける。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#F97583">SELECT</span><span style="color:#E1E4E8"> table_name1.</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">table_name2</span><span style="color:#E1E4E8">.</span><span style="color:#79B8FF">col_name</span><span style="color:#E1E4E8">, ...</span></span>
+<span class="line"><span style="color:#F97583">FROM</span><span style="color:#E1E4E8"> table_name1 </span><span style="color:#F97583">INNER JOIN</span><span style="color:#E1E4E8"> table_name2 </span><span style="color:#F97583">USING</span><span style="color:#E1E4E8">(col_name);</span></span></code></pre>
+<h3 id="外部結合">外部結合</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#F97583">SELECT</span><span style="color:#E1E4E8"> table_name1.</span><span style="color:#F97583">*</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">table_name2</span><span style="color:#E1E4E8">.</span><span style="color:#79B8FF">col_name</span><span style="color:#E1E4E8">, ...</span></span>
+<span class="line"><span style="color:#F97583">FROM</span><span style="color:#E1E4E8"> table_name1 ( LEFT | RIGHT ) </span><span style="color:#F97583">OUTER</span><span style="color:#F97583"> JOIN</span><span style="color:#E1E4E8"> table_name2</span></span>
+<span class="line"><span style="color:#F97583">ON</span><span style="color:#79B8FF"> table_name1</span><span style="color:#E1E4E8">.</span><span style="color:#79B8FF">col_name1</span><span style="color:#F97583"> =</span><span style="color:#79B8FF"> table_name2</span><span style="color:#E1E4E8">.</span><span style="color:#79B8FF">col_name1</span><span style="color:#E1E4E8">;</span></span></code></pre>
+<p>内部結合と同様に条件一致したものを取得し、さらに、マッチしなかった ( LEFT | RIGHT ) のテーブルの行は残す。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>書式</th><th>内容</th></tr></thead><tbody><tr><td>LEFT OUTER JOIN</td><td>FROM のあとに書かれたテーブルのデータだけを取得</td></tr><tr><td>RIGHT OUTER JOIN</td><td>JOIN の後に書かれたテーブルのデータだけを取得</td></tr></tbody></table>
+<h2 id="テーブルの削除">テーブルの削除</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#F97583">DROP</span><span style="color:#F97583"> TABLE</span><span style="color:#E1E4E8"> table_name;</span></span></code></pre>
+<h2 id="データの挿入">データの挿入</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#F97583">INSERT INTO</span><span style="color:#79B8FF"> database_name</span><span style="color:#E1E4E8">.</span><span style="color:#79B8FF">table_name</span><span style="color:#E1E4E8">(col_name1, col_name2, ...) </span><span style="color:#F97583">VALUES</span><span style="color:#E1E4E8"> (value1, value2, ...);</span></span></code></pre>
+<p>全てのカラムに値を追加する場合は以下のように書ける。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#F97583">INSERT INTO</span><span style="color:#E1E4E8"> table_name </span><span style="color:#F97583">VALUES</span><span style="color:#E1E4E8">(value1, value2, ...);</span></span></code></pre>
+<h2 id="ビュー">ビュー</h2>
+<p>データを持たず実行分だけが入っている。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#F97583">CREATE</span><span style="color:#F97583"> VIEW</span><span style="color:#B392F0"> view_name</span><span style="color:#E1E4E8"> (col_name1, col_name2, ...) </span><span style="color:#F97583">AS</span><span style="color:#E1E4E8"> select_statement;</span></span></code></pre>
+<h2 id="数値として取り出す">数値として取り出す</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#F97583">SELECT</span><span style="color:#E1E4E8"> col_name </span><span style="color:#F97583">FROM</span><span style="color:#F97583"> as</span><span style="color:#E1E4E8"> unsigned </span><span style="color:#F97583">FROM</span><span style="color:#E1E4E8"> table_name;</span></span></code></pre>
+<h2 id="index-の付け方">index の付け方</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#F97583">ALTER</span><span style="color:#F97583"> TABLE</span><span style="color:#E1E4E8"> table_name </span><span style="color:#F97583">AND</span><span style="color:#F97583"> INDEX</span><span style="color:#E1E4E8"> index_name (col_name);</span></span></code></pre>
+<h2 id="トランザクション">トランザクション</h2>
+<p><code>BEGIN</code> で開始して, <code>COMMIT</code> で反映, <code>ROLLBACK</code> で取り消しができる。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#F97583">BEGIN</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">  SQL1;</span></span>
+<span class="line"><span style="color:#E1E4E8">  SQL2;</span></span>
+<span class="line"><span style="color:#F97583">COMMIT</span><span style="color:#E1E4E8">;</span></span></code></pre>  </div> <footer class="post-footer" data-astro-cid-bvzihdzo> <a href="/" data-astro-cid-bvzihdzo>&larr; 一覧に戻る</a> </footer> </article>  </main> </div> </body></html> 

@@ -1,0 +1,199 @@
+<!DOCTYPE html><html lang="ja" data-astro-cid-sckkx6r4> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="icon" href="/favicon.ico"><meta name="generator" content="Astro v5.17.2"><meta name="description" content="my-docs"><title>k6のテスト結果の読み方 | my-docs</title><style>[data-astro-cid-sckkx6r4]{margin:0;padding:0;box-sizing:border-box}html{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif;line-height:1.7;color:#333;background-color:#fafafa}.container[data-astro-cid-sckkx6r4]{max-width:900px;margin:0 auto;padding:0 1.5rem;min-height:100dvh;display:flex;flex-direction:column}.header[data-astro-cid-sckkx6r4]{display:flex;justify-content:space-between;align-items:center;padding:.5rem 0;padding-bottom:0}.header-title[data-astro-cid-sckkx6r4]{font-size:1.5rem;font-weight:700;color:#111;text-decoration:none}nav[data-astro-cid-sckkx6r4]{display:flex;gap:1.5rem}nav[data-astro-cid-sckkx6r4] a[data-astro-cid-sckkx6r4]{color:#555;text-decoration:none;font-size:.9rem}nav[data-astro-cid-sckkx6r4] a[data-astro-cid-sckkx6r4]:hover{color:#111}main[data-astro-cid-sckkx6r4]{flex:1;padding:1rem 0}
+.post-header[data-astro-cid-bvzihdzo]{margin-bottom:2rem}.post-header[data-astro-cid-bvzihdzo] h1[data-astro-cid-bvzihdzo]{font-size:2rem;font-weight:700;color:#111;line-height:1.3;margin-bottom:.75rem}.post-meta[data-astro-cid-bvzihdzo]{font-size:.9rem;color:#888}.updated[data-astro-cid-bvzihdzo]{margin-left:.5rem}.tags[data-astro-cid-bvzihdzo]{display:flex;gap:.5rem;margin-top:.75rem;flex-wrap:wrap}.tag[data-astro-cid-bvzihdzo]{font-size:.8rem;background-color:#f0f0f0;color:#555;padding:.2rem .6rem;border-radius:4px}.post-content[data-astro-cid-bvzihdzo]{font-size:1rem;line-height:1.85;color:#333}.post-content[data-astro-cid-bvzihdzo] h2{font-size:1.5rem;font-weight:700;margin-top:2.5rem;margin-bottom:1rem;color:#111}.post-content[data-astro-cid-bvzihdzo] h3{font-size:1.25rem;font-weight:600;margin-top:2rem;margin-bottom:.75rem;color:#222}.post-content[data-astro-cid-bvzihdzo] p{margin-bottom:1.25rem}.post-content[data-astro-cid-bvzihdzo] ul,.post-content[data-astro-cid-bvzihdzo] ol{margin-bottom:1.25rem;padding-left:1.5rem}.post-content[data-astro-cid-bvzihdzo] li{margin-bottom:.4rem}.post-content[data-astro-cid-bvzihdzo] code{font-family:SF Mono,Fira Code,Fira Mono,Menlo,monospace;font-size:.9em;background-color:#f5f5f5;padding:.15rem .35rem;border-radius:3px}.post-content[data-astro-cid-bvzihdzo] pre{background-color:#1e1e1e;color:#d4d4d4;padding:1.25rem;border-radius:6px;overflow-x:auto;margin-bottom:1.25rem}.post-content[data-astro-cid-bvzihdzo] pre code{background:none;padding:0;font-size:.85rem}.post-content[data-astro-cid-bvzihdzo] blockquote{border-left:3px solid #ddd;padding-left:1rem;color:#666;margin-bottom:1.25rem}.post-footer[data-astro-cid-bvzihdzo]{margin-top:3rem;padding-top:1.5rem;border-top:1px solid #e0e0e0}.post-footer[data-astro-cid-bvzihdzo] a[data-astro-cid-bvzihdzo]{color:#555;text-decoration:none;font-size:.9rem}.post-footer[data-astro-cid-bvzihdzo] a[data-astro-cid-bvzihdzo]:hover{color:#111}
+</style></head> <body data-astro-cid-sckkx6r4> <div class="container" data-astro-cid-sckkx6r4> <header class="header" data-astro-cid-sckkx6r4> <a href="/" class="header-title" data-astro-cid-sckkx6r4>my-docs</a> </header> <main data-astro-cid-sckkx6r4>  <article class="post" data-astro-cid-bvzihdzo> <header class="post-header" data-astro-cid-bvzihdzo> <h1 data-astro-cid-bvzihdzo>k6のテスト結果の読み方</h1> <div class="post-meta" data-astro-cid-bvzihdzo> <time datetime="2021-12-27T14:03:18.000Z" data-astro-cid-bvzihdzo>2021-12-27</time>  </div> <div class="tags" data-astro-cid-bvzihdzo> <span class="tag" data-astro-cid-bvzihdzo>k6</span> </div> </header> <div class="post-content" data-astro-cid-bvzihdzo>  <p>docker で実行した。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> docker</span><span style="color:#9ECBFF"> run</span><span style="color:#79B8FF"> -i</span><span style="color:#9ECBFF"> loadimpact/k6</span><span style="color:#9ECBFF"> run</span><span style="color:#9ECBFF"> -</span><span style="color:#F97583"> &#x3C;</span><span style="color:#9ECBFF">script.js</span></span>
+<span class="line"><span style="color:#B392F0">          /\</span><span style="color:#F97583">      |</span><span style="color:#B392F0">‾‾</span><span style="color:#F97583">|</span><span style="color:#B392F0"> /‾‾/</span><span style="color:#9ECBFF">   /‾‾/</span></span>
+<span class="line"><span style="color:#B392F0">     /\</span><span style="color:#9ECBFF">  /</span><span style="color:#79B8FF">  \ </span><span style="color:#F97583">    |</span><span style="color:#F97583">  |</span><span style="color:#B392F0">/</span><span style="color:#9ECBFF">  /</span><span style="color:#9ECBFF">   /</span><span style="color:#9ECBFF">  /</span></span>
+<span class="line"><span style="color:#B392F0">    /</span><span style="color:#79B8FF">  \/</span><span style="color:#79B8FF">    \ </span><span style="color:#F97583">   |</span><span style="color:#E1E4E8">     (   </span><span style="color:#B392F0">/</span><span style="color:#9ECBFF">   ‾‾</span><span style="color:#79B8FF">\</span></span>
+<span class="line"><span style="color:#9ECBFF">   /</span><span style="color:#79B8FF">          \ </span><span style="color:#F97583">  |</span><span style="color:#F97583">  |</span><span style="color:#B392F0">\</span><span style="color:#79B8FF">  \ </span><span style="color:#F97583">|</span><span style="color:#E1E4E8">  (</span><span style="color:#B392F0">‾</span><span style="color:#E1E4E8">)  </span><span style="color:#F97583">|</span></span>
+<span class="line"><span style="color:#B392F0">  /</span><span style="color:#9ECBFF"> __________</span><span style="color:#79B8FF"> \ </span><span style="color:#F97583"> |</span><span style="color:#B392F0">__</span><span style="color:#F97583">|</span><span style="color:#B392F0"> \__\</span><span style="color:#79B8FF"> \_</span><span style="color:#9ECBFF">____/</span><span style="color:#9ECBFF"> .io</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">  execution:</span><span style="color:#9ECBFF"> local</span></span>
+<span class="line"><span style="color:#B392F0">     script:</span><span style="color:#9ECBFF"> -</span></span>
+<span class="line"><span style="color:#B392F0">     output:</span><span style="color:#9ECBFF"> -</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">  scenarios:</span><span style="color:#E1E4E8"> (100.00%) </span><span style="color:#B392F0">1</span><span style="color:#9ECBFF"> scenario,</span><span style="color:#79B8FF"> 20</span><span style="color:#9ECBFF"> max</span><span style="color:#9ECBFF"> VUs,</span><span style="color:#9ECBFF"> 2m50s</span><span style="color:#9ECBFF"> max</span><span style="color:#9ECBFF"> duration</span><span style="color:#E1E4E8"> (incl. </span><span style="color:#9ECBFF">graceful</span><span style="color:#9ECBFF"> stop</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#B392F0">           *</span><span style="color:#9ECBFF"> default:</span><span style="color:#9ECBFF"> Up</span><span style="color:#9ECBFF"> to</span><span style="color:#79B8FF"> 20</span><span style="color:#9ECBFF"> looping</span><span style="color:#9ECBFF"> VUs</span><span style="color:#9ECBFF"> for</span><span style="color:#9ECBFF"> 2m20s</span><span style="color:#9ECBFF"> over</span><span style="color:#79B8FF"> 3</span><span style="color:#9ECBFF"> stages</span><span style="color:#E1E4E8"> (gracefulRampDown: </span><span style="color:#9ECBFF">30s,</span><span style="color:#9ECBFF"> gracefulStop:</span><span style="color:#9ECBFF"> 30s</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">running</span><span style="color:#E1E4E8"> (0m01.0s), 01/20 VUs, 0 complete and 0 interrupted iterations</span></span>
+<span class="line"><span style="color:#B392F0">default</span><span style="color:#E1E4E8">   [   </span><span style="color:#9ECBFF">1%</span><span style="color:#9ECBFF"> ]</span><span style="color:#9ECBFF"> 01/20</span><span style="color:#9ECBFF"> VUs</span><span style="color:#9ECBFF">  0m01.0s/2m20.0s</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">running</span><span style="color:#E1E4E8"> (0m02.0s), 02/20 VUs, 1 complete and 0 interrupted iterations</span></span>
+<span class="line"><span style="color:#B392F0">default</span><span style="color:#E1E4E8">   [   </span><span style="color:#9ECBFF">1%</span><span style="color:#9ECBFF"> ]</span><span style="color:#9ECBFF"> 02/20</span><span style="color:#9ECBFF"> VUs</span><span style="color:#9ECBFF">  0m02.0s/2m20.0s</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">running</span><span style="color:#E1E4E8"> (0m03.0s), 02/20 VUs, 1 complete and 0 interrupted iterations</span></span>
+<span class="line"><span style="color:#B392F0">default</span><span style="color:#E1E4E8">   [   </span><span style="color:#9ECBFF">2%</span><span style="color:#9ECBFF"> ]</span><span style="color:#9ECBFF"> 02/20</span><span style="color:#9ECBFF"> VUs</span><span style="color:#9ECBFF">  0m03.0s/2m20.0s</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">~</span><span style="color:#E1E4E8">~</span></span>
+<span class="line"><span style="color:#B392F0">中略</span></span>
+<span class="line"><span style="color:#F97583">~</span><span style="color:#E1E4E8">~</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">running</span><span style="color:#E1E4E8"> (2m19.9s), 01/20 VUs, 1500 complete and 0 interrupted iterations</span></span>
+<span class="line"><span style="color:#B392F0">default</span><span style="color:#E1E4E8">   [ </span><span style="color:#9ECBFF">100%</span><span style="color:#9ECBFF"> ]</span><span style="color:#9ECBFF"> 01/20</span><span style="color:#9ECBFF"> VUs</span><span style="color:#9ECBFF">  2m20.0s/2m20.0s</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">running</span><span style="color:#E1E4E8"> (2m20.9s), 01/20 VUs, 1500 complete and 0 interrupted iterations</span></span>
+<span class="line"><span style="color:#B392F0">default</span><span style="color:#9ECBFF"> ↓</span><span style="color:#E1E4E8"> [ </span><span style="color:#9ECBFF">100%</span><span style="color:#9ECBFF"> ]</span><span style="color:#9ECBFF"> 01/20</span><span style="color:#9ECBFF"> VUs</span><span style="color:#9ECBFF">  2m20s</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">running</span><span style="color:#E1E4E8"> (2m21.0s), 00/20 VUs, 1501 complete and 0 interrupted iterations</span></span>
+<span class="line"><span style="color:#B392F0">default</span><span style="color:#9ECBFF"> ✗</span><span style="color:#E1E4E8"> [ </span><span style="color:#9ECBFF">100%</span><span style="color:#9ECBFF"> ]</span><span style="color:#9ECBFF"> 00/20</span><span style="color:#9ECBFF"> VUs</span><span style="color:#9ECBFF">  2m20s</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">     ✗</span><span style="color:#9ECBFF"> status</span><span style="color:#9ECBFF"> was</span><span style="color:#79B8FF"> 200</span></span>
+<span class="line"><span style="color:#B392F0">      ↳</span><span style="color:#9ECBFF">  99%</span><span style="color:#9ECBFF"> —</span><span style="color:#9ECBFF"> ✓</span><span style="color:#79B8FF"> 1500</span><span style="color:#9ECBFF"> /</span><span style="color:#9ECBFF"> ✗</span><span style="color:#79B8FF"> 1</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">     checks.........................:</span><span style="color:#9ECBFF"> 99.93%</span><span style="color:#9ECBFF"> ✓</span><span style="color:#79B8FF"> 1500</span><span style="color:#9ECBFF">      ✗</span><span style="color:#79B8FF"> 1</span></span>
+<span class="line"><span style="color:#B392F0">     data_received..................:</span><span style="color:#79B8FF"> 15</span><span style="color:#9ECBFF"> MB</span><span style="color:#79B8FF">  105</span><span style="color:#9ECBFF"> kB/s</span></span>
+<span class="line"><span style="color:#B392F0">     data_sent......................:</span><span style="color:#79B8FF"> 139</span><span style="color:#9ECBFF"> kB</span><span style="color:#79B8FF"> 985</span><span style="color:#9ECBFF"> B/s</span></span>
+<span class="line"><span style="color:#B392F0">     http_req_blocked...............:</span><span style="color:#9ECBFF"> avg=7.32ms</span><span style="color:#9ECBFF">   min=224ns</span><span style="color:#9ECBFF">    med=729ns</span><span style="color:#9ECBFF">    max=595.34ms</span><span style="color:#9ECBFF"> p</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">90</span><span style="color:#E1E4E8">)</span><span style="color:#9ECBFF">=1.26µs</span><span style="color:#9ECBFF">   p</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">95</span><span style="color:#E1E4E8">)</span><span style="color:#9ECBFF">=1.53µs</span></span>
+<span class="line"><span style="color:#B392F0">     http_req_connecting............:</span><span style="color:#9ECBFF"> avg=2.44ms</span><span style="color:#9ECBFF">   min=0s</span><span style="color:#9ECBFF">       med=0s</span><span style="color:#9ECBFF">       max=194.35ms</span><span style="color:#9ECBFF"> p</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">90</span><span style="color:#E1E4E8">)</span><span style="color:#9ECBFF">=0s</span><span style="color:#9ECBFF">       p</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">95</span><span style="color:#E1E4E8">)</span><span style="color:#9ECBFF">=0s</span></span>
+<span class="line"><span style="color:#B392F0">     http_req_duration..............:</span><span style="color:#9ECBFF"> avg=202.66ms</span><span style="color:#9ECBFF"> min=154.95ms</span><span style="color:#9ECBFF"> med=183.24ms</span><span style="color:#9ECBFF"> max=833.52ms</span><span style="color:#9ECBFF"> p</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">90</span><span style="color:#E1E4E8">)</span><span style="color:#9ECBFF">=196.11ms</span><span style="color:#9ECBFF"> p</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">95</span><span style="color:#E1E4E8">)</span><span style="color:#9ECBFF">=363.11ms</span></span>
+<span class="line"><span style="color:#E1E4E8">       { </span><span style="color:#B392F0">expected_response:true</span><span style="color:#9ECBFF"> }...:</span><span style="color:#9ECBFF"> avg=202.67ms</span><span style="color:#9ECBFF"> min=154.95ms</span><span style="color:#9ECBFF"> med=183.25ms</span><span style="color:#9ECBFF"> max=833.52ms</span><span style="color:#9ECBFF"> p</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">90</span><span style="color:#E1E4E8">)</span><span style="color:#9ECBFF">=196.11ms</span><span style="color:#9ECBFF"> p</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">95</span><span style="color:#E1E4E8">)</span><span style="color:#9ECBFF">=363.36ms</span></span>
+<span class="line"><span style="color:#B392F0">     http_req_failed................:</span><span style="color:#9ECBFF"> 0.06%</span><span style="color:#9ECBFF">  ✓</span><span style="color:#79B8FF"> 1</span><span style="color:#9ECBFF">         ✗</span><span style="color:#79B8FF"> 1500</span></span>
+<span class="line"><span style="color:#B392F0">     http_req_receiving.............:</span><span style="color:#9ECBFF"> avg=417.46µs</span><span style="color:#9ECBFF"> min=103.5µs</span><span style="color:#9ECBFF">  med=363.64µs</span><span style="color:#9ECBFF"> max=11.21ms</span><span style="color:#9ECBFF">  p</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">90</span><span style="color:#E1E4E8">)</span><span style="color:#9ECBFF">=633.19µs</span><span style="color:#9ECBFF"> p</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">95</span><span style="color:#E1E4E8">)</span><span style="color:#9ECBFF">=766.71µs</span></span>
+<span class="line"><span style="color:#B392F0">     http_req_sending...............:</span><span style="color:#9ECBFF"> avg=346.35µs</span><span style="color:#9ECBFF"> min=65.42µs</span><span style="color:#9ECBFF">  med=310.89µs</span><span style="color:#9ECBFF"> max=2.73ms</span><span style="color:#9ECBFF">   p</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">90</span><span style="color:#E1E4E8">)</span><span style="color:#9ECBFF">=531.17µs</span><span style="color:#9ECBFF"> p</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">95</span><span style="color:#E1E4E8">)</span><span style="color:#9ECBFF">=645.74µs</span></span>
+<span class="line"><span style="color:#B392F0">     http_req_tls_handshaking.......:</span><span style="color:#9ECBFF"> avg=4.85ms</span><span style="color:#9ECBFF">   min=0s</span><span style="color:#9ECBFF">       med=0s</span><span style="color:#9ECBFF">       max=393.86ms</span><span style="color:#9ECBFF"> p</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">90</span><span style="color:#E1E4E8">)</span><span style="color:#9ECBFF">=0s</span><span style="color:#9ECBFF">       p</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">95</span><span style="color:#E1E4E8">)</span><span style="color:#9ECBFF">=0s</span></span>
+<span class="line"><span style="color:#B392F0">     http_req_waiting...............:</span><span style="color:#9ECBFF"> avg=201.89ms</span><span style="color:#9ECBFF"> min=154.02ms</span><span style="color:#9ECBFF"> med=182.51ms</span><span style="color:#9ECBFF"> max=832.89ms</span><span style="color:#9ECBFF"> p</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">90</span><span style="color:#E1E4E8">)</span><span style="color:#9ECBFF">=195.27ms</span><span style="color:#9ECBFF"> p</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">95</span><span style="color:#E1E4E8">)</span><span style="color:#9ECBFF">=362.27ms</span></span>
+<span class="line"><span style="color:#B392F0">     http_reqs......................:</span><span style="color:#79B8FF"> 1501</span><span style="color:#9ECBFF">   10.645297/s</span></span>
+<span class="line"><span style="color:#B392F0">     iteration_duration.............:</span><span style="color:#9ECBFF"> avg=1.21s</span><span style="color:#9ECBFF">    min=1.17s</span><span style="color:#9ECBFF">    med=1.18s</span><span style="color:#9ECBFF">    max=2.08s</span><span style="color:#9ECBFF">    p</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">90</span><span style="color:#E1E4E8">)</span><span style="color:#9ECBFF">=1.21s</span><span style="color:#9ECBFF">    p</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">95</span><span style="color:#E1E4E8">)</span><span style="color:#9ECBFF">=1.4s</span></span>
+<span class="line"><span style="color:#B392F0">     iterations.....................:</span><span style="color:#79B8FF"> 1501</span><span style="color:#9ECBFF">   10.645297/s</span></span>
+<span class="line"><span style="color:#B392F0">     vus............................:</span><span style="color:#79B8FF"> 1</span><span style="color:#9ECBFF">      min=</span><span style="color:#79B8FF">1</span><span style="color:#9ECBFF">       max=</span><span style="color:#79B8FF">20</span></span>
+<span class="line"><span style="color:#B392F0">     vus_max........................:</span><span style="color:#79B8FF"> 20</span><span style="color:#9ECBFF">     min=</span><span style="color:#79B8FF">20</span><span style="color:#9ECBFF">      max=</span><span style="color:#79B8FF">20</span></span></code></pre>
+<h3 id="test-details">Test details</h3>
+<p>テストの説明を書いているブロック。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">  execution:</span><span style="color:#9ECBFF"> local</span></span>
+<span class="line"><span style="color:#B392F0">     script:</span><span style="color:#9ECBFF"> -</span></span>
+<span class="line"><span style="color:#B392F0">     output:</span><span style="color:#9ECBFF"> -</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">  scenarios:</span><span style="color:#E1E4E8"> (100.00%) 1 scenario, 20 max VUs, 2m50s max duration (</span><span style="color:#B392F0">incl.</span><span style="color:#9ECBFF"> graceful</span><span style="color:#9ECBFF"> stop</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#B392F0">           *</span><span style="color:#9ECBFF"> default:</span><span style="color:#9ECBFF"> Up</span><span style="color:#9ECBFF"> to</span><span style="color:#79B8FF"> 20</span><span style="color:#9ECBFF"> looping</span><span style="color:#9ECBFF"> VUs</span><span style="color:#9ECBFF"> for</span><span style="color:#9ECBFF"> 2m20s</span><span style="color:#9ECBFF"> over</span><span style="color:#79B8FF"> 3</span><span style="color:#9ECBFF"> stages</span><span style="color:#E1E4E8"> (gracefulRampDown: </span><span style="color:#9ECBFF">30s,</span><span style="color:#9ECBFF"> gracefulStop:</span><span style="color:#9ECBFF"> 30s</span><span style="color:#E1E4E8">)</span></span></code></pre>
+<ul>
+<li>execution
+<ul>
+<li>テストモード</li>
+</ul>
+</li>
+<li>scenarios
+<ul>
+<li>シナリオの概要</li>
+</ul>
+</li>
+</ul>
+<h3 id="progress-bar">Progress bar</h3>
+<p>テスト中のプログレスバー。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">running</span><span style="color:#E1E4E8"> (0m01.0s), 01/20 VUs, 0 complete and 0 interrupted iterations</span></span>
+<span class="line"><span style="color:#B392F0">default</span><span style="color:#E1E4E8">   [   </span><span style="color:#9ECBFF">1%</span><span style="color:#9ECBFF"> ]</span><span style="color:#9ECBFF"> 01/20</span><span style="color:#9ECBFF"> VUs</span><span style="color:#9ECBFF">  0m01.0s/2m20.0s</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">running</span><span style="color:#E1E4E8"> (0m02.0s), 02/20 VUs, 1 complete and 0 interrupted iterations</span></span>
+<span class="line"><span style="color:#B392F0">default</span><span style="color:#E1E4E8">   [   </span><span style="color:#9ECBFF">1%</span><span style="color:#9ECBFF"> ]</span><span style="color:#9ECBFF"> 02/20</span><span style="color:#9ECBFF"> VUs</span><span style="color:#9ECBFF">  0m02.0s/2m20.0s</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">running</span><span style="color:#E1E4E8"> (0m03.0s), 02/20 VUs, 1 complete and 0 interrupted iterations</span></span>
+<span class="line"><span style="color:#B392F0">default</span><span style="color:#E1E4E8">   [   </span><span style="color:#9ECBFF">2%</span><span style="color:#9ECBFF"> ]</span><span style="color:#9ECBFF"> 02/20</span><span style="color:#9ECBFF"> VUs</span><span style="color:#9ECBFF">  0m03.0s/2m20.0s</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">~</span><span style="color:#E1E4E8">~</span></span>
+<span class="line"><span style="color:#B392F0">中略</span></span>
+<span class="line"><span style="color:#F97583">~</span><span style="color:#E1E4E8">~</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">running</span><span style="color:#E1E4E8"> (2m19.9s), 01/20 VUs, 1500 complete and 0 interrupted iterations</span></span>
+<span class="line"><span style="color:#B392F0">default</span><span style="color:#E1E4E8">   [ </span><span style="color:#9ECBFF">100%</span><span style="color:#9ECBFF"> ]</span><span style="color:#9ECBFF"> 01/20</span><span style="color:#9ECBFF"> VUs</span><span style="color:#9ECBFF">  2m20.0s/2m20.0s</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">running</span><span style="color:#E1E4E8"> (2m20.9s), 01/20 VUs, 1500 complete and 0 interrupted iterations</span></span>
+<span class="line"><span style="color:#B392F0">default</span><span style="color:#9ECBFF"> ↓</span><span style="color:#E1E4E8"> [ </span><span style="color:#9ECBFF">100%</span><span style="color:#9ECBFF"> ]</span><span style="color:#9ECBFF"> 01/20</span><span style="color:#9ECBFF"> VUs</span><span style="color:#9ECBFF">  2m20s</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">running</span><span style="color:#E1E4E8"> (2m21.0s), 00/20 VUs, 1501 complete and 0 interrupted iterations</span></span>
+<span class="line"><span style="color:#B392F0">default</span><span style="color:#9ECBFF"> ✗</span><span style="color:#E1E4E8"> [ </span><span style="color:#9ECBFF">100%</span><span style="color:#9ECBFF"> ]</span><span style="color:#9ECBFF"> 00/20</span><span style="color:#9ECBFF"> VUs</span><span style="color:#9ECBFF">  2m20s</span></span></code></pre>
+<h3 id="test-summary">test summary</h3>
+<p>テスト結果の詳細が出力されるブロック。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">     ✗</span><span style="color:#9ECBFF"> status</span><span style="color:#9ECBFF"> was</span><span style="color:#79B8FF"> 200</span></span>
+<span class="line"><span style="color:#B392F0">      ↳</span><span style="color:#9ECBFF">  99%</span><span style="color:#9ECBFF"> —</span><span style="color:#9ECBFF"> ✓</span><span style="color:#79B8FF"> 1500</span><span style="color:#9ECBFF"> /</span><span style="color:#9ECBFF"> ✗</span><span style="color:#79B8FF"> 1</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">     checks.........................:</span><span style="color:#9ECBFF"> 99.93%</span><span style="color:#9ECBFF"> ✓</span><span style="color:#79B8FF"> 1500</span><span style="color:#9ECBFF">      ✗</span><span style="color:#79B8FF"> 1</span></span>
+<span class="line"><span style="color:#B392F0">     data_received..................:</span><span style="color:#79B8FF"> 15</span><span style="color:#9ECBFF"> MB</span><span style="color:#79B8FF">  105</span><span style="color:#9ECBFF"> kB/s</span></span>
+<span class="line"><span style="color:#B392F0">     data_sent......................:</span><span style="color:#79B8FF"> 139</span><span style="color:#9ECBFF"> kB</span><span style="color:#79B8FF"> 985</span><span style="color:#9ECBFF"> B/s</span></span>
+<span class="line"><span style="color:#B392F0">     http_req_blocked...............:</span><span style="color:#9ECBFF"> avg=7.32ms</span><span style="color:#9ECBFF">   min=224ns</span><span style="color:#9ECBFF">    med=729ns</span><span style="color:#9ECBFF">    max=595.34ms</span><span style="color:#9ECBFF"> p</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">90</span><span style="color:#E1E4E8">)</span><span style="color:#9ECBFF">=1.26µs</span><span style="color:#9ECBFF">   p</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">95</span><span style="color:#E1E4E8">)</span><span style="color:#9ECBFF">=1.53µs</span></span>
+<span class="line"><span style="color:#B392F0">     http_req_connecting............:</span><span style="color:#9ECBFF"> avg=2.44ms</span><span style="color:#9ECBFF">   min=0s</span><span style="color:#9ECBFF">       med=0s</span><span style="color:#9ECBFF">       max=194.35ms</span><span style="color:#9ECBFF"> p</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">90</span><span style="color:#E1E4E8">)</span><span style="color:#9ECBFF">=0s</span><span style="color:#9ECBFF">       p</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">95</span><span style="color:#E1E4E8">)</span><span style="color:#9ECBFF">=0s</span></span>
+<span class="line"><span style="color:#B392F0">     http_req_duration..............:</span><span style="color:#9ECBFF"> avg=202.66ms</span><span style="color:#9ECBFF"> min=154.95ms</span><span style="color:#9ECBFF"> med=183.24ms</span><span style="color:#9ECBFF"> max=833.52ms</span><span style="color:#9ECBFF"> p</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">90</span><span style="color:#E1E4E8">)</span><span style="color:#9ECBFF">=196.11ms</span><span style="color:#9ECBFF"> p</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">95</span><span style="color:#E1E4E8">)</span><span style="color:#9ECBFF">=363.11ms</span></span>
+<span class="line"><span style="color:#E1E4E8">       { </span><span style="color:#B392F0">expected_response:true</span><span style="color:#9ECBFF"> }...:</span><span style="color:#9ECBFF"> avg=202.67ms</span><span style="color:#9ECBFF"> min=154.95ms</span><span style="color:#9ECBFF"> med=183.25ms</span><span style="color:#9ECBFF"> max=833.52ms</span><span style="color:#9ECBFF"> p</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">90</span><span style="color:#E1E4E8">)</span><span style="color:#9ECBFF">=196.11ms</span><span style="color:#9ECBFF"> p</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">95</span><span style="color:#E1E4E8">)</span><span style="color:#9ECBFF">=363.36ms</span></span>
+<span class="line"><span style="color:#B392F0">     http_req_failed................:</span><span style="color:#9ECBFF"> 0.06%</span><span style="color:#9ECBFF">  ✓</span><span style="color:#79B8FF"> 1</span><span style="color:#9ECBFF">         ✗</span><span style="color:#79B8FF"> 1500</span></span>
+<span class="line"><span style="color:#B392F0">     http_req_receiving.............:</span><span style="color:#9ECBFF"> avg=417.46µs</span><span style="color:#9ECBFF"> min=103.5µs</span><span style="color:#9ECBFF">  med=363.64µs</span><span style="color:#9ECBFF"> max=11.21ms</span><span style="color:#9ECBFF">  p</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">90</span><span style="color:#E1E4E8">)</span><span style="color:#9ECBFF">=633.19µs</span><span style="color:#9ECBFF"> p</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">95</span><span style="color:#E1E4E8">)</span><span style="color:#9ECBFF">=766.71µs</span></span>
+<span class="line"><span style="color:#B392F0">     http_req_sending...............:</span><span style="color:#9ECBFF"> avg=346.35µs</span><span style="color:#9ECBFF"> min=65.42µs</span><span style="color:#9ECBFF">  med=310.89µs</span><span style="color:#9ECBFF"> max=2.73ms</span><span style="color:#9ECBFF">   p</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">90</span><span style="color:#E1E4E8">)</span><span style="color:#9ECBFF">=531.17µs</span><span style="color:#9ECBFF"> p</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">95</span><span style="color:#E1E4E8">)</span><span style="color:#9ECBFF">=645.74µs</span></span>
+<span class="line"><span style="color:#B392F0">     http_req_tls_handshaking.......:</span><span style="color:#9ECBFF"> avg=4.85ms</span><span style="color:#9ECBFF">   min=0s</span><span style="color:#9ECBFF">       med=0s</span><span style="color:#9ECBFF">       max=393.86ms</span><span style="color:#9ECBFF"> p</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">90</span><span style="color:#E1E4E8">)</span><span style="color:#9ECBFF">=0s</span><span style="color:#9ECBFF">       p</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">95</span><span style="color:#E1E4E8">)</span><span style="color:#9ECBFF">=0s</span></span>
+<span class="line"><span style="color:#B392F0">     http_req_waiting...............:</span><span style="color:#9ECBFF"> avg=201.89ms</span><span style="color:#9ECBFF"> min=154.02ms</span><span style="color:#9ECBFF"> med=182.51ms</span><span style="color:#9ECBFF"> max=832.89ms</span><span style="color:#9ECBFF"> p</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">90</span><span style="color:#E1E4E8">)</span><span style="color:#9ECBFF">=195.27ms</span><span style="color:#9ECBFF"> p</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">95</span><span style="color:#E1E4E8">)</span><span style="color:#9ECBFF">=362.27ms</span></span>
+<span class="line"><span style="color:#B392F0">     http_reqs......................:</span><span style="color:#79B8FF"> 1501</span><span style="color:#9ECBFF">   10.645297/s</span></span>
+<span class="line"><span style="color:#B392F0">     iteration_duration.............:</span><span style="color:#9ECBFF"> avg=1.21s</span><span style="color:#9ECBFF">    min=1.17s</span><span style="color:#9ECBFF">    med=1.18s</span><span style="color:#9ECBFF">    max=2.08s</span><span style="color:#9ECBFF">    p</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">90</span><span style="color:#E1E4E8">)</span><span style="color:#9ECBFF">=1.21s</span><span style="color:#9ECBFF">    p</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">95</span><span style="color:#E1E4E8">)</span><span style="color:#9ECBFF">=1.4s</span></span>
+<span class="line"><span style="color:#B392F0">     iterations.....................:</span><span style="color:#79B8FF"> 1501</span><span style="color:#9ECBFF">   10.645297/s</span></span>
+<span class="line"><span style="color:#B392F0">     vus............................:</span><span style="color:#79B8FF"> 1</span><span style="color:#9ECBFF">      min=</span><span style="color:#79B8FF">1</span><span style="color:#9ECBFF">       max=</span><span style="color:#79B8FF">20</span></span>
+<span class="line"><span style="color:#B392F0">     vus_max........................:</span><span style="color:#79B8FF"> 20</span><span style="color:#9ECBFF">     min=</span><span style="color:#79B8FF">20</span><span style="color:#9ECBFF">      max=</span><span style="color:#79B8FF">20</span></span></code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>メトリクス名</th><th>内容</th></tr></thead><tbody><tr><td>checks</td><td>チェックの成功率</td></tr><tr><td>data_received</td><td>受信したデータ量</td></tr><tr><td>data_sent</td><td>送信したデータ量</td></tr><tr><td>http_req_blocked</td><td>リクエストが開始されるまでのブロック時間</td></tr><tr><td>http_req_connecting</td><td>TCP コネクションを確立するのに要した時間</td></tr><tr><td>http_req_duration</td><td>リクエストに要した総時間 ( <code>http_req_sending + http_req_waiting + http_req_receiving</code> )</td></tr><tr><td>http_req_failed</td><td>失敗したリクエストの割合</td></tr><tr><td>http_req_receiving</td><td>リモートホストからデータ応答に要した時間</td></tr><tr><td>http_req_sending</td><td>リモートホストへのデータ送信に要した時間</td></tr><tr><td>http_req_tls_handshaking</td><td>TLS セッションのハンドシェイクに要した時間</td></tr><tr><td>http_req_waiting</td><td>リモートホストからの応答を待つのに要した時間</td></tr><tr><td>http_reqs</td><td>発生したリクエスト件数</td></tr><tr><td>iteration_duration</td><td>1 回のループに要した時間</td></tr><tr><td>iterations</td><td><code>default function</code> が実行された回数</td></tr><tr><td>vus</td><td>バーチャルユーザ数</td></tr><tr><td>vus_max</td><td>最大のバーチャルユーザ数</td></tr></tbody></table>  </div> <footer class="post-footer" data-astro-cid-bvzihdzo> <a href="/" data-astro-cid-bvzihdzo>&larr; 一覧に戻る</a> </footer> </article>  </main> </div> </body></html> 

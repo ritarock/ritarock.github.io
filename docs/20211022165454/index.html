@@ -1,0 +1,636 @@
+<!DOCTYPE html><html lang="ja" data-astro-cid-sckkx6r4> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="icon" href="/favicon.ico"><meta name="generator" content="Astro v5.17.2"><meta name="description" content="my-docs"><title>prisma-client-goを試した | my-docs</title><style>[data-astro-cid-sckkx6r4]{margin:0;padding:0;box-sizing:border-box}html{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif;line-height:1.7;color:#333;background-color:#fafafa}.container[data-astro-cid-sckkx6r4]{max-width:900px;margin:0 auto;padding:0 1.5rem;min-height:100dvh;display:flex;flex-direction:column}.header[data-astro-cid-sckkx6r4]{display:flex;justify-content:space-between;align-items:center;padding:.5rem 0;padding-bottom:0}.header-title[data-astro-cid-sckkx6r4]{font-size:1.5rem;font-weight:700;color:#111;text-decoration:none}nav[data-astro-cid-sckkx6r4]{display:flex;gap:1.5rem}nav[data-astro-cid-sckkx6r4] a[data-astro-cid-sckkx6r4]{color:#555;text-decoration:none;font-size:.9rem}nav[data-astro-cid-sckkx6r4] a[data-astro-cid-sckkx6r4]:hover{color:#111}main[data-astro-cid-sckkx6r4]{flex:1;padding:1rem 0}
+.post-header[data-astro-cid-bvzihdzo]{margin-bottom:2rem}.post-header[data-astro-cid-bvzihdzo] h1[data-astro-cid-bvzihdzo]{font-size:2rem;font-weight:700;color:#111;line-height:1.3;margin-bottom:.75rem}.post-meta[data-astro-cid-bvzihdzo]{font-size:.9rem;color:#888}.updated[data-astro-cid-bvzihdzo]{margin-left:.5rem}.tags[data-astro-cid-bvzihdzo]{display:flex;gap:.5rem;margin-top:.75rem;flex-wrap:wrap}.tag[data-astro-cid-bvzihdzo]{font-size:.8rem;background-color:#f0f0f0;color:#555;padding:.2rem .6rem;border-radius:4px}.post-content[data-astro-cid-bvzihdzo]{font-size:1rem;line-height:1.85;color:#333}.post-content[data-astro-cid-bvzihdzo] h2{font-size:1.5rem;font-weight:700;margin-top:2.5rem;margin-bottom:1rem;color:#111}.post-content[data-astro-cid-bvzihdzo] h3{font-size:1.25rem;font-weight:600;margin-top:2rem;margin-bottom:.75rem;color:#222}.post-content[data-astro-cid-bvzihdzo] p{margin-bottom:1.25rem}.post-content[data-astro-cid-bvzihdzo] ul,.post-content[data-astro-cid-bvzihdzo] ol{margin-bottom:1.25rem;padding-left:1.5rem}.post-content[data-astro-cid-bvzihdzo] li{margin-bottom:.4rem}.post-content[data-astro-cid-bvzihdzo] code{font-family:SF Mono,Fira Code,Fira Mono,Menlo,monospace;font-size:.9em;background-color:#f5f5f5;padding:.15rem .35rem;border-radius:3px}.post-content[data-astro-cid-bvzihdzo] pre{background-color:#1e1e1e;color:#d4d4d4;padding:1.25rem;border-radius:6px;overflow-x:auto;margin-bottom:1.25rem}.post-content[data-astro-cid-bvzihdzo] pre code{background:none;padding:0;font-size:.85rem}.post-content[data-astro-cid-bvzihdzo] blockquote{border-left:3px solid #ddd;padding-left:1rem;color:#666;margin-bottom:1.25rem}.post-footer[data-astro-cid-bvzihdzo]{margin-top:3rem;padding-top:1.5rem;border-top:1px solid #e0e0e0}.post-footer[data-astro-cid-bvzihdzo] a[data-astro-cid-bvzihdzo]{color:#555;text-decoration:none;font-size:.9rem}.post-footer[data-astro-cid-bvzihdzo] a[data-astro-cid-bvzihdzo]:hover{color:#111}
+</style></head> <body data-astro-cid-sckkx6r4> <div class="container" data-astro-cid-sckkx6r4> <header class="header" data-astro-cid-sckkx6r4> <a href="/" class="header-title" data-astro-cid-sckkx6r4>my-docs</a> </header> <main data-astro-cid-sckkx6r4>  <article class="post" data-astro-cid-bvzihdzo> <header class="post-header" data-astro-cid-bvzihdzo> <h1 data-astro-cid-bvzihdzo>prisma-client-goを試した</h1> <div class="post-meta" data-astro-cid-bvzihdzo> <time datetime="2021-10-22T16:54:54.000Z" data-astro-cid-bvzihdzo>2021-10-22</time>  </div> <div class="tags" data-astro-cid-bvzihdzo> <span class="tag" data-astro-cid-bvzihdzo>golang</span> </div> </header> <div class="post-content" data-astro-cid-bvzihdzo>  <h2 id="prisma-のセットアップ">prisma のセットアップ</h2>
+<p>まずは project の作成から。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> go</span><span style="color:#9ECBFF"> mod</span><span style="color:#9ECBFF"> init</span><span style="color:#9ECBFF"> backend</span></span></code></pre>
+<p>client のインストール。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> go</span><span style="color:#9ECBFF"> get</span><span style="color:#9ECBFF"> github.com/prisma/prisma-client-go</span></span></code></pre>
+<p>スキーマの作成。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> npx</span><span style="color:#9ECBFF"> prisma</span><span style="color:#9ECBFF"> init</span></span></code></pre>
+<p><code>prisma/schema.prisma</code> と <code>.env</code> (と .gitignore ) が生成される。</p>
+<p><code>.env</code> ファイルは <code>DATABASE_URL</code> を修正。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span># Environment variables declared in this file are automatically made available to Prisma.</span></span>
+<span class="line"><span># See the documentation for more detail: https://pris.ly/d/prisma-schema#using-environment-variables</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span># Prisma supports the native connection string format for PostgreSQL, MySQL, SQLite, SQL Server and MongoDB (Preview).</span></span>
+<span class="line"><span># See the documentation for all the connection string options: https://pris.ly/d/connection-strings</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>DATABASE_URL="mysql://app:password@localhost:3306/app"</span></span></code></pre>
+<p><code>prisma/schema.prisma</code> は <code>client</code> を <code>prisma-client-go</code> に、 <code>datasource</code> を <code>mysql</code> に修正。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>// This is your Prisma schema file,</span></span>
+<span class="line"><span>// learn more about it in the docs: https://pris.ly/d/prisma-schema</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>generator client {</span></span>
+<span class="line"><span>  provider = "go run github.com/prisma/prisma-client-go"</span></span>
+<span class="line"><span>}</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>datasource db {</span></span>
+<span class="line"><span>  provider = "mysql"</span></span>
+<span class="line"><span>  url      = env("DATABASE_URL")</span></span>
+<span class="line"><span>}</span></span></code></pre>
+<p><code>Task</code> モデルを定義する。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>// This is your Prisma schema file,</span></span>
+<span class="line"><span>// learn more about it in the docs: https://pris.ly/d/prisma-schema</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>generator client {</span></span>
+<span class="line"><span>  provider = "go run github.com/prisma/prisma-client-go"</span></span>
+<span class="line"><span>}</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>datasource db {</span></span>
+<span class="line"><span>  provider = "mysql"</span></span>
+<span class="line"><span>  url      = env("DATABASE_URL")</span></span>
+<span class="line"><span>}</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>model Task {</span></span>
+<span class="line"><span>  id String @default(cuid()) @id</span></span>
+<span class="line"><span>  createdAt DateTime @default(now())</span></span>
+<span class="line"><span>  updatedAt DateTime @updatedAt</span></span>
+<span class="line"><span>  title String</span></span>
+<span class="line"><span>  status Boolean</span></span>
+<span class="line"><span>  desc String?</span></span>
+<span class="line"><span>}</span></span></code></pre>
+<p>prisma クライアントの作成.
+<code>prisma/db/</code> が生成される。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> go</span><span style="color:#9ECBFF"> run</span><span style="color:#9ECBFF"> github.com/prisma/prisma-client-go</span><span style="color:#9ECBFF"> generate</span></span></code></pre>
+<p>DB にスキーマを反映させる。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> go</span><span style="color:#9ECBFF"> run</span><span style="color:#9ECBFF"> github.com/prisma/prisma-client-go</span><span style="color:#9ECBFF"> migrate</span><span style="color:#9ECBFF"> dev</span><span style="color:#79B8FF"> --name</span><span style="color:#9ECBFF"> create_task</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">~</span><span style="color:#E1E4E8">~</span></span>
+<span class="line"><span style="color:#F97583">~</span><span style="color:#E1E4E8">~</span></span>
+<span class="line"><span style="color:#B392F0">migrations/</span></span>
+<span class="line"><span style="color:#B392F0">  └─</span><span style="color:#9ECBFF"> 20211022082219_create_task/</span></span>
+<span class="line"><span style="color:#B392F0">    └─</span><span style="color:#9ECBFF"> migration.sql</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">Your</span><span style="color:#9ECBFF"> database</span><span style="color:#9ECBFF"> is</span><span style="color:#9ECBFF"> now</span><span style="color:#9ECBFF"> in</span><span style="color:#9ECBFF"> sync</span><span style="color:#9ECBFF"> with</span><span style="color:#9ECBFF"> your</span><span style="color:#9ECBFF"> schema.</span></span></code></pre>
+<p>既にスキーマファイルが存在する場合。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">go</span><span style="color:#9ECBFF"> run</span><span style="color:#9ECBFF"> github.com/prisma/prisma-client-go</span><span style="color:#9ECBFF"> migrate</span><span style="color:#9ECBFF"> dev</span></span></code></pre>
+<p><code>prisma/migrations/20211022082219_create_task/migration.sql</code> を見てみる。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#6A737D">-- CreateTable</span></span>
+<span class="line"><span style="color:#F97583">CREATE</span><span style="color:#F97583"> TABLE</span><span style="color:#E1E4E8"> `</span><span style="color:#B392F0">Task</span><span style="color:#E1E4E8">` (</span></span>
+<span class="line"><span style="color:#9ECBFF">    `id`</span><span style="color:#F97583"> VARCHAR</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">191</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">NOT NULL</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#9ECBFF">    `createdAt`</span><span style="color:#F97583"> DATETIME</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">NOT NULL</span><span style="color:#F97583"> DEFAULT</span><span style="color:#79B8FF"> CURRENT_TIMESTAMP</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">),</span></span>
+<span class="line"><span style="color:#9ECBFF">    `updatedAt`</span><span style="color:#F97583"> DATETIME</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">NOT NULL</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#9ECBFF">    `title`</span><span style="color:#F97583"> VARCHAR</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">191</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">NOT NULL</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#9ECBFF">    `status`</span><span style="color:#F97583"> BOOLEAN</span><span style="color:#F97583"> NOT NULL</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#9ECBFF">    `desc`</span><span style="color:#F97583"> VARCHAR</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">191</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">NULL</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">    PRIMARY KEY</span><span style="color:#E1E4E8"> (</span><span style="color:#9ECBFF">`id`</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">) </span><span style="color:#F97583">DEFAULT</span><span style="color:#F97583"> CHARACTER</span><span style="color:#F97583"> SET</span><span style="color:#E1E4E8"> utf8mb4 </span><span style="color:#F97583">COLLATE</span><span style="color:#E1E4E8"> utf8mb4_unicode_ci;</span></span></code></pre>
+<p>テーブルも作成されている。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>mysql> show tables;</span></span>
+<span class="line"><span>+--------------------+</span></span>
+<span class="line"><span>| Tables_in_app      |</span></span>
+<span class="line"><span>+--------------------+</span></span>
+<span class="line"><span>| _prisma_migrations |</span></span>
+<span class="line"><span>| Task               |</span></span>
+<span class="line"><span>+--------------------+</span></span></code></pre>
+<p><code>Comment</code> モデルを定義し、 <code>Task</code> モデルと関連付けを行う。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>model Task {</span></span>
+<span class="line"><span>  id String @default(cuid()) @id</span></span>
+<span class="line"><span>  createdAt DateTime @default(now())</span></span>
+<span class="line"><span>  updatedAt DateTime @updatedAt</span></span>
+<span class="line"><span>  title String</span></span>
+<span class="line"><span>  status Boolean</span></span>
+<span class="line"><span>  desc String?</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>  comments Comment[]</span></span>
+<span class="line"><span>}</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>model Comment {</span></span>
+<span class="line"><span>  id String @default(cuid()) @id</span></span>
+<span class="line"><span>  createdAt DateTime @default(now())</span></span>
+<span class="line"><span>  updatedAt DateTime @updatedAt</span></span>
+<span class="line"><span>  content String</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>  task Task @relation(fields: [taskId], references: [id])</span></span>
+<span class="line"><span>  taskId String</span></span></code></pre>
+<p>migration を行う。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> go</span><span style="color:#9ECBFF"> run</span><span style="color:#9ECBFF"> github.com/prisma/prisma-client-go</span><span style="color:#9ECBFF"> migrate</span><span style="color:#9ECBFF"> dev</span><span style="color:#79B8FF"> --name</span><span style="color:#9ECBFF"> add_comment_model</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">~</span><span style="color:#E1E4E8">~</span></span>
+<span class="line"><span style="color:#F97583">~</span><span style="color:#E1E4E8">~</span></span>
+<span class="line"><span style="color:#B392F0">migrations/</span></span>
+<span class="line"><span style="color:#B392F0">  └─</span><span style="color:#9ECBFF"> 20211022083117_add_comment_model/</span></span>
+<span class="line"><span style="color:#B392F0">    └─</span><span style="color:#9ECBFF"> migration.sql</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">Your</span><span style="color:#9ECBFF"> database</span><span style="color:#9ECBFF"> is</span><span style="color:#9ECBFF"> now</span><span style="color:#9ECBFF"> in</span><span style="color:#9ECBFF"> sync</span><span style="color:#9ECBFF"> with</span><span style="color:#9ECBFF"> your</span><span style="color:#9ECBFF"> schema.</span></span></code></pre>
+<p><code>migrations/20211022083117_add_comment_model/migration.sql</code> を見る。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="sql"><code><span class="line"><span style="color:#6A737D">-- CreateTable</span></span>
+<span class="line"><span style="color:#F97583">CREATE</span><span style="color:#F97583"> TABLE</span><span style="color:#E1E4E8"> `</span><span style="color:#B392F0">Comment</span><span style="color:#E1E4E8">` (</span></span>
+<span class="line"><span style="color:#9ECBFF">    `id`</span><span style="color:#F97583"> VARCHAR</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">191</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">NOT NULL</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#9ECBFF">    `createdAt`</span><span style="color:#F97583"> DATETIME</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">NOT NULL</span><span style="color:#F97583"> DEFAULT</span><span style="color:#79B8FF"> CURRENT_TIMESTAMP</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">),</span></span>
+<span class="line"><span style="color:#9ECBFF">    `updatedAt`</span><span style="color:#F97583"> DATETIME</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">NOT NULL</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#9ECBFF">    `content`</span><span style="color:#F97583"> VARCHAR</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">191</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">NOT NULL</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#9ECBFF">    `taskId`</span><span style="color:#F97583"> VARCHAR</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">191</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">NOT NULL</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">    PRIMARY KEY</span><span style="color:#E1E4E8"> (</span><span style="color:#9ECBFF">`id`</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">) </span><span style="color:#F97583">DEFAULT</span><span style="color:#F97583"> CHARACTER</span><span style="color:#F97583"> SET</span><span style="color:#E1E4E8"> utf8mb4 </span><span style="color:#F97583">COLLATE</span><span style="color:#E1E4E8"> utf8mb4_unicode_ci;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">-- AddForeignKey</span></span>
+<span class="line"><span style="color:#F97583">ALTER</span><span style="color:#F97583"> TABLE</span><span style="color:#9ECBFF"> `Comment`</span><span style="color:#F97583"> ADD</span><span style="color:#F97583"> CONSTRAINT</span><span style="color:#9ECBFF"> `Comment_taskId_fkey`</span><span style="color:#F97583"> FOREIGN KEY</span><span style="color:#E1E4E8"> (</span><span style="color:#9ECBFF">`taskId`</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">REFERENCES</span><span style="color:#9ECBFF"> `Task`</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">`id`</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">ON DELETE</span><span style="color:#E1E4E8"> RESTRICT </span><span style="color:#F97583">ON UPDATE CASCADE</span><span style="color:#E1E4E8">;</span></span></code></pre>
+<h2 id="prisma-studio-を使う">Prisma Studio を使う</h2>
+<p><code>localhost:5555</code> で起動する。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> npx</span><span style="color:#9ECBFF"> prisma</span><span style="color:#9ECBFF"> studio</span></span></code></pre>
+<h2 id="prisma-api-syntax">prisma api syntax</h2>
+<h3 id="全件取得する">全件取得する</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#E1E4E8">tasks, err </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> client.Task.</span><span style="color:#B392F0">FindMany</span><span style="color:#E1E4E8">().</span><span style="color:#B392F0">Exec</span><span style="color:#E1E4E8">(context.</span><span style="color:#B392F0">Background</span><span style="color:#E1E4E8">())</span></span></code></pre>
+<h3 id="クエリで取得する">クエリで取得する</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#E1E4E8">tasks, err </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> client.Task.</span><span style="color:#B392F0">FindMany</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#E1E4E8">  db.Task.Title.</span><span style="color:#B392F0">Equals</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"1st task"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#6A737D">  // &#x3C;model>.&#x3C;field>.&#x3C;method>.(value) 基本的にこの形式で使う</span></span>
+<span class="line"><span style="color:#E1E4E8">).</span><span style="color:#B392F0">Exec</span><span style="color:#E1E4E8">(context.</span><span style="color:#B392F0">Background</span><span style="color:#E1E4E8">())</span></span></code></pre>
+<h3 id="一意なデータを取得する">一意なデータを取得する</h3>
+<p><code>schema.prisma</code> で <code>@id</code> 、 <code>@unique</code> でマークされたもののみに使用可能。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#E1E4E8">task, err </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> client.Task.</span><span style="color:#B392F0">FindUnique</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#E1E4E8">  db.Task.ID.</span><span style="color:#B392F0">Equals</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"1234567890"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">).</span><span style="color:#B392F0">Exec</span><span style="color:#E1E4E8">(context.</span><span style="color:#B392F0">Background</span><span style="color:#E1E4E8">())</span></span></code></pre>
+<h3 id="最初に見つかった-1-件を取得する">最初に見つかった 1 件を取得する</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#E1E4E8">task, err </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> client.Task.</span><span style="color:#B392F0">FindFirst</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#E1E4E8">  db.Task.Title.</span><span style="color:#B392F0">Equals</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"1st task"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">).</span><span style="color:#B392F0">Exec</span><span style="color:#E1E4E8">(context.</span><span style="color:#B392F0">Background</span><span style="color:#E1E4E8">())</span></span></code></pre>
+<h3 id="スキーマのデータ型によってよしなにできる">スキーマのデータ型によってよしなにできる</h3>
+<ul>
+<li><code>String Filter</code></li>
+</ul>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#E1E4E8">tasks, err </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> client.Task.</span><span style="color:#B392F0">FindMany</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#6A737D">  // Title が "1st task" と一致する Task を取得</span></span>
+<span class="line"><span style="color:#E1E4E8">  db.Task.Title.</span><span style="color:#B392F0">Equals</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"1st task"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">  // Title に "task" を含む Task を取得</span></span>
+<span class="line"><span style="color:#6A737D">  // db.Task.Title.Contains("task")</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">  // Title が "1st" から始まる Task を取得</span></span>
+<span class="line"><span style="color:#6A737D">  // db.Task.Title.StartsWith("1st")</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">  // Title が "task" で終わる Task を取得</span></span>
+<span class="line"><span style="color:#6A737D">  // db.Task.Title.EndsWith("task")</span></span>
+<span class="line"><span style="color:#E1E4E8">).</span><span style="color:#B392F0">Exec</span><span style="color:#E1E4E8">(context.</span><span style="color:#B392F0">Background</span><span style="color:#E1E4E8">())</span></span></code></pre>
+<ul>
+<li><code>Number Filter</code></li>
+</ul>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#6A737D">// &#x3C;Field> が 50 である &#x3C;Model> を取得</span></span>
+<span class="line"><span style="color:#E1E4E8">db.</span><span style="color:#F97583">&#x3C;</span><span style="color:#E1E4E8">Model</span><span style="color:#F97583">></span><span style="color:#E1E4E8">.</span><span style="color:#F97583">&#x3C;</span><span style="color:#E1E4E8">Field</span><span style="color:#F97583">></span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">Equals</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">50</span><span style="color:#E1E4E8">).</span><span style="color:#B392F0">Exec</span><span style="color:#E1E4E8">(context.</span><span style="color:#B392F0">Background</span><span style="color:#E1E4E8">())</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// &#x3C;Field> が 50 以下の &#x3C;Model> を取得</span></span>
+<span class="line"><span style="color:#E1E4E8">db.</span><span style="color:#F97583">&#x3C;</span><span style="color:#E1E4E8">Model</span><span style="color:#F97583">></span><span style="color:#E1E4E8">.</span><span style="color:#F97583">&#x3C;</span><span style="color:#E1E4E8">Field</span><span style="color:#F97583">></span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">Lte</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">50</span><span style="color:#E1E4E8">).</span><span style="color:#B392F0">Exec</span><span style="color:#E1E4E8">(context.</span><span style="color:#B392F0">Background</span><span style="color:#E1E4E8">())</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// &#x3C;Field> が 50 未満の &#x3C;Model> を取得</span></span>
+<span class="line"><span style="color:#E1E4E8">db.</span><span style="color:#F97583">&#x3C;</span><span style="color:#E1E4E8">Model</span><span style="color:#F97583">></span><span style="color:#E1E4E8">.</span><span style="color:#F97583">&#x3C;</span><span style="color:#E1E4E8">Field</span><span style="color:#F97583">></span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">Lt</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">50</span><span style="color:#E1E4E8">).</span><span style="color:#B392F0">Exec</span><span style="color:#E1E4E8">(context.</span><span style="color:#B392F0">Background</span><span style="color:#E1E4E8">())</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// &#x3C;Field> が 50 以上の &#x3C;Model> を取得</span></span>
+<span class="line"><span style="color:#E1E4E8">db.</span><span style="color:#F97583">&#x3C;</span><span style="color:#E1E4E8">Model</span><span style="color:#F97583">></span><span style="color:#E1E4E8">.</span><span style="color:#F97583">&#x3C;</span><span style="color:#E1E4E8">Field</span><span style="color:#F97583">></span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">Gte</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">50</span><span style="color:#E1E4E8">).</span><span style="color:#B392F0">Exec</span><span style="color:#E1E4E8">(context.</span><span style="color:#B392F0">Background</span><span style="color:#E1E4E8">())</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// &#x3C;Field> が 50 より大きいの &#x3C;Model> を取得</span></span>
+<span class="line"><span style="color:#E1E4E8">db.</span><span style="color:#F97583">&#x3C;</span><span style="color:#E1E4E8">Model</span><span style="color:#F97583">></span><span style="color:#E1E4E8">.</span><span style="color:#F97583">&#x3C;</span><span style="color:#E1E4E8">Field</span><span style="color:#F97583">></span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">Gte</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">50</span><span style="color:#E1E4E8">).</span><span style="color:#B392F0">Exec</span><span style="color:#E1E4E8">(context.</span><span style="color:#B392F0">Background</span><span style="color:#E1E4E8">())</span></span></code></pre>
+<ul>
+<li><code>Time Filter</code></li>
+</ul>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#E1E4E8">tasks, err </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> client.Task.</span><span style="color:#B392F0">FindMany</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#6A737D">  // 昨日作成された task を取得する</span></span>
+<span class="line"><span style="color:#E1E4E8">  db.Task.CreatedAt.</span><span style="color:#B392F0">Equals</span><span style="color:#E1E4E8">(yesterday)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">  // 過去 6 時間で作られた task を取得する (createdAt > 6 hours ago)</span></span>
+<span class="line"><span style="color:#6A737D">  // db.Task.Gt(time.Now().Add(-6 * time.Hour))</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">  // 過去 6 時間で作られた task を取得する (createdAt >= 6 hours ago)</span></span>
+<span class="line"><span style="color:#6A737D">  // db.Task.Gte(time.Now().Add(-6 * time.Hour))</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">  // 昨日作成された task を取得する</span></span>
+<span class="line"><span style="color:#6A737D">  // db.Task.Lt(time.Now().Truncate(24 * time.Hour))</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">  // 昨日作成された task を取得する (本日 00:00:00 を含む)</span></span>
+<span class="line"><span style="color:#6A737D">  // db.Task.Lte(time.Now().Truncate(24 * time.Hour))</span></span>
+<span class="line"><span style="color:#E1E4E8">).</span><span style="color:#B392F0">Exec</span><span style="color:#E1E4E8">(context.</span><span style="color:#B392F0">Background</span><span style="color:#E1E4E8">())</span></span></code></pre>
+<h3 id="null-関連">NULL 関連</h3>
+<p>null であるものを取得する。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#E1E4E8">db.Task.Content.</span><span style="color:#B392F0">EqualsOptional</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">nil</span><span style="color:#E1E4E8">).</span><span style="color:#B392F0">Exec</span><span style="color:#E1E4E8">(context.</span><span style="color:#B392F0">Background</span><span style="color:#E1E4E8">())</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">content </span><span style="color:#F97583">:=</span><span style="color:#9ECBFF"> "string"</span></span>
+<span class="line"><span style="color:#E1E4E8">db.Task.Content.</span><span style="color:#B392F0">EqualsOptional</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">&#x26;</span><span style="color:#E1E4E8">content).</span><span style="color:#B392F0">Exec</span><span style="color:#E1E4E8">(context.</span><span style="color:#B392F0">Background</span><span style="color:#E1E4E8">())</span></span></code></pre>
+<h3 id="他にも">他にも</h3>
+<ul>
+<li><code>Not</code></li>
+</ul>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#E1E4E8">db.Task.</span><span style="color:#B392F0">Not</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#E1E4E8">  db.Task.Title.</span><span style="color:#B392F0">Equals</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"1st task"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">).</span><span style="color:#B392F0">Exec</span><span style="color:#E1E4E8">(context.</span><span style="color:#B392F0">Background</span><span style="color:#E1E4E8">())</span></span></code></pre>
+<ul>
+<li><code>Or</code></li>
+</ul>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#E1E4E8">db.Task.</span><span style="color:#B392F0">Or</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#E1E4E8">  db.Task.Title.</span><span style="color:#B392F0">Equals</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"1st task"</span><span style="color:#E1E4E8">),</span></span>
+<span class="line"><span style="color:#E1E4E8">  db.Task.Desc.</span><span style="color:#B392F0">Equals</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"new task"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">).</span><span style="color:#B392F0">Exec</span><span style="color:#E1E4E8">(context.</span><span style="color:#B392F0">Background</span><span style="color:#E1E4E8">())</span></span></code></pre>
+<h3 id="関連付けされたクエリ">関連付けされたクエリ</h3>
+<p>task の title が “1st task” で comment が “new content” であるもの task を取得する。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#E1E4E8">tasks, err </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> client.Task.</span><span style="color:#B392F0">FindMany</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#E1E4E8">  db.Task.Title.</span><span style="color:#B392F0">Equals</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"1st task"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">  db.Task.Comments.</span><span style="color:#B392F0">Some</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#E1E4E8">    db.Comment.Content.</span><span style="color:#B392F0">Equals</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"new content"</span><span style="color:#E1E4E8">),</span></span>
+<span class="line"><span style="color:#E1E4E8">  ),</span></span>
+<span class="line"><span style="color:#E1E4E8">).</span><span style="color:#B392F0">Exec</span><span style="color:#E1E4E8">(context.</span><span style="color:#B392F0">Background</span><span style="color:#E1E4E8">())</span></span></code></pre>
+<h3 id="create">create</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#E1E4E8">created, err </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> client.Task.</span><span style="color:#B392F0">CreateOne</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#E1E4E8">  db.Task.Title.</span><span style="color:#B392F0">Set</span><span style="color:#E1E4E8">(newTask.Title),</span></span>
+<span class="line"><span style="color:#E1E4E8">  db.Task.Status.</span><span style="color:#B392F0">Set</span><span style="color:#E1E4E8">(newTask.Status),</span></span>
+<span class="line"><span style="color:#E1E4E8">  db.Task.Desc.</span><span style="color:#B392F0">Set</span><span style="color:#E1E4E8">(newTask.Desc),</span></span>
+<span class="line"><span style="color:#E1E4E8">).</span><span style="color:#B392F0">Exec</span><span style="color:#E1E4E8">(context.</span><span style="color:#B392F0">Background</span><span style="color:#E1E4E8">())</span></span></code></pre>
+<p>関連付けのあるデータの場合。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#E1E4E8">created, err </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> client.Comment.</span><span style="color:#B392F0">CreateOne</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#E1E4E8">  db.Comment.Content.</span><span style="color:#B392F0">Set</span><span style="color:#E1E4E8">(newComment.Content),</span></span>
+<span class="line"><span style="color:#E1E4E8">  db.Comment.Task.</span><span style="color:#B392F0">Link</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#E1E4E8">    db.Task.ID.</span><span style="color:#B392F0">Equals</span><span style="color:#E1E4E8">(taskId),</span></span>
+<span class="line"><span style="color:#E1E4E8">  ),</span></span>
+<span class="line"><span style="color:#E1E4E8">).</span><span style="color:#B392F0">Exec</span><span style="color:#E1E4E8">(context.</span><span style="color:#B392F0">Background</span><span style="color:#E1E4E8">())</span></span></code></pre>
+<h3 id="update">update</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#E1E4E8">updated, err </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> client.Task.</span><span style="color:#B392F0">FindUnique</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#E1E4E8">  db.Task.ID.</span><span style="color:#B392F0">Equals</span><span style="color:#E1E4E8">(taskId),</span></span>
+<span class="line"><span style="color:#E1E4E8">).</span><span style="color:#B392F0">Update</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#E1E4E8">  db.Task.Title.</span><span style="color:#B392F0">Set</span><span style="color:#E1E4E8">(newTask.Title),</span></span>
+<span class="line"><span style="color:#E1E4E8">  db.Task.Status.</span><span style="color:#B392F0">Set</span><span style="color:#E1E4E8">(newTask.Status),</span></span>
+<span class="line"><span style="color:#E1E4E8">  db.Task.Desc.</span><span style="color:#B392F0">Set</span><span style="color:#E1E4E8">(newTask.Desc),</span></span>
+<span class="line"><span style="color:#E1E4E8">).</span><span style="color:#B392F0">Exec</span><span style="color:#E1E4E8">(context.</span><span style="color:#B392F0">Background</span><span style="color:#E1E4E8">())</span></span></code></pre>
+<h3 id="delete">delete</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#E1E4E8">_, err </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> client.Task.</span><span style="color:#B392F0">FindUnique</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#E1E4E8">  db.Task.ID.</span><span style="color:#B392F0">Equals</span><span style="color:#E1E4E8">(taskId),</span></span>
+<span class="line"><span style="color:#E1E4E8">).</span><span style="color:#B392F0">Delete</span><span style="color:#E1E4E8">().</span><span style="color:#B392F0">Exec</span><span style="color:#E1E4E8">(context.</span><span style="color:#B392F0">Background</span><span style="color:#E1E4E8">())</span></span></code></pre>
+<h3 id="ソースコード全体">ソースコード全体</h3>
+<p>今回は <code>github.com/gorilla/mux</code> を使って API サーバを作った。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#F97583">package</span><span style="color:#B392F0"> main</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">backend/prisma/db</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">context</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">encoding/json</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">io</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">net/http</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">github.com/gorilla/mux</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">type</span><span style="color:#B392F0"> Task</span><span style="color:#F97583"> struct</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">	Id        </span><span style="color:#F97583">string</span><span style="color:#9ECBFF"> `json:"id"`</span></span>
+<span class="line"><span style="color:#E1E4E8">	CreatedAt </span><span style="color:#F97583">string</span><span style="color:#9ECBFF"> `json:"created_at"`</span></span>
+<span class="line"><span style="color:#E1E4E8">	UpdatedAt </span><span style="color:#F97583">string</span><span style="color:#9ECBFF"> `json:"updated_at"`</span></span>
+<span class="line"><span style="color:#E1E4E8">	Title     </span><span style="color:#F97583">string</span><span style="color:#9ECBFF"> `json:"title"`</span></span>
+<span class="line"><span style="color:#E1E4E8">	Status    </span><span style="color:#F97583">bool</span><span style="color:#9ECBFF">   `json:"status"`</span></span>
+<span class="line"><span style="color:#E1E4E8">	Desc      </span><span style="color:#F97583">string</span><span style="color:#9ECBFF"> `json:"string"`</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"><span style="color:#F97583">type</span><span style="color:#B392F0"> Comment</span><span style="color:#F97583"> struct</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">	Id        </span><span style="color:#F97583">string</span><span style="color:#9ECBFF"> `json:"id"`</span></span>
+<span class="line"><span style="color:#E1E4E8">	CreatedAt </span><span style="color:#F97583">string</span><span style="color:#9ECBFF"> `json:"created_at"`</span></span>
+<span class="line"><span style="color:#E1E4E8">	UpdatedAt </span><span style="color:#F97583">string</span><span style="color:#9ECBFF"> `json:"updated_at"`</span></span>
+<span class="line"><span style="color:#E1E4E8">	Content   </span><span style="color:#F97583">string</span><span style="color:#9ECBFF"> `json:"content"`</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">func</span><span style="color:#B392F0"> main</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#E1E4E8">	client </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> db.</span><span style="color:#B392F0">NewClient</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#F97583">	if</span><span style="color:#E1E4E8"> err </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> client.Prisma.</span><span style="color:#B392F0">Connect</span><span style="color:#E1E4E8">(); err </span><span style="color:#F97583">!=</span><span style="color:#79B8FF"> nil</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">		panic</span><span style="color:#E1E4E8">(err)</span></span>
+<span class="line"><span style="color:#E1E4E8">	}</span></span>
+<span class="line"><span style="color:#F97583">	defer</span><span style="color:#F97583"> func</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#F97583">		if</span><span style="color:#E1E4E8"> err </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> client.Prisma.</span><span style="color:#B392F0">Disconnect</span><span style="color:#E1E4E8">(); err </span><span style="color:#F97583">!=</span><span style="color:#79B8FF"> nil</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#B392F0">			panic</span><span style="color:#E1E4E8">(err)</span></span>
+<span class="line"><span style="color:#E1E4E8">		}</span></span>
+<span class="line"><span style="color:#E1E4E8">	}()</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">	router </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> mux.</span><span style="color:#B392F0">NewRouter</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">	router.</span><span style="color:#B392F0">HandleFunc</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"/tasks"</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">func</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">w</span><span style="color:#B392F0"> http</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">ResponseWriter</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">r</span><span style="color:#F97583"> *</span><span style="color:#B392F0">http</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">Request</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#F97583">		var</span><span style="color:#E1E4E8"> newTask </span><span style="color:#B392F0">Task</span></span>
+<span class="line"><span style="color:#E1E4E8">		err </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> r.</span><span style="color:#B392F0">ParseForm</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#F97583">		if</span><span style="color:#E1E4E8"> err </span><span style="color:#F97583">!=</span><span style="color:#79B8FF"> nil</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">			io.</span><span style="color:#B392F0">WriteString</span><span style="color:#E1E4E8">(w, </span><span style="color:#9ECBFF">"ERROR: create task"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">		}</span></span>
+<span class="line"><span style="color:#E1E4E8">		json.</span><span style="color:#B392F0">NewDecoder</span><span style="color:#E1E4E8">(r.Body).</span><span style="color:#B392F0">Decode</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">&#x26;</span><span style="color:#E1E4E8">newTask)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">		created, err </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> client.Task.</span><span style="color:#B392F0">CreateOne</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#E1E4E8">			db.Task.Title.</span><span style="color:#B392F0">Set</span><span style="color:#E1E4E8">(newTask.Title),</span></span>
+<span class="line"><span style="color:#E1E4E8">			db.Task.Status.</span><span style="color:#B392F0">Set</span><span style="color:#E1E4E8">(newTask.Status),</span></span>
+<span class="line"><span style="color:#E1E4E8">			db.Task.Desc.</span><span style="color:#B392F0">Set</span><span style="color:#E1E4E8">(newTask.Desc),</span></span>
+<span class="line"><span style="color:#E1E4E8">		).</span><span style="color:#B392F0">Exec</span><span style="color:#E1E4E8">(context.</span><span style="color:#B392F0">Background</span><span style="color:#E1E4E8">())</span></span>
+<span class="line"><span style="color:#F97583">		if</span><span style="color:#E1E4E8"> err </span><span style="color:#F97583">!=</span><span style="color:#79B8FF"> nil</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">			io.</span><span style="color:#B392F0">WriteString</span><span style="color:#E1E4E8">(w, </span><span style="color:#9ECBFF">"ERROR: create task"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">		}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">		var</span><span style="color:#E1E4E8"> response </span><span style="color:#F97583">struct</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">			Code </span><span style="color:#F97583">int</span><span style="color:#9ECBFF">    `json:"code"`</span></span>
+<span class="line"><span style="color:#E1E4E8">			Data []</span><span style="color:#B392F0">Task</span><span style="color:#9ECBFF"> `json:"data"`</span></span>
+<span class="line"><span style="color:#E1E4E8">		}</span></span>
+<span class="line"><span style="color:#E1E4E8">		response.Code </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 200</span></span>
+<span class="line"><span style="color:#E1E4E8">		response.Data </span><span style="color:#F97583">=</span><span style="color:#B392F0"> append</span><span style="color:#E1E4E8">(response.Data, </span><span style="color:#B392F0">Task</span><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#E1E4E8">			Id:        created.ID,</span></span>
+<span class="line"><span style="color:#E1E4E8">			CreatedAt: created.CreatedAt.</span><span style="color:#B392F0">String</span><span style="color:#E1E4E8">(),</span></span>
+<span class="line"><span style="color:#E1E4E8">			UpdatedAt: created.UpdatedAt.</span><span style="color:#B392F0">String</span><span style="color:#E1E4E8">(),</span></span>
+<span class="line"><span style="color:#E1E4E8">			Title:     created.Title,</span></span>
+<span class="line"><span style="color:#E1E4E8">			Status:    created.Status,</span></span>
+<span class="line"><span style="color:#E1E4E8">			Desc: </span><span style="color:#F97583">func</span><span style="color:#E1E4E8">() </span><span style="color:#F97583">string</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">				desc, ok </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> created.</span><span style="color:#B392F0">Desc</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#F97583">				if</span><span style="color:#F97583"> !</span><span style="color:#E1E4E8">ok {</span></span>
+<span class="line"><span style="color:#E1E4E8">					desc </span><span style="color:#F97583">=</span><span style="color:#9ECBFF"> ""</span></span>
+<span class="line"><span style="color:#E1E4E8">				}</span></span>
+<span class="line"><span style="color:#F97583">				return</span><span style="color:#E1E4E8"> desc</span></span>
+<span class="line"><span style="color:#E1E4E8">			}(),</span></span>
+<span class="line"><span style="color:#E1E4E8">		})</span></span>
+<span class="line"><span style="color:#E1E4E8">		resp, _ </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> json.</span><span style="color:#B392F0">Marshal</span><span style="color:#E1E4E8">(response)</span></span>
+<span class="line"><span style="color:#E1E4E8">		w.</span><span style="color:#B392F0">Header</span><span style="color:#E1E4E8">().</span><span style="color:#B392F0">Set</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Content-Type"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"application/json"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">		w.</span><span style="color:#B392F0">Write</span><span style="color:#E1E4E8">(resp)</span></span>
+<span class="line"><span style="color:#E1E4E8">	}).</span><span style="color:#B392F0">Methods</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"POST"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">	router.</span><span style="color:#B392F0">HandleFunc</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"/tasks/{task_id}"</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">func</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">w</span><span style="color:#B392F0"> http</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">ResponseWriter</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">r</span><span style="color:#F97583"> *</span><span style="color:#B392F0">http</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">Request</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#E1E4E8">		params </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> mux.</span><span style="color:#B392F0">Vars</span><span style="color:#E1E4E8">(r)</span></span>
+<span class="line"><span style="color:#E1E4E8">		taskId </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> params[</span><span style="color:#9ECBFF">"task_id"</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">		task, err </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> client.Task.</span><span style="color:#B392F0">FindUnique</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#E1E4E8">			db.Task.ID.</span><span style="color:#B392F0">Equals</span><span style="color:#E1E4E8">(taskId),</span></span>
+<span class="line"><span style="color:#E1E4E8">		).</span><span style="color:#B392F0">Exec</span><span style="color:#E1E4E8">(context.</span><span style="color:#B392F0">Background</span><span style="color:#E1E4E8">())</span></span>
+<span class="line"><span style="color:#F97583">		if</span><span style="color:#E1E4E8"> err </span><span style="color:#F97583">!=</span><span style="color:#79B8FF"> nil</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">			io.</span><span style="color:#B392F0">WriteString</span><span style="color:#E1E4E8">(w, </span><span style="color:#9ECBFF">"ERROR: read task"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">		}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">		var</span><span style="color:#E1E4E8"> response </span><span style="color:#F97583">struct</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">			Code </span><span style="color:#F97583">int</span><span style="color:#9ECBFF">    `json:"code"`</span></span>
+<span class="line"><span style="color:#E1E4E8">			Data []</span><span style="color:#B392F0">Task</span><span style="color:#9ECBFF"> `json:"data"`</span></span>
+<span class="line"><span style="color:#E1E4E8">		}</span></span>
+<span class="line"><span style="color:#E1E4E8">		response.Code </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 200</span></span>
+<span class="line"><span style="color:#E1E4E8">		response.Data </span><span style="color:#F97583">=</span><span style="color:#B392F0"> append</span><span style="color:#E1E4E8">(response.Data, </span><span style="color:#B392F0">Task</span><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#E1E4E8">			Id:        task.ID,</span></span>
+<span class="line"><span style="color:#E1E4E8">			CreatedAt: task.CreatedAt.</span><span style="color:#B392F0">String</span><span style="color:#E1E4E8">(),</span></span>
+<span class="line"><span style="color:#E1E4E8">			UpdatedAt: task.UpdatedAt.</span><span style="color:#B392F0">String</span><span style="color:#E1E4E8">(),</span></span>
+<span class="line"><span style="color:#E1E4E8">			Title:     task.Title,</span></span>
+<span class="line"><span style="color:#E1E4E8">			Status:    task.Status,</span></span>
+<span class="line"><span style="color:#E1E4E8">			Desc: </span><span style="color:#F97583">func</span><span style="color:#E1E4E8">() </span><span style="color:#F97583">string</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">				desc, ok </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> task.</span><span style="color:#B392F0">Desc</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#F97583">				if</span><span style="color:#F97583"> !</span><span style="color:#E1E4E8">ok {</span></span>
+<span class="line"><span style="color:#E1E4E8">					desc </span><span style="color:#F97583">=</span><span style="color:#9ECBFF"> ""</span></span>
+<span class="line"><span style="color:#E1E4E8">				}</span></span>
+<span class="line"><span style="color:#F97583">				return</span><span style="color:#E1E4E8"> desc</span></span>
+<span class="line"><span style="color:#E1E4E8">			}(),</span></span>
+<span class="line"><span style="color:#E1E4E8">		})</span></span>
+<span class="line"><span style="color:#E1E4E8">		resp, _ </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> json.</span><span style="color:#B392F0">Marshal</span><span style="color:#E1E4E8">(response)</span></span>
+<span class="line"><span style="color:#E1E4E8">		w.</span><span style="color:#B392F0">Header</span><span style="color:#E1E4E8">().</span><span style="color:#B392F0">Set</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Content-Type"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"application/json"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">		w.</span><span style="color:#B392F0">Write</span><span style="color:#E1E4E8">(resp)</span></span>
+<span class="line"><span style="color:#E1E4E8">	}).</span><span style="color:#B392F0">Methods</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"GET"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">	router.</span><span style="color:#B392F0">HandleFunc</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"/tasks/{task_id}"</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">func</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">w</span><span style="color:#B392F0"> http</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">ResponseWriter</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">r</span><span style="color:#F97583"> *</span><span style="color:#B392F0">http</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">Request</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#E1E4E8">		params </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> mux.</span><span style="color:#B392F0">Vars</span><span style="color:#E1E4E8">(r)</span></span>
+<span class="line"><span style="color:#E1E4E8">		taskId </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> params[</span><span style="color:#9ECBFF">"task_id"</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#F97583">		var</span><span style="color:#E1E4E8"> newTask </span><span style="color:#B392F0">Task</span></span>
+<span class="line"><span style="color:#E1E4E8">		err </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> r.</span><span style="color:#B392F0">ParseForm</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#F97583">		if</span><span style="color:#E1E4E8"> err </span><span style="color:#F97583">!=</span><span style="color:#79B8FF"> nil</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">			io.</span><span style="color:#B392F0">WriteString</span><span style="color:#E1E4E8">(w, </span><span style="color:#9ECBFF">"ERROR: update task"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">		}</span></span>
+<span class="line"><span style="color:#E1E4E8">		json.</span><span style="color:#B392F0">NewDecoder</span><span style="color:#E1E4E8">(r.Body).</span><span style="color:#B392F0">Decode</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">&#x26;</span><span style="color:#E1E4E8">newTask)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">		updated, err </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> client.Task.</span><span style="color:#B392F0">FindUnique</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#E1E4E8">			db.Task.ID.</span><span style="color:#B392F0">Equals</span><span style="color:#E1E4E8">(taskId),</span></span>
+<span class="line"><span style="color:#E1E4E8">		).</span><span style="color:#B392F0">Update</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#E1E4E8">			db.Task.Title.</span><span style="color:#B392F0">Set</span><span style="color:#E1E4E8">(newTask.Title),</span></span>
+<span class="line"><span style="color:#E1E4E8">			db.Task.Status.</span><span style="color:#B392F0">Set</span><span style="color:#E1E4E8">(newTask.Status),</span></span>
+<span class="line"><span style="color:#E1E4E8">			db.Task.Desc.</span><span style="color:#B392F0">Set</span><span style="color:#E1E4E8">(newTask.Desc),</span></span>
+<span class="line"><span style="color:#E1E4E8">		).</span><span style="color:#B392F0">Exec</span><span style="color:#E1E4E8">(context.</span><span style="color:#B392F0">Background</span><span style="color:#E1E4E8">())</span></span>
+<span class="line"><span style="color:#F97583">		if</span><span style="color:#E1E4E8"> err </span><span style="color:#F97583">!=</span><span style="color:#79B8FF"> nil</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">			io.</span><span style="color:#B392F0">WriteString</span><span style="color:#E1E4E8">(w, </span><span style="color:#9ECBFF">"ERROR: update task"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">		}</span></span>
+<span class="line"><span style="color:#F97583">		var</span><span style="color:#E1E4E8"> response </span><span style="color:#F97583">struct</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">			Code </span><span style="color:#F97583">int</span><span style="color:#9ECBFF">    `json:"code"`</span></span>
+<span class="line"><span style="color:#E1E4E8">			Data []</span><span style="color:#B392F0">Task</span><span style="color:#9ECBFF"> `json:"data"`</span></span>
+<span class="line"><span style="color:#E1E4E8">		}</span></span>
+<span class="line"><span style="color:#E1E4E8">		response.Code </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 200</span></span>
+<span class="line"><span style="color:#E1E4E8">		response.Data </span><span style="color:#F97583">=</span><span style="color:#B392F0"> append</span><span style="color:#E1E4E8">(response.Data, </span><span style="color:#B392F0">Task</span><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#E1E4E8">			Id:        updated.ID,</span></span>
+<span class="line"><span style="color:#E1E4E8">			CreatedAt: updated.CreatedAt.</span><span style="color:#B392F0">String</span><span style="color:#E1E4E8">(),</span></span>
+<span class="line"><span style="color:#E1E4E8">			UpdatedAt: updated.UpdatedAt.</span><span style="color:#B392F0">String</span><span style="color:#E1E4E8">(),</span></span>
+<span class="line"><span style="color:#E1E4E8">			Title:     updated.Title,</span></span>
+<span class="line"><span style="color:#E1E4E8">			Status:    updated.Status,</span></span>
+<span class="line"><span style="color:#E1E4E8">			Desc: </span><span style="color:#F97583">func</span><span style="color:#E1E4E8">() </span><span style="color:#F97583">string</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">				desc, ok </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> updated.</span><span style="color:#B392F0">Desc</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#F97583">				if</span><span style="color:#F97583"> !</span><span style="color:#E1E4E8">ok {</span></span>
+<span class="line"><span style="color:#E1E4E8">					desc </span><span style="color:#F97583">=</span><span style="color:#9ECBFF"> ""</span></span>
+<span class="line"><span style="color:#E1E4E8">				}</span></span>
+<span class="line"><span style="color:#F97583">				return</span><span style="color:#E1E4E8"> desc</span></span>
+<span class="line"><span style="color:#E1E4E8">			}(),</span></span>
+<span class="line"><span style="color:#E1E4E8">		})</span></span>
+<span class="line"><span style="color:#E1E4E8">		resp, _ </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> json.</span><span style="color:#B392F0">Marshal</span><span style="color:#E1E4E8">(response)</span></span>
+<span class="line"><span style="color:#E1E4E8">		w.</span><span style="color:#B392F0">Header</span><span style="color:#E1E4E8">().</span><span style="color:#B392F0">Set</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Content-Type"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"application/json"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">		w.</span><span style="color:#B392F0">Write</span><span style="color:#E1E4E8">(resp)</span></span>
+<span class="line"><span style="color:#E1E4E8">	}).</span><span style="color:#B392F0">Methods</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"POST"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">	router.</span><span style="color:#B392F0">HandleFunc</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"/tasks/{task_id}"</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">func</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">w</span><span style="color:#B392F0"> http</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">ResponseWriter</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">r</span><span style="color:#F97583"> *</span><span style="color:#B392F0">http</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">Request</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#E1E4E8">		params </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> mux.</span><span style="color:#B392F0">Vars</span><span style="color:#E1E4E8">(r)</span></span>
+<span class="line"><span style="color:#E1E4E8">		taskId </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> params[</span><span style="color:#9ECBFF">"task_id"</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">		_, err </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> client.Task.</span><span style="color:#B392F0">FindUnique</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#E1E4E8">			db.Task.ID.</span><span style="color:#B392F0">Equals</span><span style="color:#E1E4E8">(taskId),</span></span>
+<span class="line"><span style="color:#E1E4E8">		).</span><span style="color:#B392F0">Delete</span><span style="color:#E1E4E8">().</span><span style="color:#B392F0">Exec</span><span style="color:#E1E4E8">(context.</span><span style="color:#B392F0">Background</span><span style="color:#E1E4E8">())</span></span>
+<span class="line"><span style="color:#F97583">		if</span><span style="color:#E1E4E8"> err </span><span style="color:#F97583">!=</span><span style="color:#79B8FF"> nil</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">			io.</span><span style="color:#B392F0">WriteString</span><span style="color:#E1E4E8">(w, </span><span style="color:#9ECBFF">"ERROR: delete task"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">		}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">		tasks, err </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> client.Task.</span><span style="color:#B392F0">FindMany</span><span style="color:#E1E4E8">().</span><span style="color:#B392F0">Exec</span><span style="color:#E1E4E8">(context.</span><span style="color:#B392F0">Background</span><span style="color:#E1E4E8">())</span></span>
+<span class="line"><span style="color:#F97583">		if</span><span style="color:#E1E4E8"> err </span><span style="color:#F97583">!=</span><span style="color:#79B8FF"> nil</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">			io.</span><span style="color:#B392F0">WriteString</span><span style="color:#E1E4E8">(w, </span><span style="color:#9ECBFF">"ERROR: read all task"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">		}</span></span>
+<span class="line"><span style="color:#F97583">		var</span><span style="color:#E1E4E8"> responseData []</span><span style="color:#B392F0">Task</span></span>
+<span class="line"><span style="color:#F97583">		for</span><span style="color:#E1E4E8"> _, task </span><span style="color:#F97583">:=</span><span style="color:#F97583"> range</span><span style="color:#E1E4E8"> tasks {</span></span>
+<span class="line"><span style="color:#E1E4E8">			responseData </span><span style="color:#F97583">=</span><span style="color:#B392F0"> append</span><span style="color:#E1E4E8">(responseData, </span><span style="color:#B392F0">Task</span><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#E1E4E8">				Id:        task.ID,</span></span>
+<span class="line"><span style="color:#E1E4E8">				CreatedAt: task.CreatedAt.</span><span style="color:#B392F0">String</span><span style="color:#E1E4E8">(),</span></span>
+<span class="line"><span style="color:#E1E4E8">				UpdatedAt: task.UpdatedAt.</span><span style="color:#B392F0">String</span><span style="color:#E1E4E8">(),</span></span>
+<span class="line"><span style="color:#E1E4E8">				Title:     task.Title,</span></span>
+<span class="line"><span style="color:#E1E4E8">				Status:    </span><span style="color:#79B8FF">false</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">				Desc: </span><span style="color:#F97583">func</span><span style="color:#E1E4E8">() </span><span style="color:#F97583">string</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">					desc, ok </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> task.</span><span style="color:#B392F0">Desc</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#F97583">					if</span><span style="color:#F97583"> !</span><span style="color:#E1E4E8">ok {</span></span>
+<span class="line"><span style="color:#E1E4E8">						desc </span><span style="color:#F97583">=</span><span style="color:#9ECBFF"> ""</span></span>
+<span class="line"><span style="color:#E1E4E8">					}</span></span>
+<span class="line"><span style="color:#F97583">					return</span><span style="color:#E1E4E8"> desc</span></span>
+<span class="line"><span style="color:#E1E4E8">				}(),</span></span>
+<span class="line"><span style="color:#E1E4E8">			})</span></span>
+<span class="line"><span style="color:#E1E4E8">		}</span></span>
+<span class="line"><span style="color:#F97583">		var</span><span style="color:#E1E4E8"> response </span><span style="color:#F97583">struct</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">			Code </span><span style="color:#F97583">int</span><span style="color:#9ECBFF">    `json:"code"`</span></span>
+<span class="line"><span style="color:#E1E4E8">			Data []</span><span style="color:#B392F0">Task</span><span style="color:#9ECBFF"> `json:"data"`</span></span>
+<span class="line"><span style="color:#E1E4E8">		}</span></span>
+<span class="line"><span style="color:#E1E4E8">		response.Code </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 200</span></span>
+<span class="line"><span style="color:#E1E4E8">		response.Data </span><span style="color:#F97583">=</span><span style="color:#B392F0"> append</span><span style="color:#E1E4E8">(response.Data, responseData</span><span style="color:#F97583">...</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">		resp, _ </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> json.</span><span style="color:#B392F0">Marshal</span><span style="color:#E1E4E8">(response)</span></span>
+<span class="line"><span style="color:#E1E4E8">		w.</span><span style="color:#B392F0">Header</span><span style="color:#E1E4E8">().</span><span style="color:#B392F0">Set</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Content-Type"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"application/json"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">		w.</span><span style="color:#B392F0">Write</span><span style="color:#E1E4E8">(resp)</span></span>
+<span class="line"><span style="color:#E1E4E8">	}).</span><span style="color:#B392F0">Methods</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"DELETE"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">	router.</span><span style="color:#B392F0">HandleFunc</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"/tasks"</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">func</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">w</span><span style="color:#B392F0"> http</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">ResponseWriter</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">r</span><span style="color:#F97583"> *</span><span style="color:#B392F0">http</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">Request</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#E1E4E8">		tasks, err </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> client.Task.</span><span style="color:#B392F0">FindMany</span><span style="color:#E1E4E8">().</span><span style="color:#B392F0">Exec</span><span style="color:#E1E4E8">(context.</span><span style="color:#B392F0">Background</span><span style="color:#E1E4E8">())</span></span>
+<span class="line"><span style="color:#F97583">		if</span><span style="color:#E1E4E8"> err </span><span style="color:#F97583">!=</span><span style="color:#79B8FF"> nil</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">			io.</span><span style="color:#B392F0">WriteString</span><span style="color:#E1E4E8">(w, </span><span style="color:#9ECBFF">"ERROR: read all task"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">		}</span></span>
+<span class="line"><span style="color:#F97583">		var</span><span style="color:#E1E4E8"> responseData []</span><span style="color:#B392F0">Task</span></span>
+<span class="line"><span style="color:#F97583">		for</span><span style="color:#E1E4E8"> _, task </span><span style="color:#F97583">:=</span><span style="color:#F97583"> range</span><span style="color:#E1E4E8"> tasks {</span></span>
+<span class="line"><span style="color:#E1E4E8">			responseData </span><span style="color:#F97583">=</span><span style="color:#B392F0"> append</span><span style="color:#E1E4E8">(responseData, </span><span style="color:#B392F0">Task</span><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#E1E4E8">				Id:        task.ID,</span></span>
+<span class="line"><span style="color:#E1E4E8">				CreatedAt: task.CreatedAt.</span><span style="color:#B392F0">String</span><span style="color:#E1E4E8">(),</span></span>
+<span class="line"><span style="color:#E1E4E8">				UpdatedAt: task.UpdatedAt.</span><span style="color:#B392F0">String</span><span style="color:#E1E4E8">(),</span></span>
+<span class="line"><span style="color:#E1E4E8">				Title:     task.Title,</span></span>
+<span class="line"><span style="color:#E1E4E8">				Status:    </span><span style="color:#79B8FF">false</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">				Desc: </span><span style="color:#F97583">func</span><span style="color:#E1E4E8">() </span><span style="color:#F97583">string</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">					desc, ok </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> task.</span><span style="color:#B392F0">Desc</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#F97583">					if</span><span style="color:#F97583"> !</span><span style="color:#E1E4E8">ok {</span></span>
+<span class="line"><span style="color:#E1E4E8">						desc </span><span style="color:#F97583">=</span><span style="color:#9ECBFF"> ""</span></span>
+<span class="line"><span style="color:#E1E4E8">					}</span></span>
+<span class="line"><span style="color:#F97583">					return</span><span style="color:#E1E4E8"> desc</span></span>
+<span class="line"><span style="color:#E1E4E8">				}(),</span></span>
+<span class="line"><span style="color:#E1E4E8">			})</span></span>
+<span class="line"><span style="color:#E1E4E8">		}</span></span>
+<span class="line"><span style="color:#F97583">		var</span><span style="color:#E1E4E8"> response </span><span style="color:#F97583">struct</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">			Code </span><span style="color:#F97583">int</span><span style="color:#9ECBFF">    `json:"code"`</span></span>
+<span class="line"><span style="color:#E1E4E8">			Data []</span><span style="color:#B392F0">Task</span><span style="color:#9ECBFF"> `json:"data"`</span></span>
+<span class="line"><span style="color:#E1E4E8">		}</span></span>
+<span class="line"><span style="color:#E1E4E8">		response.Code </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 200</span></span>
+<span class="line"><span style="color:#E1E4E8">		response.Data </span><span style="color:#F97583">=</span><span style="color:#B392F0"> append</span><span style="color:#E1E4E8">(response.Data, responseData</span><span style="color:#F97583">...</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">		resp, _ </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> json.</span><span style="color:#B392F0">Marshal</span><span style="color:#E1E4E8">(response)</span></span>
+<span class="line"><span style="color:#E1E4E8">		w.</span><span style="color:#B392F0">Header</span><span style="color:#E1E4E8">().</span><span style="color:#B392F0">Set</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Content-Type"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"application/json"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">		w.</span><span style="color:#B392F0">Write</span><span style="color:#E1E4E8">(resp)</span></span>
+<span class="line"><span style="color:#E1E4E8">	}).</span><span style="color:#B392F0">Methods</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"GET"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">	router.</span><span style="color:#B392F0">HandleFunc</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"/tasks/{task_id}/comments"</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">func</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">w</span><span style="color:#B392F0"> http</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">ResponseWriter</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">r</span><span style="color:#F97583"> *</span><span style="color:#B392F0">http</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">Request</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#E1E4E8">		params </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> mux.</span><span style="color:#B392F0">Vars</span><span style="color:#E1E4E8">(r)</span></span>
+<span class="line"><span style="color:#E1E4E8">		taskId </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> params[</span><span style="color:#9ECBFF">"task_id"</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#F97583">		var</span><span style="color:#E1E4E8"> newComment </span><span style="color:#B392F0">Comment</span></span>
+<span class="line"><span style="color:#E1E4E8">		err </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> r.</span><span style="color:#B392F0">ParseForm</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#F97583">		if</span><span style="color:#E1E4E8"> err </span><span style="color:#F97583">!=</span><span style="color:#79B8FF"> nil</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">			io.</span><span style="color:#B392F0">WriteString</span><span style="color:#E1E4E8">(w, </span><span style="color:#9ECBFF">"ERROR: create comment"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">		}</span></span>
+<span class="line"><span style="color:#E1E4E8">		json.</span><span style="color:#B392F0">NewDecoder</span><span style="color:#E1E4E8">(r.Body).</span><span style="color:#B392F0">Decode</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">&#x26;</span><span style="color:#E1E4E8">newComment)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">		created, err </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> client.Comment.</span><span style="color:#B392F0">CreateOne</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#E1E4E8">			db.Comment.Content.</span><span style="color:#B392F0">Set</span><span style="color:#E1E4E8">(newComment.Content),</span></span>
+<span class="line"><span style="color:#E1E4E8">			db.Comment.Task.</span><span style="color:#B392F0">Link</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#E1E4E8">				db.Task.ID.</span><span style="color:#B392F0">Equals</span><span style="color:#E1E4E8">(taskId),</span></span>
+<span class="line"><span style="color:#E1E4E8">			),</span></span>
+<span class="line"><span style="color:#E1E4E8">		).</span><span style="color:#B392F0">Exec</span><span style="color:#E1E4E8">(context.</span><span style="color:#B392F0">Background</span><span style="color:#E1E4E8">())</span></span>
+<span class="line"><span style="color:#F97583">		if</span><span style="color:#E1E4E8"> err </span><span style="color:#F97583">!=</span><span style="color:#79B8FF"> nil</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">			io.</span><span style="color:#B392F0">WriteString</span><span style="color:#E1E4E8">(w, </span><span style="color:#9ECBFF">"ERROR: create comment"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">		}</span></span>
+<span class="line"><span style="color:#F97583">		var</span><span style="color:#E1E4E8"> response </span><span style="color:#F97583">struct</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">			Code </span><span style="color:#F97583">int</span><span style="color:#9ECBFF">       `json:"code"`</span></span>
+<span class="line"><span style="color:#E1E4E8">			Data []</span><span style="color:#B392F0">Comment</span><span style="color:#9ECBFF"> `json:"data"`</span></span>
+<span class="line"><span style="color:#E1E4E8">		}</span></span>
+<span class="line"><span style="color:#E1E4E8">		response.Code </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 200</span></span>
+<span class="line"><span style="color:#E1E4E8">		response.Data </span><span style="color:#F97583">=</span><span style="color:#B392F0"> append</span><span style="color:#E1E4E8">(response.Data, </span><span style="color:#B392F0">Comment</span><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#E1E4E8">			Id:        created.ID,</span></span>
+<span class="line"><span style="color:#E1E4E8">			CreatedAt: created.CreatedAt.</span><span style="color:#B392F0">String</span><span style="color:#E1E4E8">(),</span></span>
+<span class="line"><span style="color:#E1E4E8">			UpdatedAt: created.UpdatedAt.</span><span style="color:#B392F0">String</span><span style="color:#E1E4E8">(),</span></span>
+<span class="line"><span style="color:#E1E4E8">			Content:   created.Content,</span></span>
+<span class="line"><span style="color:#E1E4E8">		})</span></span>
+<span class="line"><span style="color:#E1E4E8">		resp, _ </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> json.</span><span style="color:#B392F0">Marshal</span><span style="color:#E1E4E8">(response)</span></span>
+<span class="line"><span style="color:#E1E4E8">		w.</span><span style="color:#B392F0">Header</span><span style="color:#E1E4E8">().</span><span style="color:#B392F0">Set</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Content-Type"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"application/json"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">		w.</span><span style="color:#B392F0">Write</span><span style="color:#E1E4E8">(resp)</span></span>
+<span class="line"><span style="color:#E1E4E8">	}).</span><span style="color:#B392F0">Methods</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"POST"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">	router.</span><span style="color:#B392F0">HandleFunc</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"/tasks/{task_id}/comments"</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">func</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">w</span><span style="color:#B392F0"> http</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">ResponseWriter</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">r</span><span style="color:#F97583"> *</span><span style="color:#B392F0">http</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">Request</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#E1E4E8">		params </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> mux.</span><span style="color:#B392F0">Vars</span><span style="color:#E1E4E8">(r)</span></span>
+<span class="line"><span style="color:#E1E4E8">		taskId </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> params[</span><span style="color:#9ECBFF">"task_id"</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#E1E4E8">		comments, err </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> client.Comment.</span><span style="color:#B392F0">FindMany</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#E1E4E8">			db.Comment.TaskID.</span><span style="color:#B392F0">Equals</span><span style="color:#E1E4E8">(taskId),</span></span>
+<span class="line"><span style="color:#E1E4E8">		).</span><span style="color:#B392F0">Exec</span><span style="color:#E1E4E8">(context.</span><span style="color:#B392F0">Background</span><span style="color:#E1E4E8">())</span></span>
+<span class="line"><span style="color:#F97583">		if</span><span style="color:#E1E4E8"> err </span><span style="color:#F97583">!=</span><span style="color:#79B8FF"> nil</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">			io.</span><span style="color:#B392F0">WriteString</span><span style="color:#E1E4E8">(w, </span><span style="color:#9ECBFF">"ERROR: read comment"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">		}</span></span>
+<span class="line"><span style="color:#F97583">		var</span><span style="color:#E1E4E8"> responseData []</span><span style="color:#B392F0">Comment</span></span>
+<span class="line"><span style="color:#F97583">		for</span><span style="color:#E1E4E8"> _, comment </span><span style="color:#F97583">:=</span><span style="color:#F97583"> range</span><span style="color:#E1E4E8"> comments {</span></span>
+<span class="line"><span style="color:#E1E4E8">			responseData </span><span style="color:#F97583">=</span><span style="color:#B392F0"> append</span><span style="color:#E1E4E8">(responseData, </span><span style="color:#B392F0">Comment</span><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#E1E4E8">				Id:        comment.ID,</span></span>
+<span class="line"><span style="color:#E1E4E8">				CreatedAt: comment.CreatedAt.</span><span style="color:#B392F0">String</span><span style="color:#E1E4E8">(),</span></span>
+<span class="line"><span style="color:#E1E4E8">				UpdatedAt: comment.UpdatedAt.</span><span style="color:#B392F0">String</span><span style="color:#E1E4E8">(),</span></span>
+<span class="line"><span style="color:#E1E4E8">				Content:   comment.Content,</span></span>
+<span class="line"><span style="color:#E1E4E8">			})</span></span>
+<span class="line"><span style="color:#E1E4E8">		}</span></span>
+<span class="line"><span style="color:#F97583">		var</span><span style="color:#E1E4E8"> response </span><span style="color:#F97583">struct</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">			Code </span><span style="color:#F97583">int</span><span style="color:#9ECBFF">       `json:"code"`</span></span>
+<span class="line"><span style="color:#E1E4E8">			Data []</span><span style="color:#B392F0">Comment</span><span style="color:#9ECBFF"> `json:"data"`</span></span>
+<span class="line"><span style="color:#E1E4E8">		}</span></span>
+<span class="line"><span style="color:#E1E4E8">		response.Code </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 200</span></span>
+<span class="line"><span style="color:#E1E4E8">		response.Data </span><span style="color:#F97583">=</span><span style="color:#B392F0"> append</span><span style="color:#E1E4E8">(response.Data, responseData</span><span style="color:#F97583">...</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">		resp, _ </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> json.</span><span style="color:#B392F0">Marshal</span><span style="color:#E1E4E8">(response)</span></span>
+<span class="line"><span style="color:#E1E4E8">		w.</span><span style="color:#B392F0">Header</span><span style="color:#E1E4E8">().</span><span style="color:#B392F0">Set</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Content-Type"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"application/json"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">		w.</span><span style="color:#B392F0">Write</span><span style="color:#E1E4E8">(resp)</span></span>
+<span class="line"><span style="color:#E1E4E8">	}).</span><span style="color:#B392F0">Methods</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"GET"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">	router.</span><span style="color:#B392F0">HandleFunc</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"/tasks/{task_id}/comments/{comment_id}"</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">func</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">w</span><span style="color:#B392F0"> http</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">ResponseWriter</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">r</span><span style="color:#F97583"> *</span><span style="color:#B392F0">http</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">Request</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#E1E4E8">		params </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> mux.</span><span style="color:#B392F0">Vars</span><span style="color:#E1E4E8">(r)</span></span>
+<span class="line"><span style="color:#E1E4E8">		commentId </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> params[</span><span style="color:#9ECBFF">"comment_id"</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#F97583">		var</span><span style="color:#E1E4E8"> newComment </span><span style="color:#B392F0">Comment</span></span>
+<span class="line"><span style="color:#E1E4E8">		err </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> r.</span><span style="color:#B392F0">ParseForm</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#F97583">		if</span><span style="color:#E1E4E8"> err </span><span style="color:#F97583">!=</span><span style="color:#79B8FF"> nil</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">			io.</span><span style="color:#B392F0">WriteString</span><span style="color:#E1E4E8">(w, </span><span style="color:#9ECBFF">"ERROR: update comment"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">		}</span></span>
+<span class="line"><span style="color:#E1E4E8">		json.</span><span style="color:#B392F0">NewDecoder</span><span style="color:#E1E4E8">(r.Body).</span><span style="color:#B392F0">Decode</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">&#x26;</span><span style="color:#E1E4E8">newComment)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">		updated, err </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> client.Comment.</span><span style="color:#B392F0">FindUnique</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#E1E4E8">			db.Comment.ID.</span><span style="color:#B392F0">Equals</span><span style="color:#E1E4E8">(commentId),</span></span>
+<span class="line"><span style="color:#E1E4E8">		).</span><span style="color:#B392F0">Update</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#E1E4E8">			db.Comment.Content.</span><span style="color:#B392F0">Set</span><span style="color:#E1E4E8">(newComment.Content),</span></span>
+<span class="line"><span style="color:#E1E4E8">		).</span><span style="color:#B392F0">Exec</span><span style="color:#E1E4E8">(context.</span><span style="color:#B392F0">Background</span><span style="color:#E1E4E8">())</span></span>
+<span class="line"><span style="color:#F97583">		if</span><span style="color:#E1E4E8"> err </span><span style="color:#F97583">!=</span><span style="color:#79B8FF"> nil</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">			io.</span><span style="color:#B392F0">WriteString</span><span style="color:#E1E4E8">(w, </span><span style="color:#9ECBFF">"update error"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">		}</span></span>
+<span class="line"><span style="color:#F97583">		var</span><span style="color:#E1E4E8"> response </span><span style="color:#F97583">struct</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">			Code </span><span style="color:#F97583">int</span><span style="color:#9ECBFF">       `json:"code"`</span></span>
+<span class="line"><span style="color:#E1E4E8">			Data []</span><span style="color:#B392F0">Comment</span><span style="color:#9ECBFF"> `json:"comment"`</span></span>
+<span class="line"><span style="color:#E1E4E8">		}</span></span>
+<span class="line"><span style="color:#E1E4E8">		response.Code </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 200</span></span>
+<span class="line"><span style="color:#E1E4E8">		response.Data </span><span style="color:#F97583">=</span><span style="color:#B392F0"> append</span><span style="color:#E1E4E8">(response.Data, </span><span style="color:#B392F0">Comment</span><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#E1E4E8">			Id:        updated.ID,</span></span>
+<span class="line"><span style="color:#E1E4E8">			CreatedAt: updated.CreatedAt.</span><span style="color:#B392F0">String</span><span style="color:#E1E4E8">(),</span></span>
+<span class="line"><span style="color:#E1E4E8">			UpdatedAt: updated.UpdatedAt.</span><span style="color:#B392F0">String</span><span style="color:#E1E4E8">(),</span></span>
+<span class="line"><span style="color:#E1E4E8">			Content:   updated.Content,</span></span>
+<span class="line"><span style="color:#E1E4E8">		})</span></span>
+<span class="line"><span style="color:#E1E4E8">		resp, _ </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> json.</span><span style="color:#B392F0">Marshal</span><span style="color:#E1E4E8">(response)</span></span>
+<span class="line"><span style="color:#E1E4E8">		w.</span><span style="color:#B392F0">Header</span><span style="color:#E1E4E8">().</span><span style="color:#B392F0">Set</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Content-Type"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"application/json"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">		w.</span><span style="color:#B392F0">Write</span><span style="color:#E1E4E8">(resp)</span></span>
+<span class="line"><span style="color:#E1E4E8">	}).</span><span style="color:#B392F0">Methods</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"POST"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">	router.</span><span style="color:#B392F0">HandleFunc</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"/tasks/{task_id}/comments/{comment_id}"</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">func</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">w</span><span style="color:#B392F0"> http</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">ResponseWriter</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">r</span><span style="color:#F97583"> *</span><span style="color:#B392F0">http</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">Request</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#E1E4E8">		params </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> mux.</span><span style="color:#B392F0">Vars</span><span style="color:#E1E4E8">(r)</span></span>
+<span class="line"><span style="color:#E1E4E8">		taskId </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> params[</span><span style="color:#9ECBFF">"task_id"</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#E1E4E8">		commentId </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> params[</span><span style="color:#9ECBFF">"comment_id"</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">		_, err </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> client.Comment.</span><span style="color:#B392F0">FindUnique</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#E1E4E8">			db.Comment.ID.</span><span style="color:#B392F0">Equals</span><span style="color:#E1E4E8">(commentId),</span></span>
+<span class="line"><span style="color:#E1E4E8">		).</span><span style="color:#B392F0">Delete</span><span style="color:#E1E4E8">().</span><span style="color:#B392F0">Exec</span><span style="color:#E1E4E8">(context.</span><span style="color:#B392F0">Background</span><span style="color:#E1E4E8">())</span></span>
+<span class="line"><span style="color:#F97583">		if</span><span style="color:#E1E4E8"> err </span><span style="color:#F97583">!=</span><span style="color:#79B8FF"> nil</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">			io.</span><span style="color:#B392F0">WriteString</span><span style="color:#E1E4E8">(w, </span><span style="color:#9ECBFF">"ERROR: delete comment"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">		}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">		comments, err </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> client.Comment.</span><span style="color:#B392F0">FindMany</span><span style="color:#E1E4E8">(</span></span>
+<span class="line"><span style="color:#E1E4E8">			db.Comment.TaskID.</span><span style="color:#B392F0">Equals</span><span style="color:#E1E4E8">(taskId),</span></span>
+<span class="line"><span style="color:#E1E4E8">		).</span><span style="color:#B392F0">Exec</span><span style="color:#E1E4E8">(context.</span><span style="color:#B392F0">Background</span><span style="color:#E1E4E8">())</span></span>
+<span class="line"><span style="color:#F97583">		if</span><span style="color:#E1E4E8"> err </span><span style="color:#F97583">!=</span><span style="color:#79B8FF"> nil</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">			io.</span><span style="color:#B392F0">WriteString</span><span style="color:#E1E4E8">(w, </span><span style="color:#9ECBFF">"ERROR: read all comment"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">		}</span></span>
+<span class="line"><span style="color:#F97583">		var</span><span style="color:#E1E4E8"> responseData []</span><span style="color:#B392F0">Comment</span></span>
+<span class="line"><span style="color:#F97583">		for</span><span style="color:#E1E4E8"> _, comment </span><span style="color:#F97583">:=</span><span style="color:#F97583"> range</span><span style="color:#E1E4E8"> comments {</span></span>
+<span class="line"><span style="color:#E1E4E8">			responseData </span><span style="color:#F97583">=</span><span style="color:#B392F0"> append</span><span style="color:#E1E4E8">(responseData, </span><span style="color:#B392F0">Comment</span><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#E1E4E8">				Id:        comment.ID,</span></span>
+<span class="line"><span style="color:#E1E4E8">				CreatedAt: comment.CreatedAt.</span><span style="color:#B392F0">String</span><span style="color:#E1E4E8">(),</span></span>
+<span class="line"><span style="color:#E1E4E8">				UpdatedAt: comment.UpdatedAt.</span><span style="color:#B392F0">String</span><span style="color:#E1E4E8">(),</span></span>
+<span class="line"><span style="color:#E1E4E8">				Content:   comment.Content,</span></span>
+<span class="line"><span style="color:#E1E4E8">			})</span></span>
+<span class="line"><span style="color:#E1E4E8">		}</span></span>
+<span class="line"><span style="color:#F97583">		var</span><span style="color:#E1E4E8"> response </span><span style="color:#F97583">struct</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">			Code </span><span style="color:#F97583">int</span><span style="color:#9ECBFF">       `json:"code"`</span></span>
+<span class="line"><span style="color:#E1E4E8">			Data []</span><span style="color:#B392F0">Comment</span><span style="color:#9ECBFF"> `json:"data"`</span></span>
+<span class="line"><span style="color:#E1E4E8">		}</span></span>
+<span class="line"><span style="color:#E1E4E8">		response.Code </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 200</span></span>
+<span class="line"><span style="color:#E1E4E8">		response.Data </span><span style="color:#F97583">=</span><span style="color:#B392F0"> append</span><span style="color:#E1E4E8">(response.Data, responseData</span><span style="color:#F97583">...</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">		resp, _ </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> json.</span><span style="color:#B392F0">Marshal</span><span style="color:#E1E4E8">(response)</span></span>
+<span class="line"><span style="color:#E1E4E8">		w.</span><span style="color:#B392F0">Header</span><span style="color:#E1E4E8">().</span><span style="color:#B392F0">Set</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Content-Type"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"application/json"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">		w.</span><span style="color:#B392F0">Write</span><span style="color:#E1E4E8">(resp)</span></span>
+<span class="line"><span style="color:#E1E4E8">	}).</span><span style="color:#B392F0">Methods</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"DELETE"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">	server </span><span style="color:#F97583">:=</span><span style="color:#B392F0"> http</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">Server</span><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#E1E4E8">		Addr:    </span><span style="color:#9ECBFF">"0.0.0.0:8080"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">		Handler: router,</span></span>
+<span class="line"><span style="color:#E1E4E8">	}</span></span>
+<span class="line"><span style="color:#E1E4E8">	server.</span><span style="color:#B392F0">ListenAndServe</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>  </div> <footer class="post-footer" data-astro-cid-bvzihdzo> <a href="/" data-astro-cid-bvzihdzo>&larr; 一覧に戻る</a> </footer> </article>  </main> </div> </body></html> 

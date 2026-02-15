@@ -1,0 +1,522 @@
+<!DOCTYPE html><html lang="ja" data-astro-cid-sckkx6r4> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="icon" href="/favicon.ico"><meta name="generator" content="Astro v5.17.2"><meta name="description" content="my-docs"><title>cobra-cliを使う | my-docs</title><style>[data-astro-cid-sckkx6r4]{margin:0;padding:0;box-sizing:border-box}html{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif;line-height:1.7;color:#333;background-color:#fafafa}.container[data-astro-cid-sckkx6r4]{max-width:900px;margin:0 auto;padding:0 1.5rem;min-height:100dvh;display:flex;flex-direction:column}.header[data-astro-cid-sckkx6r4]{display:flex;justify-content:space-between;align-items:center;padding:.5rem 0;padding-bottom:0}.header-title[data-astro-cid-sckkx6r4]{font-size:1.5rem;font-weight:700;color:#111;text-decoration:none}nav[data-astro-cid-sckkx6r4]{display:flex;gap:1.5rem}nav[data-astro-cid-sckkx6r4] a[data-astro-cid-sckkx6r4]{color:#555;text-decoration:none;font-size:.9rem}nav[data-astro-cid-sckkx6r4] a[data-astro-cid-sckkx6r4]:hover{color:#111}main[data-astro-cid-sckkx6r4]{flex:1;padding:1rem 0}
+.post-header[data-astro-cid-bvzihdzo]{margin-bottom:2rem}.post-header[data-astro-cid-bvzihdzo] h1[data-astro-cid-bvzihdzo]{font-size:2rem;font-weight:700;color:#111;line-height:1.3;margin-bottom:.75rem}.post-meta[data-astro-cid-bvzihdzo]{font-size:.9rem;color:#888}.updated[data-astro-cid-bvzihdzo]{margin-left:.5rem}.tags[data-astro-cid-bvzihdzo]{display:flex;gap:.5rem;margin-top:.75rem;flex-wrap:wrap}.tag[data-astro-cid-bvzihdzo]{font-size:.8rem;background-color:#f0f0f0;color:#555;padding:.2rem .6rem;border-radius:4px}.post-content[data-astro-cid-bvzihdzo]{font-size:1rem;line-height:1.85;color:#333}.post-content[data-astro-cid-bvzihdzo] h2{font-size:1.5rem;font-weight:700;margin-top:2.5rem;margin-bottom:1rem;color:#111}.post-content[data-astro-cid-bvzihdzo] h3{font-size:1.25rem;font-weight:600;margin-top:2rem;margin-bottom:.75rem;color:#222}.post-content[data-astro-cid-bvzihdzo] p{margin-bottom:1.25rem}.post-content[data-astro-cid-bvzihdzo] ul,.post-content[data-astro-cid-bvzihdzo] ol{margin-bottom:1.25rem;padding-left:1.5rem}.post-content[data-astro-cid-bvzihdzo] li{margin-bottom:.4rem}.post-content[data-astro-cid-bvzihdzo] code{font-family:SF Mono,Fira Code,Fira Mono,Menlo,monospace;font-size:.9em;background-color:#f5f5f5;padding:.15rem .35rem;border-radius:3px}.post-content[data-astro-cid-bvzihdzo] pre{background-color:#1e1e1e;color:#d4d4d4;padding:1.25rem;border-radius:6px;overflow-x:auto;margin-bottom:1.25rem}.post-content[data-astro-cid-bvzihdzo] pre code{background:none;padding:0;font-size:.85rem}.post-content[data-astro-cid-bvzihdzo] blockquote{border-left:3px solid #ddd;padding-left:1rem;color:#666;margin-bottom:1.25rem}.post-footer[data-astro-cid-bvzihdzo]{margin-top:3rem;padding-top:1.5rem;border-top:1px solid #e0e0e0}.post-footer[data-astro-cid-bvzihdzo] a[data-astro-cid-bvzihdzo]{color:#555;text-decoration:none;font-size:.9rem}.post-footer[data-astro-cid-bvzihdzo] a[data-astro-cid-bvzihdzo]:hover{color:#111}
+</style></head> <body data-astro-cid-sckkx6r4> <div class="container" data-astro-cid-sckkx6r4> <header class="header" data-astro-cid-sckkx6r4> <a href="/" class="header-title" data-astro-cid-sckkx6r4>my-docs</a> </header> <main data-astro-cid-sckkx6r4>  <article class="post" data-astro-cid-bvzihdzo> <header class="post-header" data-astro-cid-bvzihdzo> <h1 data-astro-cid-bvzihdzo>cobra-cliを使う</h1> <div class="post-meta" data-astro-cid-bvzihdzo> <time datetime="2022-05-22T18:07:36.000Z" data-astro-cid-bvzihdzo>2022-05-22</time>  </div> <div class="tags" data-astro-cid-bvzihdzo> <span class="tag" data-astro-cid-bvzihdzo>golang</span> </div> </header> <div class="post-content" data-astro-cid-bvzihdzo>  <h2 id="cobra-cli-を使う">cobra-cli を使う</h2>
+<h3 id="gomod-を作成">go.mod を作成</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> go</span><span style="color:#9ECBFF"> mod</span><span style="color:#9ECBFF"> init</span><span style="color:#9ECBFF"> sample</span></span>
+<span class="line"><span style="color:#B392F0">go:</span><span style="color:#9ECBFF"> creating</span><span style="color:#9ECBFF"> new</span><span style="color:#9ECBFF"> go.mod:</span><span style="color:#9ECBFF"> module</span><span style="color:#9ECBFF"> sample</span></span></code></pre>
+<h3 id="project-の開始">project の開始</h3>
+<p><code>init</code> コマンドを実行。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> go</span><span style="color:#9ECBFF"> run</span><span style="color:#79B8FF"> -mod=mod</span><span style="color:#9ECBFF"> github.com/spf13/cobra-cli@latest</span><span style="color:#9ECBFF"> init</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> tree</span></span>
+<span class="line"><span style="color:#B392F0">tree</span></span>
+<span class="line"><span style="color:#79B8FF">.</span></span>
+<span class="line"><span style="color:#B392F0">├──</span><span style="color:#9ECBFF"> LICENSE</span></span>
+<span class="line"><span style="color:#B392F0">├──</span><span style="color:#9ECBFF"> cmd</span></span>
+<span class="line"><span style="color:#B392F0">│</span><span style="color:#9ECBFF">   └──</span><span style="color:#9ECBFF"> root.go</span></span>
+<span class="line"><span style="color:#B392F0">├──</span><span style="color:#9ECBFF"> go.mod</span></span>
+<span class="line"><span style="color:#B392F0">├──</span><span style="color:#9ECBFF"> go.sum</span></span>
+<span class="line"><span style="color:#B392F0">└──</span><span style="color:#9ECBFF"> main.go</span></span></code></pre>
+<p><code>main.go</code> は <code>cmd.Execute()</code> を呼び出しているだけ。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#6A737D">/*</span></span>
+<span class="line"><span style="color:#6A737D">Copyright © 2022 NAME HERE &#x3C;EMAIL ADDRESS></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">*/</span></span>
+<span class="line"><span style="color:#F97583">package</span><span style="color:#B392F0"> main</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#9ECBFF"> "</span><span style="color:#B392F0">sample/cmd</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">func</span><span style="color:#B392F0"> main</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#E1E4E8">	cmd.</span><span style="color:#B392F0">Execute</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p><code>cmd/root.go</code> を編集。実行したら <code>Hello</code> を出力する。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#6A737D">/*</span></span>
+<span class="line"><span style="color:#6A737D">Copyright © 2022 NAME HERE &#x3C;EMAIL ADDRESS></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">*/</span></span>
+<span class="line"><span style="color:#F97583">package</span><span style="color:#B392F0"> cmd</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">fmt</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">os</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">github.com/spf13/cobra</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// rootCmd represents the base command when called without any subcommands</span></span>
+<span class="line"><span style="color:#F97583">var</span><span style="color:#E1E4E8"> rootCmd </span><span style="color:#F97583">=</span><span style="color:#F97583"> &#x26;</span><span style="color:#B392F0">cobra</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">Command</span><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#E1E4E8">	Use:   </span><span style="color:#9ECBFF">"sample"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">	Short: </span><span style="color:#9ECBFF">"挨拶をします"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">	RunE: </span><span style="color:#F97583">func</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">cmd</span><span style="color:#F97583"> *</span><span style="color:#B392F0">cobra</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">Command</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">args</span><span style="color:#E1E4E8"> []</span><span style="color:#F97583">string</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">error</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">		fmt.</span><span style="color:#B392F0">Println</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Hello"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">		return</span><span style="color:#79B8FF"> nil</span></span>
+<span class="line"><span style="color:#E1E4E8">	},</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Execute adds all child commands to the root command and sets flags appropriately.</span></span>
+<span class="line"><span style="color:#6A737D">// This is called by main.main(). It only needs to happen once to the rootCmd.</span></span>
+<span class="line"><span style="color:#F97583">func</span><span style="color:#B392F0"> Execute</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#E1E4E8">	err </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> rootCmd.</span><span style="color:#B392F0">Execute</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#F97583">	if</span><span style="color:#E1E4E8"> err </span><span style="color:#F97583">!=</span><span style="color:#79B8FF"> nil</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">		os.</span><span style="color:#B392F0">Exit</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">	}</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">func</span><span style="color:#B392F0"> init</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p>実行。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> go</span><span style="color:#9ECBFF"> run</span><span style="color:#9ECBFF"> main.go</span></span>
+<span class="line"><span style="color:#B392F0">Hello</span></span></code></pre>
+<p>help を見る。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> go</span><span style="color:#9ECBFF"> run</span><span style="color:#9ECBFF"> main.go</span><span style="color:#79B8FF"> -h</span></span>
+<span class="line"><span style="color:#B392F0">挨拶をします</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">Usage:</span></span>
+<span class="line"><span style="color:#B392F0">  sample</span><span style="color:#E1E4E8"> [flags]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">Flags:</span></span>
+<span class="line"><span style="color:#B392F0">  -h,</span><span style="color:#79B8FF"> --help</span><span style="color:#9ECBFF">   help</span><span style="color:#9ECBFF"> for</span><span style="color:#9ECBFF"> sample</span></span></code></pre>
+<h2 id="フラグを設定">フラグを設定</h2>
+<h3 id="グローバルフラグを設定">グローバルフラグを設定</h3>
+<p><code>--night</code> をつければ <code>Good night</code> を出力する。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#6A737D">/*</span></span>
+<span class="line"><span style="color:#6A737D">Copyright © 2022 NAME HERE &#x3C;EMAIL ADDRESS></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">*/</span></span>
+<span class="line"><span style="color:#F97583">package</span><span style="color:#B392F0"> cmd</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">fmt</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">os</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">github.com/spf13/cobra</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">var</span><span style="color:#E1E4E8"> night </span><span style="color:#F97583">bool</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// rootCmd represents the base command when called without any subcommands</span></span>
+<span class="line"><span style="color:#F97583">var</span><span style="color:#E1E4E8"> rootCmd </span><span style="color:#F97583">=</span><span style="color:#F97583"> &#x26;</span><span style="color:#B392F0">cobra</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">Command</span><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#E1E4E8">	Use:   </span><span style="color:#9ECBFF">"sample"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">	Short: </span><span style="color:#9ECBFF">"挨拶をします"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">	RunE: </span><span style="color:#F97583">func</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">cmd</span><span style="color:#F97583"> *</span><span style="color:#B392F0">cobra</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">Command</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">args</span><span style="color:#E1E4E8"> []</span><span style="color:#F97583">string</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">error</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">		if</span><span style="color:#E1E4E8"> night {</span></span>
+<span class="line"><span style="color:#E1E4E8">			fmt.</span><span style="color:#B392F0">Println</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Good night"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">			return</span><span style="color:#79B8FF"> nil</span></span>
+<span class="line"><span style="color:#E1E4E8">		}</span></span>
+<span class="line"><span style="color:#E1E4E8">		fmt.</span><span style="color:#B392F0">Println</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Hello"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">		return</span><span style="color:#79B8FF"> nil</span></span>
+<span class="line"><span style="color:#E1E4E8">	},</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Execute adds all child commands to the root command and sets flags appropriately.</span></span>
+<span class="line"><span style="color:#6A737D">// This is called by main.main(). It only needs to happen once to the rootCmd.</span></span>
+<span class="line"><span style="color:#F97583">func</span><span style="color:#B392F0"> Execute</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#E1E4E8">	err </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> rootCmd.</span><span style="color:#B392F0">Execute</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#F97583">	if</span><span style="color:#E1E4E8"> err </span><span style="color:#F97583">!=</span><span style="color:#79B8FF"> nil</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">		os.</span><span style="color:#B392F0">Exit</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">	}</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">func</span><span style="color:#B392F0"> init</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#E1E4E8">	rootCmd.</span><span style="color:#B392F0">PersistentFlags</span><span style="color:#E1E4E8">().</span><span style="color:#B392F0">BoolVar</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">&#x26;</span><span style="color:#E1E4E8">night, </span><span style="color:#9ECBFF">"night"</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">false</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"night フラグの説明文です"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p>実行。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> go</span><span style="color:#9ECBFF"> run</span><span style="color:#9ECBFF"> main.go</span><span style="color:#79B8FF"> -h</span></span>
+<span class="line"><span style="color:#B392F0">挨拶をします</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">Usage:</span></span>
+<span class="line"><span style="color:#B392F0">  sample</span><span style="color:#E1E4E8"> [flags]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">Flags:</span></span>
+<span class="line"><span style="color:#B392F0">  -h,</span><span style="color:#79B8FF"> --help</span><span style="color:#9ECBFF">    help</span><span style="color:#9ECBFF"> for</span><span style="color:#9ECBFF"> sample</span></span>
+<span class="line"><span style="color:#B392F0">      --night</span><span style="color:#9ECBFF">   night</span><span style="color:#9ECBFF"> フラグの説明文です</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> go</span><span style="color:#9ECBFF"> run</span><span style="color:#9ECBFF"> main.go</span></span>
+<span class="line"><span style="color:#B392F0">Hello</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> go</span><span style="color:#9ECBFF"> run</span><span style="color:#9ECBFF"> main.go</span><span style="color:#79B8FF"> --night</span></span>
+<span class="line"><span style="color:#B392F0">Good</span><span style="color:#9ECBFF"> night</span></span></code></pre>
+<h4 id="shorthand-で設定する">shorthand で設定する</h4>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#F97583">func</span><span style="color:#B392F0"> init</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#6A737D">	// rootCmd.PersistentFlags().BoolVar(&#x26;night, "night", false, "night フラグの説明文です")</span></span>
+<span class="line"><span style="color:#E1E4E8">	rootCmd.</span><span style="color:#B392F0">PersistentFlags</span><span style="color:#E1E4E8">().</span><span style="color:#B392F0">BoolVarP</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">&#x26;</span><span style="color:#E1E4E8">night, </span><span style="color:#9ECBFF">"night"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"n"</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">false</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"night フラグの説明文です"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p>実行。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> go</span><span style="color:#9ECBFF"> run</span><span style="color:#9ECBFF"> main.go</span><span style="color:#79B8FF"> -h</span></span>
+<span class="line"><span style="color:#B392F0">挨拶をします</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">Usage:</span></span>
+<span class="line"><span style="color:#B392F0">  sample</span><span style="color:#E1E4E8"> [flags]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">Flags:</span></span>
+<span class="line"><span style="color:#B392F0">  -h,</span><span style="color:#79B8FF"> --help</span><span style="color:#9ECBFF">    help</span><span style="color:#9ECBFF"> for</span><span style="color:#9ECBFF"> sample</span></span>
+<span class="line"><span style="color:#B392F0">  -n,</span><span style="color:#79B8FF"> --night</span><span style="color:#9ECBFF">   night</span><span style="color:#9ECBFF"> フラグの説明文です</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> go</span><span style="color:#9ECBFF"> run</span><span style="color:#9ECBFF"> main.go</span><span style="color:#79B8FF"> -n</span></span>
+<span class="line"><span style="color:#B392F0">Good</span><span style="color:#9ECBFF"> night</span></span></code></pre>
+<h3 id="ローカルフラグを設定する">ローカルフラグを設定する</h3>
+<p><code>--name</code> をつければ挨拶の後に名前を出力する。
+今度は変数を設定しないでフラグの値を取得してみる。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#6A737D">/*</span></span>
+<span class="line"><span style="color:#6A737D">Copyright © 2022 NAME HERE &#x3C;EMAIL ADDRESS></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">*/</span></span>
+<span class="line"><span style="color:#F97583">package</span><span style="color:#B392F0"> cmd</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">fmt</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">os</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">github.com/spf13/cobra</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">var</span><span style="color:#E1E4E8"> night </span><span style="color:#F97583">bool</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// rootCmd represents the base command when called without any subcommands</span></span>
+<span class="line"><span style="color:#F97583">var</span><span style="color:#E1E4E8"> rootCmd </span><span style="color:#F97583">=</span><span style="color:#F97583"> &#x26;</span><span style="color:#B392F0">cobra</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">Command</span><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#E1E4E8">	Use:   </span><span style="color:#9ECBFF">"sample"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">	Short: </span><span style="color:#9ECBFF">"挨拶をします"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">	RunE: </span><span style="color:#F97583">func</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">cmd</span><span style="color:#F97583"> *</span><span style="color:#B392F0">cobra</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">Command</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">args</span><span style="color:#E1E4E8"> []</span><span style="color:#F97583">string</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">error</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">		name, _ </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> cmd.</span><span style="color:#B392F0">Flags</span><span style="color:#E1E4E8">().</span><span style="color:#B392F0">GetString</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"name"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">		if</span><span style="color:#E1E4E8"> night {</span></span>
+<span class="line"><span style="color:#E1E4E8">			fmt.</span><span style="color:#B392F0">Println</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Good night "</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> name)</span></span>
+<span class="line"><span style="color:#F97583">			return</span><span style="color:#79B8FF"> nil</span></span>
+<span class="line"><span style="color:#E1E4E8">		}</span></span>
+<span class="line"><span style="color:#E1E4E8">		fmt.</span><span style="color:#B392F0">Println</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Hello "</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> name)</span></span>
+<span class="line"><span style="color:#F97583">		return</span><span style="color:#79B8FF"> nil</span></span>
+<span class="line"><span style="color:#E1E4E8">	},</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Execute adds all child commands to the root command and sets flags appropriately.</span></span>
+<span class="line"><span style="color:#6A737D">// This is called by main.main(). It only needs to happen once to the rootCmd.</span></span>
+<span class="line"><span style="color:#F97583">func</span><span style="color:#B392F0"> Execute</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#E1E4E8">	err </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> rootCmd.</span><span style="color:#B392F0">Execute</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#F97583">	if</span><span style="color:#E1E4E8"> err </span><span style="color:#F97583">!=</span><span style="color:#79B8FF"> nil</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">		os.</span><span style="color:#B392F0">Exit</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">	}</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">func</span><span style="color:#B392F0"> init</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#E1E4E8">	rootCmd.</span><span style="color:#B392F0">PersistentFlags</span><span style="color:#E1E4E8">().</span><span style="color:#B392F0">BoolVarP</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">&#x26;</span><span style="color:#E1E4E8">night, </span><span style="color:#9ECBFF">"night"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"n"</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">false</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"night フラグの説明文です"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">	rootCmd.</span><span style="color:#B392F0">Flags</span><span style="color:#E1E4E8">().</span><span style="color:#B392F0">StringP</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"name"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"a"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">""</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"name フラグの説明文です"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p>実行。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> go</span><span style="color:#9ECBFF"> run</span><span style="color:#9ECBFF"> main.go</span><span style="color:#79B8FF"> -h</span></span>
+<span class="line"><span style="color:#B392F0">挨拶をします</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">Usage:</span></span>
+<span class="line"><span style="color:#B392F0">  sample</span><span style="color:#E1E4E8"> [flags]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">Flags:</span></span>
+<span class="line"><span style="color:#B392F0">  -h,</span><span style="color:#79B8FF"> --help</span><span style="color:#9ECBFF">          help</span><span style="color:#9ECBFF"> for</span><span style="color:#9ECBFF"> sample</span></span>
+<span class="line"><span style="color:#B392F0">  -a,</span><span style="color:#79B8FF"> --name</span><span style="color:#9ECBFF"> string</span><span style="color:#9ECBFF">   name</span><span style="color:#9ECBFF"> フラグの説明文です</span></span>
+<span class="line"><span style="color:#B392F0">  -n,</span><span style="color:#79B8FF"> --night</span><span style="color:#9ECBFF">         night</span><span style="color:#9ECBFF"> フラグの説明文です</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> go</span><span style="color:#9ECBFF"> run</span><span style="color:#9ECBFF"> main.go</span></span>
+<span class="line"><span style="color:#B392F0">Hello</span><span style="color:#E1E4E8"> </span></span>
+<span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> go</span><span style="color:#9ECBFF"> run</span><span style="color:#9ECBFF"> main.go</span><span style="color:#79B8FF"> -a</span><span style="color:#9ECBFF"> aaa</span></span>
+<span class="line"><span style="color:#B392F0">Hello</span><span style="color:#9ECBFF"> aaa</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> go</span><span style="color:#9ECBFF"> run</span><span style="color:#9ECBFF"> main.go</span><span style="color:#79B8FF"> -a</span><span style="color:#9ECBFF"> aaa</span><span style="color:#79B8FF"> --night</span></span>
+<span class="line"><span style="color:#B392F0">Good</span><span style="color:#9ECBFF"> night</span><span style="color:#9ECBFF"> aaa</span></span></code></pre>
+<h4 id="フラグの値の取得方法">フラグの値の取得方法</h4>
+<p><code>~P</code> がついている方は <code>shorthand</code> を設定できる。
+<code>~Var</code> がついている方は直接値を設定できる。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#E1E4E8">rootCmd.</span><span style="color:#B392F0">Flags</span><span style="color:#E1E4E8">().</span><span style="color:#B392F0">String</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"name"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">""</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"name フラグの説明文です"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">rootCmd.</span><span style="color:#B392F0">Flags</span><span style="color:#E1E4E8">().</span><span style="color:#B392F0">StringP</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"name"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"a"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">""</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"name フラグの説明文です"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">rootCmd.</span><span style="color:#B392F0">Flags</span><span style="color:#E1E4E8">().</span><span style="color:#B392F0">StringVar</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">&#x26;</span><span style="color:#E1E4E8">name, </span><span style="color:#9ECBFF">"name"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">""</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"name フラグの説明文です"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">rootCmd.</span><span style="color:#B392F0">Flags</span><span style="color:#E1E4E8">().</span><span style="color:#B392F0">StringVarP</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">&#x26;</span><span style="color:#E1E4E8">name, </span><span style="color:#9ECBFF">"name"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"a"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">""</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"name フラグの説明文です"</span><span style="color:#E1E4E8">)</span></span></code></pre>
+<h3 id="必須フラグ">必須フラグ</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#F97583">func</span><span style="color:#B392F0"> init</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#E1E4E8">	rootCmd.</span><span style="color:#B392F0">PersistentFlags</span><span style="color:#E1E4E8">().</span><span style="color:#B392F0">BoolVarP</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">&#x26;</span><span style="color:#E1E4E8">night, </span><span style="color:#9ECBFF">"night"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"n"</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">false</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"night フラグの説明文です"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">	rootCmd.</span><span style="color:#B392F0">Flags</span><span style="color:#E1E4E8">().</span><span style="color:#B392F0">StringP</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"name"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"a"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">""</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"name フラグの説明文です (required)"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">	rootCmd.</span><span style="color:#B392F0">MarkFlagRequired</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"name"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p>実行。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> go</span><span style="color:#9ECBFF"> run</span><span style="color:#9ECBFF"> main.go</span></span>
+<span class="line"><span style="color:#B392F0">Error:</span><span style="color:#9ECBFF"> required</span><span style="color:#9ECBFF"> flag</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">s</span><span style="color:#E1E4E8">) </span><span style="color:#9ECBFF">"name"</span><span style="color:#9ECBFF"> not</span><span style="color:#9ECBFF"> set</span></span>
+<span class="line"><span style="color:#B392F0">Usage:</span></span>
+<span class="line"><span style="color:#B392F0">  sample</span><span style="color:#E1E4E8"> [flags]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">Flags:</span></span>
+<span class="line"><span style="color:#B392F0">  -h,</span><span style="color:#79B8FF"> --help</span><span style="color:#9ECBFF">          help</span><span style="color:#9ECBFF"> for</span><span style="color:#9ECBFF"> sample</span></span>
+<span class="line"><span style="color:#B392F0">  -a,</span><span style="color:#79B8FF"> --name</span><span style="color:#9ECBFF"> string</span><span style="color:#9ECBFF">   name</span><span style="color:#9ECBFF"> フラグの説明文です</span><span style="color:#E1E4E8"> (required)</span></span>
+<span class="line"><span style="color:#B392F0">  -n,</span><span style="color:#79B8FF"> --night</span><span style="color:#9ECBFF">         night</span><span style="color:#9ECBFF"> フラグの説明文です</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> go</span><span style="color:#9ECBFF"> run</span><span style="color:#9ECBFF"> main.go</span><span style="color:#79B8FF"> -a</span><span style="color:#9ECBFF"> aaa</span></span>
+<span class="line"><span style="color:#B392F0">Hello</span><span style="color:#9ECBFF"> aaa</span></span></code></pre>
+<h3 id="引数の設定">引数の設定</h3>
+<p>引数に数字を 2 つ与えるとその合計を出力する。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#6A737D">// rootCmd represents the base command when called without any subcommands</span></span>
+<span class="line"><span style="color:#F97583">var</span><span style="color:#E1E4E8"> rootCmd </span><span style="color:#F97583">=</span><span style="color:#F97583"> &#x26;</span><span style="color:#B392F0">cobra</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">Command</span><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#E1E4E8">	Use:   </span><span style="color:#9ECBFF">"sample"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">	Short: </span><span style="color:#9ECBFF">"挨拶をします"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">	RunE: </span><span style="color:#F97583">func</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">cmd</span><span style="color:#F97583"> *</span><span style="color:#B392F0">cobra</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">Command</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">args</span><span style="color:#E1E4E8"> []</span><span style="color:#F97583">string</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">error</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">		name, _ </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> cmd.</span><span style="color:#B392F0">Flags</span><span style="color:#E1E4E8">().</span><span style="color:#B392F0">GetString</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"name"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">		if</span><span style="color:#E1E4E8"> night {</span></span>
+<span class="line"><span style="color:#E1E4E8">			fmt.</span><span style="color:#B392F0">Println</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Good night "</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> name)</span></span>
+<span class="line"><span style="color:#F97583">			if</span><span style="color:#B392F0"> len</span><span style="color:#E1E4E8">(args) </span><span style="color:#F97583">></span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">				firstNum, _ </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> strconv.</span><span style="color:#B392F0">Atoi</span><span style="color:#E1E4E8">(args[</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">])</span></span>
+<span class="line"><span style="color:#E1E4E8">				secondNum, _ </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> strconv.</span><span style="color:#B392F0">Atoi</span><span style="color:#E1E4E8">(args[</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">])</span></span>
+<span class="line"><span style="color:#E1E4E8">				fmt.</span><span style="color:#B392F0">Printf</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"SUM: </span><span style="color:#79B8FF">%v\n</span><span style="color:#9ECBFF">"</span><span style="color:#E1E4E8">, firstNum</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">secondNum)</span></span>
+<span class="line"><span style="color:#E1E4E8">			}</span></span>
+<span class="line"><span style="color:#F97583">			return</span><span style="color:#79B8FF"> nil</span></span>
+<span class="line"><span style="color:#E1E4E8">		}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">		fmt.</span><span style="color:#B392F0">Println</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Hello "</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> name)</span></span>
+<span class="line"><span style="color:#F97583">		if</span><span style="color:#B392F0"> len</span><span style="color:#E1E4E8">(args) </span><span style="color:#F97583">></span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">			firstNum, _ </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> strconv.</span><span style="color:#B392F0">Atoi</span><span style="color:#E1E4E8">(args[</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">])</span></span>
+<span class="line"><span style="color:#E1E4E8">			secondNum, _ </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> strconv.</span><span style="color:#B392F0">Atoi</span><span style="color:#E1E4E8">(args[</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">])</span></span>
+<span class="line"><span style="color:#E1E4E8">			fmt.</span><span style="color:#B392F0">Printf</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"SUM: </span><span style="color:#79B8FF">%v\n</span><span style="color:#9ECBFF">"</span><span style="color:#E1E4E8">, firstNum</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">secondNum)</span></span>
+<span class="line"><span style="color:#E1E4E8">		}</span></span>
+<span class="line"><span style="color:#F97583">		return</span><span style="color:#79B8FF"> nil</span></span>
+<span class="line"><span style="color:#E1E4E8">	},</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p>実行。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> go</span><span style="color:#9ECBFF"> run</span><span style="color:#9ECBFF"> main.go</span><span style="color:#79B8FF"> -a</span><span style="color:#9ECBFF"> aaa</span></span>
+<span class="line"><span style="color:#B392F0">Hello</span><span style="color:#9ECBFF"> aaa</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> go</span><span style="color:#9ECBFF"> run</span><span style="color:#9ECBFF"> main.go</span><span style="color:#79B8FF"> -a</span><span style="color:#9ECBFF"> aaa</span><span style="color:#79B8FF"> 1</span><span style="color:#79B8FF"> 99</span></span>
+<span class="line"><span style="color:#B392F0">Hello</span><span style="color:#9ECBFF"> aaa</span></span>
+<span class="line"><span style="color:#B392F0">SUM:</span><span style="color:#79B8FF"> 100</span></span></code></pre>
+<h4 id="バリデーションチェック">バリデーションチェック</h4>
+<p>これらのメソッドが用意されている。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>メソッド</th><th>機能</th></tr></thead><tbody><tr><td>NoArgs</td><td>引数が存在したらエラーを返す</td></tr><tr><td>OnlyValidArgs</td><td>ValidArgs に含まれていないとエラーを返す</td></tr><tr><td>ArbitraryArgs</td><td>エラーを返さない</td></tr><tr><td>MinimumNArgs(n)</td><td>少なくとも n 個の引数がないとエラーを返す</td></tr><tr><td>MaximumNArgs(n)</td><td>n 個以上の引数があるとエラーを返す</td></tr><tr><td>ExactArgs(n)</td><td>n 個の引数以外だとエラーを返す</td></tr><tr><td>ExactValidArgs(int)</td><td>n 個の引数以外 or ValidArgs フィールドにない位置引数がある場合はエラーを返す</td></tr><tr><td>RangeArgs(min, max)</td><td>範囲内の値でないとエラーを返す</td></tr></tbody></table>
+<p>こんな感じで設定できる。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#E1E4E8">Args:  cobra.</span><span style="color:#B392F0">ExactArgs</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">),</span></span></code></pre>
+<p>複数のバリデーションをチェックする場合は <code>MatchAll</code> を使えば良さそう。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#6A737D">// MatchAll allows combining several PositionalArgs to work in concert.</span></span>
+<span class="line"><span style="color:#F97583">func</span><span style="color:#B392F0"> MatchAll</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">pargs</span><span style="color:#F97583"> ...</span><span style="color:#B392F0">PositionalArgs</span><span style="color:#E1E4E8">) </span><span style="color:#B392F0">PositionalArgs</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">	return</span><span style="color:#F97583"> func</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">cmd</span><span style="color:#F97583"> *</span><span style="color:#B392F0">Command</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">args</span><span style="color:#E1E4E8"> []</span><span style="color:#F97583">string</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">error</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">		for</span><span style="color:#E1E4E8"> _, parg </span><span style="color:#F97583">:=</span><span style="color:#F97583"> range</span><span style="color:#E1E4E8"> pargs {</span></span>
+<span class="line"><span style="color:#F97583">			if</span><span style="color:#E1E4E8"> err </span><span style="color:#F97583">:=</span><span style="color:#B392F0"> parg</span><span style="color:#E1E4E8">(cmd, args); err </span><span style="color:#F97583">!=</span><span style="color:#79B8FF"> nil</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">				return</span><span style="color:#E1E4E8"> err</span></span>
+<span class="line"><span style="color:#E1E4E8">			}</span></span>
+<span class="line"><span style="color:#E1E4E8">		}</span></span>
+<span class="line"><span style="color:#F97583">		return</span><span style="color:#79B8FF"> nil</span></span>
+<span class="line"><span style="color:#E1E4E8">	}</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p>今回は 2 個の引数のみ受け付ける。かつ、値が数値であることのみ許可する。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#F97583">var</span><span style="color:#E1E4E8"> rootCmd </span><span style="color:#F97583">=</span><span style="color:#F97583"> &#x26;</span><span style="color:#B392F0">cobra</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">Command</span><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#E1E4E8">	Use:   </span><span style="color:#9ECBFF">"sample"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">	Short: </span><span style="color:#9ECBFF">"挨拶をします。2 つの int を渡すと計算もします"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">	Args: </span><span style="color:#F97583">func</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">cmd</span><span style="color:#F97583"> *</span><span style="color:#B392F0">cobra</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">Command</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">args</span><span style="color:#E1E4E8"> []</span><span style="color:#F97583">string</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">error</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">		if</span><span style="color:#B392F0"> len</span><span style="color:#E1E4E8">(args) </span><span style="color:#F97583">==</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">			return</span><span style="color:#79B8FF"> nil</span></span>
+<span class="line"><span style="color:#E1E4E8">		} </span><span style="color:#F97583">else</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">			if</span><span style="color:#B392F0"> len</span><span style="color:#E1E4E8">(args) </span><span style="color:#F97583">!=</span><span style="color:#79B8FF"> 2</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">				return</span><span style="color:#E1E4E8"> errors.</span><span style="color:#B392F0">New</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"引数の数が不正です"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">			}</span></span>
+<span class="line"><span style="color:#E1E4E8">			_, err1 </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> strconv.</span><span style="color:#B392F0">Atoi</span><span style="color:#E1E4E8">(args[</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">])</span></span>
+<span class="line"><span style="color:#E1E4E8">			_, err2 </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> strconv.</span><span style="color:#B392F0">Atoi</span><span style="color:#E1E4E8">(args[</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">])</span></span>
+<span class="line"><span style="color:#F97583">			if</span><span style="color:#E1E4E8"> err1 </span><span style="color:#F97583">!=</span><span style="color:#79B8FF"> nil</span><span style="color:#F97583"> ||</span><span style="color:#E1E4E8"> err2 </span><span style="color:#F97583">!=</span><span style="color:#79B8FF"> nil</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">				return</span><span style="color:#E1E4E8"> errors.</span><span style="color:#B392F0">New</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"引数の型が不正です"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">			}</span></span>
+<span class="line"><span style="color:#E1E4E8">		}</span></span>
+<span class="line"><span style="color:#F97583">		return</span><span style="color:#79B8FF"> nil</span></span>
+<span class="line"><span style="color:#E1E4E8">	},</span></span>
+<span class="line"><span style="color:#E1E4E8">	RunE: </span><span style="color:#F97583">func</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">cmd</span><span style="color:#F97583"> *</span><span style="color:#B392F0">cobra</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">Command</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">args</span><span style="color:#E1E4E8"> []</span><span style="color:#F97583">string</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">error</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">		name, _ </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> cmd.</span><span style="color:#B392F0">Flags</span><span style="color:#E1E4E8">().</span><span style="color:#B392F0">GetString</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"name"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">		if</span><span style="color:#E1E4E8"> night {</span></span>
+<span class="line"><span style="color:#E1E4E8">			fmt.</span><span style="color:#B392F0">Println</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Good night "</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> name)</span></span>
+<span class="line"><span style="color:#F97583">			if</span><span style="color:#B392F0"> len</span><span style="color:#E1E4E8">(args) </span><span style="color:#F97583">></span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">				firstNum, _ </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> strconv.</span><span style="color:#B392F0">Atoi</span><span style="color:#E1E4E8">(args[</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">])</span></span>
+<span class="line"><span style="color:#E1E4E8">				secondNum, _ </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> strconv.</span><span style="color:#B392F0">Atoi</span><span style="color:#E1E4E8">(args[</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">])</span></span>
+<span class="line"><span style="color:#E1E4E8">				fmt.</span><span style="color:#B392F0">Printf</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"SUM: </span><span style="color:#79B8FF">%v\n</span><span style="color:#9ECBFF">"</span><span style="color:#E1E4E8">, firstNum</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">secondNum)</span></span>
+<span class="line"><span style="color:#E1E4E8">			}</span></span>
+<span class="line"><span style="color:#F97583">			return</span><span style="color:#79B8FF"> nil</span></span>
+<span class="line"><span style="color:#E1E4E8">		}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">		fmt.</span><span style="color:#B392F0">Println</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Hello "</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> name)</span></span>
+<span class="line"><span style="color:#F97583">		if</span><span style="color:#B392F0"> len</span><span style="color:#E1E4E8">(args) </span><span style="color:#F97583">></span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">			firstNum, _ </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> strconv.</span><span style="color:#B392F0">Atoi</span><span style="color:#E1E4E8">(args[</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">])</span></span>
+<span class="line"><span style="color:#E1E4E8">			secondNum, _ </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> strconv.</span><span style="color:#B392F0">Atoi</span><span style="color:#E1E4E8">(args[</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">])</span></span>
+<span class="line"><span style="color:#E1E4E8">			fmt.</span><span style="color:#B392F0">Printf</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"SUM: </span><span style="color:#79B8FF">%v\n</span><span style="color:#9ECBFF">"</span><span style="color:#E1E4E8">, firstNum</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">secondNum)</span></span>
+<span class="line"><span style="color:#E1E4E8">		}</span></span>
+<span class="line"><span style="color:#F97583">		return</span><span style="color:#79B8FF"> nil</span></span>
+<span class="line"><span style="color:#E1E4E8">	},</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p>実行。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> go</span><span style="color:#9ECBFF"> run</span><span style="color:#9ECBFF"> main.go</span><span style="color:#79B8FF"> -a</span><span style="color:#9ECBFF"> aaa</span></span>
+<span class="line"><span style="color:#B392F0">Hello</span><span style="color:#9ECBFF"> aaa</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> go</span><span style="color:#9ECBFF"> run</span><span style="color:#9ECBFF"> main.go</span><span style="color:#79B8FF"> -a</span><span style="color:#9ECBFF"> aaa</span><span style="color:#79B8FF"> 1</span><span style="color:#79B8FF"> 99</span></span>
+<span class="line"><span style="color:#B392F0">Hello</span><span style="color:#9ECBFF"> aaa</span></span>
+<span class="line"><span style="color:#B392F0">SUM:</span><span style="color:#79B8FF"> 100</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> go</span><span style="color:#9ECBFF"> run</span><span style="color:#9ECBFF"> main.go</span><span style="color:#79B8FF"> -a</span><span style="color:#9ECBFF"> aaa</span><span style="color:#79B8FF"> 1</span><span style="color:#9ECBFF"> abc</span></span>
+<span class="line"><span style="color:#B392F0">Error:</span><span style="color:#9ECBFF"> 引数の型が不正です</span></span>
+<span class="line"><span style="color:#B392F0">Usage:</span></span>
+<span class="line"><span style="color:#B392F0">  sample</span><span style="color:#E1E4E8"> [flags]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">Flags:</span></span>
+<span class="line"><span style="color:#B392F0">  -h,</span><span style="color:#79B8FF"> --help</span><span style="color:#9ECBFF">          help</span><span style="color:#9ECBFF"> for</span><span style="color:#9ECBFF"> sample</span></span>
+<span class="line"><span style="color:#B392F0">  -a,</span><span style="color:#79B8FF"> --name</span><span style="color:#9ECBFF"> string</span><span style="color:#9ECBFF">   name</span><span style="color:#9ECBFF"> フラグの説明文です</span><span style="color:#E1E4E8"> (required)</span></span>
+<span class="line"><span style="color:#B392F0">  -n,</span><span style="color:#79B8FF"> --night</span><span style="color:#9ECBFF">         night</span><span style="color:#9ECBFF"> フラグの説明文です</span></span></code></pre>
+<h3 id="prerun--postrun-hooks">PreRun / PostRun Hooks</h3>
+<p>実行前と実行後の処理を設定できる。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#F97583">var</span><span style="color:#E1E4E8"> rootCmd </span><span style="color:#F97583">=</span><span style="color:#F97583"> &#x26;</span><span style="color:#B392F0">cobra</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">Command</span><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#E1E4E8">	Use:   </span><span style="color:#9ECBFF">"sample"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">	Short: </span><span style="color:#9ECBFF">"挨拶をします。2 つの int を渡すと計算もします"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">	Args: </span><span style="color:#F97583">func</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">cmd</span><span style="color:#F97583"> *</span><span style="color:#B392F0">cobra</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">Command</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">args</span><span style="color:#E1E4E8"> []</span><span style="color:#F97583">string</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">error</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">		if</span><span style="color:#B392F0"> len</span><span style="color:#E1E4E8">(args) </span><span style="color:#F97583">==</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">			return</span><span style="color:#79B8FF"> nil</span></span>
+<span class="line"><span style="color:#E1E4E8">		} </span><span style="color:#F97583">else</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">			if</span><span style="color:#B392F0"> len</span><span style="color:#E1E4E8">(args) </span><span style="color:#F97583">!=</span><span style="color:#79B8FF"> 2</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">				return</span><span style="color:#E1E4E8"> errors.</span><span style="color:#B392F0">New</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"引数の数が不正です"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">			}</span></span>
+<span class="line"><span style="color:#E1E4E8">			_, err1 </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> strconv.</span><span style="color:#B392F0">Atoi</span><span style="color:#E1E4E8">(args[</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">])</span></span>
+<span class="line"><span style="color:#E1E4E8">			_, err2 </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> strconv.</span><span style="color:#B392F0">Atoi</span><span style="color:#E1E4E8">(args[</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">])</span></span>
+<span class="line"><span style="color:#F97583">			if</span><span style="color:#E1E4E8"> err1 </span><span style="color:#F97583">!=</span><span style="color:#79B8FF"> nil</span><span style="color:#F97583"> ||</span><span style="color:#E1E4E8"> err2 </span><span style="color:#F97583">!=</span><span style="color:#79B8FF"> nil</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">				return</span><span style="color:#E1E4E8"> errors.</span><span style="color:#B392F0">New</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"引数の型が不正です"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">			}</span></span>
+<span class="line"><span style="color:#E1E4E8">		}</span></span>
+<span class="line"><span style="color:#F97583">		return</span><span style="color:#79B8FF"> nil</span></span>
+<span class="line"><span style="color:#E1E4E8">	},</span></span>
+<span class="line"><span style="color:#E1E4E8">	PreRun: </span><span style="color:#F97583">func</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">cmd</span><span style="color:#F97583"> *</span><span style="color:#B392F0">cobra</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">Command</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">args</span><span style="color:#E1E4E8"> []</span><span style="color:#F97583">string</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#E1E4E8">		fmt.</span><span style="color:#B392F0">Println</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"=== PreRun ==="</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">	},</span></span>
+<span class="line"><span style="color:#E1E4E8">	RunE: </span><span style="color:#F97583">func</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">cmd</span><span style="color:#F97583"> *</span><span style="color:#B392F0">cobra</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">Command</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">args</span><span style="color:#E1E4E8"> []</span><span style="color:#F97583">string</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">error</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">		name, _ </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> cmd.</span><span style="color:#B392F0">Flags</span><span style="color:#E1E4E8">().</span><span style="color:#B392F0">GetString</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"name"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">		if</span><span style="color:#E1E4E8"> night {</span></span>
+<span class="line"><span style="color:#E1E4E8">			fmt.</span><span style="color:#B392F0">Println</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Good night "</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> name)</span></span>
+<span class="line"><span style="color:#F97583">			if</span><span style="color:#B392F0"> len</span><span style="color:#E1E4E8">(args) </span><span style="color:#F97583">></span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">				firstNum, _ </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> strconv.</span><span style="color:#B392F0">Atoi</span><span style="color:#E1E4E8">(args[</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">])</span></span>
+<span class="line"><span style="color:#E1E4E8">				secondNum, _ </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> strconv.</span><span style="color:#B392F0">Atoi</span><span style="color:#E1E4E8">(args[</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">])</span></span>
+<span class="line"><span style="color:#E1E4E8">				fmt.</span><span style="color:#B392F0">Printf</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"SUM: </span><span style="color:#79B8FF">%v\n</span><span style="color:#9ECBFF">"</span><span style="color:#E1E4E8">, firstNum</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">secondNum)</span></span>
+<span class="line"><span style="color:#E1E4E8">			}</span></span>
+<span class="line"><span style="color:#F97583">			return</span><span style="color:#79B8FF"> nil</span></span>
+<span class="line"><span style="color:#E1E4E8">		}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">		fmt.</span><span style="color:#B392F0">Println</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Hello "</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> name)</span></span>
+<span class="line"><span style="color:#F97583">		if</span><span style="color:#B392F0"> len</span><span style="color:#E1E4E8">(args) </span><span style="color:#F97583">></span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">			firstNum, _ </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> strconv.</span><span style="color:#B392F0">Atoi</span><span style="color:#E1E4E8">(args[</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">])</span></span>
+<span class="line"><span style="color:#E1E4E8">			secondNum, _ </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> strconv.</span><span style="color:#B392F0">Atoi</span><span style="color:#E1E4E8">(args[</span><span style="color:#79B8FF">1</span><span style="color:#E1E4E8">])</span></span>
+<span class="line"><span style="color:#E1E4E8">			fmt.</span><span style="color:#B392F0">Printf</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"SUM: </span><span style="color:#79B8FF">%v\n</span><span style="color:#9ECBFF">"</span><span style="color:#E1E4E8">, firstNum</span><span style="color:#F97583">+</span><span style="color:#E1E4E8">secondNum)</span></span>
+<span class="line"><span style="color:#E1E4E8">		}</span></span>
+<span class="line"><span style="color:#F97583">		return</span><span style="color:#79B8FF"> nil</span></span>
+<span class="line"><span style="color:#E1E4E8">	},</span></span>
+<span class="line"><span style="color:#E1E4E8">	PostRun: </span><span style="color:#F97583">func</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">cmd</span><span style="color:#F97583"> *</span><span style="color:#B392F0">cobra</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">Command</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">args</span><span style="color:#E1E4E8"> []</span><span style="color:#F97583">string</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#E1E4E8">		fmt.</span><span style="color:#B392F0">Println</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"=== PostRun ==="</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">	},</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p>実行。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> go</span><span style="color:#9ECBFF"> run</span><span style="color:#9ECBFF"> main.go</span><span style="color:#79B8FF"> -a</span><span style="color:#9ECBFF"> aaa</span></span>
+<span class="line"><span style="color:#9ECBFF">===</span><span style="color:#9ECBFF"> PreRun</span><span style="color:#9ECBFF"> ===</span></span>
+<span class="line"><span style="color:#B392F0">Hello</span><span style="color:#9ECBFF"> aaa</span></span>
+<span class="line"><span style="color:#9ECBFF">===</span><span style="color:#9ECBFF"> PostRun</span><span style="color:#9ECBFF"> ===</span></span></code></pre>
+<h3 id="subcommand">subcommand</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> go</span><span style="color:#9ECBFF"> run</span><span style="color:#79B8FF"> -mod=mod</span><span style="color:#9ECBFF"> github.com/spf13/cobra-cli@latest</span><span style="color:#9ECBFF"> add</span><span style="color:#9ECBFF"> server</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> tree</span></span>
+<span class="line"><span style="color:#79B8FF">.</span></span>
+<span class="line"><span style="color:#B392F0">├──</span><span style="color:#9ECBFF"> LICENSE</span></span>
+<span class="line"><span style="color:#B392F0">├──</span><span style="color:#9ECBFF"> cmd</span></span>
+<span class="line"><span style="color:#B392F0">│</span><span style="color:#9ECBFF">   ├──</span><span style="color:#9ECBFF"> root.go</span></span>
+<span class="line"><span style="color:#B392F0">│</span><span style="color:#9ECBFF">   └──</span><span style="color:#9ECBFF"> server.go</span></span>
+<span class="line"><span style="color:#B392F0">├──</span><span style="color:#9ECBFF"> go.mod</span></span>
+<span class="line"><span style="color:#B392F0">├──</span><span style="color:#9ECBFF"> go.sum</span></span>
+<span class="line"><span style="color:#B392F0">└──</span><span style="color:#9ECBFF"> main.go</span></span></code></pre>
+<p><code>cmd</code> 配下にファイルが生成されている。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="go"><code><span class="line"><span style="color:#6A737D">/*</span></span>
+<span class="line"><span style="color:#6A737D">Copyright © 2022 NAME HERE &#x3C;EMAIL ADDRESS></span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">*/</span></span>
+<span class="line"><span style="color:#F97583">package</span><span style="color:#B392F0"> cmd</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">fmt</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#9ECBFF">	"</span><span style="color:#B392F0">github.com/spf13/cobra</span><span style="color:#9ECBFF">"</span></span>
+<span class="line"><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// serverCmd represents the server command</span></span>
+<span class="line"><span style="color:#F97583">var</span><span style="color:#E1E4E8"> serverCmd </span><span style="color:#F97583">=</span><span style="color:#F97583"> &#x26;</span><span style="color:#B392F0">cobra</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">Command</span><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#E1E4E8">	Use:   </span><span style="color:#9ECBFF">"server"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">	Short: </span><span style="color:#9ECBFF">"server を起動します"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">	Run: </span><span style="color:#F97583">func</span><span style="color:#E1E4E8">(</span><span style="color:#FFAB70">cmd</span><span style="color:#F97583"> *</span><span style="color:#B392F0">cobra</span><span style="color:#E1E4E8">.</span><span style="color:#B392F0">Command</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">args</span><span style="color:#E1E4E8"> []</span><span style="color:#F97583">string</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#E1E4E8">		fmt.</span><span style="color:#B392F0">Println</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"server called"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">	},</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">func</span><span style="color:#B392F0"> init</span><span style="color:#E1E4E8">() {</span></span>
+<span class="line"><span style="color:#E1E4E8">	rootCmd.</span><span style="color:#B392F0">AddCommand</span><span style="color:#E1E4E8">(serverCmd)</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p>実行。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> go</span><span style="color:#9ECBFF"> run</span><span style="color:#9ECBFF"> main.go</span><span style="color:#79B8FF"> -h</span></span>
+<span class="line"><span style="color:#B392F0">挨拶をします。2</span><span style="color:#9ECBFF"> つの</span><span style="color:#9ECBFF"> int</span><span style="color:#9ECBFF"> を渡すと計算もします</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">Usage:</span></span>
+<span class="line"><span style="color:#B392F0">  sample</span><span style="color:#E1E4E8"> [flags]</span></span>
+<span class="line"><span style="color:#B392F0">  sample</span><span style="color:#E1E4E8"> [command]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">Available</span><span style="color:#9ECBFF"> Commands:</span></span>
+<span class="line"><span style="color:#B392F0">  completion</span><span style="color:#9ECBFF">  Generate</span><span style="color:#9ECBFF"> the</span><span style="color:#9ECBFF"> autocompletion</span><span style="color:#9ECBFF"> script</span><span style="color:#9ECBFF"> for</span><span style="color:#9ECBFF"> the</span><span style="color:#9ECBFF"> specified</span><span style="color:#9ECBFF"> shell</span></span>
+<span class="line"><span style="color:#B392F0">  help</span><span style="color:#9ECBFF">        Help</span><span style="color:#9ECBFF"> about</span><span style="color:#9ECBFF"> any</span><span style="color:#9ECBFF"> command</span></span>
+<span class="line"><span style="color:#B392F0">  server</span><span style="color:#9ECBFF">      A</span><span style="color:#9ECBFF"> brief</span><span style="color:#9ECBFF"> description</span><span style="color:#9ECBFF"> of</span><span style="color:#9ECBFF"> your</span><span style="color:#9ECBFF"> command</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">Flags:</span></span>
+<span class="line"><span style="color:#B392F0">  -h,</span><span style="color:#79B8FF"> --help</span><span style="color:#9ECBFF">          help</span><span style="color:#9ECBFF"> for</span><span style="color:#9ECBFF"> sample</span></span>
+<span class="line"><span style="color:#B392F0">  -a,</span><span style="color:#79B8FF"> --name</span><span style="color:#9ECBFF"> string</span><span style="color:#9ECBFF">   name</span><span style="color:#9ECBFF"> フラグの説明文です</span><span style="color:#E1E4E8"> (required)</span></span>
+<span class="line"><span style="color:#B392F0">  -n,</span><span style="color:#79B8FF"> --night</span><span style="color:#9ECBFF">         night</span><span style="color:#9ECBFF"> フラグの説明文です</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">Use</span><span style="color:#9ECBFF"> "sample [command] --help"</span><span style="color:#9ECBFF"> for</span><span style="color:#9ECBFF"> more</span><span style="color:#9ECBFF"> information</span><span style="color:#9ECBFF"> about</span><span style="color:#9ECBFF"> a</span><span style="color:#9ECBFF"> command.</span></span></code></pre>
+<p><code>server</code> のヘルプをみる。</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> go</span><span style="color:#9ECBFF"> run</span><span style="color:#9ECBFF"> main.go</span><span style="color:#9ECBFF"> server</span><span style="color:#79B8FF"> -h</span></span>
+<span class="line"><span style="color:#B392F0">server</span><span style="color:#9ECBFF"> を起動します</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">Usage:</span></span>
+<span class="line"><span style="color:#B392F0">  sample</span><span style="color:#9ECBFF"> server</span><span style="color:#E1E4E8"> [flags]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">Flags:</span></span>
+<span class="line"><span style="color:#B392F0">  -h,</span><span style="color:#79B8FF"> --help</span><span style="color:#9ECBFF">   help</span><span style="color:#9ECBFF"> for</span><span style="color:#9ECBFF"> server</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">Global</span><span style="color:#9ECBFF"> Flags:</span></span>
+<span class="line"><span style="color:#B392F0">  -n,</span><span style="color:#79B8FF"> --night</span><span style="color:#9ECBFF">   night</span><span style="color:#9ECBFF"> フラグの説明文です</span></span>
+<span class="line"><span style="color:#B392F0">$</span><span style="color:#9ECBFF"> go</span><span style="color:#9ECBFF"> run</span><span style="color:#9ECBFF"> main.go</span><span style="color:#9ECBFF"> server</span></span>
+<span class="line"><span style="color:#B392F0">server</span><span style="color:#9ECBFF"> called</span></span></code></pre>
+<p>subcommand も簡単に実装できそう。</p>  </div> <footer class="post-footer" data-astro-cid-bvzihdzo> <a href="/" data-astro-cid-bvzihdzo>&larr; 一覧に戻る</a> </footer> </article>  </main> </div> </body></html> 
