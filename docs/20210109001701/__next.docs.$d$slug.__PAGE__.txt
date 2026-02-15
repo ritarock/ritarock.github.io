@@ -1,5 +1,5 @@
 1:"$Sreact.fragment"
-4:I[35417,["/_next/static/chunks/26ca110782d86623.js","/_next/static/chunks/81f0f13d25d49d65.js"],"OutletBoundary"]
+4:I[97367,["/_next/static/chunks/ff1a16fafef87110.js","/_next/static/chunks/d2be314c3ece3fbe.js"],"OutletBoundary"]
 5:"$Sreact.suspense"
 2:T2365,<p><a href="https://roadmap.sh/roadmaps">Developer Roadmaps</a> にあった DevOps コマンドをまとめておく。</p>
 <h2>文字列操作</h2>
@@ -287,6 +287,6 @@ traceroute とだいたい同じ。</p>
 <p>コマンドの履歴を表示。</p>
 <p><code>-d</code> で指定した番号の履歴を削除する。</p>
 <pre><code class="hljs language-bash">$ <span class="hljs-built_in">history</span> -d 10
-</code></pre>0:{"buildId":"Ui61jZApT7GtKcnil8WO0","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"コマンドいろいろ"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,"$L3"]}],"loading":null,"isPartial":false}
+</code></pre>0:{"buildId":"Qv-0y001aAXmbkKWuzga9","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"コマンドいろいろ"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,"$L3"]}],"loading":null,"isPartial":false}
 3:["$","$L4",null,{"children":["$","$5",null,{"name":"Next.MetadataOutlet","children":"$@6"}]}]
 6:null

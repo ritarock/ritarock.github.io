@@ -1,5 +1,5 @@
 1:"$Sreact.fragment"
-4:I[35417,["/_next/static/chunks/26ca110782d86623.js","/_next/static/chunks/81f0f13d25d49d65.js"],"OutletBoundary"]
+4:I[97367,["/_next/static/chunks/ff1a16fafef87110.js","/_next/static/chunks/d2be314c3ece3fbe.js"],"OutletBoundary"]
 5:"$Sreact.suspense"
 2:T4bba,<p>コードを殆ど書かずに実装してみた。成果物は <a href="https://github.com/ritarock/bbs-app">これ</a> 。</p>
 <p>使っているものは以下の通り。</p>
@@ -537,6 +537,6 @@
      - web/src/components/CommentList.tsx
      - web/src/components/CommentItem.tsx
      - web/src/components/CommentForm.tsx
-</code></pre>0:{"buildId":"Ui61jZApT7GtKcnil8WO0","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"AI駆動開発"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,"$L3"]}],"loading":null,"isPartial":false}
+</code></pre>0:{"buildId":"Qv-0y001aAXmbkKWuzga9","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"AI駆動開発"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,"$L3"]}],"loading":null,"isPartial":false}
 3:["$","$L4",null,{"children":["$","$5",null,{"name":"Next.MetadataOutlet","children":"$@6"}]}]
 6:null

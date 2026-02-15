@@ -1,5 +1,5 @@
 1:"$Sreact.fragment"
-4:I[35417,["/_next/static/chunks/26ca110782d86623.js","/_next/static/chunks/81f0f13d25d49d65.js"],"OutletBoundary"]
+4:I[97367,["/_next/static/chunks/ff1a16fafef87110.js","/_next/static/chunks/d2be314c3ece3fbe.js"],"OutletBoundary"]
 5:"$Sreact.suspense"
 2:T1287,<p>nix で全て完結させようと思ったけど、大変だったので困るまでは Devbox + chezmoi の組み合わせで行くことにする。</p>
 <h2>Devboxのインストール</h2>
@@ -106,6 +106,6 @@ brew install --cask \
     zoom
 </code></pre>
 <p>最低限はこれで良さそう。
-<a href="https://github.com/ritarock/dotfiles">https://github.com/ritarock/dotfiles</a></p>0:{"buildId":"Ui61jZApT7GtKcnil8WO0","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"Devbox+chezmoiで環境構築"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,"$L3"]}],"loading":null,"isPartial":false}
+<a href="https://github.com/ritarock/dotfiles">https://github.com/ritarock/dotfiles</a></p>0:{"buildId":"Qv-0y001aAXmbkKWuzga9","rsc":["$","$1","c",{"children":[["$","article",null,{"style":{"maxWidth":"1000px","margin":"0 auto","padding":"0 2rem 2rem"},"children":[["$","h1",null,{"children":"Devbox+chezmoiで環境構築"}],["$","div",null,{"dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,"$L3"]}],"loading":null,"isPartial":false}
 3:["$","$L4",null,{"children":["$","$5",null,{"name":"Next.MetadataOutlet","children":"$@6"}]}]
 6:null
